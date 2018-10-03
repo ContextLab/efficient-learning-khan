@@ -1,6 +1,6 @@
 # Dockerfile for psiturk container
 FROM debian:stretch
-MAINTAINER Paxton Fitzpatrick <paxton.c.fitzpatrick.19@dartmouth.edu>
+MAINTAINER Max Bluestone <mbluestone93@gmail.edu>
 
 # install debian-related stuff
 RUN apt-get update
@@ -33,12 +33,6 @@ sqlalchemy \
 scipy \
 deepdish
 
-
-# install ffmpeg
-RUN git clone https://github.com/FFmpeg/FFmpeg
-RUN cd FFmpeg && ./configure --enable-gpl && \
-make && make install && ldconfig
-
 RUN pip install \
 git+https://github.com/ContextLab/psiTurk.git@expose-gunicorn-timeout-parameter
 
@@ -47,12 +41,12 @@ RUN apt-get update
 RUN apt-get install -y vim
 
 # add experiment and data folders
-COPY memory-dynamics/exp /exp
-COPY memory-dynamics/data /data
-COPY memory-dynamics/code /code
+COPY efficient-learning-khan/exp /exp
+COPY efficient-learning-khan/data /data
+COPY efficient-learning-khan/code /code
 
 # add stimuli folder
-# COPY video-stims /exp/video-stims
+# COPY stimuli /exp/stimuli
 
 # setup working directory
 WORKDIR /exp
