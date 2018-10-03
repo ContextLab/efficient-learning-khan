@@ -3,13 +3,13 @@
 
 # to build and start for the first time:
 #   with docker running:
-#   from enclosing dir: `docker build -t memorydynamics:latest -f memory-dynamics/Dockerfile .`
-#   from eclosing dir: `docker run -it -p 22363:22363 --mount type=bind,"source=$(pwd)/data",target=/data --name MD memorydynamics`
+#   from enclosing dir: `docker build -t efficientlearnkhan:latest -f efficient-learning-khan/Dockerfile .`
+#   from eclosing dir: `docker run -it -p 22363:22363 --mount type=bind,"source=$(pwd)/data",target=/data --name ELK efficientlearnkhan`
 
 # to start subsequent times:
 #   with docker running:
-#   from enclosing dir: `docker start MD`
-#   from enclosing dir: `docker exec -it MD bash`
+#   from enclosing dir: `docker start ELK`
+#   from enclosing dir: `docker exec -it ELK bash`
 
 # to run experiment:
 #   start docker (see above)
@@ -23,8 +23,5 @@
 #   `exit` exits docker
 
 
-
-
-
 # made a mistake?
-#   to delete container and and start over: `docker rm MD`
+#   to delete container and and start over: `docker rm ELK`
