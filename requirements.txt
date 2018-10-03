@@ -1,0 +1,9 @@
+sqlalchemy
+pandas>= 0.20.0
+numpy
+matplotlib
+scipy
+seaborn
+jupyter
+quail
+deepdish
