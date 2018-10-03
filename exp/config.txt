@@ -1,0 +1,37 @@
+[HIT Configuration]
+title = Memory Dynamics
+description = View episodes of TV shows and verbally recall them
+amt_keywords = Psychology, Memory
+lifetime = 24
+us_only = true
+approve_requirement = 95
+contact_email_on_error = youremail@gmail.com
+ad_group = Default psiTurk Stroop Example
+psiturk_keywords = memory
+organization_name = Dartmouth College
+browser_exclude_rule = MSIE, mobile, tablet
+
+[Database Parameters]
+database_url = sqlite:///memory-dynamics-1.1.db
+table_name = turkdemo
+
+[Server Parameters]
+host = 0.0.0.0
+port = 22363
+cutoff_time = 120
+timeout = 120
+logfile = server.log
+loglevel = 1
+debug = true
+login_username = examplename
+login_pw = examplepassword
+threads = 1
+secret_key = 'this is my secret key which is hard to guess, i should change this'
+
+[Task Parameters]
+experiment_code_version = 1.1
+num_conds = 1
+num_counters = 1
+
+[Shell Parameters]
+launch_in_sandbox_mode = true
