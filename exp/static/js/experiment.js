@@ -9,17 +9,13 @@ var runExperiment = function(options, conditions) {
   var instructions = {
       type: "instructions",
       pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY</p>" +
-            "<p>In this experiment, you will <strong>watch</strong> a 20-25 minute episode of a TV show and <strong>recall</strong> what happened in as much detail as possible.</p>" +
+            "<p>In this experiment, you will <strong>watch</strong> two ___ minute Khan Academy video about the same topic and <strong>answer</strong> following questions about the topic covered in the videos.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p> When the episode ends, you will see a red microphone icon (<i style='color:red' class='fa fa-microphone'></i>).  This indicates that the computer has started recording.</p>" +
-            "<p>When you see the <i style='color:red' class='fa fa-microphone'></i>, <strong>recall</strong> the episode out loud as fully as you can.</p>" +
+            "<div class='instructions'> <p>Once the first video ends, answer the following questions to the best of your ability.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>Do your best to recount the events of the episode in order, using the characters' names and as much detail as you can remember, but if you realize you skipped something, feel free to go back and describe it.</p>" +
+            "<div class='instructions'> <p>After you finish the first set of questions, you will watch the second video.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>You will have <strong>30 minutes</strong> to recall the episode, but if you feel you can't remember any more, you may stop after <strong>10 minutes</strong> by pressing the spacebar.</p>" +
-            "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>After that, you'll be asked to <strong>predict</strong> what you think will happen in the next episode.</p>" +
-            "<p>When you see a blue microphone icon (<i style='color:blue' class='fa fa-microphone'></i>), you will have <strong>5 minutes</strong> to <strong>predict</strong> what will happen.</p>" +
+            "<div class='instructions'> <p>Once the second video ends, answer the following questions to the best of your ability.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
             "<p><strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>"
