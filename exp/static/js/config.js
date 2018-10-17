@@ -6,6 +6,6 @@
 var psiTurk = new PsiTurk(uniqueId, adServerLoc, mode);
 
 // create empty folder for audio files
-$.post("/createaudiofolder", {
-    "data": uniqueId
-});
+//$.post("/createaudiofolder", {
+//    "data": uniqueId
+//});
