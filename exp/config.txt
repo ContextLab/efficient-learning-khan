@@ -12,7 +12,7 @@ organization_name = Dartmouth College
 browser_exclude_rule = MSIE, mobile, tablet
 
 [Database Parameters]
-database_url = sqlite:///memory-dynamics-1.1.db
+database_url = sqlite:///eff-learn-khan-1.db
 table_name = turkdemo
 
 [Server Parameters]
@@ -29,7 +29,7 @@ threads = 1
 secret_key = 'this is my secret key which is hard to guess, i should change this'
 
 [Task Parameters]
-experiment_code_version = 1.1
+experiment_code_version = 1
 num_conds = 1
 num_counters = 1
 
