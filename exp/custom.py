@@ -35,40 +35,40 @@ custom_code = Blueprint('custom_code', __name__, template_folder='templates', st
 #  serving warm, fresh, & sweet custom, user-provided routes
 #  add them here
 ###########################################################
-@custom_code.route('/createaudiofolder',methods=['POST'])
-def createFolder():
-    print('creating audio folder...')
-    call('mkdir ' + '/data/' + request.form['data'], shell=True)
-    print(request.form['data'])
-    resp = {"folderCreated": "success"}
-    return jsonify(**resp)
-
-@custom_code.route('/save_audio', methods=['POST'])
-def save_audio():
-    print('saving audio...')
-    """ Save an audio file"""
-    try:
-        # get file name
-        filename = request.form['audio-filename']
-
-        # get folder name
-        foldername = request.form['audio-foldername']
-
-        # get audio file
-        wav = request.files
-
-        # file path
-        fname ='/data/' + foldername + "/" + filename
-
-        # write out audio file
-        wav['audio-blob'].save(fname)
-
-        resp = {'message' : "Sucessfully saved audio file: " + fname,
-                'fname' : fname}
-
-        print('audio saved!')
-    except Exception as e:
-        print(e)
-        resp = {"message": "There was an error saving the audio file: " + fname}
-
-    return jsonify(**resp)
+#@custom_code.route('/createaudiofolder',methods=['POST'])
+#def createFolder():
+#    print('creating audio folder...')
+#    call('mkdir ' + '/data/' + request.form['data'], shell=True)
+#    print(request.form['data'])
+#    resp = {"folderCreated": "success"}
+#    return jsonify(**resp)
+#
+#@custom_code.route('/save_audio', methods=['POST'])
+#def save_audio():
+#    print('saving audio...')
+#    """ Save an audio file"""
+#    try:
+#        # get file name
+#        filename = request.form['audio-filename']
+#
+#        # get folder name
+#        foldername = request.form['audio-foldername']
+#
+#        # get audio file
+#        wav = request.files
+#
+#        # file path
+#        fname ='/data/' + foldername + "/" + filename
+#
+#        # write out audio file
+#        wav['audio-blob'].save(fname)
+#
+#        resp = {'message' : "Sucessfully saved audio file: " + fname,
+#                'fname' : fname}
+#
+#        print('audio saved!')
+#    except Exception as e:
+#        print(e)
+#        resp = {"message": "There was an error saving the audio file: " + fname}
+#
+#    return jsonify(**resp)
