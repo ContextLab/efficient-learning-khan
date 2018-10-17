@@ -1,6 +1,6 @@
 [HIT Configuration]
-title = Memory Dynamics
-description = View episodes of TV shows and verbally recall them
+title = Efficient Learning Khan
+description = View Khan Academy videos and complete the following quizzes
 amt_keywords = Psychology, Memory
 lifetime = 24
 us_only = true
