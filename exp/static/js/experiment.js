@@ -45,8 +45,12 @@ var runExperiment = function(options, conditions) {
   exptimeline.push(test_instructions);
 
   // test questions
-  var test2 = {
-
+  var test = {
+      type: 'survey-multi-choice',
+      questions: [
+        {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
+        {prompt: 'Question2', options: ['A','B','C','D'], required: true}
+      ],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
@@ -56,7 +60,7 @@ var runExperiment = function(options, conditions) {
             })
       }
   };
-  exptimeline.push(test2);
+  exptimeline.push(test);
 
   // instructions for next video
   var video2_instructions = {
@@ -91,7 +95,11 @@ var runExperiment = function(options, conditions) {
 
   // recall questions
   var test2 = {
-
+      type: 'survey-multi-choice',
+      questions: [
+        {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
+        {prompt: 'Question2', options: ['A','B','C','D'], required: true}
+      ],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
