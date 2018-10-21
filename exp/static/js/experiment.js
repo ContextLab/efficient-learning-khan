@@ -8,12 +8,14 @@ var video2 = '/static/files/sample_video.mp4'
 var runExperiment = function(options) {
 
   //fullscreen mode
-  exptimeline.push({
+  var fscreen = {
     type: 'fullscreen',
     message: '<p>We’d like you to really focus on this HIT so that we can collect clean data. Please turn off any music (but keep your volume turned on), close any additional open tabs in your browser (or any other open programs), remove any distractions around you (e.g. phone), and make yourself comfortable. When you are ready, please press the following button to switch your browser to fullscreen mode. (Your browser will remain in fullscreen for the duration of the HIT.  If you need to exit the HIT early, you may press ESCAPE (esc) to exit fullscreen mode and return your browser back to normal.</p>',
     button_label: 'Enter fullscreen mode',
     fullscreen_mode: true
-   });
+   };
+
+   exptimeline.push(fscreen)
 
   // opening instructions
   var open_instructions = {
