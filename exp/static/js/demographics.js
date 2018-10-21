@@ -8,7 +8,7 @@ var runDemographics = function(options) {
 
       $('#nextBtn').click(function() {
         $("body").remove();
-        runStim_select(options);
+        runExperiment(options);
       });
     };
   };
