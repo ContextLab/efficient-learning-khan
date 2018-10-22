@@ -2,8 +2,8 @@ var exptimeline = []
 var recall_time = 1800 // 30 minutes
 var predict_time = 300 // 5 minutes
 var exit_time = 600 // 10 minutes
-var video1 = '/static/files/sample_video.mp4'
-var video2 = '/static/files/sample_video.mp4'
+var vidstim1 = '/static/files/sample_video.mp4'
+var vidstim2 = '/static/files/sample_video.mp4'
 
 var runExperiment = function(options) {
 
@@ -41,16 +41,15 @@ var runExperiment = function(options) {
     type: "video",
     height: $(window).height(),
     width: $(window).width(),
-    sources: [video1],
+    sources: [vidstim1],
   };
   exptimeline.push(video);
 
   // test instructions
   var test_instructions = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>When you see the <i style='color:red' class='fa fa-microphone'></i>, recall the episode to the best of your ability.</p>" +
-              "<p>Please remember to speak <strong>clearly</strong>.</p>" +
-              "<p><strong>When you're ready to begin recalling the episode, press the spacebar.</strong></p></div>"
+      pages: ["<div class='instructions'><p>Now you will answer some questions about _____ to the best of your ability.</p>" +
+              "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
   };
@@ -92,14 +91,13 @@ var runExperiment = function(options) {
     width: $(window).width(),
     sources: [video2],
   };
-  exptimeline.push(video2);
+  exptimeline.push(vidstim2);
 
   // recall instructions
   var test2_instructions = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>When you see the <i style='color:red' class='fa fa-microphone'></i>, recall the episode to the best of your ability.</p>" +
-              "<p>Please remember to speak <strong>clearly</strong>.</p>" +
-              "<p><strong>When you're ready to begin recalling the episode, press the spacebar.</strong></p></div>"
+      pages: ["<div class='instructions'><p>Now you will answer some questions about _____ to the best of your ability.</p>" +
+              "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
   };
@@ -110,7 +108,7 @@ var runExperiment = function(options) {
       type: 'survey-multi-choice',
       questions: [
         {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
-        {prompt: 'Question2', options: ['A','B','C','D'], required: true}
+        {prompt: 'Question2?', options: ['A','B','C','D'], required: true}
       ],
         on_finish: function() {
             console.log('Saving recall data...')
