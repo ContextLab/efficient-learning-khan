@@ -25,7 +25,7 @@ var runExperiment = function(options) {
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Once the first video ends, answer the following questions to the best of your ability.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>After you finish the first set of questions, you will watch the second video.</p>" +
+            "<div class='instructions'> <p>After the first set of questions, you will watch the second video.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Once the second video ends, answer the following questions to the best of your ability.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
@@ -35,6 +35,16 @@ var runExperiment = function(options) {
       key_forward: 32
   };
   exptimeline.push(open_instructions);
+
+  // instructions for first video
+  var video1_instructions = {
+      type: "instructions",
+      pages: ["<div class='instructions'><p>You will now watch the first video.</p>" +
+      "<p><strong>When you're ready to begin watching the first video, press the spacebar.</strong></p></div>"
+      ],
+      key_forward: 32
+  };
+  exptimeline.push(video1_instructions);
 
   // video
   var video = {
@@ -48,7 +58,7 @@ var runExperiment = function(options) {
   // test instructions
   var test_instructions = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>Now you will answer some questions about _____ to the best of your ability.</p>" +
+      pages: ["<div class='instructions'><p>Now you will answer some questions about _____. Please, answer the questions to the best of your ability.</p>" +
               "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
@@ -76,9 +86,8 @@ var runExperiment = function(options) {
   // instructions for next video
   var video2_instructions = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>Now, when you see the <i style='color:blue' class='fa fa-microphone'></i>, predict what will happen in the next episode to the best of your ability.</p>" +
-      "<p>Please remember to speak <strong>clearly</strong>.</p>" +
-      "<p><strong>When you're ready to begin predicting, press the spacebar.</strong></p></div>"
+      pages: ["<div class='instructions'><p>You will now watch the second video.</p>" +
+      "<p><strong>When you're ready to begin watching the second video, press the spacebar.</strong></p></div>"
       ],
       key_forward: 32
   };
@@ -89,14 +98,14 @@ var runExperiment = function(options) {
     type: "video",
     height: $(window).height(),
     width: $(window).width(),
-    sources: [video2],
+    sources: [vidstim2],
   };
-  exptimeline.push(vidstim2);
+  exptimeline.push(video2);
 
   // recall instructions
   var test2_instructions = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>Now you will answer some questions about _____ to the best of your ability.</p>" +
+      pages: ["<div class='instructions'><p>Now you will answer some questions about _____. Please, answer the questions to the best of your ability.</p>" +
               "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
@@ -138,7 +147,7 @@ var runExperiment = function(options) {
     on_finish: function() {
       psiTurk.recordTrialData(uniqueId),
       psiTurk.saveData({
-        success: runPostQuestionnaire(options)
+        success: psiTurk.completeHIT()
       })
     }
   })
