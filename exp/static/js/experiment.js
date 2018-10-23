@@ -1,4 +1,4 @@
-var exptimeline = []
+var experimentTimeline = []
 var recall_time = 1800 // 30 minutes
 var predict_time = 300 // 5 minutes
 var exit_time = 600 // 10 minutes
@@ -15,7 +15,7 @@ var runExperiment = function(options) {
     fullscreen_mode: true
    };
 
-   exptimeline.push(fscreen)
+   experimentTimeline.push(fscreen)
 
   // opening instructions
   var open_instructions = {
@@ -34,7 +34,7 @@ var runExperiment = function(options) {
           ],
       key_forward: 32
   };
-  exptimeline.push(open_instructions);
+  experimentTimeline.push(open_instructions);
 
   // instructions for first video
   var video1_instructions = {
@@ -44,7 +44,7 @@ var runExperiment = function(options) {
       ],
       key_forward: 32
   };
-  exptimeline.push(video1_instructions);
+  experimentTimeline.push(video1_instructions);
 
   // video
   var video = {
@@ -53,7 +53,7 @@ var runExperiment = function(options) {
     width: $(window).width(),
     sources: [vidstim1],
   };
-  exptimeline.push(video);
+  experimentTimeline.push(video);
 
   // test instructions
   var test_instructions = {
@@ -63,7 +63,7 @@ var runExperiment = function(options) {
             ],
       key_forward: 32
   };
-  exptimeline.push(test_instructions);
+  experimentTimeline.push(test_instructions);
 
   // test questions
   var test = {
@@ -81,7 +81,7 @@ var runExperiment = function(options) {
             })
       }
   };
-  exptimeline.push(test);
+  experimentTimeline.push(test);
 
   // instructions for next video
   var video2_instructions = {
@@ -91,7 +91,7 @@ var runExperiment = function(options) {
       ],
       key_forward: 32
   };
-  exptimeline.push(video2_instructions);
+  experimentTimeline.push(video2_instructions);
 
   // video
   var video2 = {
@@ -100,7 +100,7 @@ var runExperiment = function(options) {
     width: $(window).width(),
     sources: [vidstim2],
   };
-  exptimeline.push(video2);
+  experimentTimeline.push(video2);
 
   // recall instructions
   var test2_instructions = {
@@ -110,7 +110,7 @@ var runExperiment = function(options) {
             ],
       key_forward: 32
   };
-  exptimeline.push(test2_instructions);
+  experimentTimeline.push(test2_instructions);
 
   // recall questions
   var test2 = {
@@ -128,7 +128,7 @@ var runExperiment = function(options) {
             })
       }
   };
-  exptimeline.push(test2);
+  experimentTimeline.push(test2);
 
 
   // finished message
@@ -139,16 +139,58 @@ var runExperiment = function(options) {
       "<p>Press the spacebar for the post-experiment questionnaire.</div>"],
       key_forward: 32
   };
-  exptimeline.push(finished_message);
+  experimentTimeline.push(finished_message);
 
   // initialize
+//  jsPsych.init({
+  //  timeline: experimentTimeline,
+//    on_finish: function() {
+//      psiTurk.recordTrialData(uniqueId),
+//      psiTurk.saveData({
+//        success: psiTurk.completeHIT()
+//      })
+//    }
+//  })
+
+  /*start experiment*/
   jsPsych.init({
-    timeline: exptimeline,
+    timeline: experimentTimeline,
+    show_progress_bar: false,
+    on_data_update: function(data) {
+          psiTurk.recordTrialData(data)
+            },
     on_finish: function() {
-      psiTurk.recordTrialData(uniqueId),
-      psiTurk.saveData({
-        success: psiTurk.completeHIT()
-      })
-    }
-  })
+        console.log('Saving data...')
+
+        //define functions to use below (modified from https://github.com/NYUCCL/psiTurk/blob/master/psiturk/example/static/js/task.js)
+        var error_message = "<h1>Oops!</h1><p>Something went wrong submitting your HIT. This might happen if you lose your internet connection. Press the button to resubmit.</p><button id='resubmit'>Resubmit</button>";
+
+        prompt_resubmit = function() {
+          document.body.innerHTML = error_message;
+          $("#resubmit").click(resubmit);
+        }
+
+        resubmit = function() {
+          document.body.innerHTML = "<h1>Trying to resubmit...</h1>";
+          reprompt = setTimeout(prompt_resubmit, 10000);
+          psiTurk.saveData({
+            success: function() {
+                clearInterval(reprompt);
+                        psiTurk.completeHIT() // when finished saving, compute bonus, then quit
+            },
+            error: prompt_resubmit //if error saving data, try again
+          });
+        };
+
+          psiTurk.saveData({
+              success: function() {
+                  console.log('Data saved!')
+                  psiTurk.completeHIT()
+              },
+              error: prompt_resubmit}) //if error saving data, try again
+      //}
+    },
+});
+
+
 };
