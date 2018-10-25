@@ -21,30 +21,44 @@
     <body>
         <div id="container-consent">
             <div id="consent">
-                <h1>Verify Consent</h1>
-                <hr />
-                <div class="legal well">
-                    <p>
-                    Experimenter: Please verify that the subject has signed the consent form.
-                    </p>
+              <h1>We need your consent to proceed.</h1>
+              <hr>
+              <div class="legal well">
+                  <p>
+                      You have been invited to take part in a research study investigating fitness and cognition.
+                  </p>
+                  <centering>
+                      <h3><b><u>CONSENT TO PARTICIPATE IN RESEARCH</u></b></h3>
+                      <p>Dartmouth College</p>
+                      <p>Study Title: TITLE HERE </p>
+                      <p>Principal Investigator: Jeremy Manning</p>
+                  </centering>
+                  <br />
 
-                </div>
+                  <p><b><u>Introduction:</u></b> You are being asked to take part in a <u>research</u> study.  Taking part in research is <u>voluntary</u>.  You are being asked to take part in this study because you are a healthy adult.</p>
+                  <br />
+                  <p>[paste in your approved consent form here!]</p>
+                  <button type="button" class="btn btn-default btn-sm" onClick="window.print();">
+                  <span class="glyphicon glyphicon-print"></span> Print a copy of this
+                  </button>
+              </div>
 
-                <hr />
-                <h4>Has the subject signed the consent form?</h4>
-                <br />
+              <hr>
+              <h4><b><u>CONSENT</u></b></h4>
+              <p>I have read the above information and agree to take part in this study.</p>
+              <br>
 
-                <center>
-                    <button type="button" class="btn btn-primary btn-lg" onClick="window.location='/exp?hitId={{ hitid }}&assignmentId={{ assignmentid }}&workerId={{ workerid }}'">
-                    <span class="glyphicon glyphicon-ok"></span> Yes, they have signed.
-                    </button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-danger btn-lg" onClick="onexit()">
-                    <span class="glyphicon glyphicon-ban-circle"></span> No, quit the experiment.
-                    </button>
-                </center>
+              <center>
+                  <button type="button" class="btn btn-primary btn-lg" onClick="window.location='/exp?hitId={{ hitid }}&assignmentId={{ assignmentid }}&workerId={{ workerid }}'">
+                  <span class="glyphicon glyphicon-ok"></span> I agree
+                  </button>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button type="button" class="btn btn-danger btn-lg" onClick="onexit()">
+                  <span class="glyphicon glyphicon-ban-circle"></span> No thanks, I do not want to do this HIT
+                  </button>
+              </center>
 
             </div>
         </div>
