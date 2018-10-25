@@ -60,30 +60,21 @@ var runExperiment = function(options) {
   var open_instructions = {
       type: "instructions",
       pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY</p>" +
-            "<p>In this experiment, you will <strong>watch</strong> two ___ minute Khan Academy video about the same topic and <strong>answer</strong> following questions about the topic covered in the videos.</p>" +
+            "<p>In this experiment, you will watch informational videos and answer questions about ______.</p>" +
+            "<p>In total, you will be asked <strong>three</strong> sets of <strong>ten</strong> questions and you will watch <strong>two</strong> videos.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>Once the first video ends, answer the following questions to the best of your ability.</p>" +
+            "<div class='instructions'> <p>Please, pay attention to the informational videos and try to learn about _____</p>" +
+            "<p>Then, try to use the knowledge you learned from the videos to answer the following questions.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>After the first set of questions, you will watch the second video.</p>" +
-            "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>Once the second video ends, answer the following questions to the best of your ability.</p>" +
+            "<div class='instructions'> <p>You will start the experiment by answering a set of ten questions about _____.</p>" +
+            "<p>Even though you will not have watched an informational video yet, try to answer the questions to the best of your ability.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
-            "<p><strong>When you're ready to begin the video, press the spacebar.</strong></p></div>"
+            "<p><strong>When you're ready to begin the first set of questions, press the spacebar.</strong></p></div>"
           ],
       key_forward: 32
   };
   experimentTimeline.push(open_instructions);
-
-  // test instructions
-  var test_instructions = {
-      type: "instructions",
-      pages: ["<div class='instructions'><p>Now you will answer some questions about _____. Please, answer the questions to the best of your ability.</p>" +
-              "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
-            ],
-      key_forward: 32
-  };
-  experimentTimeline.push(test_instructions);
 
   // test questions
   var test = {
@@ -120,17 +111,17 @@ var runExperiment = function(options) {
   experimentTimeline.push(video);
 
   // test instructions
-  var test_instructions = {
+  var test2_instructions = {
       type: "instructions",
       pages: ["<div class='instructions'><p>Now you will answer some questions about _____. Please, answer the questions to the best of your ability.</p>" +
               "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
   };
-  experimentTimeline.push(test_instructions);
+  experimentTimeline.push(test2_instructions);
 
   // test questions
-  var test = {
+  var test2 = {
       type: 'survey-multi-choice',
       questions: qset2,
         on_finish: function() {
@@ -142,7 +133,7 @@ var runExperiment = function(options) {
             })
       }
   };
-  experimentTimeline.push(test);
+  experimentTimeline.push(test2);
 
   // instructions for next video
   var video2_instructions = {
@@ -164,17 +155,17 @@ var runExperiment = function(options) {
   experimentTimeline.push(video2);
 
   // recall instructions
-  var test2_instructions = {
+  var test3_instructions = {
       type: "instructions",
       pages: ["<div class='instructions'><p>Now you will answer some questions about _____. Please, answer the questions to the best of your ability.</p>" +
               "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
   };
-  experimentTimeline.push(test2_instructions);
+  experimentTimeline.push(test3_instructions);
 
   // recall questions
-  var test2 = {
+  var test3 = {
       type: 'survey-multi-choice',
       questions: qset3,
         on_finish: function() {
@@ -186,7 +177,7 @@ var runExperiment = function(options) {
             })
       }
   };
-  experimentTimeline.push(test2);
+  experimentTimeline.push(test3);
 
 
   // finished message
