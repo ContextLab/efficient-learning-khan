@@ -1,9 +1,48 @@
 var experimentTimeline = []
-var recall_time = 1800 // 30 minutes
-var predict_time = 300 // 5 minutes
-var exit_time = 600 // 10 minutes
+
+// video info
 var vidstim1 = '/static/files/sample_video.mp4'
 var vidstim2 = '/static/files/sample_video.mp4'
+
+// question info
+var qset1 = [
+  {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question2?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question3?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question4?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question5?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question6?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question7?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question8?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question9?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
+]
+
+var qset2 = [
+  {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question2?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question3?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question4?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question5?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question6?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question7?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question8?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question9?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
+]
+
+var qset3 = [
+  {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question2?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question3?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question4?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question5?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question6?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question7?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question8?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question9?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
+  ]
 
 var runExperiment = function(options) {
 
@@ -35,6 +74,31 @@ var runExperiment = function(options) {
       key_forward: 32
   };
   experimentTimeline.push(open_instructions);
+
+  // test instructions
+  var test_instructions = {
+      type: "instructions",
+      pages: ["<div class='instructions'><p>Now you will answer some questions about _____. Please, answer the questions to the best of your ability.</p>" +
+              "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
+            ],
+      key_forward: 32
+  };
+  experimentTimeline.push(test_instructions);
+
+  // test questions
+  var test = {
+      type: 'survey-multi-choice',
+      questions: qset1,
+        on_finish: function() {
+            console.log('Saving recall data...')
+            psiTurk.saveData({
+                success: function() {
+                    console.log('Data saved!')
+                }
+            })
+      }
+  };
+  experimentTimeline.push(test);
 
   // instructions for first video
   var video1_instructions = {
@@ -68,10 +132,7 @@ var runExperiment = function(options) {
   // test questions
   var test = {
       type: 'survey-multi-choice',
-      questions: [
-        {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
-        {prompt: 'Question2', options: ['A','B','C','D'], required: true}
-      ],
+      questions: qset2,
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
@@ -115,10 +176,7 @@ var runExperiment = function(options) {
   // recall questions
   var test2 = {
       type: 'survey-multi-choice',
-      questions: [
-        {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
-        {prompt: 'Question2?', options: ['A','B','C','D'], required: true}
-      ],
+      questions: qset3,
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
