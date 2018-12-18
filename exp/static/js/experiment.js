@@ -63,11 +63,12 @@ var runExperiment = function(options) {
             "<p>In this experiment, you will watch informational videos and answer questions about ______.</p>" +
             "<p>In total, you will be asked <strong>three</strong> sets of <strong>ten</strong> questions and you will watch <strong>two</strong> videos.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>Please, pay attention to the informational videos and try to learn about _____</p>" +
-            "<p>Then, try to use the knowledge you learned from the videos to answer the following questions.</p>" +
-            "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>You will start the experiment by answering a set of ten questions about _____.</p>" +
             "<p>Even though you will not have watched an informational video yet, try to answer the questions to the best of your ability.</p>" +
+            "<p>Press the spacebar to continue.</p></div>",
+            "<div class='instructions'> <p>After you anwer the first set of questions, you will watch the informational videos and answer some more questions after each video.</p>" +
+            "<p>Please, pay attention to the informational videos and try to learn about _____.</p>" +
+            "<p>Then, try to use the knowledge you learned from the videos to answer the following questions.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
             "<p><strong>When you're ready to begin the first set of questions, press the spacebar.</strong></p></div>"
