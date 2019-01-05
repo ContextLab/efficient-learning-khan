@@ -5,18 +5,17 @@ var vidstim1 = '/static/files/sample_video.mp4'
 var vidstim2 = '/static/files/sample_video.mp4'
 
 // question info
-var qset1 = [
-  {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question2?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question3?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question4?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question5?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question6?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question7?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question8?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question9?', options: ['A','B','C','D'], required: true},
-  {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
-]
+var qset1_file = '/static/files/qset1.csv'
+  Papa.parse(qset1_file, {
+    delimiter: ',',
+    download: true,
+  	complete: function(results) {
+      qset1 = results.data;
+  		console.log("Finished:", qset1);
+	}
+});
+
+
 
 var qset2 = [
   {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
@@ -44,13 +43,9 @@ var qset3 = [
   {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
   ]
 
-  //var set_conditions = functions(){
-    var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
-    var rand_qset2 = jsPsych.randomization.repeat(qset1,2);
-    var rand_qset3 = jsPsych.randomization.repeat(qset1,3);
-    var conditions = {rand_qset1, rand_qset2, rand_qset3};
-    //return conditions
-  //}
+//  var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
+  var rand_qset2 = jsPsych.randomization.repeat(qset2,2);
+  var rand_qset3 = jsPsych.randomization.repeat(qset3,3);
 
 var runExperiment = function(options) {
 
