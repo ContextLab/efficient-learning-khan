@@ -13,7 +13,6 @@ var runExperiment = function(options) {
     button_label: 'Enter fullscreen mode',
     fullscreen_mode: true
    };
-
    experimentTimeline.push(fscreen)
 
   // opening instructions
@@ -144,23 +143,14 @@ var runExperiment = function(options) {
   // finished message
   var finished_message = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>You're almost done!</p>" +
-      "<p>Please go get your experimter.</p>" +
-      "<p>Press the spacebar for the post-experiment questionnaire.</div>"],
+      pages: ["<div class='instructions'><p>You're done!</p>" +
+      "<p>DEBRIEFING.</p>" +
+      "<p>Press the spacebar to complete the experiment.</div>"],
       key_forward: 32
   };
   experimentTimeline.push(finished_message);
 
-  // initialize
-//  jsPsych.init({
-  //  timeline: experimentTimeline,
-//    on_finish: function() {
-//      psiTurk.recordTrialData(uniqueId),
-//      psiTurk.saveData({
-//        success: psiTurk.completeHIT()
-//      })
-//    }
-//  })
+
 
   /*start experiment*/
   jsPsych.init({
