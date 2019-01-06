@@ -4,18 +4,29 @@ var experimentTimeline = []
 var vidstim1 = '/static/files/sample_video.mp4'
 var vidstim2 = '/static/files/sample_video.mp4'
 
-// question info
+// load question info
 var qset1_file = '/static/files/qset1.csv'
-  Papa.parse(qset1_file, {
+var qset1;
+var parseFile = function(file, callBack){
+  Papa.parse(file, {
     delimiter: ',',
     download: true,
+    header: true,
   	complete: function(results) {
-      qset1 = results.data;
-  		console.log("Finished:", qset1);
-	}
-});
+      callBack(results.data);
+  		console.log("Finished:", results.data);
+  	}
+  });
+}
 
+var print = function(data){
+  var qset1 = data;
+  console.log(qset1)
+}
 
+parseFile(qset1_file, print)
+//var qs = qset1[1,4]
+//var qset1 = results.data;
 
 var qset2 = [
   {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
@@ -44,8 +55,8 @@ var qset3 = [
   ]
 
 //  var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
-  var rand_qset2 = jsPsych.randomization.repeat(qset2,2);
-  var rand_qset3 = jsPsych.randomization.repeat(qset3,3);
+  var rand_qset2 = jsPsych.randomization.repeat(qset2,1);
+  var rand_qset3 = jsPsych.randomization.repeat(qset3,1);
 
 var runExperiment = function(options) {
 
