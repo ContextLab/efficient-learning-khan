@@ -7,7 +7,7 @@ var vidstim2 = '/static/files/sample_video.mp4'
 // load question info
 var qset1_file = '/static/files/qset1.csv'
 var qset1;
-var parseFile = function(file, callBack){
+var loadQs = function(file, callBack){
   Papa.parse(file, {
     delimiter: ',',
     download: true,
@@ -19,12 +19,12 @@ var parseFile = function(file, callBack){
   });
 }
 
-var print = function(data){
+var prepareQs = function(data){
   var qset1 = data;
   console.log(qset1)
 }
 
-parseFile(qset1_file, print)
+loadQs(qset1_file, print)
 //var qs = qset1[1,4]
 //var qset1 = results.data;
 
