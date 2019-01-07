@@ -51,8 +51,8 @@ var qset3 = [
   {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
   ]
 
-//  var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
-  var rand_qset2 = jsPsych.randomization.repeat(qset2,1);
+  var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
+  var rand_qset2 = jsPsych.randomization.shuffle(qset2);
   var rand_qset3 = jsPsych.randomization.repeat(qset3,1);
 
 var runExperiment = function(options) {
@@ -90,7 +90,7 @@ var runExperiment = function(options) {
   // test questions
   var test = {
       type: 'survey-multi-choice',
-      questions: rand_qset1,
+      questions: rand_qset2,
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
