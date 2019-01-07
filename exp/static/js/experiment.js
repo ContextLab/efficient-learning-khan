@@ -6,25 +6,22 @@ var vidstim2 = '/static/files/sample_video.mp4'
 
 // load question info
 var qset1_file = '/static/files/qset1.csv'
-var qset1;
-var loadQs = function(file, callBack){
+var loadQs = function(file){
+  var data;
   Papa.parse(file, {
     delimiter: ',',
     download: true,
     header: true,
   	complete: function(results) {
-      callBack(results.data);
-  		console.log("Finished:", results.data);
+      var data = results.data;
+  		console.log("Finished:", data);
   	}
   });
+  return {qs: data}
 }
 
-var prepareQs = function(data){
-  var qset1 = data;
-  console.log(qset1)
-}
-
-loadQs(qset1_file, print)
+var qset1 = loadQs(qset1_file)
+console.log(qset1.qs)
 //var qs = qset1[1,4]
 //var qset1 = results.data;
 
