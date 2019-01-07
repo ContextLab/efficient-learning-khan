@@ -51,6 +51,13 @@ var qset3 = [
   {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
   ]
 
+var i;
+for (i = 0; i < qset2.length; i++) {
+  qset2[i].options = jsPsych.randomization.shuffle(qset2[i].options)
+}
+
+console.log(qset2[2].options)
+
   var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
   var rand_qset2 = jsPsych.randomization.shuffle(qset2);
   var rand_qset3 = jsPsych.randomization.repeat(qset3,1);
