@@ -93,7 +93,7 @@ var runExperiment = function(options) {
   // test questions
   var test = {
       type: 'survey-multi-choice',
-      questions: rand_qset2,
+      questions: rand_qsets[0],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
@@ -137,7 +137,7 @@ var runExperiment = function(options) {
   // test questions
   var test2 = {
       type: 'survey-multi-choice',
-      questions: qset2,
+      questions: rand_qsets[1],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
@@ -181,7 +181,7 @@ var runExperiment = function(options) {
   // recall questions
   var test3 = {
       type: 'survey-multi-choice',
-      questions: qset3,
+      questions: rand_qsets[2],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
