@@ -5,25 +5,18 @@ var vidstim1 = '/static/files/sample_video.mp4'
 var vidstim2 = '/static/files/sample_video.mp4'
 
 // load question info
-var qset1_file = '/static/files/qset1.csv'
-var loadQs = function(file){
-  var data;
-  Papa.parse(file, {
-    delimiter: ',',
-    download: true,
-    header: true,
-  	complete: function(results) {
-      var data = results.data;
-  		console.log("Finished:", data);
-  	}
-  });
-  return {qs: data}
-}
-
-var qset1 = loadQs(qset1_file)
-console.log(qset1.qs)
-//var qs = qset1[1,4]
-//var qset1 = results.data;
+var qset1 = [
+  {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question2?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question3?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question4?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question5?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question6?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question7?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question8?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question9?', options: ['A','B','C','D'], required: true},
+  {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
+]
 
 var qset2 = [
   {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
@@ -51,8 +44,9 @@ var qset3 = [
   {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
   ]
 
-var qsets = [qset2, qset3];
+var qsets = [qset1, qset2, qset3];
 
+// loop through questions and answers and randomize
 var rand_qsets = new Object();
 var i; var j;
 for (i = 0; i < qsets.length; i++) {
@@ -60,15 +54,10 @@ for (i = 0; i < qsets.length; i++) {
   for (j = 0; j < temp_qs.length; j++) {
     temp_qs[j].options = jsPsych.randomization.shuffle(temp_qs[j].options)
   }
-  rand_qsets[i] = temp_qs;
+  rand_qsets[i] = jsPsych.randomization.shuffle(temp_qs);
 }
 
-console.log(rand_qsets[1])
-
-var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
-var rand_qset2 = jsPsych.randomization.shuffle(qset2);
-var rand_qset3 = jsPsych.randomization.repeat(qset3,1);
-
+// run experiment
 var runExperiment = function(options) {
 
   //fullscreen mode
