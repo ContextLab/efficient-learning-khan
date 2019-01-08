@@ -51,16 +51,23 @@ var qset3 = [
   {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
   ]
 
-var i;
-for (i = 0; i < qset2.length; i++) {
-  qset2[i].options = jsPsych.randomization.shuffle(qset2[i].options)
+var qsets = [qset2, qset3];
+
+var rand_qsets = new Object();
+var i; var j;
+for (i = 0; i < qsets.length; i++) {
+  var temp_qs = qsets[i];
+  for (j = 0; j < temp_qs.length; j++) {
+    temp_qs[j].options = jsPsych.randomization.shuffle(temp_qs[j].options)
+  }
+  rand_qsets[i] = temp_qs;
 }
 
-console.log(qset2[2].options)
+console.log(rand_qsets[1])
 
-  var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
-  var rand_qset2 = jsPsych.randomization.shuffle(qset2);
-  var rand_qset3 = jsPsych.randomization.repeat(qset3,1);
+var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
+var rand_qset2 = jsPsych.randomization.shuffle(qset2);
+var rand_qset3 = jsPsych.randomization.repeat(qset3,1);
 
 var runExperiment = function(options) {
 
