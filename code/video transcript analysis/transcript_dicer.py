@@ -4,6 +4,7 @@
 
 # reads "fourforcestrans" and "birthofstarstrans" and outputs, in order,
 # all the clusters of 15 consecutive lines within the text
+# test
 
 # performs the desired analysis on a given file
 def dicefile(filename):
