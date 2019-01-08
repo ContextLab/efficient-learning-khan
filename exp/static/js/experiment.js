@@ -4,7 +4,7 @@ var experimentTimeline = []
 var vidstim1 = '/static/files/sample_video.mp4'
 var vidstim2 = '/static/files/sample_video.mp4'
 
-// question info
+// load question info
 var qset1 = [
   {prompt: 'Question1?', options: ['A','B','C','D'], required: true},
   {prompt: 'Question2?', options: ['A','B','C','D'], required: true},
@@ -44,14 +44,20 @@ var qset3 = [
   {prompt: 'Question10?', options: ['A','B','C','D'], required: true}
   ]
 
-  //var set_conditions = functions(){
-    var rand_qset1 = jsPsych.randomization.repeat(qset1,1);
-    var rand_qset2 = jsPsych.randomization.repeat(qset1,2);
-    var rand_qset3 = jsPsych.randomization.repeat(qset1,3);
-    var conditions = {rand_qset1, rand_qset2, rand_qset3};
-    //return conditions
-  //}
+var qsets = [qset1, qset2, qset3];
 
+// loop through questions and answers and randomize
+var rand_qsets = new Object();
+var i; var j;
+for (i = 0; i < qsets.length; i++) {
+  var temp_qs = qsets[i];
+  for (j = 0; j < temp_qs.length; j++) {
+    temp_qs[j].options = jsPsych.randomization.shuffle(temp_qs[j].options)
+  }
+  rand_qsets[i] = jsPsych.randomization.shuffle(temp_qs);
+}
+
+// run experiment
 var runExperiment = function(options) {
 
   //fullscreen mode
@@ -87,7 +93,7 @@ var runExperiment = function(options) {
   // test questions
   var test = {
       type: 'survey-multi-choice',
-      questions: rand_qset1,
+      questions: rand_qsets[0],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
@@ -131,7 +137,7 @@ var runExperiment = function(options) {
   // test questions
   var test2 = {
       type: 'survey-multi-choice',
-      questions: qset2,
+      questions: rand_qsets[1],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
@@ -175,7 +181,7 @@ var runExperiment = function(options) {
   // recall questions
   var test3 = {
       type: 'survey-multi-choice',
-      questions: qset3,
+      questions: rand_qsets[2],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
