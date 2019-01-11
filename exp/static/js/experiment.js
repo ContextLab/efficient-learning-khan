@@ -336,7 +336,7 @@ var runExperiment = function(options) {
   // recall questions
   var test3 = {
       type: 'survey-multi-choice',
-      questions: rand_qsets[1],
+      questions: rand_qsets[2],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
