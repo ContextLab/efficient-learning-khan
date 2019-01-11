@@ -228,14 +228,14 @@ var runExperiment = function(options) {
   var open_instructions = {
       type: "instructions",
       pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY</p>" +
-            "<p>In this experiment, you will watch informational videos and answer questions about ______.</p>" +
+            "<p>In this experiment, you will watch informational videos and answer questions about Cosmology and Astronomy.</p>" +
             "<p>In total, you will be asked <strong>three</strong> sets of <strong>ten</strong> questions and you will watch <strong>two</strong> videos.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>You will start the experiment by answering a set of ten questions about _____.</p>" +
+            "<div class='instructions'> <p>You will start the experiment by answering a set of ten questions about Cosmology and Astronomy.</p>" +
             "<p>Even though you will not have watched an informational video yet, try to answer the questions to the best of your ability.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>After you anwer the first set of questions, you will watch the informational videos and answer some more questions after each video.</p>" +
-            "<p>Please, pay attention to the informational videos and try to learn about _____.</p>" +
+            "<p>Please, pay attention to the informational videos and try to learn about Cosmology and Astronomy.</p>" +
             "<p>Then, try to use the knowledge you learned from the videos to answer the following questions.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
@@ -282,7 +282,7 @@ var runExperiment = function(options) {
   // test instructions
   var test2_instructions = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>Now you will answer some questions about _____. Please, answer the questions to the best of your ability.</p>" +
+      pages: ["<div class='instructions'><p>Now you will answer some questions about Cosmology and Astronomy. Please, answer the questions to the best of your ability.</p>" +
               "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
@@ -326,7 +326,7 @@ var runExperiment = function(options) {
   // recall instructions
   var test3_instructions = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>Now you will answer some questions about _____. Please, answer the questions to the best of your ability.</p>" +
+      pages: ["<div class='instructions'><p>Now you will answer some questions about Cosmology and Astronomy. Please, answer the questions to the best of your ability.</p>" +
               "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
