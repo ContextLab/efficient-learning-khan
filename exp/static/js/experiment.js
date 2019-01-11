@@ -203,14 +203,14 @@ for (i = 0; i < qsets.length; i++) {
 }
 
 var final_qsets = new Object();
-final_qsets[0] = [rand_qsets[0][0],rand_qsets[0][1],rand_qsets[0][2],rand_qsets[0][3],rand_qsets[0][4],
-                  rand_qsets[1][0],rand_qsets[1][1],rand_qsets[1][2],rand_qsets[1][3],rand_qsets[1][4]]
+final_qsets[0] = jsPsych.randomization.shuffle([rand_qsets[0][0],rand_qsets[0][1],rand_qsets[0][2],rand_qsets[0][3],rand_qsets[0][4],
+                                                rand_qsets[1][0],rand_qsets[1][1],rand_qsets[1][2],rand_qsets[1][3],rand_qsets[1][4]])
 
-final_qsets[1] = [rand_qsets[0][5],rand_qsets[0][6],rand_qsets[0][7],rand_qsets[0][8],rand_qsets[0][9],
-                  rand_qsets[1][5],rand_qsets[1][6],rand_qsets[1][7],rand_qsets[1][8],rand_qsets[1][9]]
+final_qsets[1] = jsPsych.randomization.shuffle([rand_qsets[0][5],rand_qsets[0][6],rand_qsets[0][7],rand_qsets[0][8],rand_qsets[0][9],
+                                                rand_qsets[1][5],rand_qsets[1][6],rand_qsets[1][7],rand_qsets[1][8],rand_qsets[1][9]])
 
-final_qsets[1] = [rand_qsets[0][10],rand_qsets[0][11],rand_qsets[0][12],rand_qsets[0][13],rand_qsets[0][14],
-                  rand_qsets[1][10],rand_qsets[1][11],rand_qsets[1][12],rand_qsets[1][13],rand_qsets[1][14]]
+final_qsets[1] = jsPsych.randomization.shuffle([rand_qsets[0][10],rand_qsets[0][11],rand_qsets[0][12],rand_qsets[0][13],rand_qsets[0][14],
+                                                rand_qsets[1][10],rand_qsets[1][11],rand_qsets[1][12],rand_qsets[1][13],rand_qsets[1][14]])
 
 // run experiment
 var runExperiment = function(options) {
