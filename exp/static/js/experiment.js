@@ -209,8 +209,11 @@ final_qsets[0] = jsPsych.randomization.shuffle([rand_qsets[0][0],rand_qsets[0][1
 final_qsets[1] = jsPsych.randomization.shuffle([rand_qsets[0][5],rand_qsets[0][6],rand_qsets[0][7],rand_qsets[0][8],rand_qsets[0][9],
                                                 rand_qsets[1][5],rand_qsets[1][6],rand_qsets[1][7],rand_qsets[1][8],rand_qsets[1][9]])
 
-final_qsets[1] = jsPsych.randomization.shuffle([rand_qsets[0][10],rand_qsets[0][11],rand_qsets[0][12],rand_qsets[0][13],rand_qsets[0][14],
+final_qsets[2] = jsPsych.randomization.shuffle([rand_qsets[0][10],rand_qsets[0][11],rand_qsets[0][12],rand_qsets[0][13],rand_qsets[0][14],
                                                 rand_qsets[1][10],rand_qsets[1][11],rand_qsets[1][12],rand_qsets[1][13],rand_qsets[1][14]])
+
+//let test = final_qsets[1];
+//console.log(final_qsets[1].splice(1,1))
 
 // run experiment
 var runExperiment = function(options) {
@@ -336,7 +339,7 @@ var runExperiment = function(options) {
   // recall questions
   var test3 = {
       type: 'survey-multi-choice',
-      questions: rand_qsets[2],
+      questions: final_qsets[2],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
