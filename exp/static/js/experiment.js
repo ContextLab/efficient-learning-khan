@@ -293,7 +293,8 @@ var runExperiment = function(options) {
       timing_response: 17000,
       response_ends_trial: false
     };
-  experimentTimeline.push(video_test);
+    
+  experimentTimeline.push(video);
 
   // test instructions
   var test2_instructions = {
