@@ -1,8 +1,11 @@
 var experimentTimeline = []
 
-// video info
-var vidstim1 = '/static/files/sample_video.mp4'
+// debug video info
+//var vidstim1 = '/static/files/sample_video.mp4'
 var vidstim2 = '/static/files/sample_video.mp4'
+
+// video info
+var vidstim1 = '<video src="https://www.youtube.com/embed/HG17TsgV_qI" autoplay></video>'
 
 // load question info
 var qset1 = [
@@ -253,6 +256,7 @@ var runExperiment = function(options) {
       type: 'survey-multi-choice',
       questions: final_qsets[0],
         on_finish: function() {
+            jsPsych.data.displayData();
             console.log('Saving recall data...')
             psiTurk.saveData({
                 success: function() {
@@ -280,7 +284,16 @@ var runExperiment = function(options) {
     width: $(window).width(),
     sources: [vidstim1],
   };
-  experimentTimeline.push(video);
+
+  var video_test = {
+      type: "single-stim",
+      stimuli: [vidstim1],
+      is_html: true,
+      choices: [],
+      timing_response: 17000,
+      response_ends_trial: false
+    };
+  experimentTimeline.push(video_test);
 
   // test instructions
   var test2_instructions = {
@@ -295,7 +308,7 @@ var runExperiment = function(options) {
   // test questions
   var test2 = {
       type: 'survey-multi-choice',
-      questions: rand_qsets[1],
+      questions: final_qsets[1],
         on_finish: function() {
             console.log('Saving recall data...')
             psiTurk.saveData({
