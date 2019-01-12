@@ -256,8 +256,8 @@ var runExperiment = function(options) {
       type: 'survey-multi-choice',
       questions: final_qsets[0],
         on_finish: function() {
-            jsPsych.data.displayData();
             console.log('Saving recall data...')
+            psiTurk.recordTrialData(final_qsets[0])
             psiTurk.saveData({
                 success: function() {
                     console.log('Data saved!')
@@ -311,6 +311,7 @@ var runExperiment = function(options) {
       questions: final_qsets[1],
         on_finish: function() {
             console.log('Saving recall data...')
+            psiTurk.recordTrialData(final_qsets[1])
             psiTurk.saveData({
                 success: function() {
                     console.log('Data saved!')
@@ -354,6 +355,7 @@ var runExperiment = function(options) {
       type: 'survey-multi-choice',
       questions: final_qsets[2],
         on_finish: function() {
+            psiTurk.recordTrialData(final_qsets[2])
             console.log('Saving recall data...')
             psiTurk.saveData({
                 success: function() {
