@@ -1,11 +1,11 @@
 var experimentTimeline = []
 
 // debug video info
-//var vidstim1 = '/static/files/sample_video.mp4'
+var vidstim1 = '/static/files/sample_video.mp4'
 var vidstim2 = '/static/files/sample_video.mp4'
 
 // video info
-var vidstim1 = '<video src="https://www.youtube.com/embed/HG17TsgV_qI" autoplay></video>'
+//var vidstim1 = '<video src="https://www.youtube.com/embed/HG17TsgV_qI" autoplay></video>'
 
 // load question info
 var qset1 = [
@@ -293,7 +293,7 @@ var runExperiment = function(options) {
       timing_response: 17000,
       response_ends_trial: false
     };
-    
+
   experimentTimeline.push(video);
 
   // test instructions
