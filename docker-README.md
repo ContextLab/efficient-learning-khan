@@ -3,7 +3,7 @@
 
 # to build and start for the first time:
 #   with docker running:
-#   from enclosing dir: `docker build -t efficientlearnkhan:latest -f efficient-learning-khan/Dockerfile .`
+#   from enclosing dir: `docker build -t efficientlearnkhan:latest -f Dockerfile .`
 #   from eclosing dir: `docker run -it -p 22363:22363 --mount type=bind,"source=$(pwd)/data",target=/data --name ELK efficientlearnkhan`
 
 # to start subsequent times:
