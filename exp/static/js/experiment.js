@@ -292,7 +292,7 @@ var runExperiment = function(options) {
     sources: [vidstim1],
     };
 
-  experimentTimeline.push(video_test);
+  experimentTimeline.push(video);
 
   // test instructions
   var test2_instructions = {
