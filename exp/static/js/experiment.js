@@ -1,9 +1,9 @@
 var experimentTimeline = []
 
 // debug video info
-var vidstim1 = '/static/files/sample_video.mp4'
+//var vidstim1 = '/static/files/sample_video.mp4'
 var vidstim2 = '/static/files/sample_video.mp4'
-
+var vidstim1 = 'https://www.youtube.com/embed/FEF6PxWOvsk'
 // video info
 //var vidstim1 = '<video src="https://www.youtube.com/embed/HG17TsgV_qI" autoplay></video>'
 
@@ -286,15 +286,13 @@ var runExperiment = function(options) {
   };
 
   var video_test = {
-      type: "single-stim",
-      stimuli: [vidstim1],
-      is_html: true,
-      choices: [],
-      timing_response: 17000,
-      response_ends_trial: false
+    type: "url-video",
+    height: $(window).height(),
+    width: $(window).width(),
+    sources: [vidstim1],
     };
 
-  experimentTimeline.push(video);
+  experimentTimeline.push(video_test);
 
   // test instructions
   var test2_instructions = {
