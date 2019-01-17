@@ -36,9 +36,9 @@ def parsedata(filename, startingline):  # the first line of the file is line 0
 
     return (qsets, asets)
 
-# read the file of questions and return ordered lists of the questions and their answers
+# read the file of questions and return dictionary of the form {question -> (question number, answer)}
 def readquestions(filename):
-    questiondict = {}  # dictionary of the form {question -> (question number, answer)}
+    questiondict = {}
 
     infile = open(filename, "r")
     lines = infile.read().split("\n")
@@ -51,35 +51,24 @@ def readquestions(filename):
 
     return questiondict
 
+# output to the desired file
 def grade(output, questiondict, qsets, asets):
     outfile = open(output, "w")
     for set in range(3):
         outfile.write("QUESTION SET " + str(1 + set) + "\n")
         for question in range(10):
-            if qsets[set][question] in questiondict:
+            if qsets[set][question] in questiondict:    # check if we have the question
                 outfile.write("q" + str(questiondict[qsets[set][question]][0]) + ", ")
-                if asets[set][question] == questiondict[qsets[set][question]][1]:
+                if asets[set][question] == questiondict[qsets[set][question]][1]:   # check if the answer is right
                     outfile.write("right")
                 else:
                     outfile.write("wrong")
                 outfile.write("\n")
             else:
                 outfile.write("error" + "/n")
-
     outfile.close()
 
 (qsets, asets) = parsedata("testdata", 0)
 questiondict = readquestions("testvideoquestions")
 
-# for key in questiondict:
-#     print(key)
-#     print()
-#
-# print("-------------------------------------------")
-#
-# for question in range(10):
-#     print(qsets[0][question])
-#     print(qsets[0][question] in questiondict)
-#     print()
-#
 grade("testoutput", questiondict, qsets, asets)
