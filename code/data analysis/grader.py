@@ -38,29 +38,48 @@ def parsedata(filename, startingline):  # the first line of the file is line 0
 
 # read the file of questions and return ordered lists of the questions and their answers
 def readquestions(filename):
-    orderedQs = []  # ordered questions, from 1-30 (where 16-30 correspond to video 2)
-    orderedAs = []  # ordered answers(see above)
+    questiondict = {}  # dictionary of the form {question -> (question number, answer)}
 
     infile = open(filename, "r")
     lines = infile.read().split("\n")
 
     for qv1 in range(15):   # for each question from video 1
-        orderedQs.append(lines[6 + 8*qv1].strip(" "))
-        orderedAs.append(lines[7 + 8*qv1].strip(" "))
+        questiondict[lines[6 + 8*qv1].strip(" ")] = (qv1 + 1, lines[7 + 8*qv1].strip(" "))
 
     for qv2 in range(15):   # for each question from video 2
-        orderedQs.append(lines[129 + 8*qv2].strip(" "))
-        orderedAs.append(lines[130 + 8*qv2].strip(" "))
+        questiondict[lines[129 + 8*qv2].strip(" ")] = (qv2 + 16, lines[130 + 8 * qv2].strip(" "))
 
-    return (orderedQs, orderedAs)
+    return questiondict
 
-def grade():
-    return 0
+def grade(output, questiondict, qsets, asets):
+    outfile = open(output, "w")
+    for set in range(3):
+        outfile.write("QUESTION SET " + str(1 + set) + "\n")
+        for question in range(10):
+            if qsets[set][question] in questiondict:
+                outfile.write("q" + str(questiondict[qsets[set][question]][0]) + ", ")
+                if asets[set][question] == questiondict[qsets[set][question]][1]:
+                    outfile.write("right")
+                else:
+                    outfile.write("wrong")
+                outfile.write("\n")
+            else:
+                outfile.write("error" + "/n")
+
+    outfile.close()
 
 (qsets, asets) = parsedata("testdata", 0)
-(orderedQs, orderedAs) = readquestions("testvideoquestions")
+questiondict = readquestions("testvideoquestions")
 
-for set in range(3):
-    for a in asets[set]:
-        print(a)
-        print()
+# for key in questiondict:
+#     print(key)
+#     print()
+#
+# print("-------------------------------------------")
+#
+# for question in range(10):
+#     print(qsets[0][question])
+#     print(qsets[0][question] in questiondict)
+#     print()
+#
+grade("testoutput", questiondict, qsets, asets)
