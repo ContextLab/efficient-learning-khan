@@ -18,9 +18,8 @@ def parsedata(filename, startingline):  # the first line of the file is line 0
 
     for set in range(3):         # go through each question set in qsets
         for i in range(len(qsets[set])):          # go through each question in the set...
-            if len(qsets[set][i].split(":")) > 2:   # (ignoring irrelevant lines)
-                                                    # ...and clean it up
-                qsets[set][i] = qsets[set][i].split(":")[2].split(",")[0].strip(' \"').replace("&#8217;","\'")
+            if len(qsets[set][i].split("\"")) >= 10:   # (ignoring irrelevant lines) DO I NEED THIS?
+                qsets[set][i] = qsets[set][i].split("\"")[10].strip().replace("&#8217;", "\'")   #...and clean it up
         qsets[set] = qsets[set][1:]     # get rid of some junk
 
     asets.append(lines[2].split(":"))       # first set of 10 answers goes in asets[0]
@@ -28,8 +27,9 @@ def parsedata(filename, startingline):  # the first line of the file is line 0
     asets.append(lines[12].split(":"))      # third set of 10 answers goes in asets[2]
 
     for set in range(3):            # go through each question set in qsets
-        for i in range(len(asets[set])):    # go through each question in the set
-            asets[set][i] = asets[set][i].split(",")[0].strip("}\ \"").replace("&#8217;","\'")  # clean it up
+        for i in range(len(asets[set])):    # go through each question in the set...
+            if len(asets[set][i].split("\\")) > 1:  #(ignoring irrelevant lines)
+                asets[set][i] = asets[set][i].split("\\")[1].strip(" \"").replace("&#8217;","\'")  #...clean it up
         asets[set] = asets[set][5:15]       # get rid of some junk
 
     infile.close()
@@ -52,18 +52,15 @@ def readquestions(filename):
         orderedQs.append(lines[129 + 8*qv2].strip(" "))
         orderedAs.append(lines[130 + 8*qv2].strip(" "))
 
-    for q in orderedAs:
-        print(q)
+    return (orderedQs, orderedAs)
 
 def grade():
     return 0
 
-readquestions("testvideoquestions")
-
 (qsets, asets) = parsedata("testdata", 0)
-(orderedQs, orderedAs) = readquestions()
+(orderedQs, orderedAs) = readquestions("testvideoquestions")
 
-# for set in range(3):
-#     for q in asets[set]:
-#         print(q)
-#         print()
+for set in range(3):
+    for a in asets[set]:
+        print(a)
+        print()
