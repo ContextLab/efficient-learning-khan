@@ -12,7 +12,7 @@ organization_name = Dartmouth College
 browser_exclude_rule = MSIE, mobile, tablet
 
 # set true for testing, otherwise should be false
-allow_repeats = false
+allow_repeats = true
 
 [Database Parameters]
 database_url = sqlite:///eff-learn-khan-1.db
@@ -25,12 +25,12 @@ cutoff_time = 50
 timeout = 50
 logfile = server.log
 loglevel = 1
-debug = false
+debug = true
 threads = auto
 
 # Change adserver_revproxy_host to www.location.of.your.revproxy.sans.protocol.com
-adserver_revproxy_host = 129.170.30.179
-adserver_revproxy_port = 80
+# adserver_revproxy_host = 129.170.30.179
+# adserver_revproxy_port = 80
 
 [AWS Access]
 aws_access_key_id = AKIAIDO2QBK2NCQF3ZTA
