@@ -68,6 +68,7 @@ def grade(output, questiondict, qsets, asets):
                 outfile.write("error" + "/n")
     outfile.close()
 
+# call methods defined above
 (qsets, asets) = parsedata("testdata", 0)
 questiondict = readquestions("testvideoquestions")
 
