@@ -295,8 +295,8 @@ var runExperiment = function(options) {
   // video
   var video = {
     type: "video",
-    height: 500,
-    width: 880,
+    height: $(window).height(),
+    width: $(window).width(),
     sources: [vidstim1],
   };
 
