@@ -1,11 +1,16 @@
 var experimentTimeline = []
 
-// debug video info
-//var vidstim1 = '/static/files/sample_video.mp4'
-var vidstim2 = '/static/files/sample_video.mp4'
-var vidstim1 = 'https://www.youtube.com/embed/FEF6PxWOvsk'
-// video info
-//var vidstim1 = '<video src="https://www.youtube.com/embed/HG17TsgV_qI" autoplay></video>'
+var debug = 1
+
+if (debug){
+  // debug video info
+  var vidstim1 = '/static/files/sample_video.mp4'
+  var vidstim2 = '/static/files/sample_video.mp4'
+} else {
+  // video info
+  var vidstim1 = '/static/files/video1.mp4'
+  var vidstim2 = '/static/files/video2.mp4'
+}
 
 // load question info
 var qset1 = [
