@@ -29,8 +29,8 @@ debug = true
 threads = auto
 
 # Change adserver_revproxy_host to www.location.of.your.revproxy.sans.protocol.com
-# adserver_revproxy_host = 129.170.195.145
-# adserver_revproxy_port = 32
+adserver_revproxy_host = 129.170.30.179
+adserver_revproxy_port = 80
 
 [AWS Access]
 aws_access_key_id = AKIAIDO2QBK2NCQF3ZTA
