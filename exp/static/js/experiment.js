@@ -235,6 +235,16 @@ var runExperiment = function(options) {
    };
    experimentTimeline.push(fscreen)
 
+   var soundcheck_movie = {
+      type: "instructions",
+      pages: ["<h2>Speaker adjustment</h2><p>Click the button to play the following sound clip:</p>" +
+      "<audio id='soundTest' src='static/files/furelise.mp3' preload='auto'></audio>" +
+      "<button style='background-color:white; outline:none' class='btn btn-large' onclick='document.getElementById(" + '"soundTest"' + ").play();'><i class='fa fa-play-circle-o fa-5x'></i></button>" +
+      "<p>Take this time to adjust your speaker or headphone volume to a comfortable level. Press the spacebar to continue to the next screen once you are ready.</p>"],
+      key_forward: 32
+    }
+  experimentTimeline.push(soundcheck_movie);
+
   // opening instructions
   var open_instructions = {
       type: "instructions",
@@ -285,8 +295,8 @@ var runExperiment = function(options) {
   // video
   var video = {
     type: "video",
-    height: $(window).height(),
-    width: $(window).width(),
+    height: 500,
+    width: 880,
     sources: [vidstim1],
   };
 
