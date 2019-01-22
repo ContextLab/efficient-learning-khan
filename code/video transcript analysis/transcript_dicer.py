@@ -6,8 +6,10 @@
 # all the clusters of 15 consecutive lines within the text
 
 # performs the desired analysis on a given file
-def dicefile(filename):
-    infile = open(filename, "r")
+def dicefile(input, output):
+    infile = open(input, "r")
+    outfile = open(output, "w")
+
     lines = infile.read().split("\n")
     n = len(lines)/2        # number of lines with text
     i = 1                   # current start of the window
@@ -15,9 +17,11 @@ def dicefile(filename):
         cluster = ""
         for int in range(15):
             cluster += lines[2 * (i + int) - 1] + " "
-        print(cluster + "\n")
+        outfile.write(cluster + "\n")
         i += 1          # shift the window over by 1
-    infile.close()
 
-dicefile("fourforcestrans")
-dicefile("birthofstarstrans")
+    infile.close()
+    outfile.close()
+
+dicefile("fourforcestrans", "fourforcesdiced.csv")
+dicefile("birthofstarstrans", "birthofstarsdiced.csv")
