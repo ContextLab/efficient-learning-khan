@@ -42,15 +42,15 @@ RUN apt-get update
 RUN apt-get install -y vim
 
 # add experiment and data folders
-COPY exp /exp
-COPY data /data
-COPY code /code
+COPY exp /psiturk/exp
+COPY data /psiturk/data
+COPY code /psiturk/code
 
 # setup working directory
-WORKDIR /exp
+WORKDIR /psiturk
 
-# set up psiturk to use the .psiturkconfig in /exp
-ENV PSITURK_GLOBAL_CONFIG_LOCATION=/exp/
+# set up psiturk to use the .psiturkconfig in /psiturk
+ENV PSITURK_GLOBAL_CONFIG_LOCATION=/psiturk/
 
 # expose port to access psiturk from outside
 EXPOSE 22363
