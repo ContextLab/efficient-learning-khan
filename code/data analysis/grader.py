@@ -51,6 +51,24 @@ def readquestions(filename):
 
     return questiondict
 
+#output all the questions into a csv file with columns:
+#  c1 = question number, c2 = 0 for fourforces and 1 for birthofstars, c3 = question text
+def printquestions(filename, qdict):
+    outfile = open(filename, "w")
+
+    #print out each question with the appropriate information
+    for question in qdict:
+        vid1 = qdict.get(question)[0] <= 15    # whether it came from video 1
+        entry = str(qdict.get(question)[0]) + ","
+        if qdict.get(question)[0] <= 15:
+            entry += "0,";
+        else:
+            entry += "1,";
+        entry += question + "\n"
+        outfile.write(entry)
+
+    outfile.close()
+
 # output to the desired file
 def grade(output, questiondict, qsets, asets):
     outfile = open(output, "w")
@@ -69,7 +87,8 @@ def grade(output, questiondict, qsets, asets):
     outfile.close()
 
 # call methods defined above
-(qsets, asets) = parsedata("testdata", 0)
+#(qsets, asets) = parsedata("testdata", 0)
 questiondict = readquestions("testvideoquestions")
+printquestions("questions.csv", questiondict)
 
-grade("testoutput", questiondict, qsets, asets)
+#grade("testoutput", questiondict, qsets, asets)
