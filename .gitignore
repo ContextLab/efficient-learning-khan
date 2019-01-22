@@ -1,1 +1,6 @@
 ELKserver.pem
+*.DS_Store
+.psiturkconfig
+data/*
+exp/static/google-credentials
+exp/config.txt

@@ -1,6 +1,6 @@
-# Dockerfile for psiturk container
+# Dockerfile for Eficient-Learning-Khan container
 FROM debian:stretch
-MAINTAINER Max Bluestone <mbluestone93@gmail.edu>
+MAINTAINER Contextual Dynamics Lab <contextualdynamics@gmail.com>
 
 # install debian-related stuff
 RUN apt-get update
@@ -11,6 +11,7 @@ RUN eatmydata apt-get install -y \
     python-pip \
     procps \
     git \
+    curl \
     yasm
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -20,7 +21,7 @@ RUN pip install --upgrade \
 setuptools \
 requests \
 mysql-python \
-psiturk==2.2.3 \
+psiturk \
 pydub \
 matplotlib \
 pandas \
@@ -31,28 +32,23 @@ hypertools \
 joblib \
 sqlalchemy \
 scipy \
-deepdish
-
-RUN pip install \
-git+https://github.com/ContextLab/psiTurk.git@expose-gunicorn-timeout-parameter
+deepdish \
+datetime \
+python-dateutil \
+requests-oauthlib
 
 # install vim
 RUN apt-get update
 RUN apt-get install -y vim
 
 # add experiment and data folders
-COPY exp /exp
-COPY data /data
-COPY code /code
-
-# add stimuli folder
-# COPY stimuli /exp/stimuli
+ADD exp /psiturk/exp
 
 # setup working directory
-WORKDIR /exp
+WORKDIR /psiturk
 
-# set up psiturk to use the .psiturkconfig in /
-ENV PSITURK_GLOBAL_CONFIG_LOCATION=/
+# set up psiturk to use the .psiturkconfig in /psiturk
+ENV PSITURK_GLOBAL_CONFIG_LOCATION=/psiturk/
 
 # expose port to access psiturk from outside
 EXPOSE 22363

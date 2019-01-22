@@ -1,27 +1,29 @@
 [HIT Configuration]
 title = Learning & Memory Experiment
-description = View Khan Academy videos and complete the following quizzes
+description = View Khan Academy videos and complete the following quizzes.
 amt_keywords = Psychology, Memory, Learning
 lifetime = 24
 us_only = true
 approve_requirement = 95
-contact_email_on_error = cdlbrainfit@gmail.com
+require_master_workers = true
+contact_email_on_error = contextualdynamics@gmail.com
 ad_group = online learning experiment
 psiturk_keywords = memory, learning
 organization_name = Dartmouth College
 browser_exclude_rule = MSIE, mobile, tablet
 
 # set true for testing, otherwise should be false
-allow_repeats = true
+# allow_repeats = true
+allow_repeats = false
 
 [Database Parameters]
-database_url = sqlite:///eff-learn-khan-1.db
+database_url = mysql://psiturk:psiturk@db:3306/participants
 table_name = efflearnkhan
 
 [Server Parameters]
 host = 0.0.0.0
 port = 22363
-cutoff_time = 50
+cutoff_time = 30
 timeout = 50
 logfile = server.log
 loglevel = 1
@@ -33,13 +35,13 @@ adserver_revproxy_host = 129.170.30.179
 adserver_revproxy_port = 80
 
 [AWS Access]
-aws_access_key_id = AKIAIDO2QBK2NCQF3ZTA
-aws_secret_access_key = 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
+aws_access_key_id = AKIAJ526S5QFLGBM6LXA
+aws_secret_access_key = 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
 aws_region = us-east-1
 
 [psiTurk Access]
-psiturk_access_key_id = UVARaZqRFUFWNVb5asVMoL
-psiturk_secret_access_id = quQGzU5ixwR7v7ePGVGVyg
+psiturk_access_key_id = ndRD9pXht6bHaAUnf6Srbe
+psiturk_secret_access_id = JBGuDUkzgMyEMXQJzUBurL
 
 [Task Parameters]
 experiment_code_version = 1.0
