@@ -42,7 +42,7 @@ RUN apt-get update
 RUN apt-get install -y vim
 
 # add experiment and data folders
-COPY exp /psiturk/exp
+ADD exp /psiturk/exp
 
 # setup working directory
 WORKDIR /psiturk
