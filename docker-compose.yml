@@ -19,7 +19,7 @@ services:
       MYSQL_ROOT_PASSWORD: psipsi
       MYSQL_DATABASE: participants
       MYSQL_USER: psiturk
-      MYSQL_PASSWORD: passpass
+      MYSQL_PASSWORD: psiturk
 
   psiturk:
     build: .
