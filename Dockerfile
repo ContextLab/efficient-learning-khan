@@ -1,6 +1,6 @@
-# Dockerfile for psiturk container
+# Dockerfile for Eficient-Learning-Khan container
 FROM debian:stretch
-MAINTAINER Max Bluestone <mbluestone93@gmail.edu>
+MAINTAINER Contextual Dynamics Lab <contextualdynamics@gmail.com>
 
 # install debian-related stuff
 RUN apt-get update
@@ -11,6 +11,7 @@ RUN eatmydata apt-get install -y \
     python-pip \
     procps \
     git \
+    curl \
     yasm
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -45,14 +46,11 @@ COPY exp /exp
 COPY data /data
 COPY code /code
 
-# add stimuli folder
-# COPY stimuli /exp/stimuli
-
 # setup working directory
 WORKDIR /exp
 
-# set up psiturk to use the .psiturkconfig in /
-ENV PSITURK_GLOBAL_CONFIG_LOCATION=/
+# set up psiturk to use the .psiturkconfig in /exp
+ENV PSITURK_GLOBAL_CONFIG_LOCATION=/exp/
 
 # expose port to access psiturk from outside
 EXPOSE 22363
