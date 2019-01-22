@@ -13,8 +13,8 @@ organization_name = Dartmouth College
 browser_exclude_rule = MSIE, mobile, tablet
 
 # set true for testing, otherwise should be false
-allow_repeats = true
-# allow_repeats = false
+# allow_repeats = true
+allow_repeats = false
 
 [Database Parameters]
 database_url = mysql://psiturk:psiturk@db:3306/participants
@@ -23,7 +23,7 @@ table_name = efflearnkhan
 [Server Parameters]
 host = 0.0.0.0
 port = 22363
-cutoff_time = 50
+cutoff_time = 30
 timeout = 50
 logfile = server.log
 loglevel = 1
