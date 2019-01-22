@@ -63,11 +63,11 @@ def printquestions(filename, qdict):
     #print out each question with the appropriate information
     for question in qdict:
         vid1 = qdict.get(question)[0] <= 15    # whether it came from video 1
-        entry = str(qdict.get(question)[0]) + ","
+        entry = str(qdict.get(question)[0]) + "\t"
         if qdict.get(question)[0] <= 15:
-            entry += "0,";
+            entry += "0\t"
         else:
-            entry += "1,";
+            entry += "1\t"
         entry += question + "\n"
         outfile.write(entry)
 
@@ -80,7 +80,7 @@ def grade(output, questiondict, qsets, asets):
     for set in range(3):    # for each of the 3 sets
         for question in range(10):
             if qsets[set][question] in questiondict:    # check if we have the question
-                outfile.write(str(set) + "," + str(questiondict[qsets[set][question]][0]) + ",")
+                outfile.write(str(set) + "\t" + str(questiondict[qsets[set][question]][0]) + "\t")
                 if asets[set][question] == questiondict[qsets[set][question]][1]:   # check if the answer is right
                     outfile.write("1")
                 else:
@@ -99,7 +99,7 @@ def countlines(filename):
 # --- Method calls happen here --- #
 
 questiondict = readquestions("testvideoquestions")
-# printquestions("questions.csv", questiondict)
+#printquestions("questions.tsv", questiondict)
 
 # prompt the user as to what file they want to read
 file = input("Enter the name of the file you'd like to read: ")
@@ -108,5 +108,5 @@ file = input("Enter the name of the file you'd like to read: ")
 # so read data in groups of 14 lines
 for n in range(countlines(file) // 14):
     (qsets, asets) = parsedata("testdata", 14 * n)
-    grade("participant" + str(n + 1) + "data", questiondict, qsets, asets)
+    grade("participant" + str(n + 1) + "data.tsv", questiondict, qsets, asets)
 

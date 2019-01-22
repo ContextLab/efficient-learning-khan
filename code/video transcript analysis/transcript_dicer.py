@@ -17,11 +17,11 @@ def dicefile(input, output):
         cluster = ""
         for int in range(15):
             cluster += lines[2 * (i + int) - 1] + " "
-        outfile.write(cluster + "\n")
+        outfile.write(cluster + "\t\n")
         i += 1          # shift the window over by 1
 
     infile.close()
     outfile.close()
 
-dicefile("fourforcestrans", "fourforcesdiced.csv")
-dicefile("birthofstarstrans", "birthofstarsdiced.csv")
+dicefile("fourforcestrans", "fourforcesdiced.tsv")
+dicefile("birthofstarstrans", "birthofstarsdiced.tsv")
