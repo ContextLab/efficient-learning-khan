@@ -36,9 +36,6 @@ datetime \
 python-dateutil \
 requests-oauthlib
 
-RUN pip install \
-git+https://github.com/ContextLab/psiTurk.git@expose-gunicorn-timeout-parameter
-
 # install vim
 RUN apt-get update
 RUN apt-get install -y vim
