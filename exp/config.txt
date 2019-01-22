@@ -5,6 +5,7 @@ amt_keywords = Psychology, Memory, Learning
 lifetime = 24
 us_only = true
 approve_requirement = 95
+require_master_workers = true
 contact_email_on_error = contextualdynamics@gmail.com
 ad_group = online learning experiment
 psiturk_keywords = memory, learning
