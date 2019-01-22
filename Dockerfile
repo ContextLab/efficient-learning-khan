@@ -41,9 +41,9 @@ RUN apt-get update
 RUN apt-get install -y vim
 
 # add experiment and data folders
-COPY efficient-learning-khan/exp /exp
-COPY efficient-learning-khan/data /data
-COPY efficient-learning-khan/code /code
+COPY exp /exp
+COPY data /data
+COPY code /code
 
 # add stimuli folder
 # COPY stimuli /exp/stimuli
