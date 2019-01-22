@@ -1,5 +1,5 @@
 #grader.py
-#Will Baxley, 1/18/8
+#Will Baxley, 1/18/19
 #Context Lab, Dartmouth College, Hanover, NH
 
 # reads "testdata" and cleanly outputs which questions the user got correct
