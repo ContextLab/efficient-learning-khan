@@ -20,7 +20,7 @@ RUN pip install --upgrade \
 setuptools \
 requests \
 mysql-python \
-psiturk==2.2.3 \
+psiturk \
 pydub \
 matplotlib \
 pandas \
@@ -31,7 +31,10 @@ hypertools \
 joblib \
 sqlalchemy \
 scipy \
-deepdish
+deepdish \
+datetime \
+python-dateutil \
+requests-oauthlib
 
 RUN pip install \
 git+https://github.com/ContextLab/psiTurk.git@expose-gunicorn-timeout-parameter
