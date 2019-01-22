@@ -12,8 +12,8 @@ organization_name = Dartmouth College
 browser_exclude_rule = MSIE, mobile, tablet
 
 # set true for testing, otherwise should be false
-# allow_repeats = true
-allow_repeats = false
+allow_repeats = true
+# allow_repeats = false
 
 [Database Parameters]
 database_url = mysql://psiturk:psiturk@db:3306/participants
