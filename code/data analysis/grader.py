@@ -1,10 +1,14 @@
 #grader.py
-#Will Baxley, 1/18/19
+#Will Baxley, 1/21/19
 #Context Lab, Dartmouth College, Hanover, NH
 
 # reads "testdata" and cleanly outputs which questions the user got correct
+# REQUIRES AN IMPUT OF THE FOLLOWING FORMAT:
+# The first participant's data starts on the first line, the second participant's data starts on the
+# 15th line, etc.
 
 # parses the data file and returns, in ordered lists, the questions and answers
+# startingline is the line to start reading from
 def parsedata(filename, startingline):  # the first line of the file is line 0
     qsets = []  # list of the 3 lists of questions
     asets = []  # list of the 3 lists of answers
@@ -69,26 +73,40 @@ def printquestions(filename, qdict):
 
     outfile.close()
 
-# output to the desired file
+# output to the desired file in the following format:
+# question section (0, 1, or 2), question number, right (0) or wrong (1)
 def grade(output, questiondict, qsets, asets):
     outfile = open(output, "w")
-    for set in range(3):
-        outfile.write("QUESTION SET " + str(1 + set) + "\n")
+    for set in range(3):    # for each of the 3 sets
         for question in range(10):
             if qsets[set][question] in questiondict:    # check if we have the question
-                outfile.write("q" + str(questiondict[qsets[set][question]][0]) + ", ")
+                outfile.write(str(set) + "," + str(questiondict[qsets[set][question]][0]) + ",")
                 if asets[set][question] == questiondict[qsets[set][question]][1]:   # check if the answer is right
-                    outfile.write("right")
+                    outfile.write("1")
                 else:
-                    outfile.write("wrong")
+                    outfile.write("0")
                 outfile.write("\n")
             else:
                 outfile.write("error" + "/n")
     outfile.close()
 
-# call methods defined above
-#(qsets, asets) = parsedata("testdata", 0)
-questiondict = readquestions("testvideoquestions")
-printquestions("questions.csv", questiondict)
+# determine how many lines a file has
+def countlines(filename):
+    infile = open(filename, "r")
+    lines = infile.read().split("\n")
+    return len(lines)
 
-#grade("testoutput", questiondict, qsets, asets)
+# --- Method calls happen here --- #
+
+questiondict = readquestions("testvideoquestions")
+# printquestions("questions.csv", questiondict)
+
+# prompt the user as to what file they want to read
+file = input("Enter the name of the file you'd like to read: ")
+
+# Every 14 lines represents a new person's data,
+# so read data in groups of 14 lines
+for n in range(countlines(file) // 14):
+    (qsets, asets) = parsedata("testdata", 14 * n)
+    grade("participant" + str(n + 1) + "data", questiondict, qsets, asets)
+
