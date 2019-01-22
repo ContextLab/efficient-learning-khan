@@ -1,11 +1,16 @@
 var experimentTimeline = []
 
-// debug video info
-var vidstim1 = '/static/files/sample_video.mp4'
-var vidstim2 = '/static/files/sample_video.mp4'
+var debug = 1
 
-// video info
-//var vidstim1 = '<video src="https://www.youtube.com/embed/HG17TsgV_qI" autoplay></video>'
+if (debug){
+  // debug video info
+  var vidstim1 = '/static/files/sample_video.mp4'
+  var vidstim2 = '/static/files/sample_video.mp4'
+} else {
+  // video info
+  var vidstim1 = '/static/files/video1.mp4'
+  var vidstim2 = '/static/files/video2.mp4'
+}
 
 // load question info
 var qset1 = [
@@ -230,6 +235,16 @@ var runExperiment = function(options) {
    };
    experimentTimeline.push(fscreen)
 
+   var soundcheck_movie = {
+      type: "instructions",
+      pages: ["<h2>Speaker adjustment</h2><p>Click the button to play the following sound clip:</p>" +
+      "<audio id='soundTest' src='static/files/furelise.mp3' preload='auto'></audio>" +
+      "<button style='background-color:white; outline:none' class='btn btn-large' onclick='document.getElementById(" + '"soundTest"' + ").play();'><i class='fa fa-play-circle-o fa-5x'></i></button>" +
+      "<p>Take this time to adjust your speaker or headphone volume to a comfortable level. Press the spacebar to continue to the next screen once you are ready.</p>"],
+      key_forward: 32
+    }
+  experimentTimeline.push(soundcheck_movie);
+
   // opening instructions
   var open_instructions = {
       type: "instructions",
@@ -286,12 +301,10 @@ var runExperiment = function(options) {
   };
 
   var video_test = {
-      type: "single-stim",
-      stimuli: [vidstim1],
-      is_html: true,
-      choices: [],
-      timing_response: 17000,
-      response_ends_trial: false
+    type: "url-video",
+    height: $(window).height(),
+    width: $(window).width(),
+    sources: [vidstim1],
     };
 
   experimentTimeline.push(video);
@@ -371,9 +384,12 @@ var runExperiment = function(options) {
   // finished message
   var finished_message = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>You're done!</p>" +
-      "<p>DEBRIEFING.</p>" +
-      "<p>Press the spacebar to complete the experiment.</div>"],
+      pages: ["<h2>Debriefing</h2>" +
+      "<p>Thank you for contributing to research in The Contextual Dynamics Laboratory (http://www.context-lab.com/) at Dartmouth College!</p>" +
+      "<p>You will receive a base payment of $AMOUNT for your participation in the task upon submission of this HIT.</p>" +
+      "<p>Our lab is interested in developing technology to predicit future learning and test performance on information learned from short videos from past test performance. We will use your responses during this experiment to help develop models that will track participant learning while viewing short online videos and predict participant performance on future tests. We hope that this technology can help to improve learning from online courses.</p>" +
+      "<p>We've taken great care to design this task appropriately for Amazon Mechanical Turk and your enjoyment as a Worker, and securely store your data on our servers without any personally-identifiable information. If for any reason you would like to contact us to ask further questions or comment on this experiment, please call the research director for this study: Dr. Jeremy Manning, at (603) 646-2777 during normal business hours (9 — 5 PM, Monday — Friday), or send an email to contextualdynamics@gmail.com with the title 'AMT Experiment Inquiry'. If you have questions, concerns, complaints, or suggestions about human research at Dartmouth College, you may call the Office of the Committee for the Protection of Human Subjects at Dartmouth College (603) 646-6482 during normal business hours. Otherwise, thank you for your contributions to scientific research and enjoy your day! </p>"],
+      show_clickable_nav: true,
       key_forward: 32
   };
   experimentTimeline.push(finished_message);
