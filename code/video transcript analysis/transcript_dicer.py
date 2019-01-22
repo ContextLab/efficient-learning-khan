@@ -1,5 +1,5 @@
 #transcript_dicer.py
-#Will Baxley, 1/07/8
+#Will Baxley, 1/21/19
 #Context Lab, Dartmouth College, Hanover, NH
 
 # reads "fourforcestrans" and "birthofstarstrans" and outputs, in order,
