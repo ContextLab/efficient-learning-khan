@@ -4,7 +4,7 @@ This repository contains code for the **Efficient Learning: Khan Academy** exper
 The experiment is contained in Docker images and may be deployed as a local Psiturk- or Amazon MTurk-based.
 The experiment structure may be modified to run a variety of experiments.
 
-## required components
+## Required components
 
 To run the efficient-learning-khan experiment on the Amazon Mechanical Turk platform, you'll need the following software and accounts:
 
@@ -42,8 +42,8 @@ To run the efficient-learning-khan experiment on the Amazon Mechanical Turk plat
 3. Enter `docker-compose up -d` to build the docker image
 4. Attach this image via `docker attach efficient-learning-khan_psiturk_1`
 5. This will open a bash shell from within the docker image. From here, enter the command `psiturk` to launch the server followed by `server on`. To debug, enter `debug` and paste the link into the browser.
-6. Make sure to update the consent form (`exp/static/templates/consent.html`), lab/university images(`exp/static/favicon.ico`,`exp/static/files/lablogo.png`,`exp/static/files/university.png`) and tasks (`exp/static/js`) as needed for your experiment.
-7. Read the section on "Testing or Collecting Data Locally", below, to make sure your configuration is correctly set for local use.
+6. Make sure to update the consent form (`exp/static/templates/consent.html`), lab/university images (`exp/static/favicon.ico`,`exp/static/files/lablogo.png`,`exp/static/files/university.png`) and tasks (`exp/static/js`) as needed for your experiment.
+7. Read the section on "Testing or Collecting Data Locally" below to make sure your configuration is correctly set for local use.
 
 
 ## Experiment Walkthrough
@@ -111,7 +111,8 @@ To view the data, first make sure the Adminer container is running with `docker 
 
 * Recent versions of Google Chrome do not allow loading HTTP content, and thus cannot run many PsiTurk experiments. Additionally, adding Chrome to `browser_exclude_rule` in `exp/config.txt` often excludes other browsers inadvertently. If your experiment does not run on recent Chrome releases and excluding Chrome excludes other browsers during testing, add a note to your ad about the compatibility issue for workers. Workers who accept the HIT but cannot view the experiment due to compatibility issues will show a blank value in the `datastring` column and a value of `1` in the `status` column of the database when viewed in Adminer.
 * After building the images, the MySQL server image will take a minute to begin communicating through its assigned port. If you get an error starting the PsiTurk server shortly after building the images, wait a minute and try again before other troubleshooting.
-* If you change `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER`, or `MYSQL_PASSWORD` in `docker-compose.yml` after building the docker images, you may get the error `gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>` when trying turn the PsiTurk server on. Remove the images with `docker-compose rm -v`, **delete the bind-mounted data/ folder on your local machine**, and rebuild the images with `docker-compose up -d`. **NOTE**: this will delete any data you've already collected, so if you have already posted HITs, save your data first!
+* If you change `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER`, or `MYSQL_PASSWORD` in `docker-compose.yml` after building the docker images, you may get the error `gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>` when trying turn the PsiTurk server on. Remove the images with `docker-compose rm -v`, **delete the bind-mounted data/ folder on your local machine**, and rebuild the images with `docker-compose up -d`.  
+**NOTE**: this will delete any data you've already collected, so if you have already posted HITs, save your data first!
 * Turn off your ad-blocker when testing to make sure it is not interfering with the experiment.
 * Setting `us_only` to `true` and `approve_requirement` to `95` in `exp/config.txt` helps avoid strange/low-quality datasets from bots and MTurk "farms" trying to take advantage of the platform.
 
