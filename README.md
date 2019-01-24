@@ -1,41 +1,42 @@
 # efficient-learning-khan
 
-'''insert experiment/package description'''
+This repository contains code for the **Efficient Learning: Khan Academy** experiment, data analysis, and generated figures.
+The experiment is contained in Docker images and may be deployed as a local Psiturk- or Amazon MTurk-based. The experiment structure can be modified to run a variety of experiments. 
 
 ## required components
 
 To run the efficient-learning-khan experiment on the Amazon Mechanical Turk platform, you'll need the following software and accounts:
 
 * Docker (v3+):
-  https://docs.docker.com/install/
+  https://docs.docker.com/install/  
   (required for local use as well)
 * PsiTurk account (free):
-  https://psiturk.org
-* Amazon Web Services account (paid):
-  https://aws.amazon.com/console/
+  https://psiturk.org  
+* Amazon Web Services account (paid):  
+  https://aws.amazon.com/console/  
   (create a user account and give this user permissions to RDS and MTurk to generate keys)
-* Amazon MTurk Sandbox account (free):
-  https://requestersandbox.mturk.com/developer
-  (create a user account and link to AWS account)
+* Amazon MTurk Sandbox account (free):  
+  https://requestersandbox.mturk.com/developer  
+  (create a user account and link to AWS account)  
   (for testing prior to going live)
-* Amazon MTurk account (see pricing at https://requester.mturk.com/pricing):
-  https://requester.mturk.com/developer
+* Amazon MTurk account (see pricing at https://requester.mturk.com/pricing):  
+  https://requester.mturk.com/developer  
   (create a user account and link to AWS account)
-* Static public IP address (free):
-  (if you are running this experiment through a university, you may need to contact your IT department to acquire this)
+* Static public IP address (free):  
+  (if you are running this experiment through a university, you may need to contact your IT department to acquire this)  
 * A computer capable of running multiple copies of the experiment simultaneously
 * All other requirements are installed when building the docker container. These include:
- * MySQL, v5.7 (https://www.mysql.com/)
- * Adminer (https://www.adminer.org/en/)
- * NGNIX (https://www.nginx.com/)
- * PsiTurk (http://psiturk.org/)
- * JsPsych (https://www.jspsych.org/)
+    * MySQL, v5.7 (https://www.mysql.com/)
+    * Adminer (https://www.adminer.org/en/)
+    * NGNIX (https://www.nginx.com/)
+    * PsiTurk (http://psiturk.org/)
+    * JsPsych (https://www.jspsych.org/)
 
 
 ## Installation and Quick Start (for local testing & data collection)
 
 1. Clone the repository `git clone https://github.com/ContextLab/efficient-learning-khan.git`
-2. Navigate to the efficient-learning-khan folder in the terminal
+2. Navigate to the efficient-learning-khan folder in the terminal  
     **NOTE**: If you want to change the name, username or password for the MySQL database in which your data will be stored, do so in `docker-compse.yml` before building the docker image.
 3. Enter `docker-compose up -d` to build the docker image
 4. Attach this image via `docker attach efficient-learning-khan_psiturk_1`
