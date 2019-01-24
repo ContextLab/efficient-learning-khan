@@ -1,7 +1,8 @@
 # efficient-learning-khan
 
 This repository contains code for the **Efficient Learning: Khan Academy** experiment, data analysis, and generated figures.
-The experiment is contained in Docker images and may be deployed as a local Psiturk- or Amazon MTurk-based. The experiment structure can be modified to run a variety of experiments. 
+The experiment is contained in Docker images and may be deployed as a local Psiturk- or Amazon MTurk-based.
+The experiment structure may be modified to run a variety of experiments.
 
 ## required components
 
@@ -37,7 +38,7 @@ To run the efficient-learning-khan experiment on the Amazon Mechanical Turk plat
 
 1. Clone the repository `git clone https://github.com/ContextLab/efficient-learning-khan.git`
 2. Navigate to the efficient-learning-khan folder in the terminal  
-    **NOTE**: If you want to change the name, username or password for the MySQL database in which your data will be stored, do so in `docker-compse.yml` before building the docker image.
+**NOTE**: If you want to change the name, username or password for the MySQL database in which your data will be stored, do so in `docker-compse.yml` before building the docker image.
 3. Enter `docker-compose up -d` to build the docker image
 4. Attach this image via `docker attach efficient-learning-khan_psiturk_1`
 5. This will open a bash shell from within the docker image. From here, enter the command `psiturk` to launch the server followed by `server on`. To debug, enter `debug` and paste the link into the browser.
@@ -66,45 +67,43 @@ You'll also want to check `exp/onfig.txt` to ensure the following:
 
 Once you've tested the experiment locally and acquired all the components under "required components," you'll need to modify the following:
 * Update the following locations to your static public IP address:
- * `adserver_revproxy_host` in `exp/config.txt`
- * `serverporturl` in `exp/static/js/config.js`
+    * `adserver_revproxy_host` in `exp/config.txt`
+    * `serverporturl` in `exp/static/js/config.js`
 * Update the following in `exp/config.txt`:
- * Add any browsers with which your experiment is incompatible to `browser_exclude_rule`
- * Set `aws_access_key_id` and `aws_secret_access_key` to match your AWS access key information
- * Set `psiturk_access_key_id` and `psiturk_secret_access_key` to match your PsiTurk access key information
- * **If you are testing online in Sandbox mode**
-  * Set `allow_repeats` to `true`
-  * Set `launch_in_sandbox_mode` to `true`
-  * Set `debug` to `true`
- * **If you are collecting live data online**
-  * Set `allow_repeats` to `false` (so MTurk workers cannot participate in the study multiple times)
-  * Set `launch_in_sandbox_mode` to `false`
-  * Set `debug` to `false`
+    * Add any browsers with which your experiment is incompatible to `browser_exclude_rule`
+    * Set `aws_access_key_id` and `aws_secret_access_key` to match your AWS access key information
+    * Set `psiturk_access_key_id` and `psiturk_secret_access_key` to match your PsiTurk access key information
+    * **If you are testing online in Sandbox mode**
+        * Set `allow_repeats` to `true`
+        * Set `launch_in_sandbox_mode` to `true`
+        * Set `debug` to `true`
+    * **If you are collecting live data online**
+        * Set `allow_repeats` to `false` (so MTurk workers cannot participate in the study multiple times)
+        * Set `launch_in_sandbox_mode` to `false`
+        * Set `debug` to `false`
 * Update the following in `.psiturkconfig`:
- * Set `aws_access_key_id` and `aws_secret_access_key` to match your AWS access key information
- * Set `psiturk_access_key_id` and `psiturk_secret_access_key` to match your PsiTurk access key information
+    * Set `aws_access_key_id` and `aws_secret_access_key` to match your AWS access key information
+    * Set `psiturk_access_key_id` and `psiturk_secret_access_key` to match your PsiTurk access key information
 * Add the following to `.gitignore`:
- * `exp/config.txt` (contains your Psiturk and AWS access keys)
- * `.psiturkconfig` (contains your Psiturk and AWS access keys)
- * `docker-compse.yml` (contains your MySQL username and password)
- * `data/*` (contains your MySQL database with experiment data)
+    * `exp/config.txt` (contains your Psiturk and AWS access keys)
+    * `.psiturkconfig` (contains your Psiturk and AWS access keys)
+    * `docker-compse.yml` (contains your MySQL username and password)
+    * `data/*` (contains your MySQL database with experiment data)
 
 
 ## Posting, approving, and removing HITs
 
-After checking the above, ensure that all four of the experiments associated docker images (`efficient-learning-khan_psiturk_1`, `efficient-learning-khan_db_1`, `efficient-learning-khan_adminer_1`, and `efficient-learning-khan_nginx_1`) are running with `docker ps`. Use `docker start` followed by the image name to start any that do not appear.
-Launch the PsiTurk container with `docker attach efficient-learning-khan_psiturk_1`. Then, from within the container shell, type `psiturk` to launch PsiTurk.
-First, check your AWS account balance with `amt_balance`. If you are in Sandbox mode, this should return a placeholder of $10000. If you are live, this will show your balance.  You can then turn the server on (`server on`) and create hits with `hit create` followed by the number of participants you'd like to collect (or number of test runs you'd like to do if you're in Sandbox mode), the payment amount, and time given to workers to complete the experiment after accepting the HIT.
-For example, `hit create 10 5.00 1.5` creates HITs for 10 workers, offering a $5.00 reward, and allowing each worker 1.5 hours to complete the experiment after beginning.
-Creating a HIT will generate two live links: one for your ad and one for your experiment (note: the experiment link actually brings you to the full list of available experiments. Type in any of your `psiturk_keywords` from `exp config.txt` to search for your experiment). You can view these links at any time with `hit list`.
+After checking the above, ensure that all four of the experiments associated docker images (`efficient-learning-khan_psiturk_1`, `efficient-learning-khan_db_1`, `efficient-learning-khan_adminer_1`, and `efficient-learning-khan_nginx_1`) are running with `docker ps`. Use `docker start` followed by the image name to start any that do not appear.  
+Launch the PsiTurk container with `docker attach efficient-learning-khan_psiturk_1`. Then, from within the container shell, type `psiturk` to launch PsiTurk.  
+First, check your AWS account balance with `amt_balance`. If you are in Sandbox mode, this should return a placeholder of $10000. If you are live, this will show your balance.  You can then turn the server on (`server on`) and create hits with `hit create` followed by the number of participants you'd like to collect (or number of test runs you'd like to do if you're in Sandbox mode), the payment amount, and time given to workers to complete the experiment after accepting the HIT. For example, `hit create 10 5.00 1.5` creates HITs for 10 workers, offering a $5.00 reward, and allowing each worker 1.5 hours to complete the experiment after beginning. Creating a HIT will generate two live links: one for your ad and one for your experiment (note: the experiment link actually brings you to the full list of available experiments. Type in any of your `psiturk_keywords` from `exp config.txt` to search for your experiment). You can view these links at any time with `hit list`.  
 To view how many workers have completed your experiment, type `worker list`.
-To accept individual workers' HITs, type `worker approve assignment_id`. To accept all workers' HITs, type `worker approve --hit hit_id`. Replace `assignment_id` or `hit_id` with the corresponding string.  See https://psiturk.readthedocs.io/en/latest/command_line/worker.html#worker-approve for documentation on `worker` commands
+To accept individual workers' HITs, type `worker approve assignment_id`. To accept all workers' HITs, type `worker approve --hit hit_id`. Replace `assignment_id` or `hit_id` with the corresponding string.  See https://psiturk.readthedocs.io/en/latest/command_line/worker.html#worker-approve for documentation on `worker` commands.  
 To end data collection before all your posted HITs have been used and remove any unused HITs, type `hit expire --all` to end the HIT availability period. Then, type `hit dispose --all` to remove the HITs from MTurk.
 
 
 ## Accessing and Downloading Data
 
-As workers complete your experiment, data will populate the repository's `data/db` directory, since it is bind-mounted to the `efficient-learning-khan_db_1` image. You can view the MySQL database containing the data from a web browser using Adminer.
+As workers complete your experiment, data will populate the repository's `data/db` directory, since it is bind-mounted to the `efficient-learning-khan_db_1` image. You can view the MySQL database containing the data from a web browser using Adminer.  
 To view the data, first make sure the Adminer container is running with `docker start efficient-learning-khan_adminer_1` (from your local system). Open a web browser and go to `localhost:8080`. On the login screen, enter the user, password, and database name specified in `docker-compose.yml`. Select the file you want to view, and hit "View Data". You can then download the data as a number of file types.
 
 
