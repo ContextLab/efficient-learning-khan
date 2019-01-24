@@ -4,7 +4,7 @@ This repository contains code for the **Efficient Learning: Khan Academy** exper
 The experiment is contained in Docker images and may be deployed as a local Psiturk- or Amazon MTurk-based.
 The experiment structure may be modified to run a variety of experiments.
 
-## Required components
+## Required Components
 
 To run the efficient-learning-khan experiment on the Amazon Mechanical Turk platform, you'll need the following software and accounts:
 
@@ -46,9 +46,9 @@ To run the efficient-learning-khan experiment on the Amazon Mechanical Turk plat
 7. Read the section on "Testing or Collecting Data Locally" below to make sure your configuration is correctly set for local use.
 
 
-## Experiment Walkthrough
+## Experiment Walkthrough and JavaScript files guide
 
-  '''insert experiment walkthrough here'''
+  *insert description of .js files here*
 
 
 ## Configuring to Test or Collect Data Locally
