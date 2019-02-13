@@ -54,6 +54,7 @@ def compute_bonus():
                one()
         user_data = loads(user.datastring) # load datastring from JSON
         bonus = 0 # initialize
+        console.log(user_data)
 
     except:
         abort(404)  # quick solution, update **
