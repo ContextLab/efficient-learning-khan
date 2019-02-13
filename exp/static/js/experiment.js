@@ -1,6 +1,6 @@
 var experimentTimeline = []
 
-var debug = 0
+var debug = 1
 
 if (debug){
   // debug video info
