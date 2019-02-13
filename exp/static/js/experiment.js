@@ -418,7 +418,9 @@ var runExperiment = function(options) {
           psiTurk.saveData({
             success: function() {
                 clearInterval(reprompt);
+                  psiTurk.computeBonus('compute_bonus', function(){
                         psiTurk.completeHIT() // when finished saving, compute bonus, then quit
+                  });
             },
             error: prompt_resubmit //if error saving data, try again
           });
@@ -427,7 +429,9 @@ var runExperiment = function(options) {
           psiTurk.saveData({
               success: function() {
                   console.log('Data saved!')
-                  psiTurk.completeHIT()
+                  psiTurk.computeBonus('compute_bonus', function(){
+                    psiTurk.completeHIT()
+                  })
               },
               error: prompt_resubmit}) //if error saving data, try again
       //}
