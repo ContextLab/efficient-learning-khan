@@ -40,44 +40,20 @@ myauth = PsiTurkAuthorization(config)  # if you want to add a password protect r
 # explore the Blueprint
 custom_code = Blueprint('custom_code', __name__, template_folder='templates', static_folder='static')
 
-###########################################################
-#  serving warm, fresh, & sweet custom, user-provided routes
-#  add them here
-###########################################################
-#@custom_code.route('/createaudiofolder',methods=['POST'])
-#def createFolder():
-#    print('creating audio folder...')
-#    call('mkdir ' + '/data/' + request.form['data'], shell=True)
-#    print(request.form['data'])
-#    resp = {"folderCreated": "success"}
-#    return jsonify(**resp)
-#
-#@custom_code.route('/save_audio', methods=['POST'])
-#def save_audio():
-#    print('saving audio...')
-#    """ Save an audio file"""
-#    try:
-#        # get file name
-#        filename = request.form['audio-filename']
-#
-#        # get folder name
-#        foldername = request.form['audio-foldername']
-#
-#        # get audio file
-#        wav = request.files
-#
-#        # file path
-#        fname ='/data/' + foldername + "/" + filename
-#
-#        # write out audio file
-#        wav['audio-blob'].save(fname)
-#
-#        resp = {'message' : "Sucessfully saved audio file: " + fname,
-#                'fname' : fname}
-#
-#        print('audio saved!')
-#    except Exception as e:
-#        print(e)
-#        resp = {"message": "There was an error saving the audio file: " + fname}
-#
-#    return jsonify(**resp)
+@custom_code.route('/compute_bonus', methods=['GET']) #originally post
+def compute_bonus():
+    #get uniqueId
+    if not request.args.has_key('uniqueId'):
+        raise ExperimentError('improper_inputs')
+    uniqueId = request.args['uniqueId']
+
+    try:
+        # lookup user in database
+        user = Participant.query.\
+               filter(Participant.uniqueid == uniqueId).\
+               one()
+        user_data = loads(user.datastring) # load datastring from JSON
+        bonus = 0 # initialize
+
+    except:
+        abort(404)  # quick solution, update **
