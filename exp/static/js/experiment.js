@@ -62,7 +62,7 @@ var qset1 = [
           'Masses tend to attract while charges tend to repel',
           'The gravitational interaction acting between masses is stronger than the electromagnetic interaction acting between charges'],
   required: true},
-  {prompt: 'In your body, there are a tremendous amount of negatively-charged electrons. Your computer also contains a huge number of negatively-charged electrons. From the video, we know that like charges repel. Which of the following explains why you and your computer are not repelled apart?',
+  {prompt: 'In your body, there are a tremendous amount of negatively-charged electrons. Your computer also contains a huge number of negatively-charged electrons. We know that like charges repel, but you and your computer are not repelled apart. Which of the following explains why?',
   options:['The electrons’ negative charges are balanced by the positive charges of an equal number of protons',
           'An attractive gravitational force balances out this repulsion',
           'The Electromagnetic force only acts over very small distances',
