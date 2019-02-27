@@ -10,7 +10,7 @@ contact_email_on_error = contextualdynamics@gmail.com
 ad_group = online learning experiment
 psiturk_keywords = memory, learning
 organization_name = Dartmouth College
-browser_exclude_rule = MSIE, mobile, tablet
+browser_exclude_rule = mobile, tablet, Chrome
 
 # set true for testing, otherwise should be false
 # allow_repeats = true
@@ -27,7 +27,7 @@ cutoff_time = 30
 timeout = 50
 logfile = server.log
 loglevel = 1
-debug = true
+debug = false
 threads = auto
 
 # Change adserver_revproxy_host to www.location.of.your.revproxy.sans.protocol.com
