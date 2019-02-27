@@ -3,16 +3,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // collects custom ID and experimenter name if run in the lab
-mode = 'debug';
+//mode = 'debug';
 //mode = 'lab';
-//mode = 'mturk'
+mode = 'mturk'
 
 // Initalize psiturk object
 var psiTurk = new PsiTurk(uniqueId, adServerLoc, mode);
 
 //local testing and running:
-var serverport = '22363'; // should match psiturk config.txt file
-var serverporturl = 'http://localhost:'+serverport+'/'
+//var serverport = '22363'; // should match psiturk config.txt file
+//var serverporturl = 'http://localhost:'+serverport+'/'
 
 
 //replace with static IP for online use!
@@ -20,4 +20,4 @@ var serverporturl = 'http://localhost:'+serverport+'/'
 //var serverporturl = 'http://127.0.0.1/' //used in fitbit.html to open window
 
 //online use:
-//var serverporturl = 'http://129.170.30.179/'
+var serverporturl = 'http://129.170.30.179/'
