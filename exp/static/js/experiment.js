@@ -309,9 +309,9 @@ var runExperiment = function(options) {
       type: "instructions",
       pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY</p>" +
             "<p>In this experiment, you will watch informational videos and answer questions about Cosmology and Astronomy.</p>" +
-            "<p>In total, you will be asked <strong>three</strong> sets of <strong>ten</strong> questions and you will watch <strong>two</strong> videos.</p>" +
+            "<p>In total, you will be asked <strong>three</strong> sets of <strong>thirteen</strong> questions and you will watch <strong>two</strong> videos.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>You will start the experiment by answering a set of ten questions about Cosmology and Astronomy.</p>" +
+            "<div class='instructions'> <p>You will start the experiment by answering a set of thirteen questions about Cosmology and Astronomy.</p>" +
             "<p>Even though you will not have watched an informational video yet, try to answer the questions to the best of your ability.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>After you anwer the first set of questions, you will watch the informational videos and answer some more questions after each video.</p>" +
