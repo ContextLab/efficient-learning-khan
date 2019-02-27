@@ -1,6 +1,6 @@
 var experimentTimeline = []
 
-var debug = 1
+var debug = 0
 
 if (debug){
   // debug video info
@@ -197,7 +197,63 @@ var qset2 = [
           'Displacement'],
   required: true}]
 
-var qsets = [qset1, qset2];
+var qset3 = [
+  {prompt: 'Which of the following lists is ordered from smallest to largest?',
+  options:['Electron, proton, nucleus, atom',
+          'Atom, electron, proton, nucleus',
+          'Electron, nucleus, atom, neutron',
+          'Neutron, nucleus, electrom, atom'],
+  required: true},
+  {prompt: 'Which of the following defines what element an atom is?',
+  options:['Its number of protons',
+          'Its number of neutrons',
+          'Its number of electrons',
+          'Its mass'],
+  required: true},
+  {prompt: 'Suppose that in some atom, a proton is converted into a neutron. What changes as a result of this conversion?',
+  options:["The atom's element",
+          "The atom's mass (in atomic mass units)",
+          "The atom's velocity",
+          "The atom's density"],
+  required: true},
+  {prompt: 'Which of the following lists is ordered from smallest to largest?',
+  options:['Star, solar system, galaxy, universe',
+          'Galaxy, solar system, Milky Way, universe',
+          'Planet, galaxy, star, solar system',
+          'Earth, solar system, universe, galaxy'],
+  required: true},
+  {prompt: 'Which of the following are located in the nucleus of an atom?',
+  options:['Protons and neutrons',
+          'Only protons',
+          'Only electrons',
+          'Neutrons and electrons'],
+  required: true},
+  {prompt: 'Which of the following has the least mass?',
+  options:['An electron',
+          'A proton',
+          'A neutron',
+          'A hydrogen atom'],
+  required: true},
+  {prompt: "What percent of an atom's space does its nucleus occupy?",
+  options:['Less than 1%',
+          '10%',
+          '50%',
+          'More than 90%'],
+  required: true},
+  {prompt: 'In the famous equation attributed to Albert Einstein, E = mc^2, what does the letter "m" represent?',
+  options:['Mass',
+          'Momentum',
+          'Moment of inertia',
+          'Moles'],
+  required: true},
+  {prompt: 'If I were to heat up an inflated balloon, which of the the following would occur?',
+  options:['The balloon would expand',
+          'The balloon would shrink',
+          "The balloon could expand or shrink depending on whether it's filled with air or helium gas",
+          'None of these answers are correct'],
+  required: true}]
+
+var qsets = [qset1, qset2, qset3];
 
 // loop through questions and answers and randomize
 var rand_qsets = new Object();
@@ -212,13 +268,16 @@ for (i = 0; i < qsets.length; i++) {
 
 var final_qsets = new Object();
 final_qsets[0] = jsPsych.randomization.shuffle([rand_qsets[0][0],rand_qsets[0][1],rand_qsets[0][2],rand_qsets[0][3],rand_qsets[0][4],
-                                                rand_qsets[1][0],rand_qsets[1][1],rand_qsets[1][2],rand_qsets[1][3],rand_qsets[1][4]])
+                                                rand_qsets[1][0],rand_qsets[1][1],rand_qsets[1][2],rand_qsets[1][3],rand_qsets[1][4],
+                                                rand_qsets[2][0],rand_qsets[2][1],rand_qsets[2][2]])
 
 final_qsets[1] = jsPsych.randomization.shuffle([rand_qsets[0][5],rand_qsets[0][6],rand_qsets[0][7],rand_qsets[0][8],rand_qsets[0][9],
-                                                rand_qsets[1][5],rand_qsets[1][6],rand_qsets[1][7],rand_qsets[1][8],rand_qsets[1][9]])
+                                                rand_qsets[1][5],rand_qsets[1][6],rand_qsets[1][7],rand_qsets[1][8],rand_qsets[1][9],
+                                                rand_qsets[2][3],rand_qsets[2][4],rand_qsets[2][5]])
 
 final_qsets[2] = jsPsych.randomization.shuffle([rand_qsets[0][10],rand_qsets[0][11],rand_qsets[0][12],rand_qsets[0][13],rand_qsets[0][14],
-                                                rand_qsets[1][10],rand_qsets[1][11],rand_qsets[1][12],rand_qsets[1][13],rand_qsets[1][14]])
+                                                rand_qsets[1][10],rand_qsets[1][11],rand_qsets[1][12],rand_qsets[1][13],rand_qsets[1][14],
+                                                rand_qsets[2][6],rand_qsets[2][7],rand_qsets[2][8]])
 
 //let test = final_qsets[1];
 //console.log(final_qsets[1].splice(1,1))
@@ -386,7 +445,7 @@ var runExperiment = function(options) {
       type: "instructions",
       pages: ["<h2>Debriefing</h2>" +
       "<p>Thank you for contributing to research in The Contextual Dynamics Laboratory (http://www.context-lab.com/) at Dartmouth College!</p>" +
-      "<p>You will receive a base payment of $AMOUNT for your participation in the task upon submission of this HIT.</p>" +
+      "<p>You will receive a base payment of $6.25 for your participation in the task in addition to a performance bonus upon submission of this HIT.</p>" +
       "<p>Our lab is interested in developing technology to predicit future learning and test performance on information learned from short videos from past test performance. We will use your responses during this experiment to help develop models that will track participant learning while viewing short online videos and predict participant performance on future tests. We hope that this technology can help to improve learning from online courses.</p>" +
       "<p>We've taken great care to design this task appropriately for Amazon Mechanical Turk and your enjoyment as a Worker, and securely store your data on our servers without any personally-identifiable information. If for any reason you would like to contact us to ask further questions or comment on this experiment, please call the research director for this study: Dr. Jeremy Manning, at (603) 646-2777 during normal business hours (9 — 5 PM, Monday — Friday), or send an email to contextualdynamics@gmail.com with the title 'AMT Experiment Inquiry'. If you have questions, concerns, complaints, or suggestions about human research at Dartmouth College, you may call the Office of the Committee for the Protection of Human Subjects at Dartmouth College (603) 646-6482 during normal business hours. Otherwise, thank you for your contributions to scientific research and enjoy your day! </p>"],
       show_clickable_nav: true,
@@ -418,9 +477,9 @@ var runExperiment = function(options) {
           psiTurk.saveData({
             success: function() {
                 clearInterval(reprompt);
-                  psiTurk.computeBonus('compute_bonus', function(){
+                psiTurk.computeBonus('compute_bonus', function(){
                         psiTurk.completeHIT() // when finished saving, compute bonus, then quit
-                  });
+                });
             },
             error: prompt_resubmit //if error saving data, try again
           });
