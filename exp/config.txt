@@ -1,6 +1,6 @@
 [HIT Configuration]
 title = Learning & Memory Experiment
-description = View Khan Academy videos and complete the following quizzes.
+description = View Khan Academy videos and complete the following quizzes. PLEASE NOTE: This task is not compatible with Google Chrome.
 amt_keywords = Psychology, Memory, Learning
 lifetime = 24
 us_only = true
