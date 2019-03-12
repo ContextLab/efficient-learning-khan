@@ -190,7 +190,7 @@ var qset2 = [
           'Alternative sequence star',
           'None of the above'],
   required: true},
-  {prompt: 'Which of the following terms best decribes a fusion reaction?',
+  {prompt: 'Which of the following terms best describes a fusion reaction?',
   options:['Ignition',
           'Combustion',
           'Decomposition',
@@ -198,7 +198,7 @@ var qset2 = [
   required: true}]
 
 var qset3 = [
-  {prompt: 'Which of the following lists is ordered from smallest to largest?',
+  {prompt: 'Which of the following lists of particles is ordered from smallest to largest?',
   options:['Electron, proton, nucleus, atom',
           'Atom, electron, proton, nucleus',
           'Electron, nucleus, atom, neutron',
