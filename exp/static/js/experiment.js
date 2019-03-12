@@ -57,7 +57,7 @@ var qset1 = [
           'The Strong Force and the Weak Interaction'],
   required: true},
   {prompt: 'Why does the universe have a very uneven distribution of mass but a relatively equal distribution of charge?',
-  options:['Positive and negative charges “cancel out” and become a neutral charge when they combine while masses only grow larger as they combine',
+  options:['Positive and negative charges cancel out and become a neutral charge when they combine while masses only grow larger as they combine',
           'Masses tend to repel while charges tend to attract',
           'Masses tend to attract while charges tend to repel',
           'The gravitational interaction acting between masses is stronger than the electromagnetic interaction acting between charges'],
