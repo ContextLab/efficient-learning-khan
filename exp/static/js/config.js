@@ -11,7 +11,7 @@ mode = 'mturk'
 var psiTurk = new PsiTurk(uniqueId, adServerLoc, mode);
 
 //local testing and running:
-//var serverport = '22364'; // should match psiturk config.txt file
+//var serverport = '22363'; // should match psiturk config.txt file
 //var serverporturl = 'http://localhost:'+serverport+'/'
 
 
