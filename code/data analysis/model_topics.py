@@ -14,7 +14,7 @@ import numpy as np
 import os
 
 
-def model_topics(v_windows,q_windows,corpus=None,lda_params=None,vec_params=None):
+def model_topics(videos,questions,corpus=None,lda_params=None,vec_params=None):
     """
     Function that fits topic models to video content and uses it to transform video and question content
     
@@ -34,26 +34,47 @@ def model_topics(v_windows,q_windows,corpus=None,lda_params=None,vec_params=None
         
         questions_topics - topic model for the questions
     """
-    print("Running model")
-    corpus = v_windows+q_windows
+    print("Modeling Topics!")
+    
+    # create corpus from questions and videos if none provided
+    if corpus is None:
+        corpus = videos+questions
+        
+    # assign vectorizer and lda parameters if none provided
+    if vec_params is None:
+        vec_params = {
+            'max_df': 0.95,
+            'min_df': 2,
+            'max_features': 500,
+            'stop_words': 'english'
+        }
+    if lda_params is None: 
+        lda_params = {
+            'n_topics': 20,
+            'max_iter': 10,
+            'learning_method': 'online',
+            'learning_offset':50.,
+            'random_state': 0
+        }
+    
     # initialize count vectorizer
     tf_vectorizer = CountVectorizer(**vec_params)
     # fit the model
-    tf_vectorizer.fit(v_windows+q_windows)
+    tf_vectorizer.fit(videos+questions)
 
     # transform video windows
-    video_tf = tf_vectorizer.transform(v_windows)
+    video_tf = tf_vectorizer.transform(videos)
 
     # transform question samples
-    questions_tf = tf_vectorizer.transform(q_windows)
+    questions_tf = tf_vectorizer.transform(questions)
 
-    both_tf = tf_vectorizer.transform(v_windows+q_windows)
+    corpus_tf = tf_vectorizer.transform(videos+questions)
 
     # initialize topic model
     lda = LatentDirichletAllocation(**lda_params)
 
     # fit the topic model
-    lda.fit(both_tf)
+    lda.fit(corpus_tf)
 
     # transform video topics
     video_topics = lda.transform(video_tf)
@@ -66,40 +87,3 @@ def model_topics(v_windows,q_windows,corpus=None,lda_params=None,vec_params=None
     
     return video_topics, questions_topics
 
-
-t1,t2 = model_topics(forces_video_samples,forces_questions_samples,lda_params=lda_params,vec_params=vec_params)
-
-def model_lessons(v_windows, q_windows, vec_params, lda_params):
-    """
-    Function that fits a topic model to video content and uses it to transform video and question content
-    """
-    
-    # initialize count vectorizer
-    tf_vectorizer = CountVectorizer(**vec_params)
-    # fit the model
-    tf_vectorizer.fit(v_windows+q_windows)
-
-    # transform video windows
-    video_tf = tf_vectorizer.transform(v_windows)
-
-    # transform question samples
-    questions_tf = tf_vectorizer.transform(q_windows)
-
-    both_tf = tf_vectorizer.transform(v_windows+q_windows)
-
-    # initialize topic model
-    lda = LatentDirichletAllocation(**lda_params)
-
-    # fit the topic model
-    lda.fit(both_tf)
-
-    # transform video topics
-    video_topics = lda.transform(video_tf)
-
-    # smooth model
-    video_topics = pd.DataFrame(video_topics).rolling(25).mean().loc[25:,:].as_matrix()
-
-    # transform question topics
-    questions_topics = lda.transform(questions_tf)
-    
-    return video_topics, questions_topics
