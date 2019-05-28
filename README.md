@@ -4,6 +4,11 @@ This repository contains code for the **Efficient Learning: Khan Academy** exper
 The experiment is contained in Docker images and may be deployed as a local Psiturk- or Amazon MTurk-based.
 The experiment structure may be modified to run a variety of experiments.
 
+
+## Overview
+
+Human knowledge is growing exponentially as new discoveries build upon one another, compounded by similarly accelerated advances in technology.  Nearly every student is familiar with the frustrations of typical classroom learning.  There is an ever-present mismatch between material he or she is struggling with the most and the material the instructor spends the most time teaching. This project constitutes the first step on the path to resolving such inefficiencies in individual learning. In this study, online participants answer three randomized sets of thirteen quiz question combining knowledge of general physics, the four forces of nature, and the birth of stars. Between these question blocks, participants view two (randomly ordered) Khan Academy lectures pertaining to the latter two topics. By modeling the dynamic content of the lecture videos, we are able reveal the information conveyed in each moment of the lesson. We then apply that model to the quiz questions to determine the knowledge tested by each, and map that knowledge onto a weighted combination of segments of lectures. With the modeled content of questions that participants answered correctly and incorrectly during each quiz block, we can estimate what knowledge and understanding they gained from the prior lesson, as well as predict what they will gain from the next lesson. Our method allows us to quantify successful acquisition of lecture knowledge via increasing similarity between the models of the lectures’ content and those of participants correctly answered questions, along with decreasing similarity between the lecture models and those of incorrectly answered questions. These models of and mappings of content learned, not learned, soon-to-be-learned, and previously known will allow us to build EEG data-based models for neural responses corresponding to each, allowing us to classify what a brain “looks like” when learning efficiently versus struggling. We aim to ultimately leverage these classifications into a deployable, low-cost hardware and software toolkit that will aid both instructors and students in real-world classroom environments.
+
 ## Required Components
 
 To run the efficient-learning-khan experiment on the Amazon Mechanical Turk platform, you'll need the following software and accounts:
@@ -44,11 +49,6 @@ To run the efficient-learning-khan experiment on the Amazon Mechanical Turk plat
 5. This will open a bash shell from within the docker image. From here, enter the command `psiturk` to launch the server followed by `server on`. To debug, enter `debug` and paste the link into the browser.
 6. Make sure to update the consent form (`exp/static/templates/consent.html`), lab/university images (`exp/static/favicon.ico`,`exp/static/files/lablogo.png`,`exp/static/files/university.png`) and tasks (`exp/static/js`) as needed for your experiment.
 7. Read the section on "Testing or Collecting Data Locally" below to make sure your configuration is correctly set for local use.
-
-
-## Experiment Walkthrough and JavaScript files guide
-
-  *insert description of .js files here*
 
 
 ## Configuring to Test or Collect Data Locally
