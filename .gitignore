@@ -1,5 +1,6 @@
 ELKserver.pem
 *.DS_Store
+*.ipynb_checkpoints/
 exp/.psiturkconfig
 data/*
 exp/google-credentials
