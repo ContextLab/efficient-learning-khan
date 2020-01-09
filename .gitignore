@@ -5,3 +5,4 @@ exp/.psiturkconfig
 data/*
 exp/google-credentials
 exp/config.txt
+code/data-analysis/UMAP_reducer.npy
