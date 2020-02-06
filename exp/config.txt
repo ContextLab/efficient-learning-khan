@@ -12,43 +12,24 @@ psiturk_keywords = memory, learning
 organization_name = Dartmouth College
 browser_exclude_rule = mobile, tablet, Chrome
 
-# set true for testing, otherwise should be false
-# allow_repeats = true
-allow_repeats = false
-
 [Database Parameters]
-database_url = mysql://psiturk:psiturk@db:3306/participants
-table_name = efflearnkhan
+database_url = sqlite://efficient-learning-khan.db
+table_name = participants
 
 [Server Parameters]
 host = 0.0.0.0
 port = 22363
-cutoff_time = 30
-timeout = 50
+cutoff_time = 120
+timeout = 120
 logfile = server.log
 loglevel = 1
 debug = false
 threads = auto
 
-# Change adserver_revproxy_host to www.location.of.your.revproxy.sans.protocol.com
-adserver_revproxy_host = 129.170.30.179
-adserver_revproxy_port = 80
-
-[AWS Access]
-aws_access_key_id = AKIAJ526S5QFLGBM6LXA
-aws_secret_access_key = GnXEqGJ4EQxiRjomLmHIcakoewFtN83I6KP1oPWR
-aws_region = us-east-1
-
-[psiTurk Access]
-psiturk_access_key_id = ndRD9pXht6bHaAUnf6Srbe
-psiturk_secret_access_id = JBGuDUkzgMyEMXQJzUBurL
-
 [Task Parameters]
-experiment_code_version = 1.0
+experiment_code_version = 2.0
 num_conds = 1
 num_counters = 1
 
 [Shell Parameters]
 launch_in_sandbox_mode = true
-use_psiturk_ad_server = true
-ad_location = false
