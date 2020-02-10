@@ -5,7 +5,7 @@
 // collects custom ID and experimenter name if run in the lab
 //mode = 'debug';
 //mode = 'lab';
-mode = 'mturk'
+//mode = 'mturk'
 
 // Initalize psiturk object
 var psiTurk = new PsiTurk(uniqueId, adServerLoc, mode);
@@ -20,4 +20,4 @@ var psiTurk = new PsiTurk(uniqueId, adServerLoc, mode);
 //var serverporturl = 'http://127.0.0.1/' //used in fitbit.html to open window
 
 //online use:
-var serverporturl = 'http://129.170.30.179/'
+// var serverporturl = 'http://129.170.30.179/'
