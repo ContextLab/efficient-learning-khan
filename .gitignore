@@ -2,7 +2,7 @@ ELKserver.pem
 *.DS_Store
 *.ipynb_checkpoints/
 exp/.psiturkconfig
-data/*
+data/db/
 exp/google-credentials
 exp/config.txt
 code/data-analysis/UMAP_reducer.npy
