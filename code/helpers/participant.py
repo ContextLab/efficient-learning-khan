@@ -51,7 +51,7 @@ class Participant:
         if isinstance(lecture, int):
             lecture = [lecture]
         elif isinstance(lecture, str):
-            lecture = lec_keys[lecture]
+            lecture = [lec_keys[lecture]]
         elif hasattr(lecture, '__iter__'):
             for l in range(len(lecture)):
                 if isinstance(lecture[l], str):
@@ -59,7 +59,7 @@ class Participant:
 
         d = self.data
         if qset is not None:
-            d = d.loc[d['set'].isin(qset)]
+            d = d.loc[d['qset'].isin(qset)]
         if lecture is not None:
             d = d.loc[d['lecture'].isin(lecture)]
         return d
@@ -84,7 +84,7 @@ class Participant:
         :return trace: (numpy.ndarray) The reconstructed memory trace
         """
         def symmetric_KL(a, b, c=1e-11):
-            np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
+            return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
 
         if store and store_key is None:
             raise ValueError("Must pass a store_key if passing store")
