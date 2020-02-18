@@ -67,33 +67,40 @@ class Participant:
     def store_trace(self, trace, store_key):
         self.traces[store_key] = trace
 
-    def reconstruct_trace(self, exp, lecture=None, qset=None, store=False, store_key=None):
+    def reconstruct_trace(self, exp, lecture, qset=None, store=None, recon_lec=None):
         """
         Reconstructs a participant's memory trace based on a lecture's
         trajectory, a set of questions' topic vectors, and binary accuracy scores
         :param exp: (Experiment object) Used to access lecture trajectory and
-        question topic vectors
-        :param lecture: (int, str, iterable of ints/strs) The lecture(s) for
-        which to get questions and scores
-        :param qset: (int or iterable of ints) The question set for which to get
-        questions and scores
-        :param store: (bool, default False) If True, store the reconstructed
-        trace in the self.traces dict with the key given by store_key
-        :param store_key: Key under which the reconstructed trace will be stored
-        in self.traces (if store is True)
+                    question topic vectors
+        :param lecture: (int, str, list-like of ints/strs) The lecture(s) for
+                        which to get questions and scores
+        :param qset: (int or list-like of ints) The question set for which to get
+                     questions and scores. If [default] None, get data for all question sets
+        :param store: (str) The key under which the reconstructed trace should be
+                       stored in self.traces. If [default] None, don't store the trace
+        :param recon_lec: (int or str) The lecture trajectory to use in reconstructing
+                          the trace. Useful if passing an iterable to lecture in
+                          order to get questions related to multiple lectures
         :return trace: (numpy.ndarray) The reconstructed memory trace
         """
         def symmetric_KL(a, b, c=1e-11):
             return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
 
-        if store and store_key is None:
-            raise ValueError("Must pass a store_key if passing store")
-
         data = self.get_data(qset=qset, lecture=lecture)
         acc = data['accuracy'].tolist()
         qids = data['qID'].tolist()
-        lecture_traj = exp.get_lecture_traj(lecture=lecture)
         question_vecs = exp.get_question_vecs(qids=qids)
+        if isinstance(lecture, (int, str)):
+            lecture_traj = exp.get_lecture_traj(lecture)
+        elif hasattr(lecture, '__iter__'):
+            if recon_lec is not None:
+                lecture_traj = exp.get_lecture_traj(recon_lec)
+            else:
+                raise ValueError("Must specify recon_lec if passing multiple lectures")
+        else:
+            raise ValueError("lecture should be one of: str, int, list-like of str/int")
+
         # compute timepoints by questions correlation matrix
         wz = 1 - cdist(lecture_traj, question_vecs, metric=symmetric_KL)
         # normalize
@@ -108,8 +115,8 @@ class Participant:
         # weight the model
         trace = lecture_traj * b_a.T
         # store trace in object
-        if store:
-            self.store_trace(trace=trace, store_key=store_key)
+        if store is not None:
+            self.store_trace(trace=trace, store_key=store)
         return trace
 
     def plot(self, keys, **kwargs):
