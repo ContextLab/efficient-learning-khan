@@ -29,10 +29,18 @@ class Participant:
 
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
+        print(self.__str__())
         return self.data.to_html()
 
     def __str__(self):
-        return f"Participant object with subID {self.subID}"
+        return f"Participant {self.subID}"
+
+    def __eq__(self, other):
+        return self.subID == other
+
+    def head(self, *args, **kwargs):
+        print(self.__str__())
+        return self.data.head(*args, **kwargs)
 
     def get_data(self, qset=None, lecture=None):
         # return (a subset of) the subject's data
