@@ -48,7 +48,12 @@ class Experiment:
         }
 
     def get_lecture_traj(self, lecture):
-        if lecture in ['forces', 1]:
+        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
+            if len(lecture > 1):
+                return [self.get_lecture_traj(l) for l in lecture]
+            else:
+                return self.get_lecture_traj(lecture[0])
+        elif lecture in ['forces', 1]:
             return self.forces_traj
         elif lecture in ['bos', 2]:
             return self.bos_traj
@@ -111,7 +116,7 @@ class Experiment:
             else:
                 participants = [participants]
         elif isinstance(participants, int):
-            participants = [f"P{participants}"]
+            participants = [f'P{participants}']
         if isinstance(keys, str):
             keys = [keys]
 
