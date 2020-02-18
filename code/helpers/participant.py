@@ -32,7 +32,7 @@ class Participant:
         return self.data.to_html()
 
     def __str__(self):
-        print(f"Participant object with subID {self.subID}")
+        return f"Participant object with subID {self.subID}"
 
     def get_data(self, qset=None, lecture=None):
         # return (a subset of) the subject's data
