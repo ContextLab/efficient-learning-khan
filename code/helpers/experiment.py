@@ -7,6 +7,7 @@ from nltk.corpus import stopwords
 DATADIR= '../../data'
 RAWDIR = opj(DATADIR, 'raw')
 TRAJS_DIR = opj(DATADIR, 'trajectories')
+EMBEDDING_DIR = opj(DATADIR, 'embedding')
 MODELS_DIR = opj(DATADIR, 'models')
 STOP_WORDS = stopwords.words('english') + ["let", "let's", "they'd",
                                            "they're", "they've", "they'll",
@@ -25,6 +26,7 @@ class Experiment:
         self.bos_traj = None
         self.question_vectors = None
         self.answer_vectors = None
+        self.embedding_space = None
         self.cv = None
         self.lda = None
         self.lecture_wsize = 15
@@ -114,6 +116,9 @@ class Experiment:
 
     def load_answer_vectors(self):
         self.answer_vectors = np.load(opj(TRAJS_DIR, 'all_answers.npy'))
+
+    def load_embedding_space(self):
+        self.embedding_space = np.load(opj(EMBEDDING_DIR), 'embedding_space.npy')
 
     def load_windows(self, lecture):
         if lecture not in ('forces', 'bos'):
