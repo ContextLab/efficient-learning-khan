@@ -62,6 +62,8 @@ class Experiment:
                 qids += list(range(16, 30))
             if 'general' in lectures:
                 qids += list(range(30, 39))
+        else:
+            qids = [qid - 1 for qid in qids]
         return self.question_vectors[qids]
 
     def plot(self, lectures=None, questions=None, participants=None, keys=None, **kwargs):
@@ -80,10 +82,11 @@ class Experiment:
 
         to_plot = [self.get_lecture_traj(l) for l in lectures]
         if len(questions) > 0:
-            if isinstance(questions[0], str):
-                to_plot += self.get_question_vecs(lecture=questions)
-            else:
-                to_plot += self.get_question_vecs(qids=questions)
+            for q in questions:
+                if isinstance(q, str):
+                    to_plot.append(self.get_question_vecs(lectures=q))
+                else:
+                    to_plot.append(self.get_question_vecs(qids=q))
         to_plot += [p.traces[key] for p in participants for key in keys]
         return hyp.plot(to_plot, **kwargs)
 
