@@ -6,9 +6,6 @@ from html import unescape
 from scipy.spatial.distance import cdist
 from scipy.stats import entropy
 
-QS_PATH = '../../data/raw/questions.tsv'
-TRAJS_DIR = '../../data/trajectories/'
-
 
 class Participant:
     def __init__(self, subID, psiturk_data=None, data_df=None):
@@ -114,7 +111,7 @@ class Participant:
         return hyp.plot(traces_toplot, **kwargs)
 
     @property
-    def all_questions(self, questions_path=QS_PATH):
+    def all_questions(self, questions_path='../../data/raw/questions.tsv'):
         return pd.read_csv(questions_path,
                            sep='\t',
                            names=['index', 'video', 'question',
