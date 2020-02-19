@@ -33,7 +33,10 @@ class Participant:
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
         print(self.__str__())
-        return self.data.to_html()
+        try:
+            return self.data.to_html()
+        except AttributeError:
+            return "Individual data unavailable"
 
     def __str__(self):
         return f"Participant {self.subID}"
