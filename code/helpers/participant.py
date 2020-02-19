@@ -8,24 +8,27 @@ from scipy.stats import entropy
 
 
 class Participant:
-    def __init__(self, subID, psiturk_data=None, data_df=None):
-        if (
-            (psiturk_data is data_df is None)
-            or (psiturk_data is not None and data_df is not None)
-        ):
-            raise ValueError("Must create Participant with either raw PsiTurk data OR a Pandas.DataFrame")
-        if psiturk_data is not None:
-            self.raw_data = literal_eval(psiturk_data['datastring'])
-            self.uniqueid = psiturk_data['uniqueid']
-            self.date_collected = psiturk_data['beginhit'].split()[0]
-            self.data = self._grade()
-        elif data_df is not None:
-            fallback_msg = "Only set for participant created from raw PsiTurk data"
-            self.raw_data = self.uniqueid = self.date_collected = fallback_msg
-            self.data = data_df
-
-        self.subID = subID
+    def __init__(self, subid, data=None, raw_data=None, date_collected=None):
+        self.subID = subid
+        self.data = data
+        fallback_msg = "Attribute only set for participant created from raw PsiTurk data"
+        if raw_data is None:
+            self.raw_data = fallback_msg
+        else:
+            self.raw_data = raw_data
+        if date_collected is None:
+            self.date_collected = fallback_msg
+        else:
+            self.date_collected = date_collected
         self.traces = {}
+
+    @classmethod
+    def from_psiturk(cls, psiturk_data, subid):
+        raw_data = literal_eval(psiturk_data['datastring'])
+        date_collected = psiturk_data['beginhit'].split()[0]
+        p = cls(subid=subid, raw_data=raw_data, date_collected=date_collected)
+        p.data = p._grade()
+        return p
 
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
@@ -134,7 +137,7 @@ class Participant:
                            index_col='index')
 
     def _grade(self):
-        # grades raw data and sets self.data
+        # grades raw data to set self.data
         data = []
         question_blocks = (3, 8, 13)
         all_qs = self.all_questions
