@@ -1,7 +1,0 @@
-google-cloud-videointelligence==1.2.0
-Google-cloud-vision==0.29.0
-Google-cloud-storage==1.6.0
-sk-video==1.1.8
-ffmpy==0.2.2
-ffmpeg-python==0.1.9
-datetime
