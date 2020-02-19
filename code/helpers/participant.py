@@ -128,6 +128,8 @@ class Participant:
     def plot(self, keys, **kwargs):
         # wraps hypertools.plot for plotting multiple reconstructed traces
         # (see Experiment.plot for multisubject plotting)
+        if isinstance(keys, str):
+            keys = [keys]
         traces_toplot = [self.traces[k] for k in keys]
         return hyp.plot(traces_toplot, **kwargs)
 
