@@ -62,5 +62,8 @@ RUN pip install \
 # install js & css files for some nice (pure convenience) jupyter notebook extensions
 RUN jupyter contrib nbextension install --user
 
+# download nltk stop-words corpus
+RUN python -c "import nltk; nltk.download('stopwords')"
+
 # expose a port to run jupyter notebooks
 EXPOSE 22364
