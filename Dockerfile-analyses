@@ -38,10 +38,6 @@ ENV PATH /opt/conda/bin:$PATH
 # enable UTF-8 locale
 ENV LANG C.UTF-8
 
-# make remaining commands happen inside the environment
-# SHELL ["conda", "run", "-n", "base", "/bin/bash", "-c"]
-
-
 # update setuptools
 RUN conda update setuptools
 
@@ -60,7 +56,11 @@ RUN pip install \
     scikit-learn==0.21.3 \
     spurplus==2.3.3 \
     hypertools==0.6.2 \
-    git+git://github.com/lmcinnes/umap.git@fc59aa78f14b10e5eafc19b18fc135de1c5382ea#egg=umap_learn
+    git+git://github.com/lmcinnes/umap.git@fc59aa78f14b10e5eafc19b18fc135de1c5382ea#egg=umap_learn \
+    jupyter_contrib_nbextensions==0.5.1
+
+# install js & css files for some nice (pure convenience) jupyter notebook extensions
+RUN jupyter contrib nbextension install --user
 
 # expose a port to run jupyter notebooks
 EXPOSE 22364
