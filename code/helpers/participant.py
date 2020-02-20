@@ -8,31 +8,45 @@ from scipy.stats import entropy
 
 
 class Participant:
-    def __init__(self, subID, psiturk_data=None, data_df=None):
-        if (
-            (psiturk_data is data_df is None)
-            or (psiturk_data is not None and data_df is not None)
-        ):
-            raise ValueError("Must create Participant with either raw PsiTurk data OR a Pandas.DataFrame")
-        if psiturk_data is not None:
-            self.raw_data = literal_eval(psiturk_data['datastring'])
-            self.uniqueid = psiturk_data['uniqueid']
-            self.date_collected = psiturk_data['beginhit'].split()[0]
-            self.data = self._grade()
-        elif data_df is not None:
-            fallback_msg = "Only set for participant created from raw PsiTurk data"
-            self.raw_data = self.uniqueid = self.date_collected = fallback_msg
-            self.data = data_df
-
-        self.subID = subID
+    def __init__(self, subid, data=None, raw_data=None, date_collected=None):
+        self.subID = subid
+        self.data = data
+        fallback_msg = "Attribute only set for participant created from raw PsiTurk data"
+        if raw_data is None:
+            self.raw_data = fallback_msg
+        else:
+            self.raw_data = raw_data
+        if date_collected is None:
+            self.date_collected = fallback_msg
+        else:
+            self.date_collected = date_collected
         self.traces = {}
+
+    @classmethod
+    def from_psiturk(cls, psiturk_data, subid):
+        raw_data = literal_eval(psiturk_data['datastring'])
+        date_collected = psiturk_data['beginhit'].split()[0]
+        p = cls(subid=subid, raw_data=raw_data, date_collected=date_collected)
+        p.data = p._grade()
+        return p
 
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
-        return self.data.to_html()
+        print(self.__str__())
+        try:
+            return self.data.to_html()
+        except AttributeError:
+            return "Individual data unavailable"
 
     def __str__(self):
-        print(f"Participant object with subID {self.subID}")
+        return f"Participant {self.subID}"
+
+    def __eq__(self, other):
+        return self.subID == other
+
+    def head(self, *args, **kwargs):
+        print(self.__str__())
+        return self.data.head(*args, **kwargs)
 
     def get_data(self, qset=None, lecture=None):
         # return (a subset of) the subject's data
@@ -43,7 +57,7 @@ class Participant:
         if isinstance(lecture, int):
             lecture = [lecture]
         elif isinstance(lecture, str):
-            lecture = lec_keys[lecture]
+            lecture = [lec_keys[lecture]]
         elif hasattr(lecture, '__iter__'):
             for l in range(len(lecture)):
                 if isinstance(lecture[l], str):
@@ -51,7 +65,7 @@ class Participant:
 
         d = self.data
         if qset is not None:
-            d = d.loc[d['set'].isin(qset)]
+            d = d.loc[d['qset'].isin(qset)]
         if lecture is not None:
             d = d.loc[d['lecture'].isin(lecture)]
         return d
@@ -59,33 +73,40 @@ class Participant:
     def store_trace(self, trace, store_key):
         self.traces[store_key] = trace
 
-    def reconstruct_trace(self, exp, lecture=None, qset=None, store=False, store_key=None):
+    def reconstruct_trace(self, exp, lecture, qset=None, store=None, recon_lec=None):
         """
         Reconstructs a participant's memory trace based on a lecture's
         trajectory, a set of questions' topic vectors, and binary accuracy scores
         :param exp: (Experiment object) Used to access lecture trajectory and
-        question topic vectors
-        :param lecture: (int, str, iterable of ints/strs) The lecture(s) for
-        which to get questions and scores
-        :param qset: (int or iterable of ints) The question set for which to get
-        questions and scores
-        :param store: (bool, default False) If True, store the reconstructed
-        trace in the self.traces dict with the key given by store_key
-        :param store_key: Key under which the reconstructed trace will be stored
-        in self.traces (if store is True)
+                    question topic vectors
+        :param lecture: (int, str, list-like of ints/strs) The lecture(s) for
+                        which to get questions and scores
+        :param qset: (int or list-like of ints) The question set for which to get
+                     questions and scores. If [default] None, get data for all question sets
+        :param store: (str) The key under which the reconstructed trace should be
+                       stored in self.traces. If [default] None, don't store the trace
+        :param recon_lec: (int or str) The lecture trajectory to use in reconstructing
+                          the trace. Useful if passing an iterable to lecture in
+                          order to get questions related to multiple lectures
         :return trace: (numpy.ndarray) The reconstructed memory trace
         """
         def symmetric_KL(a, b, c=1e-11):
-            np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
-
-        if store and store_key is None:
-            raise ValueError("Must pass a store_key if passing store")
+            return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
 
         data = self.get_data(qset=qset, lecture=lecture)
         acc = data['accuracy'].tolist()
         qids = data['qID'].tolist()
-        lecture_traj = exp.get_lecture_traj(lecture=lecture)
         question_vecs = exp.get_question_vecs(qids=qids)
+        if isinstance(lecture, (int, str)):
+            lecture_traj = exp.get_lecture_traj(lecture)
+        elif hasattr(lecture, '__iter__'):
+            if recon_lec is not None:
+                lecture_traj = exp.get_lecture_traj(recon_lec)
+            else:
+                raise ValueError("Must specify recon_lec if passing multiple lectures")
+        else:
+            raise ValueError("lecture should be one of: str, int, list-like of str/int")
+
         # compute timepoints by questions correlation matrix
         wz = 1 - cdist(lecture_traj, question_vecs, metric=symmetric_KL)
         # normalize
@@ -100,13 +121,15 @@ class Participant:
         # weight the model
         trace = lecture_traj * b_a.T
         # store trace in object
-        if store:
-            self.store_trace(trace=trace, store_key=store_key)
+        if store is not None:
+            self.store_trace(trace=trace, store_key=store)
         return trace
 
     def plot(self, keys, **kwargs):
         # wraps hypertools.plot for plotting multiple reconstructed traces
         # (see Experiment.plot for multisubject plotting)
+        if isinstance(keys, str):
+            keys = [keys]
         traces_toplot = [self.traces[k] for k in keys]
         return hyp.plot(traces_toplot, **kwargs)
 
@@ -119,7 +142,7 @@ class Participant:
                            index_col='index')
 
     def _grade(self):
-        # grades raw data and sets self.data
+        # grades raw data to set self.data
         data = []
         question_blocks = (3, 8, 13)
         all_qs = self.all_questions

@@ -6,8 +6,11 @@ from nltk.corpus import stopwords
 
 DATADIR= '../../data'
 RAWDIR = opj(DATADIR, 'raw')
+PARTICIPANTS_DIR = opj(DATADIR, 'participants')
 TRAJS_DIR = opj(DATADIR, 'trajectories')
+EMBEDDING_DIR = opj(DATADIR, 'embedding')
 MODELS_DIR = opj(DATADIR, 'models')
+N_PARTICIPANTS = 50
 STOP_WORDS = stopwords.words('english') + ["let", "let's", "they'd",
                                            "they're", "they've", "they'll",
                                            "that's", "I'll", "I'm"]
@@ -16,6 +19,9 @@ STOP_WORDS = stopwords.words('english') + ["let", "let's", "they'd",
 class Experiment:
     def __init__(self):
         self.lectures = ['Four Forces', 'Birth of Stars']
+        self.n_participants = N_PARTICIPANTS
+        self.participants = None
+        self.avg_participant = None
         self.forces_transcript = None
         self.bos_transcript = None
         self.questions = None
@@ -25,6 +31,7 @@ class Experiment:
         self.bos_traj = None
         self.question_vectors = None
         self.answer_vectors = None
+        self.embedding_space = None
         self.cv = None
         self.lda = None
         self.lecture_wsize = 15
@@ -41,7 +48,12 @@ class Experiment:
         }
 
     def get_lecture_traj(self, lecture):
-        if lecture in ['forces', 1]:
+        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
+            if len(lecture > 1):
+                return [self.get_lecture_traj(l) for l in lecture]
+            else:
+                return self.get_lecture_traj(lecture[0])
+        elif lecture in ['forces', 1]:
             return self.forces_traj
         elif lecture in ['bos', 2]:
             return self.bos_traj
@@ -60,32 +72,86 @@ class Experiment:
                 qids += list(range(16, 30))
             if 'general' in lectures:
                 qids += list(range(30, 39))
+        else:
+            qids = [qid - 1 for qid in qids]
         return self.question_vectors[qids]
 
     def plot(self, lectures=None, questions=None, participants=None, keys=None, **kwargs):
-        # wraps hypertools.plot for multisubject plots
-        # plots in order: [lectures, questions, participants[0][keys[0]], participants[0][keys[1]], etc
+        """
+        wraps hypertools.plot for multisubject plots and plotting lectures/questions
+        plots in order: [lectures, questions, participants[0][keys[0]], participants[0][keys[1]], etc
+        :param lectures: (str or iterable of str) Lecture(s) topic trajectories
+                         to plot
+        :param questions: (str, int, or iterable of str/int) If str or iterable
+                           of strs, the names of question types ("forces", "bos",
+                           "general") to plot. If int or iterable of ints, the
+                           IDs of questions to plot
+        :param participants: (str or iterable of str) The participant(s) in
+                              self.participants whose reconstructed traces
+                              (given by keys arg) to plot.  May also be "all" for
+                              all in self.participants or "avg" for self.avg_participant
+        :param keys: (str or iterable of str) The keys of reconstructed traces to
+                      plot for each participant (contained in Participant.traces)
+        :param kwargs: Keyword arguments to pass to hypertools or matplotlib
+        :return:
+        """
+        if (participants is not None) and (keys is None):
+            raise ValueError("Must pass keys if passing participants")
+        # funnel args into iterables
         if lectures is None:
             lectures = []
+        elif isinstance(lectures, str):
+            lectures = [lectures]
         if questions is None:
             questions = []
         elif isinstance(questions, (str, int)):
             questions = [questions]
         if participants is None:
             participants = []
-        if len(participants) > 0 and keys is None:
-            raise ValueError("Must pass keys if passing participants")
+        elif isinstance(participants, str):
+            if participants == 'all':
+                participants = self.participants
+            elif participants == 'avg':
+                participants = [self.avg_participant]
+            else:
+                participants = [participants]
+        elif isinstance(participants, int):
+            participants = [f'P{participants}']
+        if isinstance(keys, str):
+            keys = [keys]
 
         to_plot = [self.get_lecture_traj(l) for l in lectures]
-        if len(questions) > 0:
-            if isinstance(questions[0], str):
-                to_plot += self.get_question_vecs(lecture=questions)
+        for q in questions:
+            if isinstance(q, str):
+                to_plot.append(self.get_question_vecs(lectures=q))
             else:
-                to_plot += self.get_question_vecs(qids=questions)
-        to_plot += [p.traces[key] for p in participants for key in keys]
+                to_plot.append(self.get_question_vecs(qids=q))
+
+        for p in participants:
+            if isinstance(p, int):
+                p = f"P{p}"
+            if isinstance(p, str):
+                p = self.participants[self.participants == p][0]
+            for key in keys:
+                to_plot.append(p.traces[key])
+
         return hyp.plot(to_plot, **kwargs)
 
     # data loaders
+    def load_participants(self, load_avg=False):
+        participants = []
+        for pid in range(1, self.n_participants + 1):
+            path = opj(PARTICIPANTS_DIR, f'P{pid}.npy')
+            p = np.load(path, allow_pickle=True).item()
+            participants.append(p)
+        self.participants = np.array(participants)
+        if load_avg:
+            self.load_avg_participant()
+
+    def load_avg_participant(self):
+        path = opj(PARTICIPANTS_DIR, 'avg_participant.npy')
+        self.avg_participant = np.load(path, allow_pickle=True).item()
+
     def load_transcript(self, lecture):
         if lecture not in ('forces', 'bos'):
             raise ValueError("lecture may be one of: 'forces', 'bos'")
@@ -114,6 +180,9 @@ class Experiment:
 
     def load_answer_vectors(self):
         self.answer_vectors = np.load(opj(TRAJS_DIR, 'all_answers.npy'))
+
+    def load_embedding_space(self):
+        self.embedding_space = np.load(opj(EMBEDDING_DIR), 'embedding_space.npy')
 
     def load_windows(self, lecture):
         if lecture not in ('forces', 'bos'):

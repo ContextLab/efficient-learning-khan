@@ -1,7 +1,7 @@
-# Dockerfile for Eficient-Learning-Khan experiment
+# Dockerfile for running eficient-Learning-Khan experiment
+# Use Dockerfile-analyses to build an environment for running the analysis code
 FROM debian:stretch
-MAINTAINER Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu
-# created 2/5/2020
+MAINTAINER Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu>
 
 # install debian-related stuff
 RUN apt-get update
