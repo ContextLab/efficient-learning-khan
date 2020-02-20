@@ -11,9 +11,9 @@ TRAJS_DIR = opj(DATADIR, 'trajectories')
 EMBEDDING_DIR = opj(DATADIR, 'embedding')
 MODELS_DIR = opj(DATADIR, 'models')
 N_PARTICIPANTS = 50
-STOP_WORDS = stopwords.words('english') + ["let", "let's", "they'd",
-                                           "they're", "they've", "they'll",
-                                           "that's", "I'll", "I'm"]
+STOP_WORDS = stopwords.words('english') + ["even", "I'll", "I'm", "let", "let's",
+                                           "really", "they'd", "they're",
+                                           "they've", "they'll", "that's"]
 
 
 class Experiment:
