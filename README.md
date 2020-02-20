@@ -1,123 +1,51 @@
 # efficient-learning-khan
 
 This repository contains code for the **Efficient Learning: Khan Academy** experiment, data analysis, and generated figures.
-The experiment is contained in Docker images and may be deployed as a local Psiturk- or Amazon MTurk-based.
-The experiment structure may be modified to run a variety of experiments.
 
 
 ## Overview
 
 Human knowledge is growing exponentially as new discoveries build upon one another, compounded by similarly accelerated advances in technology.  Nearly every student is familiar with the frustrations of typical classroom learning.  There is an ever-present mismatch between material he or she is struggling with the most and the material the instructor spends the most time teaching. This project constitutes the first step on the path to resolving such inefficiencies in individual learning. In this study, online participants answer three randomized sets of thirteen quiz question combining knowledge of general physics, the four forces of nature, and the birth of stars. Between these question blocks, participants view two (randomly ordered) Khan Academy lectures pertaining to the latter two topics. By modeling the dynamic content of the lecture videos, we are able reveal the information conveyed in each moment of the lesson. We then apply that model to the quiz questions to determine the knowledge tested by each, and map that knowledge onto a weighted combination of segments of lectures. With the modeled content of questions that participants answered correctly and incorrectly during each quiz block, we can estimate what knowledge and understanding they gained from the prior lesson, as well as predict what they will gain from the next lesson. Our method allows us to quantify successful acquisition of lecture knowledge via increasing similarity between the models of the lectures’ content and those of participants correctly answered questions, along with decreasing similarity between the lecture models and those of incorrectly answered questions. These models of and mappings of content learned, not learned, soon-to-be-learned, and previously known will allow us to build EEG data-based models for neural responses corresponding to each, allowing us to classify what a brain “looks like” when learning efficiently versus struggling. We aim to ultimately leverage these classifications into a deployable, low-cost hardware and software toolkit that will aid both instructors and students in real-world classroom environments.
 
-## Required Components
+## Running the experiment
+The locally deployable version of the experiment may be run inside a Docker container as described here (for the MTURK-compatible version of the experiment, see the `mturk` branch).  A pre-configured image for the local experiment can be built from `Dockerfile-experiment`.  
+0. Install Docker on your computer using the appropriate guide below:
+- [OSX](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac)
+- [Windows](https://docs.docker.com/docker-for-windows/install/)
+- [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/)
+- [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian/)
+1. Build the image from the `Dockerfile-experiment` file in this repository
+ - `docker build -f Dockerfile-experiment -t khan-exp .`
+2. Run a container from the image, exposing a port to run the experiment in a web browser
+- `docker run -it -p 22363:22363 --name Khan-exp`
+3. You should now be inside the the container, in the `/psiturk/exp` directory. Start the PsiTurk shell and turn the server on
+- `psiturk`
+- `server on`
+4. In a web browser, navigate to the port exposed to the container
+- Open a browser window and enter `localhost:22363`
+5. Once the experiment is finished running, shut down the server, exit the PsiTurk shell and exit the Docker container
+- `server off`
+- `exit`
+- `exit`
 
-To run the efficient-learning-khan experiment on the Amazon Mechanical Turk platform, you'll need the following software and accounts:
-
-* Docker (v3+):
-  https://docs.docker.com/install/  
-  (required for local use as well)
-* PsiTurk account (free):
-  https://psiturk.org  
-* Amazon Web Services account (paid):  
-  https://aws.amazon.com/console/  
-  (create a user account and give this user permissions to RDS and MTurk to generate keys)
-* Amazon MTurk Sandbox account (free):  
-  https://requestersandbox.mturk.com/developer  
-  (create a user account and link to AWS account)  
-  (for testing prior to going live)
-* Amazon MTurk account (see pricing at https://requester.mturk.com/pricing):  
-  https://requester.mturk.com/developer  
-  (create a user account and link to AWS account)
-* Static public IP address (free):  
-  (if you are running this experiment through a university, you may need to contact your IT department to acquire this)  
-* A computer capable of running multiple copies of the experiment simultaneously
-* All other requirements are installed when building the docker container. These include:
-    * MySQL, v5.7 (https://www.mysql.com/)
-    * Adminer (https://www.adminer.org/en/)
-    * NGNIX (https://www.nginx.com/)
-    * PsiTurk (http://psiturk.org/)
-    * JsPsych (https://www.jspsych.org/)
+**Note**: To run the container and experiment after the first time, skip steps 0-2 and instead start the existing container
+- `docker start Khan-exp && docker attach Khan-exp`
 
 
-## Installation and Quick Start (for local testing & data collection)
-
-1. Clone the repository `git clone https://github.com/ContextLab/efficient-learning-khan.git`
-2. Navigate to the efficient-learning-khan folder in the terminal  
-**NOTE**: If you want to change the name, username or password for the MySQL database in which your data will be stored, do so in `docker-compse.yml` before building the docker image.
-3. Enter `docker-compose up -d` to build the docker image
-4. Attach this image via `docker attach efficient-learning-khan_psiturk_1`
-5. This will open a bash shell from within the docker image. From here, enter the command `psiturk` to launch the server followed by `server on`. To debug, enter `debug` and paste the link into the browser.
-6. Make sure to update the consent form (`exp/static/templates/consent.html`), lab/university images (`exp/static/favicon.ico`,`exp/static/files/lablogo.png`,`exp/static/files/university.png`) and tasks (`exp/static/js`) as needed for your experiment.
-7. Read the section on "Testing or Collecting Data Locally" below to make sure your configuration is correctly set for local use.
-
-
-## Configuring to Test or Collect Data Locally
-
-Once you've cloned the repo (`git clone https://github.com/ContextLab/efficient-learning-khan.git`) and successfully built the docker container (`docker-compose up -d`), you can begin testing locally.  Make sure the IP address is set to the local host (127.0.0.1) in the following locations:
-* `adserver_revproxy_host` in `exp/config.txt`
-* `serverporturl` in `exp/static/js/config.js`
-You'll also want to check `exp/onfig.txt` to ensure the following:
-* Your experiment title, keywords, and experimenter contact are correct
-* You've chosen and set a `table_name`
-* `debug` is set to `true`
-* `launch_in_sandbox_mode` is set to `true`
-
-
-## Configuring to Test or Collect Data Online via MTurk
-
-Once you've tested the experiment locally and acquired all the components under "required components," you'll need to modify the following:
-* Update the following locations to your static public IP address:
-    * `adserver_revproxy_host` in `exp/config.txt`
-    * `serverporturl` in `exp/static/js/config.js`
-* Update the following in `exp/config.txt`:
-    * Add any browsers with which your experiment is incompatible to `browser_exclude_rule`
-    * Set `aws_access_key_id` and `aws_secret_access_key` to match your AWS access key information
-    * Set `psiturk_access_key_id` and `psiturk_secret_access_key` to match your PsiTurk access key information
-    * **If you are testing online in Sandbox mode**
-        * Set `allow_repeats` to `true`
-        * Set `launch_in_sandbox_mode` to `true`
-        * Set `debug` to `true`
-    * **If you are collecting live data online**
-        * Set `allow_repeats` to `false` (so MTurk workers cannot participate in the study multiple times)
-        * Set `launch_in_sandbox_mode` to `false`
-        * Set `debug` to `false`
-* Update the following in `.psiturkconfig`:
-    * Set `aws_access_key_id` and `aws_secret_access_key` to match your AWS access key information
-    * Set `psiturk_access_key_id` and `psiturk_secret_access_key` to match your PsiTurk access key information
-* Add the following to `.gitignore`:
-    * `exp/config.txt` (contains your Psiturk and AWS access keys)
-    * `.psiturkconfig` (contains your Psiturk and AWS access keys)
-    * `docker-compse.yml` (contains your MySQL username and password)
-    * `data/*` (contains your MySQL database with experiment data)
-
-
-## Posting, approving, and removing HITs
-
-After checking the above, ensure that all four of the experiments associated docker images (`efficient-learning-khan_psiturk_1`, `efficient-learning-khan_db_1`, `efficient-learning-khan_adminer_1`, and `efficient-learning-khan_nginx_1`) are running with `docker ps`. Use `docker start` followed by the image name to start any that do not appear.  
-Launch the PsiTurk container with `docker attach efficient-learning-khan_psiturk_1`. Then, from within the container shell, type `psiturk` to launch PsiTurk.  
-First, check your AWS account balance with `amt_balance`. If you are in Sandbox mode, this should return a placeholder of $10000. If you are live, this will show your balance.  You can then turn the server on (`server on`) and create hits with `hit create` followed by the number of participants you'd like to collect (or number of test runs you'd like to do if you're in Sandbox mode), the payment amount, and time given to workers to complete the experiment after accepting the HIT. For example, `hit create 10 5.00 1.5` creates HITs for 10 workers, offering a $5.00 reward, and allowing each worker 1.5 hours to complete the experiment after beginning. Creating a HIT will generate two live links: one for your ad and one for your experiment (note: the experiment link actually brings you to the full list of available experiments. Type in any of your `psiturk_keywords` from `exp config.txt` to search for your experiment). You can view these links at any time with `hit list`.  
-To view how many workers have completed your experiment, type `worker list`.
-To accept individual workers' HITs, type `worker approve assignment_id`. To accept all workers' HITs, type `worker approve --hit hit_id`. Replace `assignment_id` or `hit_id` with the corresponding string.  See https://psiturk.readthedocs.io/en/latest/command_line/worker.html#worker-approve for documentation on `worker` commands.  
-To end data collection before all your posted HITs have been used and remove any unused HITs, type `hit expire --all` to end the HIT availability period. Then, type `hit dispose --all` to remove the HITs from MTurk.
-
-
-## Accessing and Downloading Data
-
-As workers complete your experiment, data will populate the repository's `data/db` directory, since it is bind-mounted to the `efficient-learning-khan_db_1` image. You can view the MySQL database containing the data from a web browser using Adminer.  
-To view the data, first make sure the Adminer container is running with `docker start efficient-learning-khan_adminer_1` (from your local system). Open a web browser and go to `localhost:8080`. On the login screen, enter the user, password, and database name specified in `docker-compose.yml`. Select the file you want to view, and hit "View Data". You can then download the data as a number of file types.
-
-
-## Troubleshooting Notes
-
-* Recent versions of Google Chrome do not allow loading HTTP content, and thus cannot run many PsiTurk experiments. Additionally, adding Chrome to `browser_exclude_rule` in `exp/config.txt` often excludes other browsers inadvertently. If your experiment does not run on recent Chrome releases and excluding Chrome excludes other browsers during testing, add a note to your ad about the compatibility issue for workers. Workers who accept the HIT but cannot view the experiment due to compatibility issues will show a blank value in the `datastring` column and a value of `1` in the `status` column of the database when viewed in Adminer.
-* After building the images, the MySQL server image will take a minute to begin communicating through its assigned port. If you get an error starting the PsiTurk server shortly after building the images, wait a minute and try again before other troubleshooting.
-* If you change `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER`, or `MYSQL_PASSWORD` in `docker-compose.yml` after building the docker images, you may get the error `gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>` when trying turn the PsiTurk server on. Remove the images with `docker-compose rm -v`, **delete the bind-mounted data/ folder on your local machine**, and rebuild the images with `docker-compose up -d`.  
-**NOTE**: this will delete any data you've already collected, so if you have already posted HITs, save your data first!
-* Turn off your ad-blocker when testing to make sure it is not interfering with the experiment.
-* Setting `us_only` to `true` and `approve_requirement` to `95` in `exp/config.txt` helps avoid strange/low-quality datasets from bots and MTurk "farms" trying to take advantage of the platform.
-
-
-## Additional Reference
-
-For more information on incorporating the NGNIX, Adminer, and MySQL components, refer to the package below:
-* psiturk-docker: https://github.com/mvdoc/psiturk-docker
+## Running the analyses
+A separate Docker container is available for reproducing and experimenting with the analyses performed in the paper. To create it:
+0. Install Docker if you haven't already (see step 0 in **Running the experiment**)
+1. Build the image from the `Dockerfile-analyses` file
+- `docker build -f Dockerfile-analyses -t khan .`
+2. Create a container based on the newly created image, exposing a port to run Jupyter Notebooks and bind-mounting the container to the repository's root directory to access the code and data files
+- `docker run -it -p 22364:22364 --name Khan -v <PATH_TO_LOCAL_REPO>:/mnt khan`
+3. You should now be inside the container, in the root directory (`/`). Navigate to the folder containing the analysis notebooks and.
+- `cd /mnt/code/notebooks`
+4. Start a local Jupyter Notebook server on the port exposed to your local machine, and suppress automatically opening a browser (since there isn't one in the container)
+- `jupyter notebook --port=22364 --no-browser --ip=0.0.0.0 --allow-root`
+5. Copy the **third** link that appears (the one starting with `http://127.0.0.1:22364`) and paste it into a web browser
+6. The container pre-installs some nifty extensions for customizing the Jupyter Notebook interface.  If you want to enable any of them:
+- click on the `Nbextensions` tab on the Jupyter server page in a browser
+- uncheck the "disable configuration for nbextensions without explicit compatibility" box (don't worry, nearly all of them _are_ compatible, we're just using a newer version of `jupyter-notebook`)
+- click on any of the listed extensions to see a description and further options, and check the box next to enable it
+- refresh any running notebooks to apply the changes
