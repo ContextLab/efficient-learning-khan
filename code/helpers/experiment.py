@@ -138,7 +138,7 @@ class Experiment:
         return hyp.plot(to_plot, **kwargs)
 
     # data loaders
-    def load_participants(self, load_avg=False):
+    def load_participants(self, load_avg=True):
         participants = []
         for pid in range(1, self.n_participants + 1):
             path = opj(PARTICIPANTS_DIR, f'P{pid}.npy')
@@ -153,15 +153,21 @@ class Experiment:
         self.avg_participant = np.load(path, allow_pickle=True).item()
 
     def load_transcript(self, lecture):
-        if lecture not in ('forces', 'bos'):
-            raise ValueError("lecture may be one of: 'forces', 'bos'")
-        path = opj(RAWDIR, f'{lecture}_transcript_timestamped.txt')
-        with open(path, 'r') as f:
-            transcript = f.read()
-        if lecture == 'forces':
-            self.forces_transcript = transcript
+        if isinstance(lecture, str):
+            if lecture not in ('forces', 'bos'):
+                raise ValueError("lecture may be one of: 'forces', 'bos'")
+            path = opj(RAWDIR, f'{lecture}_transcript_timestamped.txt')
+            with open(path, 'r') as f:
+                transcript = f.read()
+            if lecture == 'forces':
+                self.forces_transcript = transcript
+            else:
+                self.bos_transcript = transcript
+        elif hasattr(lecture, '__iter__'):
+            for l in lecture:
+                self.load_transcript(l)
         else:
-            self.bos_transcript = transcript
+            raise ValueError("lecture should be either a str or an iterable of strs")
 
     def load_questions(self):
         path = opj(RAWDIR, 'questions.tsv')
