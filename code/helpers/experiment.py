@@ -36,13 +36,11 @@ class Experiment:
         self.lda = None
         self.lecture_wsize = 15
         self.cv_params = {
-            'max_df': 0.95,
-            'min_df': 2,
-            'max_features': 500,
+            'strip_accents': 'unicode',
             'stop_words': STOP_WORDS
         }
         self.lda_params = {
-            'n_components': 20,
+            'n_components': 25,
             'learning_method': 'batch',
             'random_state': 0
         }
@@ -173,7 +171,7 @@ class Experiment:
         path = opj(RAWDIR, 'questions.tsv')
         self.questions = pd.read_csv(path,
                                      sep='\t',
-                                     names=['index', 'lecture', 'questions',
+                                     names=['index', 'lecture', 'question',
                                             'A', 'B', 'C', 'D'],
                                      index_col='index')
 
