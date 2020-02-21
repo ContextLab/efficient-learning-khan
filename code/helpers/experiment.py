@@ -67,7 +67,7 @@ class Experiment:
             if 'forces' in lectures:
                 qids += list(range(15))
             if 'bos' in lectures:
-                qids += list(range(16, 30))
+                qids += list(range(15, 30))
             if 'general' in lectures:
                 qids += list(range(30, 39))
         else:
