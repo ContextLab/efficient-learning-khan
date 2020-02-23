@@ -147,7 +147,7 @@ class Experiment:
             self.load_avg_participant()
 
     def load_avg_participant(self):
-        path = opj(PARTICIPANTS_DIR, 'avg_participant.npy')
+        path = opj(PARTICIPANTS_DIR, 'avg.npy')
         self.avg_participant = np.load(path, allow_pickle=True).item()
 
     def load_transcript(self, lecture):
