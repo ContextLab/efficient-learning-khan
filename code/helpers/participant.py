@@ -5,7 +5,7 @@ from html import unescape
 from os.path import isfile, join as opj
 from scipy.spatial.distance import cdist
 from scipy.stats import entropy
-from .experiment import PARTICIPANTS_DIR, RAWDIR
+from experiment import PARTICIPANTS_DIR, RAWDIR
 
 
 # distance function passed to scipy.spatial.distance.cdist in reconstruct_trace method
@@ -133,7 +133,7 @@ class Participant:
             self.store_trace(trace=trace, store_key=store)
         return trace
 
-    def save(self, filepath, allow_overwrite=False):
+    def save(self, filepath=None, allow_overwrite=False):
         if filepath is None:
             filepath = opj(PARTICIPANTS_DIR, f'{self.subID}.npy')
         if not allow_overwrite and isfile(filepath):
