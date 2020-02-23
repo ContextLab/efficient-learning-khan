@@ -47,7 +47,7 @@ class Experiment:
 
     def get_lecture_traj(self, lecture):
         if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
-            if len(lecture > 1):
+            if len(lecture) > 1:
                 return [self.get_lecture_traj(l) for l in lecture]
             else:
                 return self.get_lecture_traj(lecture[0])
