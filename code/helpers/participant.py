@@ -142,6 +142,9 @@ class Participant:
         else:
             np.save(filepath, self)
 
+    def store_trace(self, trace, store_key):
+        self.traces[store_key] = trace
+
     # def plot(self, keys, **kwargs):
     #     # wraps hypertools.plot for plotting multiple reconstructed traces
     #     # (see Experiment.plot for multisubject plotting)
