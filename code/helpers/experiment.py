@@ -8,7 +8,7 @@ DATADIR= '../../data'
 RAWDIR = opj(DATADIR, 'raw')
 PARTICIPANTS_DIR = opj(DATADIR, 'participants')
 TRAJS_DIR = opj(DATADIR, 'trajectories')
-EMBEDDING_DIR = opj(DATADIR, 'embedding')
+EMBS_DIR = opj(DATADIR, 'embeddings')
 MODELS_DIR = opj(DATADIR, 'models')
 N_PARTICIPANTS = 50
 STOP_WORDS = stopwords.words('english') + ["even", "I'll", "I'm", "let", "let's",
@@ -32,8 +32,12 @@ class Experiment:
         self.question_vectors = None
         self.answer_vectors = None
         self.embedding_space = None
+        self.forces_embedding = None
+        self.bos_embedding = None
+        self.question_embeddings = None
         self.cv = None
         self.lda = None
+        self.reducer = None
         self.lecture_wsize = 15
         self.cv_params = {
             'strip_accents': 'unicode',
@@ -175,6 +179,18 @@ class Experiment:
                                             'A', 'B', 'C', 'D'],
                                      index_col='index')
 
+    def load_windows(self, lecture):
+        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
+            for l in lecture:
+                self.load_windows(l)
+        elif lecture not in ('forces', 'bos'):
+            raise ValueError("lecture may be one of: 'forces', 'bos'")
+        windows = np.load(opj(RAWDIR, f'{lecture}_transcript_timestamped.txt'))
+        if lecture == 'forces':
+            self.forces_windows = windows
+        else:
+            self.bos_windows = windows
+
     def load_lecture_trajs(self):
         self.forces_traj = np.load(opj(TRAJS_DIR, 'forces_lecture.npy'))
         self.bos_traj = np.load(opj(TRAJS_DIR, 'bos_lecture.npy'))
@@ -185,20 +201,19 @@ class Experiment:
     def load_answer_vectors(self):
         self.answer_vectors = np.load(opj(TRAJS_DIR, 'all_answers.npy'))
 
-    def load_embedding_space(self):
-        self.embedding_space = np.load(opj(EMBEDDING_DIR), 'embedding_space.npy')
-
-    def load_windows(self, lecture):
-        if lecture not in ('forces', 'bos'):
-            raise ValueError("lecture may be one of: 'forces', 'bos'")
-        windows = np.load(opj(RAWDIR, f'{lecture}_transcript_timestamped.txt'))
-        if lecture == 'forces':
-            self.forces_windows = windows
-        else:
-            self.bos_windows = windows
+    def load_embeddings(self):
+        self.forces_embedding = np.load(opj(EMBS_DIR, 'forces_lecture.npy'))
+        self.bos_embedding = np.load(opj(EMBS_DIR, 'bos_lecture.npy'))
+        self.question_embeddings = np.load(opj(EMBS_DIR, 'questions.npy'))
 
     def load_cv(self):
         self.cv = np.load(opj(MODELS_DIR, 'fit_CV.npy'), allow_pickle=True).item()
 
     def load_lda(self):
         self.lda = np.load(opj(MODELS_DIR, 'fit_LDA.npy'), allow_pickle=True).item()
+
+    def load_reducer(self):
+        self.reducer = np.load(opj(MODELS_DIR, 'UMAP_reducer.npy'), allow_pickle=True).item()
+
+    def load_embedding_space(self):
+        self.embedding_space = np.load(opj(EMBS_DIR), 'embedding_space.npy')
