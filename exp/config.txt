@@ -13,7 +13,7 @@ organization_name = Dartmouth College
 browser_exclude_rule = mobile, tablet, Chrome
 
 [Database Parameters]
-database_url = sqlite://efficient-learning-khan.db
+database_url = sqlite:///efficient-learning-khan.db
 table_name = participants
 
 [Server Parameters]
@@ -23,7 +23,7 @@ cutoff_time = 120
 timeout = 120
 logfile = server.log
 loglevel = 1
-debug = false
+debug = true
 threads = auto
 
 [Task Parameters]
