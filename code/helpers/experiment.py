@@ -48,6 +48,13 @@ class Experiment:
             'learning_method': 'batch',
             'random_state': 0
         }
+        self.umap_params = {
+            'n_components': 2,
+            'n_neighbors': 15,
+            'min_dist': 0.7,
+            'spread': 1.0,
+            'random_state': 0
+        }
 
     def get_lecture_traj(self, lecture):
         if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
