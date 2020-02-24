@@ -8,7 +8,8 @@ from scipy.stats import entropy
 from experiment import PARTICIPANTS_DIR, RAWDIR
 
 
-# distance function passed to scipy.spatial.distance.cdist in reconstruct_trace method
+# symmetrized KL divergence
+# passed to scipy.spatial.distance.cdist in reconstruct_trace
 def symmetric_kl(a, b, c=1e-11):
     return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
 
@@ -87,20 +88,23 @@ class Participant:
             d = d.loc[d['lecture'].isin(lecture)]
         return d
 
-    def reconstruct_trace(self, exp, lecture, qset=None, store=None, recon_lec=None):
+    def reconstruct_trace(self, exp, content=None, lecture=None, qset=None, store=None, recon_lec=None):
         """
         Reconstructs a participant's knowledge trace based on a lecture's
         trajectory, a set of questions' topic vectors, and binary accuracy scores
         :param exp: (Experiment object) Used to access lecture trajectory and
                     question topic vectors
+        :param content: (numpy.ndarray) The content against which to weight knowledge,
+                        as derived by question accuracy
         :param lecture: (int, str, list-like of ints/strs) The lecture(s) for
-                        which to get questions and scores
+                        which to get questions and scores. If [default] None, get
+                        questions and scores for both lectures (& general knowledge)
         :param qset: (int or list-like of ints) The question set for which to get
                      questions and scores. If [default] None, get data for all question sets
         :param store: (str) The key under which the reconstructed trace should be
                        stored in self.traces. If [default] None, don't store the trace
         :param recon_lec: (int or str) The lecture trajectory to use in reconstructing
-                          the trace. Useful if passing an iterable to lecture in
+                          the trace (if not passed directly via content). Useful if passing an iterable to lecture in
                           order to get questions related to multiple lectures
         :return trace: (numpy.ndarray) The reconstructed knowledge trace
         """
@@ -108,17 +112,18 @@ class Participant:
         acc = data['accuracy'].astype(bool)
         qids = data['qID'].tolist()
         question_vecs = exp.get_question_vecs(qids=qids)
-        if isinstance(lecture, (int, str)):
-            lecture_traj = exp.get_lecture_traj(lecture)
-        elif hasattr(lecture, '__iter__'):
-            if recon_lec is not None:
-                lecture_traj = exp.get_lecture_traj(recon_lec)
+        if content is None:
+            if isinstance(lecture, (int, str)):
+                content = exp.get_lecture_traj(lecture)
+            elif hasattr(lecture, '__iter__'):
+                if recon_lec is not None:
+                    content = exp.get_lecture_traj(recon_lec)
+                else:
+                    raise ValueError("Must specify `content` or `recon_lec` if passing multiple `lecture`s")
             else:
-                raise ValueError("Must specify recon_lec if passing multiple lectures")
-        else:
-            raise ValueError("lecture should be one of: str, int, list-like of str/int")
+                raise ValueError("lecture should be one of: str, int, list-like of str/int")
         # compute timepoints by questions weights matrix
-        wz = 1 - cdist(lecture_traj, question_vecs, metric=symmetric_kl)
+        wz = 1 - cdist(content, question_vecs, metric=symmetric_kl)
         # normalize
         wz -= wz.min()
         wz /= wz.max()
