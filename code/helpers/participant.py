@@ -1,10 +1,17 @@
 import numpy as np
 import pandas as pd
-import hypertools as hyp
 from ast import literal_eval
 from html import unescape
+from os.path import isfile, join as opj
 from scipy.spatial.distance import cdist
 from scipy.stats import entropy
+from experiment import PARTICIPANTS_DIR, RAWDIR
+
+
+# symmetrized KL divergence
+# passed to scipy.spatial.distance.cdist in reconstruct_trace
+def symmetric_kl(a, b, c=1e-11):
+    return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
 
 
 class Participant:
@@ -21,6 +28,7 @@ class Participant:
         else:
             self.date_collected = date_collected
         self.traces = {}
+        self.maps = {}
 
     @classmethod
     def from_psiturk(cls, psiturk_data, subid):
@@ -29,6 +37,16 @@ class Participant:
         p = cls(subid=subid, raw_data=raw_data, date_collected=date_collected)
         p.data = p._grade()
         return p
+
+    @property
+    def all_questions(self, questions_path=None):
+        if questions_path is None:
+            questions_path = opj(RAWDIR, 'questions.tsv')
+        return pd.read_csv(questions_path,
+                           sep='\t',
+                           names=['index', 'video', 'question',
+                                  'A', 'B', 'C', 'D'],
+                           index_col='index')
 
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
@@ -70,76 +88,75 @@ class Participant:
             d = d.loc[d['lecture'].isin(lecture)]
         return d
 
-    def store_trace(self, trace, store_key):
-        self.traces[store_key] = trace
-
-    def reconstruct_trace(self, exp, lecture, qset=None, store=None, recon_lec=None):
+    def reconstruct_trace(self, exp, content=None, lecture=None, qset=None, store=None, recon_lec=None):
         """
-        Reconstructs a participant's memory trace based on a lecture's
+        Reconstructs a participant's knowledge trace based on a lecture's
         trajectory, a set of questions' topic vectors, and binary accuracy scores
         :param exp: (Experiment object) Used to access lecture trajectory and
                     question topic vectors
+        :param content: (numpy.ndarray) The content against which to weight knowledge,
+                        as derived by question accuracy
         :param lecture: (int, str, list-like of ints/strs) The lecture(s) for
-                        which to get questions and scores
+                        which to get questions and scores. If [default] None, get
+                        questions and scores for both lectures (& general knowledge)
         :param qset: (int or list-like of ints) The question set for which to get
                      questions and scores. If [default] None, get data for all question sets
         :param store: (str) The key under which the reconstructed trace should be
                        stored in self.traces. If [default] None, don't store the trace
         :param recon_lec: (int or str) The lecture trajectory to use in reconstructing
-                          the trace. Useful if passing an iterable to lecture in
+                          the trace (if not passed directly via content). Useful if passing an iterable to lecture in
                           order to get questions related to multiple lectures
-        :return trace: (numpy.ndarray) The reconstructed memory trace
+        :return trace: (numpy.ndarray) The reconstructed knowledge trace
         """
-        def symmetric_KL(a, b, c=1e-11):
-            return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
-
         data = self.get_data(qset=qset, lecture=lecture)
-        acc = data['accuracy'].tolist()
+        acc = data['accuracy'].astype(bool)
         qids = data['qID'].tolist()
         question_vecs = exp.get_question_vecs(qids=qids)
-        if isinstance(lecture, (int, str)):
-            lecture_traj = exp.get_lecture_traj(lecture)
-        elif hasattr(lecture, '__iter__'):
-            if recon_lec is not None:
-                lecture_traj = exp.get_lecture_traj(recon_lec)
+        if content is None:
+            if isinstance(lecture, (int, str)):
+                content = exp.get_lecture_traj(lecture)
+            elif hasattr(lecture, '__iter__'):
+                if recon_lec is not None:
+                    content = exp.get_lecture_traj(recon_lec)
+                else:
+                    raise ValueError("Must specify `content` or `recon_lec` if passing multiple `lecture`s")
             else:
-                raise ValueError("Must specify recon_lec if passing multiple lectures")
-        else:
-            raise ValueError("lecture should be one of: str, int, list-like of str/int")
-
-        # compute timepoints by questions correlation matrix
-        wz = 1 - cdist(lecture_traj, question_vecs, metric=symmetric_KL)
+                raise ValueError("lecture should be one of: str, int, list-like of str/int")
+        # compute timepoints by questions weights matrix
+        wz = 1 - cdist(content, question_vecs, metric=symmetric_kl)
         # normalize
-        wz -= np.min(wz)
-        wz /= np.max(wz)
-        # sum over questions
-        a = np.sum(wz, axis=1)
-        # sum over correctly answered questions
-        b = np.sum(wz[:, list(map(bool, acc))], axis=1)
-        # divide b by a
-        b_a = np.array(np.divide(b, a), ndmin=2)
-        # weight the model
-        trace = lecture_traj * b_a.T
+        wz -= wz.min()
+        wz /= wz.max()
+        # sum over questions (total possible weights for each timepoint)
+        a = wz.sum(axis=1)
+        # sum weights from correctly answered questions at each timepoint
+        b = wz[:, acc].sum(axis=1)
+        # divide weight from correct answers by total weight
+        trace = b / a
         # store trace in object
         if store is not None:
             self.store_trace(trace=trace, store_key=store)
         return trace
 
-    def plot(self, keys, **kwargs):
-        # wraps hypertools.plot for plotting multiple reconstructed traces
-        # (see Experiment.plot for multisubject plotting)
-        if isinstance(keys, str):
-            keys = [keys]
-        traces_toplot = [self.traces[k] for k in keys]
-        return hyp.plot(traces_toplot, **kwargs)
+    def save(self, filepath=None, allow_overwrite=False):
+        if filepath is None:
+            filepath = opj(PARTICIPANTS_DIR, f'{self.subID}.npy')
+        if not allow_overwrite and isfile(filepath):
+            print(f"self.subID not saved because {filepath} already exists. "
+                  "Set allow_overwrite to True to replace the existing file")
+        else:
+            np.save(filepath, self)
 
-    @property
-    def all_questions(self, questions_path='../../data/raw/questions.tsv'):
-        return pd.read_csv(questions_path,
-                           sep='\t',
-                           names=['index', 'video', 'question',
-                                  'A', 'B', 'C', 'D'],
-                           index_col='index')
+    def store_trace(self, trace, store_key):
+        self.traces[store_key] = trace
+
+    # def plot(self, keys, **kwargs):
+    #     # wraps hypertools.plot for plotting multiple reconstructed traces
+    #     # (see Experiment.plot for multisubject plotting)
+    #     if isinstance(keys, str):
+    #         keys = [keys]
+    #     traces_toplot = [self.traces[k] for k in keys]
+    #     return hyp.plot(traces_toplot, **kwargs)
 
     def _grade(self):
         # grades raw data to set self.data

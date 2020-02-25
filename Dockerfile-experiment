@@ -22,7 +22,7 @@ RUN pip install --upgrade \
 setuptools \
 requests \
 mysql-python \
-psiturk \
+psiturk==2.2.3 \
 pydub \
 matplotlib \
 pandas \

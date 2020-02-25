@@ -8,12 +8,12 @@ DATADIR= '../../data'
 RAWDIR = opj(DATADIR, 'raw')
 PARTICIPANTS_DIR = opj(DATADIR, 'participants')
 TRAJS_DIR = opj(DATADIR, 'trajectories')
-EMBEDDING_DIR = opj(DATADIR, 'embedding')
+EMBS_DIR = opj(DATADIR, 'embeddings')
 MODELS_DIR = opj(DATADIR, 'models')
 N_PARTICIPANTS = 50
-STOP_WORDS = stopwords.words('english') + ["let", "let's", "they'd",
-                                           "they're", "they've", "they'll",
-                                           "that's", "I'll", "I'm"]
+STOP_WORDS = stopwords.words('english') + ["even", "I'll", "I'm", "let", "let's",
+                                           "really", "they'd", "they're",
+                                           "they've", "they'll", "that's"]
 
 
 class Experiment:
@@ -32,24 +32,33 @@ class Experiment:
         self.question_vectors = None
         self.answer_vectors = None
         self.embedding_space = None
+        self.forces_embedding = None
+        self.bos_embedding = None
+        self.question_embeddings = None
         self.cv = None
         self.lda = None
+        self.reducer = None
         self.lecture_wsize = 15
         self.cv_params = {
-            'max_df': 0.95,
-            'min_df': 2,
-            'max_features': 500,
+            'strip_accents': 'unicode',
             'stop_words': STOP_WORDS
         }
         self.lda_params = {
-            'n_components': 20,
+            'n_components': 25,
             'learning_method': 'batch',
+            'random_state': 0
+        }
+        self.umap_params = {
+            'n_components': 2,
+            'n_neighbors': 15,
+            'min_dist': 0.7,
+            'spread': 1.0,
             'random_state': 0
         }
 
     def get_lecture_traj(self, lecture):
         if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
-            if len(lecture > 1):
+            if len(lecture) > 1:
                 return [self.get_lecture_traj(l) for l in lecture]
             else:
                 return self.get_lecture_traj(lecture[0])
@@ -69,7 +78,7 @@ class Experiment:
             if 'forces' in lectures:
                 qids += list(range(15))
             if 'bos' in lectures:
-                qids += list(range(16, 30))
+                qids += list(range(15, 30))
             if 'general' in lectures:
                 qids += list(range(30, 39))
         else:
@@ -138,7 +147,7 @@ class Experiment:
         return hyp.plot(to_plot, **kwargs)
 
     # data loaders
-    def load_participants(self, load_avg=False):
+    def load_participants(self, load_avg=True):
         participants = []
         for pid in range(1, self.n_participants + 1):
             path = opj(PARTICIPANTS_DIR, f'P{pid}.npy')
@@ -149,27 +158,45 @@ class Experiment:
             self.load_avg_participant()
 
     def load_avg_participant(self):
-        path = opj(PARTICIPANTS_DIR, 'avg_participant.npy')
+        path = opj(PARTICIPANTS_DIR, 'avg.npy')
         self.avg_participant = np.load(path, allow_pickle=True).item()
 
     def load_transcript(self, lecture):
-        if lecture not in ('forces', 'bos'):
-            raise ValueError("lecture may be one of: 'forces', 'bos'")
-        path = opj(RAWDIR, f'{lecture}_transcript_timestamped.txt')
-        with open(path, 'r') as f:
-            transcript = f.read()
-        if lecture == 'forces':
-            self.forces_transcript = transcript
+        if isinstance(lecture, str):
+            if lecture not in ('forces', 'bos'):
+                raise ValueError("lecture may be one of: 'forces', 'bos'")
+            path = opj(RAWDIR, f'{lecture}_transcript_timestamped.txt')
+            with open(path, 'r') as f:
+                transcript = f.read()
+            if lecture == 'forces':
+                self.forces_transcript = transcript
+            else:
+                self.bos_transcript = transcript
+        elif hasattr(lecture, '__iter__'):
+            for l in lecture:
+                self.load_transcript(l)
         else:
-            self.bos_transcript = transcript
+            raise ValueError("lecture should be either a str or an iterable of strs")
 
     def load_questions(self):
         path = opj(RAWDIR, 'questions.tsv')
         self.questions = pd.read_csv(path,
                                      sep='\t',
-                                     names=['index', 'lecture', 'questions',
+                                     names=['index', 'lecture', 'question',
                                             'A', 'B', 'C', 'D'],
                                      index_col='index')
+
+    def load_windows(self, lecture):
+        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
+            for l in lecture:
+                self.load_windows(l)
+        elif lecture not in ('forces', 'bos'):
+            raise ValueError("lecture may be one of: 'forces', 'bos'")
+        windows = np.load(opj(RAWDIR, f'{lecture}_transcript_timestamped.txt'))
+        if lecture == 'forces':
+            self.forces_windows = windows
+        else:
+            self.bos_windows = windows
 
     def load_lecture_trajs(self):
         self.forces_traj = np.load(opj(TRAJS_DIR, 'forces_lecture.npy'))
@@ -181,20 +208,19 @@ class Experiment:
     def load_answer_vectors(self):
         self.answer_vectors = np.load(opj(TRAJS_DIR, 'all_answers.npy'))
 
-    def load_embedding_space(self):
-        self.embedding_space = np.load(opj(EMBEDDING_DIR), 'embedding_space.npy')
-
-    def load_windows(self, lecture):
-        if lecture not in ('forces', 'bos'):
-            raise ValueError("lecture may be one of: 'forces', 'bos'")
-        windows = np.load(opj(RAWDIR, f'{lecture}_transcript_timestamped.txt'))
-        if lecture == 'forces':
-            self.forces_windows = windows
-        else:
-            self.bos_windows = windows
+    def load_embeddings(self):
+        self.forces_embedding = np.load(opj(EMBS_DIR, 'forces_lecture.npy'))
+        self.bos_embedding = np.load(opj(EMBS_DIR, 'bos_lecture.npy'))
+        self.question_embeddings = np.load(opj(EMBS_DIR, 'questions.npy'))
 
     def load_cv(self):
         self.cv = np.load(opj(MODELS_DIR, 'fit_CV.npy'), allow_pickle=True).item()
 
     def load_lda(self):
         self.lda = np.load(opj(MODELS_DIR, 'fit_LDA.npy'), allow_pickle=True).item()
+
+    def load_reducer(self):
+        self.reducer = np.load(opj(MODELS_DIR, 'UMAP_reducer.npy'), allow_pickle=True).item()
+
+    def load_embedding_space(self):
+        self.embedding_space = np.load(opj(EMBS_DIR), 'embedding_space.npy')
