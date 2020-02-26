@@ -17,7 +17,7 @@ The locally deployable version of the experiment may be run inside a Docker cont
 1. Build the image from the `Dockerfile-experiment` file in this repository
  - `docker build -f Dockerfile-experiment -t khan-exp .`
 2. Run a container from the image, exposing a port to run the experiment in a web browser
-- `docker run -it -p 22363:22363 --name Khan-exp`
+- `docker run -it -p 22363:22363 --name Khan-exp khan-exp`
 3. You should now be inside the the container, in the `/psiturk/exp` directory. Start the PsiTurk shell and turn the server on
 - `psiturk`
 - `server on`
