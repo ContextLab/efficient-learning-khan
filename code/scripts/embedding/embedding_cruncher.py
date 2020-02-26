@@ -4,14 +4,10 @@ from os.path import isfile, join as opj
 from scipy.stats import entropy
 from umap import UMAP
 from embedding_config import config
-
-
-def symmetric_kl(a, b, c=1e-11):
-    return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
+from embedding_helpers import distance_funcs
 
 
 order, seed = [int(i) for i in sys.argv[1:]]
-
 trajs_dir = opj(config['datadir'], 'trajectories')
 embeddings_dir = opj(config['datadir'], 'embeddings')
 models_dir = opj(config['datadir'], 'fit_reducers')
@@ -42,8 +38,7 @@ stacked_vecs = np.vstack(to_reduce)
 for n_neighbors in list(range(15, 200, 15)):
     for min_dist in np.arange(.1, 1, .2):
         for spread in range(1, 11, 2):
-            for metric in ['correlation', symmetric_kl]:
-                met = metric if metric == 'correlation' else 'kl'
+            for met, dist_func in distance_funcs.items():
                 fname = f"seed{seed}_nn{n_neighbors}_md{min_dist}_sp{spread}_{met}.npy"
                 embpath = opj(embeddings_dir, f'order{order}', fname)
                 modpath = opj(models_dir, f'order{order}', fname)
@@ -53,7 +48,7 @@ for n_neighbors in list(range(15, 200, 15)):
                 params = {
                     'n_components': 2,
                     'init': 'spectral',
-                    'metric': metric,
+                    'metric': dist_func,
                     'random_state': seed,
                     'n_neighbors': n_neighbors,
                     'min_dist': min_dist,
