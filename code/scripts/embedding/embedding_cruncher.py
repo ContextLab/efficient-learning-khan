@@ -1,7 +1,6 @@
 import sys
 import numpy as np
 from os.path import isfile, join as opj
-from scipy.stats import entropy
 from umap import UMAP
 from embedding_config import config
 from embedding_helpers import distance_funcs
@@ -33,7 +32,7 @@ else:
     to_reduce = list(questions) + [bos_traj] + [ff_traj]
 
 split_inds = np.cumsum([np.atleast_2d(vec).shape[0] for vec in to_reduce])[:-1]
-stacked_vecs = np.vstack(to_reduce)
+stacked_vecs = np.log(np.vstack(to_reduce))
 
 for n_neighbors in list(range(15, 200, 15)):
     for min_dist in np.arange(.1, 1, .2):
