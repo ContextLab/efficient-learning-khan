@@ -192,7 +192,7 @@ class Experiment:
                 self.load_windows(l)
         elif lecture not in ('forces', 'bos'):
             raise ValueError("lecture may be one of: 'forces', 'bos'")
-        windows = np.load(opj(RAWDIR, f'{lecture}_transcript_timestamped.txt'))
+        windows = np.load(opj(RAWDIR, f'{lecture}_windows.npy'))
         if lecture == 'forces':
             self.forces_windows = windows
         else:
