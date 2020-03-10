@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-# create a bunch of job scripts
 import os
 from datetime import datetime as dt
 from os.path import join as opj
@@ -27,8 +26,8 @@ job_names = list()
 # order 6: questions, bos, forces
 
 for order in range(1, 7):
-    # os.mkdir(opj(embeddings_dir, f'order{order}'))
-    # os.mkdir(opj(models_dir, f'order{order}'))
+    os.mkdir(opj(embeddings_dir, f'order{order}'))
+    os.mkdir(opj(models_dir, f'order{order}'))
 
     for seed in range(min_seed, max_seed + 1):
         job_commands.append(f'{job_script} {order} {seed}')

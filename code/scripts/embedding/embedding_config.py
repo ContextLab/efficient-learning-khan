@@ -21,5 +21,5 @@ config['jobname'] = 'embedding'
 config['queue'] = 'largeq'
 config['nnodes'] = 1
 config['ppn'] = 1
-config['walltime'] = '12:00:00'
+config['walltime'] = '18:00:00'
 # ====== MODIFY ONLY THE CODE BETWEEN THESE LINES ======

@@ -88,6 +88,17 @@ class Participant:
             d = d.loc[d['lecture'].isin(lecture)]
         return d
 
+    def get_trace(self, trace_key):
+        """
+        Getter for self.traces
+        :param trace_key: (str) the key for the trace to be returned
+        :return: trace: (np.ndarray) The trace stored under the given trace_key
+        """
+        try:
+            return self.traces[trace_key]
+        except KeyError as e:
+            raise KeyError(f"No trace stored for {self} under {trace_key}") from e
+
     def reconstruct_trace(self, exp, content=None, lecture=None, qset=None, store=None, recon_lec=None):
         """
         Reconstructs a participant's knowledge trace based on a lecture's
