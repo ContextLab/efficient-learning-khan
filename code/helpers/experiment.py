@@ -149,7 +149,9 @@ class Experiment:
 
         return hyp.plot(to_plot, **kwargs)
 
-    # data loaders
+    ##########################################
+    #              DATA LOADERS              #
+    ##########################################
     def load_participants(self, load_avg=True):
         participants = []
         for pid in range(1, self.n_participants + 1):
@@ -159,10 +161,13 @@ class Experiment:
         self.participants = np.array(participants)
         if load_avg:
             self.load_avg_participant()
+            return self.participants, self.avg_participant
+        return self.participants
 
     def load_avg_participant(self):
         path = opj(PARTICIPANTS_DIR, 'avg.npy')
         self.avg_participant = np.load(path, allow_pickle=True).item()
+        return self.avg_participant
 
     def load_transcript(self, lecture):
         if isinstance(lecture, str):
@@ -176,10 +181,12 @@ class Experiment:
             else:
                 self.bos_transcript = transcript
         elif hasattr(lecture, '__iter__'):
+            transcript = []
             for l in lecture:
-                self.load_transcript(l)
+                transcript.append(self.load_transcript(l))
         else:
             raise ValueError("lecture should be either a str or an iterable of strs")
+        return transcript
 
     def load_questions(self):
         path = opj(RAWDIR, 'questions.tsv')
@@ -188,11 +195,13 @@ class Experiment:
                                      names=['index', 'lecture', 'question',
                                             'A', 'B', 'C', 'D'],
                                      index_col='index')
+        return self.questions
 
     def load_windows(self, lecture):
         if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
+            windows = []
             for l in lecture:
-                self.load_windows(l)
+                windows.append(self.load_windows(l))
         elif lecture not in ('forces', 'bos'):
             raise ValueError("lecture may be one of: 'forces', 'bos'")
         else:
@@ -201,35 +210,41 @@ class Experiment:
                 self.forces_windows = windows
             else:
                 self.bos_windows = windows
+        return windows
 
     def load_lecture_trajs(self):
         self.forces_traj = np.load(opj(TRAJS_DIR, 'forces_lecture.npy'))
         self.bos_traj = np.load(opj(TRAJS_DIR, 'bos_lecture.npy'))
+        return self.forces_traj, self.bos_traj
 
     def load_question_vectors(self):
         self.question_vectors = np.load(opj(TRAJS_DIR, 'all_questions.npy'))
+        return self.question_vectors
 
     def load_answer_vectors(self):
         self.answer_vectors = np.load(opj(TRAJS_DIR, 'all_answers.npy'))
+        return self.answer_vectors
 
     def load_embeddings(self):
         self.forces_embedding = np.load(opj(EMBS_DIR, 'forces_lecture.npy'))
         self.bos_embedding = np.load(opj(EMBS_DIR, 'bos_lecture.npy'))
         self.question_embeddings = np.load(opj(EMBS_DIR, 'questions.npy'))
+        return self.forces_embedding, self.bos_embedding, self.question_embeddings
 
     def load_cv(self):
         self.cv = np.load(opj(MODELS_DIR, 'fit_CV.npy'), allow_pickle=True).item()
+        return self.cv
 
     def load_lda(self):
         self.lda = np.load(opj(MODELS_DIR, 'fit_LDA.npy'), allow_pickle=True).item()
+        return self.lda
 
     def load_reducer(self):
         self.reducer = np.load(opj(MODELS_DIR, 'UMAP_reducer.npy'), allow_pickle=True).item()
-
-    def load_embedding_space(self):
-        self.embedding_space = np.load(opj(EMBS_DIR), 'embedding_space.npy')
+        return self.reducer
 
     def load_wordle_mask(self, path=None):
         if path is None:
             path = opj(DATADIR, 'wordle-mask.jpg')
         self.wordle_mask = np.array(open_image(path))
+        return self.wordle_mask
