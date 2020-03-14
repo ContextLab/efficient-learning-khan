@@ -34,9 +34,9 @@ else:
 split_inds = np.cumsum([np.atleast_2d(vec).shape[0] for vec in to_reduce])[:-1]
 stacked_vecs = np.log(np.vstack(to_reduce))
 
-for n_neighbors in list(range(15, 200, 15)):
-    for min_dist in np.arange(.1, 1, .2):
-        for spread in range(1, 11, 2):
+for n_neighbors in [5, 10, 15] + list(range(20, 201, 20)):
+    for min_dist in (.1, .3, .5, .7, .9):
+        for spread in range(1, 10, 2):
             for met, dist_func in distance_funcs.items():
                 fname = f"seed{seed}_nn{n_neighbors}_md{min_dist}_sp{spread}_{met}.npy"
                 embpath = opj(embeddings_dir, f'order{order}', fname)

@@ -25,7 +25,7 @@ while len(done) < len(orders):
         n_done_embs = len(listdir(opj(embeddings_dir, order)))
         n_done_mods = len(listdir(opj(models_dir, order)))
         n_done = n_done_embs + n_done_mods
-        pct_done = n_done / 131300
+        pct_done = n_done / 65650
         if pct_done < 1:
             pct_todo = 1 - pct_done
             n_hashes = int(pct_done * BAR_LENGTH)
