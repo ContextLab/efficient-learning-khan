@@ -169,6 +169,15 @@ class Experiment:
         self.avg_participant = np.load(path, allow_pickle=True).item()
         return self.avg_participant
 
+    def save_participants(self, filepaths=None, allow_overwrite=False):
+        if filepaths is None:
+            filepaths = [None] * (len(self.participants) + 1)
+        if len(filepaths) != len(self.participants) + 1:
+            raise ValueError("`filepaths` should contain one path per "
+                             "participant (including average participant, last)")
+        for p, fpath in zip(self.participants + [self.avg_participant], filepaths):
+            p.save(filepath=fpath, allow_overwrite=allow_overwrite)
+
     def load_transcript(self, lecture):
         if isinstance(lecture, str):
             if lecture not in ('forces', 'bos'):
