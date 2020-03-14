@@ -199,11 +199,12 @@ class Experiment:
 
     def load_questions(self):
         path = opj(RAWDIR, 'questions.tsv')
-        self.questions = pd.read_csv(path,
-                                     sep='\t',
-                                     names=['index', 'lecture', 'question',
-                                            'A', 'B', 'C', 'D'],
-                                     index_col='index')
+        self.questions = pd.read_csv(
+            path,
+            sep='\t',
+            names=['index', 'lecture', 'question', 'A', 'B', 'C', 'D'],
+            index_col='index'
+        )
         return self.questions
 
     def load_windows(self, lecture):
