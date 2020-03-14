@@ -153,7 +153,7 @@ class Participant:
         if filepath is None:
             filepath = opj(PARTICIPANTS_DIR, f'{self.subID}.npy')
         if not allow_overwrite and isfile(filepath):
-            print(f"self.subID not saved because {filepath} already exists. "
+            print(f"{self.subID} not saved because {filepath} already exists. "
                   "Set allow_overwrite to True to replace the existing file")
         else:
             np.save(filepath, self)
