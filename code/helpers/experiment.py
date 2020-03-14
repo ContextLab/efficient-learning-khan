@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 from os.path import join as opj
 from nltk.corpus import stopwords
+from PIL.Image import open as open_image
+
 
 DATADIR= '../../data'
 RAWDIR = opj(DATADIR, 'raw')
@@ -25,6 +27,7 @@ class Experiment:
         self.forces_transcript = None
         self.bos_transcript = None
         self.questions = None
+        self.lecture_wsize = 15
         self.forces_windows = None
         self.bos_windows = None
         self.forces_traj = None
@@ -35,19 +38,19 @@ class Experiment:
         self.forces_embedding = None
         self.bos_embedding = None
         self.question_embeddings = None
+        self.wordle_mask = None
         self.cv = None
-        self.lda = None
-        self.reducer = None
-        self.lecture_wsize = 15
         self.cv_params = {
             'strip_accents': 'unicode',
             'stop_words': STOP_WORDS
         }
+        self.lda = None
         self.lda_params = {
             'n_components': 25,
             'learning_method': 'batch',
             'random_state': 0
         }
+        self.reducer = None
         self.umap_params = {
             'n_components': 2,
             'n_neighbors': 15,
@@ -225,3 +228,8 @@ class Experiment:
 
     def load_embedding_space(self):
         self.embedding_space = np.load(opj(EMBS_DIR), 'embedding_space.npy')
+
+    def load_wordle_mask(self, path=None):
+        if path is None:
+            path = opj(DATADIR, 'wordle-mask.jpg')
+        self.wordle_mask = np.array(open_image(path))
