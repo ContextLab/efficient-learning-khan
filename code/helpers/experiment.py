@@ -51,7 +51,7 @@ class Experiment:
             'learning_method': 'batch',
             'random_state': 0
         }
-        self.reducer = None
+        self.umap_reducer = None
         self.umap_params = {
             'n_components': 2,
             'n_neighbors': 15,
@@ -200,7 +200,7 @@ class Experiment:
         if len(filepaths) != len(self.participants) + 1:
             raise ValueError("`filepaths` should contain one path per "
                              "participant (including average participant, last)")
-        for p, fpath in zip(self.participants + [self.avg_participant], filepaths):
+        for p, fpath in zip(list(self.participants) + [self.avg_participant], filepaths):
             p.save(filepath=fpath, allow_overwrite=allow_overwrite)
 
     def load_transcript(self, lecture):
@@ -274,9 +274,9 @@ class Experiment:
         self.lda = np.load(opj(MODELS_DIR, 'fit_LDA.npy'), allow_pickle=True).item()
         return self.lda
 
-    def load_reducer(self):
-        self.reducer = np.load(opj(MODELS_DIR, 'fit_UMAP.npy'), allow_pickle=True).item()
-        return self.reducer
+    def load_umap(self):
+        self.umap_reducer = np.load(opj(MODELS_DIR, 'fit_UMAP.npy'), allow_pickle=True).item()
+        return self.umap_reducer
 
     def load_wordle_mask(self, path=None):
         if path is None:
