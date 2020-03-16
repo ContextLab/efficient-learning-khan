@@ -18,13 +18,14 @@ class Participant:
     def __init__(self, subid, data=None, raw_data=None, date_collected=None):
         self.subID = subid
         self.data = data
-        fallback_msg = "Attribute only set for participant created from raw PsiTurk data"
+        _fallback_msg = "Attribute only set for participant created from raw " \
+                       "PsiTurk data"
         if raw_data is None:
-            self.raw_data = fallback_msg
+            self.raw_data = _fallback_msg
         else:
             self.raw_data = raw_data
         if date_collected is None:
-            self.date_collected = fallback_msg
+            self.date_collected = _fallback_msg
         else:
             self.date_collected = date_collected
         self.traces = {}
@@ -48,6 +49,49 @@ class Participant:
                                   'A', 'B', 'C', 'D'],
                            index_col='index')
 
+    def __str__(self):
+        return f"Participant {self.subID}"
+
+    def __eq__(self, other):
+        return self.subID == other
+
+    def _grade(self):
+        # grades raw data to set self.data
+        data = []
+        question_blocks = (3, 8, 13)
+        all_qs = self.all_questions
+        for set_num, qblock in enumerate(question_blocks):
+            question_block = self.raw_data['data'][qblock]['trialdata']
+            answer_block = literal_eval(
+                self.raw_data['data'][qblock + 1]['trialdata']['responses']
+            )
+            for q_num, q in enumerate(question_block):
+                # deal with HTML characters
+                q_text = unescape(q['prompt']).replace(chr(8217), "'")
+                # match question text to question in dataset
+                q_info = all_qs.loc[all_qs.question == q_text]
+                # error on failure to match questions
+                if not q_info.values.any():
+                    raise KeyError(f"failed to find question matching {q_text}")
+                # set qID and reference lecture
+                qid = q_info.index[0]
+                lec = q_info.loc[qid, 'video']
+                # get answer
+                ans_text = unescape(answer_block[f'Q{q_num}']).replace(chr(8217), "'")
+                # error on failure to match question or unexpected letter
+                try:
+                    ans_let = q_info.squeeze()[q_info.squeeze() == ans_text].index[0]
+                except IndexError as e:
+                    raise KeyError(
+                        f"failed to find answer matching {ans_text}"
+                    ) from e
+                assert ans_let in 'ABCD', f"found answer code {ans_let}, " \
+                                          f"expected one of: 'A', 'B', 'C', 'D'"
+                # set accuracy for response
+                acc = 1 if ans_let == 'A' else 0
+                data.append([qid, acc, set_num, lec])
+        return pd.DataFrame(data, columns=['qID', 'accuracy', 'qset', 'lecture'])
+
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
         print(self.__str__())
@@ -55,12 +99,6 @@ class Participant:
             return self.data.to_html()
         except AttributeError:
             return "Individual data unavailable"
-
-    def __str__(self):
-        return f"Participant {self.subID}"
-
-    def __eq__(self, other):
-        return self.subID == other
 
     def head(self, *args, **kwargs):
         print(self.__str__())
@@ -91,33 +129,53 @@ class Participant:
     def get_trace(self, trace_key):
         """
         Getter for self.traces
-        :param trace_key: (str) the key for the trace to be returned
-        :return: trace: (np.ndarray) The trace stored under the given trace_key
+        :param trace_key: str
+                The key for the trace to be returned
+        :return: trace: np.ndarray
+                The trace stored under the given `trace_key`
         """
         try:
             return self.traces[trace_key]
         except KeyError as e:
-            raise KeyError(f"No trace stored for {self} under {trace_key}") from e
+            raise KeyError(
+                f"No trace stored for {self} under {trace_key}. "
+                f"Stored traces are: {', '.join(self.traces.keys())}"
+            ) from e
 
-    def reconstruct_trace(self, exp, content=None, lecture=None, qset=None, store=None, recon_lec=None):
+    def reconstruct_trace(
+            self,
+            exp,
+            content=None,
+            lecture=None,
+            qset=None,
+            store=None,
+            recon_lec=None
+    ):
         """
         Reconstructs a participant's knowledge trace based on a lecture's
         trajectory, a set of questions' topic vectors, and binary accuracy scores
-        :param exp: (Experiment object) Used to access lecture trajectory and
-                    question topic vectors
-        :param content: (numpy.ndarray) The content against which to weight knowledge,
-                        as derived by question accuracy
-        :param lecture: (int, str, list-like of ints/strs) The lecture(s) for
-                        which to get questions and scores. If [default] None, get
-                        questions and scores for both lectures (& general knowledge)
-        :param qset: (int or list-like of ints) The question set for which to get
-                     questions and scores. If [default] None, get data for all question sets
-        :param store: (str) The key under which the reconstructed trace should be
-                       stored in self.traces. If [default] None, don't store the trace
-        :param recon_lec: (int or str) The lecture trajectory to use in reconstructing
-                          the trace (if not passed directly via content). Useful if passing an iterable to lecture in
-                          order to get questions related to multiple lectures
-        :return trace: (numpy.ndarray) The reconstructed knowledge trace
+        :param exp: Experiment object
+                Used to access lecture trajectory and question topic vectors
+        :param content: numpy.ndarray
+                The content against which to weight knowledge, as derived by
+                question accuracy
+        :param lecture: str, int, or iterable of strs/ints
+                The lecture(s) for which to get questions and scores. If
+                [default] None, get questions and scores for both lectures
+                (& general knowledge)
+        :param qset: int or iterable of ints
+                The question set for which to get questions and scores. If
+                [default] None, get data for all question sets
+        :param store: str or None
+                The key under which the reconstructed trace should be stored in
+                self.traces. If [default] None, don't store the trace
+        :param recon_lec: int or str
+                The lecture trajectory to use in reconstructing the trace (if
+                not passed directly via content). Useful if passing an iterable
+                to lecture in order to get questions related to multiple lectures
+        :return trace: numpy.ndarray
+                The reconstructed trace, describing "knowledge" for each
+                timepoint of given content.
         """
         data = self.get_data(qset=qset, lecture=lecture)
         acc = data['accuracy'].astype(bool)
@@ -130,9 +188,12 @@ class Participant:
                 if recon_lec is not None:
                     content = exp.get_lecture_traj(recon_lec)
                 else:
-                    raise ValueError("Must specify `content` or `recon_lec` if passing multiple `lecture`s")
+                    raise ValueError("Must specify `content` or `recon_lec` if "
+                                     "passing multiple `lecture`s")
             else:
-                raise ValueError("lecture should be one of: str, int, list-like of str/int")
+                raise ValueError(
+                    "lecture should be one of: str, int, iterable of str/int"
+                )
         # compute timepoints by questions weights matrix
         wz = 1 - cdist(content, question_vecs, metric=symmetric_kl)
         # normalize
@@ -168,35 +229,3 @@ class Participant:
     #         keys = [keys]
     #     traces_toplot = [self.traces[k] for k in keys]
     #     return hyp.plot(traces_toplot, **kwargs)
-
-    def _grade(self):
-        # grades raw data to set self.data
-        data = []
-        question_blocks = (3, 8, 13)
-        all_qs = self.all_questions
-        for set_num, qblock in enumerate(question_blocks):
-            question_block = self.raw_data['data'][qblock]['trialdata']
-            answer_block = literal_eval(self.raw_data['data'][qblock + 1]['trialdata']['responses'])
-            for q_num, q in enumerate(question_block):
-                # deal with HTML characters
-                q_text = unescape(q['prompt']).replace(chr(8217), "'")
-                # match question text to question in dataset
-                q_info = all_qs.loc[all_qs.question == q_text]
-                # error on failure to match questions
-                if not q_info.values.any():
-                    raise KeyError(f"failed to find question matching {q_text}")
-                # set qID and reference lecture
-                qid = q_info.index[0]
-                lec = q_info.loc[qid, 'video']
-                # get answer
-                ans_text = unescape(answer_block[f'Q{q_num}']).replace(chr(8217), "'")
-                # error on failure to match question or unexpected letter
-                try:
-                    ans_let = q_info.squeeze()[q_info.squeeze() == ans_text].index[0]
-                except IndexError as e:
-                    raise KeyError(f"failed to find answer matching {ans_text}") from e
-                assert ans_let in 'ABCD', f"found answer code {ans_let}, expected one of: 'A', 'B', 'C', 'D'"
-                # set accuracy for response
-                acc = 1 if ans_let == 'A' else 0
-                data.append([qid, acc, set_num, lec])
-        return pd.DataFrame(data, columns=['qID', 'accuracy', 'qset', 'lecture'])

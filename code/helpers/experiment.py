@@ -2,6 +2,7 @@ import hypertools as hyp
 import numpy as np
 import pandas as pd
 from os.path import join as opj
+from warnings import warn
 from nltk.corpus import stopwords
 from PIL.Image import open as open_image
 
@@ -88,24 +89,38 @@ class Experiment:
             qids = [qid - 1 for qid in qids]
         return self.question_vectors[qids]
 
-    def plot(self, lectures=None, questions=None, participants=None, keys=None, **kwargs):
+    def plot(
+            self,
+            lectures=None,
+            questions=None,
+            participants=None,
+            keys=None,
+            **kwargs
+    ):
         """
-        wraps hypertools.plot for multisubject plots and plotting lectures/questions
-        plots in order: [lectures, questions, participants[0][keys[0]], participants[0][keys[1]], etc
-        :param lectures: (str or iterable of str) Lecture(s) topic trajectories
-                         to plot
-        :param questions: (str, int, or iterable of str/int) If str or iterable
-                           of strs, the names of question types ("forces", "bos",
-                           "general") to plot. If int or iterable of ints, the
-                           IDs of questions to plot
-        :param participants: (str or iterable of str) The participant(s) in
-                              self.participants whose reconstructed traces
-                              (given by keys arg) to plot.  May also be "all" for
-                              all in self.participants or "avg" for self.avg_participant
-        :param keys: (str or iterable of str) The keys of reconstructed traces to
-                      plot for each participant (contained in Participant.traces)
-        :param kwargs: Keyword arguments to pass to hypertools or matplotlib
-        :return:
+        Wraps hypertools.plot for multi-subject plots and plotting
+        lectures/questions. Plotting order is:
+            1. lectures (if multiple, plotted in order passed)
+            2. questions (plotted in order passed)
+            3. traces (for each participant, in order passed, the trace given by
+                each key, in order passed)
+        :param lectures: str, int, or iterable of strs/ints (optional)
+                Lecture topic trajectories to plot
+        :param questions: str, int, or iterable of str/int (optional)
+                If str or iterable of strs, the category of questions ("forces",
+                "bos", "general") to plot. If int or iterable of ints, the IDs
+                of questions to plot
+        :param participants: str, int or iterable of strs/ints (optional)
+                The participant(s) in `self.participants` whose reconstructed
+                traces (given by keys arg) to plot.  May also be "all" for all
+                participants or "avg" for `self.avg_participant`
+        :param keys: str or iterable of str (required if passing `participants`)
+                The keys of reconstructed traces to plot for each participant
+        :param kwargs: various types
+                Keyword arguments passed to `hypertools.plot`, then forwarded to
+                matplotlib
+        :return: plot: hypertools.datageometry.DataGeometry
+                A plot of the specified data
         """
         if (participants is not None) and (keys is None):
             raise ValueError("Must pass keys if passing participants")
@@ -131,6 +146,12 @@ class Experiment:
             participants = [f'P{participants}']
         if isinstance(keys, str):
             keys = [keys]
+        skip_keys = []
+        for key in keys:
+            if not ('forces' in key or 'bos' in key):
+                warn(f"couldn't determine corresponding lecture for trace key "
+                     f"'{key}'. Trace will be excluded from plot")
+        keys = [k for k in keys if k not in skip_keys]
 
         to_plot = [self.get_lecture_traj(l) for l in lectures]
         for q in questions:
@@ -145,7 +166,11 @@ class Experiment:
             if isinstance(p, str):
                 p = self.participants[self.participants == p][0]
             for key in keys:
-                to_plot.append(p.traces[key])
+                lec = 'forces' if 'forces' in key else 'bos'
+                lec_traj = self.get_lecture_traj(lec)
+                trace = p.get_trace(key)
+                # weight each timepoint of lecture by knowledge
+                to_plot.append(lec_traj * trace[:, np.newaxis])
 
         return hyp.plot(to_plot, **kwargs)
 
@@ -250,7 +275,7 @@ class Experiment:
         return self.lda
 
     def load_reducer(self):
-        self.reducer = np.load(opj(MODELS_DIR, 'UMAP_reducer.npy'), allow_pickle=True).item()
+        self.reducer = np.load(opj(MODELS_DIR, 'fit_UMAP.npy'), allow_pickle=True).item()
         return self.reducer
 
     def load_wordle_mask(self, path=None):
