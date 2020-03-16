@@ -214,14 +214,14 @@ class Experiment:
                 self.forces_transcript = transcript
             else:
                 self.bos_transcript = transcript
+            if splitlines:
+                transcript = transcript.splitlines()
         elif hasattr(lecture, '__iter__'):
             transcript = []
             for l in lecture:
                 transcript.append(self.load_transcript(l, splitlines=splitlines))
         else:
             raise ValueError("lecture should be either a str or an iterable of strs")
-        if splitlines:
-            transcript = transcript.splitlines()
         return transcript
 
     def load_questions(self):
