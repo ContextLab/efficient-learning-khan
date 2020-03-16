@@ -217,7 +217,7 @@ class Experiment:
         elif hasattr(lecture, '__iter__'):
             transcript = []
             for l in lecture:
-                transcript.append(self.load_transcript(l))
+                transcript.append(self.load_transcript(l, splitlines=splitlines))
         else:
             raise ValueError("lecture should be either a str or an iterable of strs")
         if splitlines:
