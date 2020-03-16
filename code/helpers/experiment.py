@@ -203,7 +203,7 @@ class Experiment:
         for p, fpath in zip(list(self.participants) + [self.avg_participant], filepaths):
             p.save(filepath=fpath, allow_overwrite=allow_overwrite)
 
-    def load_transcript(self, lecture):
+    def load_transcript(self, lecture, splitlines=False):
         if isinstance(lecture, str):
             if lecture not in ('forces', 'bos'):
                 raise ValueError("lecture may be one of: 'forces', 'bos'")
@@ -220,6 +220,8 @@ class Experiment:
                 transcript.append(self.load_transcript(l))
         else:
             raise ValueError("lecture should be either a str or an iterable of strs")
+        if splitlines:
+            transcript = transcript.splitlines()
         return transcript
 
     def load_questions(self):
