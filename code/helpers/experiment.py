@@ -177,7 +177,7 @@ class Experiment:
     ##########################################
     #              DATA LOADERS              #
     ##########################################
-    def load_participants(self, load_avg=True):
+    def load_participants(self, load_avg=False):
         participants = []
         for pid in range(1, self.n_participants + 1):
             path = opj(PARTICIPANTS_DIR, f'P{pid}.npy')
