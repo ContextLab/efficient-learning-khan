@@ -1,6 +1,7 @@
 import hypertools as hyp
 import numpy as np
 import pandas as pd
+from datetime import timedelta
 from os.path import join as opj
 from warnings import warn
 from nltk.corpus import stopwords
@@ -17,6 +18,14 @@ N_PARTICIPANTS = 50
 STOP_WORDS = stopwords.words('english') + ["even", "I'll", "I'm", "let", "let's",
                                            "really", "they'd", "they're",
                                            "they've", "they'll", "that's"]
+
+
+def ts_to_sec(ts):
+    # converts elapsed time timestamps from
+    # "MM:SS" format to floats
+    mins, secs = ts.split(':')
+    mins, secs = int(mins), int(secs)
+    return timedelta(minutes=mins, seconds=secs).total_seconds()
 
 
 class Experiment:
