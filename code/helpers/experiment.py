@@ -1,3 +1,4 @@
+import re
 import hypertools as hyp
 import numpy as np
 import pandas as pd
@@ -20,12 +21,23 @@ STOP_WORDS = stopwords.words('english') + ["even", "I'll", "I'm", "let", "let's"
                                            "they've", "they'll", "that's"]
 
 
-def ts_to_sec(ts):
-    # converts elapsed time timestamps from
-    # "MM:SS" format to floats
+def _ts_to_sec(ts):
+    # converts timestamp of elapsed time
+    # from "MM:SS" format to scalar
     mins, secs = ts.split(':')
     mins, secs = int(mins), int(secs)
     return timedelta(minutes=mins, seconds=secs).total_seconds()
+
+
+def format_text(textlist, sw=STOP_WORDS):
+    # some simple text preprocessing
+    clean_textlist = []
+    for chunk in textlist:
+        no_punc = re.sub("[^a-zA-Z\s'-]+", '', chunk.lower()).replace('-', ' ')
+        no_stop = ' '.join([word for word in no_punc.split() if word not in sw])
+        clean_text = re.sub("'+", '', no_stop)
+        clean_textlist.append(clean_text)
+    return clean_textlist
 
 
 class Experiment:
@@ -97,6 +109,31 @@ class Experiment:
         else:
             qids = [qid - 1 for qid in qids]
         return self.question_vectors[qids]
+
+    def get_timepoint_text(self, lecture, timepoint, buffer=15):
+        if lecture == 'forces':
+            transcript = self.forces_transcript
+        elif lecture == 'bos':
+            transcript = self.bos_transcript
+        else:
+            raise ValueError("Lecture must be either 'forces' or 'bos'")
+        # make sure necessary data is loaded
+        if transcript is None:
+            transcript = self.load_transcript(lecture)
+        # get timestamps and text from transcript
+        transcript = transcript.splitlines()
+        timestamps = np.fromiter(map(_ts_to_sec, transcript[::2]), dtype=np.int)
+        text = np.array(transcript[1::2])
+        # compute start and end time from timeoint and buffer
+        onset, offset = timepoint - buffer, timepoint + buffer
+        # make sure times are within bounds
+        if onset < 0:
+            onset = 0
+        if offset > timestamps[-1]:
+            offset = timestamps[-1]
+        # get timestamps of text between those times
+        text_ixs = np.where((timestamps >= onset) & (timestamps < offset))[0]
+        return ' '.join(text[text_ixs])
 
     def plot(
             self,
