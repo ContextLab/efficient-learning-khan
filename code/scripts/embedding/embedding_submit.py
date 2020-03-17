@@ -2,7 +2,7 @@
 
 import os
 from datetime import datetime as dt
-from os.path import join as opj
+from os.path import isdir, join as opj
 from string import Template
 from subprocess import run
 from embedding_config import config as config
@@ -24,6 +24,11 @@ job_names = list()
 # order 4: bos, questions, forces
 # order 5: questions, forces, bos
 # order 6: questions, bos, forces
+
+if not isdir(embeddings_dir):
+    os.mkdir(embeddings_dir)
+if not isdir(models_dir):
+    os.mkdir(models_dir)
 
 for order in range(1, 7):
     os.mkdir(opj(embeddings_dir, f'order{order}'))

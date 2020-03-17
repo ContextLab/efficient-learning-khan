@@ -55,6 +55,7 @@ RUN pip install \
     seaborn==0.9.0 \
     scikit-learn==0.21.3 \
     spurplus==2.3.3 \
+    wordcloud==1.5.0 \
     hypertools==0.6.2 \
     git+git://github.com/lmcinnes/umap.git@ba31421be27a99a897ed8bdb39aa7ecfebd72e40#egg=umap_learn \
     jupyter_contrib_nbextensions==0.5.1

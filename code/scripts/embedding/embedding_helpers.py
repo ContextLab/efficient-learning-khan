@@ -52,37 +52,37 @@ def euclidean_exp(x, y):
     return d, grad
 
 
-@numba.njit(fastmath=True)
-def symmetric_kl_exp(x, y, z=1e-11):
-    x = e ** x
-    y = e ** y
-    n = x.shape[0]
-    x_sum = 0.0
-    y_sum = 0.0
-    kl1 = 0.0
-    kl2 = 0.0
-
-    for i in range(n):
-        x[i] += z
-        x_sum += x[i]
-        y[i] += z
-        y_sum += y[i]
-
-    for i in range(n):
-        x[i] /= x_sum
-        y[i] /= y_sum
-
-    for i in range(n):
-        kl1 += x[i] * np.log(x[i] / y[i])
-        kl2 += y[i] * np.log(y[i] / x[i])
-
-    dist = (kl1 + kl2) / 2
-    grad = (np.log(y / x) - (x / y) + 1) / 2
-    return dist, grad
+# @numba.njit(fastmath=True)
+# def symmetric_kl_exp(x, y, z=1e-11):
+#     x = e ** x
+#     y = e ** y
+#     n = x.shape[0]
+#     x_sum = 0.0
+#     y_sum = 0.0
+#     kl1 = 0.0
+#     kl2 = 0.0
+#
+#     for i in range(n):
+#         x[i] += z
+#         x_sum += x[i]
+#         y[i] += z
+#         y_sum += y[i]
+#
+#     for i in range(n):
+#         x[i] /= x_sum
+#         y[i] /= y_sum
+#
+#     for i in range(n):
+#         kl1 += x[i] * np.log(x[i] / y[i])
+#         kl2 += y[i] * np.log(y[i] / x[i])
+#
+#     dist = (kl1 + kl2) / 2
+#     grad = (np.log(y / x) - (x / y) + 1) / 2
+#     return dist, grad
 
 
 distance_funcs = {
     'euclidean': euclidean_exp,
-    'correlation': correlation_exp,
-    'kl': symmetric_kl_exp
+    'correlation': correlation_exp
+    # 'kl': symmetric_kl_exp
 }
