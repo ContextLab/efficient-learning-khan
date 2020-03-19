@@ -16,6 +16,7 @@ TRAJS_DIR = opj(DATADIR, 'trajectories')
 EMBS_DIR = opj(DATADIR, 'embeddings')
 MODELS_DIR = opj(DATADIR, 'models')
 N_PARTICIPANTS = 50
+LECTURE_WSIZE = 15
 STOP_WORDS = stopwords.words('english') + ["even", "I'll", "I'm", "let", "let's",
                                            "really", "they'd", "they're",
                                            "they've", "they'll", "that's"]
@@ -30,7 +31,9 @@ def _ts_to_sec(ts):
 
 
 def format_text(textlist, sw=STOP_WORDS):
-    # some simple text preprocessing
+    # some simple text preprocessing:
+    # removes punctuation & symbols, converts to all lowercase,
+    # splits hyphenated words, removes apostrophes
     clean_textlist = []
     for chunk in textlist:
         no_punc = re.sub("[^a-zA-Z\s'-]+", '', chunk.lower()).replace('-', ' ')
@@ -42,14 +45,11 @@ def format_text(textlist, sw=STOP_WORDS):
 
 class Experiment:
     def __init__(self):
-        self.lectures = ['Four Forces', 'Birth of Stars']
-        self.n_participants = N_PARTICIPANTS
         self.participants = None
         self.avg_participant = None
         self.forces_transcript = None
         self.bos_transcript = None
         self.questions = None
-        self.lecture_wsize = 15
         self.forces_windows = None
         self.bos_windows = None
         self.forces_traj = None
@@ -181,6 +181,7 @@ class Experiment:
             questions = [questions]
         if participants is None:
             participants = []
+            keys = []
         elif isinstance(participants, str):
             if participants == 'all':
                 participants = self.participants
@@ -225,7 +226,7 @@ class Experiment:
     ##########################################
     def load_participants(self, load_avg=False):
         participants = []
-        for pid in range(1, self.n_participants + 1):
+        for pid in range(1, N_PARTICIPANTS + 1):
             path = opj(PARTICIPANTS_DIR, f'P{pid}.npy')
             p = np.load(path, allow_pickle=True).item()
             participants.append(p)
