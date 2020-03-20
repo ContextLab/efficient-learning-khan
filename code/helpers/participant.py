@@ -50,7 +50,7 @@ class Participant:
                            index_col='index')
 
     def __str__(self):
-        return f"Participant {self.subID}"
+        return self.subID
 
     def __eq__(self, other):
         return self.subID == other
