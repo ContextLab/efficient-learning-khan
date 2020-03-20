@@ -106,6 +106,9 @@ class Participant:
 
     def get_data(self, qset=None, lecture=None):
         # return (a subset of) the subject's data
+        if self.data is None:
+            return f"No data for participant: {self.subID}"
+        
         lec_keys = {'general': 0, 'forces': 1, 'bos': 2}
         if isinstance(qset, int):
             qset = [qset]
