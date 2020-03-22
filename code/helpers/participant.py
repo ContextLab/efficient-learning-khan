@@ -89,8 +89,8 @@ class Participant:
                                           f"expected one of: 'A', 'B', 'C', 'D'"
                 # set accuracy for response
                 acc = 1 if ans_let == 'A' else 0
-                data.append([qid, acc, set_num, lec])
-        return pd.DataFrame(data, columns=['qID', 'accuracy', 'qset', 'lecture'])
+                data.append([qid, acc, ans_let, set_num, lec])
+        return pd.DataFrame(data, columns=['qID', 'accuracy', 'response', 'qset', 'lecture'])
 
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
@@ -108,7 +108,7 @@ class Participant:
         # return (a subset of) the subject's data
         if self.data is None:
             return f"No data for participant: {self.subID}"
-        
+
         lec_keys = {'general': 0, 'forces': 1, 'bos': 2}
         if isinstance(qset, int):
             qset = [qset]
