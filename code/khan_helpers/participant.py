@@ -6,13 +6,7 @@ from os.path import isfile, join as opj
 from scipy.spatial.distance import cdist
 from scipy.stats import entropy
 from experiment import PARTICIPANTS_DIR, RAWDIR
-
-
-# symmetrized KL divergence
-# passed to scipy.spatial.distance.cdist in reconstruct_trace
-def symmetric_kl(a, b, c=1e-11):
-    return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
-
+from helpers import symmetric_kl
 
 class Participant:
     def __init__(self, subid, data=None, raw_data=None, date_collected=None):
