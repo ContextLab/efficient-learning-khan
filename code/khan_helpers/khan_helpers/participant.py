@@ -4,9 +4,8 @@ from ast import literal_eval
 from html import unescape
 from os.path import isfile, join as opj
 from scipy.spatial.distance import cdist
-from scipy.stats import entropy
-from experiment import PARTICIPANTS_DIR, RAWDIR
-from helpers import symmetric_kl
+from .helpers import PARTICIPANTS_DIR, RAW_DIR, symmetric_kl
+
 
 class Participant:
     def __init__(self, subid, data=None, raw_data=None, date_collected=None):
@@ -36,7 +35,7 @@ class Participant:
     @property
     def all_questions(self, questions_path=None):
         if questions_path is None:
-            questions_path = opj(RAWDIR, 'questions.tsv')
+            questions_path = opj(RAW_DIR, 'questions.tsv')
         return pd.read_csv(questions_path,
                            sep='\t',
                            names=['index', 'video', 'question',

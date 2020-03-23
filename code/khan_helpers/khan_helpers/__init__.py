@@ -14,8 +14,8 @@ message = Markdown(
     "show_source(foo)</pre>"
 )
 
-# check for InteractiveShell method
 try:
+    # check for InteractiveShell method
     get_ipython()
     display(message)
 except NameError:

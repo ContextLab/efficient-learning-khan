@@ -5,42 +5,17 @@ import pandas as pd
 from datetime import timedelta
 from os.path import join as opj
 from warnings import warn
-from nltk.corpus import stopwords
 from PIL.Image import open as open_image
-
-
-DATADIR= '../../data'
-RAWDIR = opj(DATADIR, 'raw')
-PARTICIPANTS_DIR = opj(DATADIR, 'participants')
-TRAJS_DIR = opj(DATADIR, 'trajectories')
-EMBS_DIR = opj(DATADIR, 'embeddings')
-MODELS_DIR = opj(DATADIR, 'models')
-N_PARTICIPANTS = 50
-LECTURE_WSIZE = 15
-STOP_WORDS = stopwords.words('english') + ["even", "I'll", "I'm", "let", "let's",
-                                           "really", "they'd", "they're",
-                                           "they've", "they'll", "that's"]
-
-
-def _ts_to_sec(ts):
-    # converts timestamp of elapsed time
-    # from "MM:SS" format to scalar
-    mins, secs = ts.split(':')
-    mins, secs = int(mins), int(secs)
-    return timedelta(minutes=mins, seconds=secs).total_seconds()
-
-
-def format_text(textlist, sw=STOP_WORDS):
-    # some simple text preprocessing:
-    # removes punctuation & symbols, converts to all lowercase,
-    # splits hyphenated words, removes apostrophes
-    clean_textlist = []
-    for chunk in textlist:
-        no_punc = re.sub("[^a-zA-Z\s'-]+", '', chunk.lower()).replace('-', ' ')
-        no_stop = ' '.join([word for word in no_punc.split() if word not in sw])
-        clean_text = re.sub("'+", '', no_stop)
-        clean_textlist.append(clean_text)
-    return clean_textlist
+from .helpers import (
+    DATA_DIR,
+    EMBS_DIR,
+    MODELS_DIR,
+    N_PARTICIPANTS,
+    PARTICIPANTS_DIR,
+    RAW_DIR,
+    STOP_WORDS,
+    TRAJS_DIR
+)
 
 
 class Experiment:
@@ -254,7 +229,7 @@ class Experiment:
         if isinstance(lecture, str):
             if lecture not in ('forces', 'bos'):
                 raise ValueError("lecture may be one of: 'forces', 'bos'")
-            path = opj(RAWDIR, f'{lecture}_transcript_timestamped.txt')
+            path = opj(RAW_DIR, f'{lecture}_transcript_timestamped.txt')
             with open(path, 'r') as f:
                 transcript = f.read()
             if lecture == 'forces':
@@ -272,7 +247,7 @@ class Experiment:
         return transcript
 
     def load_questions(self):
-        path = opj(RAWDIR, 'questions.tsv')
+        path = opj(RAW_DIR, 'questions.tsv')
         self.questions = pd.read_csv(
             path,
             sep='\t',
@@ -289,7 +264,7 @@ class Experiment:
         elif lecture not in ('forces', 'bos'):
             raise ValueError("lecture may be one of: 'forces', 'bos'")
         else:
-            windows = np.load(opj(RAWDIR, f'{lecture}_windows.npy'))
+            windows = np.load(opj(RAW_DIR, f'{lecture}_windows.npy'))
             if lecture == 'forces':
                 self.forces_windows = windows
             else:
@@ -329,6 +304,6 @@ class Experiment:
 
     def load_wordle_mask(self, path=None):
         if path is None:
-            path = opj(DATADIR, 'wordle-mask.jpg')
+            path = opj(DATA_DIR, 'wordle-mask.jpg')
         self.wordle_mask = np.array(open_image(path))
         return self.wordle_mask
