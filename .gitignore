@@ -2,6 +2,7 @@
 *.ipynb_checkpoints/
 *.idea
 *__pycache__
+*.egg-info
 exp/.psiturkconfig
 data/db/
 exp/google-credentials
