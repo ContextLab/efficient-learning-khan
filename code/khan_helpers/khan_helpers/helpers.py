@@ -3,6 +3,8 @@ import numpy as np
 from datetime import timedelta
 from inspect import getsource, isclass, isfunction
 from os.path import join as opj
+from IPython.display import HTML
+from IPython.core.oinspect import pylight
 from nltk.corpus import stopwords
 from scipy.stats import entropy
 
@@ -50,12 +52,15 @@ def format_text(textlist, sw=STOP_WORDS):
 
 def show_source(obj):
     try:
-        getsource(obj)
+        src = getsource(obj)
     except TypeError as e:
-        if not (isclass(obj) or isfunction(obj)):
-            return obj
-        else:
-            raise ValueError("Couldn't identify source of object") from e
+        # if called on variable, just show its value
+        src = obj
+    try:
+        return HTML(pylight(src))
+    except AttributeError:
+        # pylight doesn't work on certain builtin types
+        return src
 
 
 def symmetric_kl(a, b, c=1e-11):
