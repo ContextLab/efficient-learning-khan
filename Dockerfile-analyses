@@ -38,33 +38,8 @@ ENV PATH /opt/conda/bin:$PATH
 # enable UTF-8 locale
 ENV LANG C.UTF-8
 
-# update setuptools
-RUN conda update setuptools
-
-# install jupyterlab
-RUN conda install -c conda-forge jupyterlab
-
-# Install proper package versions
-# pip install to avoid slow conda compatibility checks
-RUN pip install \
-    numpy==1.16.5 \
-    scipy==1.4.1 \
-    pandas==0.25.2 \
-    nltk==3.4.5 \
-    matplotlib==3.1.0 \
-    seaborn==0.9.0 \
-    scikit-learn==0.21.3 \
-    spurplus==2.3.3 \
-    wordcloud==1.5.0 \
-    hypertools==0.6.2 \
-    git+git://github.com/lmcinnes/umap.git@ba31421be27a99a897ed8bdb39aa7ecfebd72e40#egg=umap_learn \
-    jupyter_contrib_nbextensions==0.5.1
-
-# install js & css files for some nice (pure convenience) jupyter notebook extensions
-RUN jupyter contrib nbextension install --user
-
-# download nltk stop-words corpus
-RUN python -c "import nltk; nltk.download('stopwords')"
+# run setup script
+RUN python -c "environment_setup.py"
 
 # expose a port to run jupyter notebooks
 EXPOSE 22364

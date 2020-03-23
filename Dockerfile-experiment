@@ -14,29 +14,11 @@ RUN eatmydata apt-get install -y \
     git \
     curl \
     yasm
+
 RUN rm -rf /var/lib/apt/lists/*
 
 # install python packages
-RUN pip install --upgrade pip
-RUN pip install --upgrade \
-setuptools \
-requests \
-mysql-python \
-psiturk==2.2.3 \
-pydub \
-matplotlib \
-pandas \
-numpy \
-quail \
-seaborn \
-hypertools \
-joblib \
-sqlalchemy \
-scipy \
-deepdish \
-datetime \
-python-dateutil \
-requests-oauthlib
+RUN pip install --upgrade pip && pip install -r --no-cache-dir experiment-requirements.txt
 
 # install vim
 RUN apt-get update
