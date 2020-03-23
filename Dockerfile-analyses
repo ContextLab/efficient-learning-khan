@@ -39,7 +39,7 @@ ENV PATH /opt/conda/bin:$PATH
 ENV LANG C.UTF-8
 
 # run setup script
-RUN python -c "environment_setup.py"
+RUN python -B "environment_setup.py"
 
 # expose a port to run jupyter notebooks
 EXPOSE 22364
