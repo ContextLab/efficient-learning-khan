@@ -59,7 +59,7 @@ def show_source(obj):
     try:
         return HTML(pylight(src))
     except AttributeError:
-        # pylight doesn't work on certain builtin types
+        # pylight doesn't work on certain types
         return src
 
 
