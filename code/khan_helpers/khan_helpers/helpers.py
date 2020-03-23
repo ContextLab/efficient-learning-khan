@@ -1,6 +1,7 @@
 import re
 import numpy as np
 from datetime import timedelta
+from inspect import getsource, isclass, isfunction
 from os.path import join as opj
 from nltk.corpus import stopwords
 from scipy.stats import entropy
@@ -45,6 +46,16 @@ def format_text(textlist, sw=STOP_WORDS):
         clean_text = re.sub("'+", '', no_stop)
         clean_textlist.append(clean_text)
     return clean_textlist
+
+
+def show_source(obj):
+    try:
+        getsource(obj)
+    except TypeError as e:
+        if not (isclass(obj) or isfunction(obj)):
+            return obj
+        else:
+            raise ValueError("Couldn't identify source of object") from e
 
 
 def symmetric_kl(a, b, c=1e-11):
