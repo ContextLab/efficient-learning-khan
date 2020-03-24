@@ -1,3 +1,8 @@
+# This script is run during build from Dockerfile-analyses.
+# It deals with installing conda, pip, and local packages,
+# as well as downloading some data and configuring some jupyter
+# extensions needed to run the analysis notebooks
+
 from shlex import split as split_command
 from subprocess import PIPE, Popen, SubprocessError, TimeoutExpered
 from sys import exc_info, exit
