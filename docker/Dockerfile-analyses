@@ -39,7 +39,8 @@ ENV PATH /opt/conda/bin:$PATH
 ENV LANG C.UTF-8
 
 # run setup script
-RUN python -B "environment_setup.py"
+COPY 
+RUN python -B docker-pysetup.py
 
 # expose a port to run jupyter notebooks
 EXPOSE 22364
