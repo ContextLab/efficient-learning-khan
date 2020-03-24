@@ -43,18 +43,18 @@ commands = [
     # install proper package versions (use pip to avoid
     # dreadfully slow conda compatibility checks)
     "pip install -r analyses-requirements.txt",
-    # install js & css files for some convenient jupyter notebook extensions
-    "jupyter contrib nbextion install --user",
     # install helper module as a package for easier importing in notebooks
-    "pip install -e /mnt/code/khan_helpers"
+    "pip install /buildfiles/khan_helpers",
+    # install js & css files for some convenient jupyter notebook extensions
+    "jupyter contrib nbextension install --user",
     # download nltk stop-words corpus
     # (have to run in subprocess because package wasn't installed when this
     # interpreter was loaded)
-    '''python -c "import nltk; nltk.download('stopwords')"'''
+    '''python -uc "import nltk; nltk.download('stopwords')"'''
 ]
 
 for i, command in enumerate(commands):
-    print(f"Running step {i + 1}/{len(commands)}: {command}")
+    print(f'\n\nRunning step {i + 1}/{len(commands)}: "{command}"')
     return_code = run_with_live_output(command)
     if return_code != 0:
         exit(return_code)

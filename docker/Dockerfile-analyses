@@ -38,9 +38,12 @@ ENV PATH /opt/conda/bin:$PATH
 # enable UTF-8 locale
 ENV LANG C.UTF-8
 
+# copy in files for build
+COPY docker/docker-pysetup.py docker/analyses-requirements.txt /buildfiles/
+COPY code/khan_helpers/ /buildfiles/khan_helpers/
+
 # run setup script
-COPY docker-pysetup.py analyses-requirements.txt /buildfiles/
-RUN cd /buildfiles && python -Bu docker-pysetup.py && cd / && rm -rf /buildfiles
+RUN python -Bu /buildfiles/docker-pysetup.py && rm -rf /buildfiles
 
 # expose a port to run jupyter notebooks
 EXPOSE 22364
