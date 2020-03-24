@@ -4,7 +4,7 @@
 # extensions needed to run the analysis notebooks
 
 from shlex import split as split_command
-from subprocess import PIPE, Popen, SubprocessError, TimeoutExpered
+from subprocess import PIPE, Popen, SubprocessError, TimeoutExpired
 from sys import exc_info, exit
 
 
@@ -22,15 +22,15 @@ def run_with_live_output(command):
             output = process.stdout.readline()
             if output:
                 print(output.strip().decode())
-    except TimeoutExpered as e:
+    except TimeoutExpired as e:
         # shouldn't occur, but handle it just to be safe
         # so we can clean up child processes
         process.kill()
         raise SubprocessError(f"Child process timed out while running "
-                              "{command}") from e
+                              f"{command}") from e
     except SubprocessError as e:
         raise SubprocessError(f"ERROR {exc_info()[1]} occurred while running "
-                               "{command} ") from e
+                              f"{command} ") from e
     # return the completed process's return code
     return process.poll()
 
