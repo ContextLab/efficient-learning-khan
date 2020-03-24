@@ -40,7 +40,7 @@ ENV LANG C.UTF-8
 
 # run setup script
 COPY docker-pysetup.py analyses-requirements.txt /buildfiles/
-RUN cd /buildfiles && python -B docker-pysetup.py && cd / && rm -rf /buildfiles
+RUN cd /buildfiles && python -Bu docker-pysetup.py && cd / && rm -rf /buildfiles
 
 # expose a port to run jupyter notebooks
 EXPOSE 22364
