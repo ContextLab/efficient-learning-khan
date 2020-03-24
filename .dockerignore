@@ -1,0 +1,6 @@
+# Pare down the build context to just the necessary files:
+# Ignore everything...
+**
+# ...except for the directories with files needed for build...
+!docker/
+!/code/khan_helpers/
