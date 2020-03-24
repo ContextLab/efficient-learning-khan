@@ -40,6 +40,8 @@ commands = [
     "pip install -r analyses-requirements.txt",
     # install js & css files for some convenient jupyter notebook extensions
     "jupyter contrib nbextion install --user",
+    # install helper module as a package for easier importing in notebooks
+    "pip install -e /mnt/code/khan_helpers"
     # download nltk stop-words corpus
     # (have to run in subprocess because package wasn't installed when this
     # interpreter was loaded)
