@@ -1,8 +1,6 @@
-import re
 import hypertools as hyp
 import numpy as np
 import pandas as pd
-from datetime import timedelta
 from os.path import join as opj
 from warnings import warn
 from PIL.Image import open as open_image
