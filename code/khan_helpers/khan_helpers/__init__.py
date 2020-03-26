@@ -2,6 +2,9 @@ from os.path import dirname, realpath
 from pkg_resources import get_distribution
 from IPython.display import display, Markdown
 
+from .experiment import Experiment
+from .participant import Participant
+
 
 # see version number in setup.py
 __version__ = get_distribution("khan_helpers").version
