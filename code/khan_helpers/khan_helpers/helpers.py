@@ -22,7 +22,7 @@ MODELS_DIR = opj(DATA_DIR, 'models')
 FIG_DIR = '/mnt/paper/figs/'
 N_PARTICIPANTS = 50
 LECTURE_WSIZE = 15
-STOP_WORDS = stopwords.words('english') + ["even", "I'll", "I'm", "let", "let's",
+STOP_WORDS = stopwords.words('english') + ["even", "i'll", "i'm", "let", "let's",
                                            "really", "they'd", "they're",
                                            "they've", "they'll", "that's"]
 
