@@ -31,11 +31,16 @@ STOP_WORDS = stopwords.words('english') + ["even", "i'll", "i'm", "let", "let's"
 #            REUSED FUNCTIONS            #
 ##########################################
 def _ts_to_sec(ts):
-    # converts timestamp of elapsed time
-    # from "MM:SS" format to scalar
+    # converts timestamp of elapsed time from "MM:SS" format to scalar
     mins, secs = ts.split(':')
     mins, secs = int(mins), int(secs)
     return timedelta(minutes=mins, seconds=secs).total_seconds()
+
+
+def corr_mean(rs, axis=0):
+    # computes the mean of correlation coefficients, performing the
+    # Fisher z-transformation & inverse z-transormation before & after
+    return z2r(np.nanmean([r2z(r) for r in rs], axis=axis))
 
 
 def format_text(textlist, sw=STOP_WORDS):
@@ -81,6 +86,12 @@ def parse_windows(transcript, wsize):
     return windows, timestamps
 
 
+def r2z(r):
+    # computes the Fisher z-transformation
+    with np.errstate(invalid='ignore', divide='ignore'):
+        return 0.5 * (np.log(1 + r) - np.log(1 - r))
+
+
 def show_source(obj):
     try:
         src = getsource(obj)
@@ -97,3 +108,9 @@ def show_source(obj):
 def symmetric_kl(a, b, c=1e-11):
     # symmetrized KL divergence
     return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
+
+
+def z2r(z):
+    # computes the inverse Fisher z-transformation
+    with np.errstate(invalid='ignore', divide='ignore'):
+        return (np.exp(2 * z) - 1) / (np.exp(2 * z) + 1)
