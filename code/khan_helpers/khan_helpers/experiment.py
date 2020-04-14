@@ -12,7 +12,8 @@ from .helpers import (
     PARTICIPANTS_DIR,
     RAW_DIR,
     STOP_WORDS,
-    TRAJS_DIR
+    TRAJS_DIR,
+    _ts_to_sec
 )
 
 
