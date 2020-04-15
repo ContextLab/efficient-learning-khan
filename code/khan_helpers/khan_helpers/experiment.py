@@ -42,7 +42,7 @@ class Experiment:
         }
         self.lda = None
         self.lda_params = {
-            'n_components': 25,
+            'n_components': 10,
             'learning_method': 'batch',
             'random_state': 0
         }
