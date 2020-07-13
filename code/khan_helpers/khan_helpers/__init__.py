@@ -8,7 +8,7 @@ version_info = (0, 0, 1)
 __version__ = '.'.join(map(str, version_info))
 
 github_link = "https://github.com/contextlab/efficient-learning-khan/tree/master/code/khan_helpers"
-pkg_dir = Path(__file__).resolve().parents[1]
+pkg_dir = Path(__file__).resolve().parent
 message = Markdown(
     "Experiment & Participant classes, helper functions, and variables used "
     f"across multiple notebooks can be found in `{pkg_dir}`, or on GitHub, "

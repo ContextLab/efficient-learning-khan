@@ -1,35 +1,16 @@
 import re
-import numpy as np
 from datetime import timedelta
 from inspect import getsource
-from pathlib import Path
+
+import numpy as np
 from IPython.display import HTML
 from IPython.core.oinspect import pylight
-from nltk.corpus import stopwords
 from scipy.interpolate import interp1d
 from scipy.stats import entropy
 
-
-##########################################
-#            REUSED VARIABLES            #
-##########################################
-DATA_DIR = Path('/mnt/data')
-RAW_DIR = DATA_DIR.joinpath('raw')
-PARTICIPANTS_DIR = DATA_DIR.joinpath('participants')
-TRAJS_DIR = DATA_DIR.joinpath('trajectories')
-EMBS_DIR = DATA_DIR.joinpath('embeddings')
-MODELS_DIR = DATA_DIR.joinpath('models')
-FIG_DIR = Path('/mnt/paper/figs/')
-N_PARTICIPANTS = 50
-LECTURE_WSIZE = 20
-STOP_WORDS = stopwords.words('english') + ["even", "i'll", "i'm", "let", "let's",
-                                           "really", "they'd", "they're",
-                                           "they've", "they'll", "that's"]
+from .constants import STOP_WORDS
 
 
-##########################################
-#            REUSED FUNCTIONS            #
-##########################################
 def _ts_to_sec(ts):
     # converts timestamp of elapsed time from "MM:SS" format to scalar
     mins, secs = ts.split(':')

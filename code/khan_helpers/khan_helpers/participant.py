@@ -1,10 +1,13 @@
-import numpy as np
-import pandas as pd
 from ast import literal_eval
 from html import unescape
-from os.path import isfile, join as opj
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
 from scipy.spatial.distance import cdist
-from .helpers import PARTICIPANTS_DIR, RAW_DIR, symmetric_kl
+
+from .constants import PARTICIPANTS_DIR, RAW_DIR
+from .functions import symmetric_kl
 
 
 class Participant:
@@ -35,7 +38,7 @@ class Participant:
     @property
     def all_questions(self, questions_path=None):
         if questions_path is None:
-            questions_path = opj(RAW_DIR, 'questions.tsv')
+            questions_path = RAW_DIR.joinpath('questions.tsv')
         return pd.read_csv(questions_path,
                            sep='\t',
                            names=['index', 'video', 'question',
@@ -208,8 +211,8 @@ class Participant:
 
     def save(self, filepath=None, allow_overwrite=False):
         if filepath is None:
-            filepath = opj(PARTICIPANTS_DIR, f'{self.subID}.npy')
-        if not allow_overwrite and isfile(filepath):
+            filepath = PARTICIPANTS_DIR.joinpath(f'{self.subID}.npy')
+        if not allow_overwrite and Path(filepath).is_file():
             print(f"{self.subID} not saved because {filepath} already exists. "
                   "Set allow_overwrite to True to replace the existing file")
         else:
