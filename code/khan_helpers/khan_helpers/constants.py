@@ -37,7 +37,7 @@ LDA_PARAMS = {
 UMAP_PARAMS = {
     'n_components': 2,
     'n_neighbors': 15,
-    'min_dist': 0.7,
+    'min_dist': 0.8,
     'spread': 1.0,
     'random_state': 0
 }
