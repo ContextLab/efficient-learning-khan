@@ -25,7 +25,7 @@ class Participant:
         else:
             self.date_collected = date_collected
         self.traces = {}
-        self.maps = {}
+        self.knowledge_maps = {}
 
     @classmethod
     def from_psiturk(cls, psiturk_data, subid):
@@ -125,9 +125,25 @@ class Participant:
             d = d.loc[d['lecture'].isin(lecture)]
         return d
 
+    def get_kmap(self, kmap_key):
+        """
+        dict.get()-like access to self.knowledge_maps
+        :param trace_key: str
+                The key for the trace to be returned
+        :return: trace: np.ndarray
+                The trace stored under the given `trace_key`
+        """
+        try:
+            return self.knowledge_maps[kmap_key]
+        except KeyError as e:
+            raise KeyError(
+                f"No knowledge map stored for {self} under {kmap_key}. Stored "
+                f"knowledge maps are: {', '.join(self.knowledge_maps.keys())}"
+            ) from e
+
     def get_trace(self, trace_key):
         """
-        Getter for self.traces
+        dict.get()-like access to self.traces
         :param trace_key: str
                 The key for the trace to be returned
         :return: trace: np.ndarray
@@ -137,8 +153,8 @@ class Participant:
             return self.traces[trace_key]
         except KeyError as e:
             raise KeyError(
-                f"No trace stored for {self} under {trace_key}. "
-                f"Stored traces are: {', '.join(self.traces.keys())}"
+                f"No trace stored for {self} under {trace_key}. Stored traces "
+                f"are: {', '.join(self.traces.keys())}"
             ) from e
 
     def reconstruct_trace(
@@ -217,6 +233,9 @@ class Participant:
                   "Set allow_overwrite to True to replace the existing file")
         else:
             np.save(filepath, self)
+
+    def store_kmap(self, kmap, store_key):
+        self.knowledge_maps[store_key] = kmap
 
     def store_trace(self, trace, store_key):
         self.traces[store_key] = trace
