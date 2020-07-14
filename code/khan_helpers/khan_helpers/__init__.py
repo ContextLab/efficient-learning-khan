@@ -13,7 +13,7 @@ message = Markdown(
     "Experiment & Participant classes, helper functions, and variables used "
     f"across multiple notebooks can be found in `{pkg_dir}`, or on GitHub, "
     f"[here]({github_link}).<br />You can also view source code directly from "
-    "the notebook with:<br /><pre>    from khan_helpers.helpers import "
+    "the notebook with:<br /><pre>    from khan_helpers.functions import "
     "show_source<br />    show_source(foo)</pre>"
 )
 
