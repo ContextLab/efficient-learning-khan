@@ -1,16 +1,16 @@
-import socket
-from os.path import dirname, realpath, join as opj
+from pathlib import Path
+
 
 config = dict()
 
 # ====== MODIFY ONLY THE CODE BETWEEN THESE LINES ======
 # job creation options
-config['startdir'] = opj(dirname(dirname(realpath(__file__))))
-config['workingdir'] = opj(config['startdir'], 'scripts')
-config['datadir'] = opj(config['startdir'], 'data')
-config['figdir'] = opj(config['startdir'], 'figures')
-config['scriptdir'] = opj(config['workingdir'], 'scripts')
-config['lockdir'] = opj(config['workingdir'], 'locks')
+config['startdir'] = Path(__file__).resolve().parents[1]
+config['workingdir'] = config['startdir'].joinpath('scripts')
+config['datadir'] = config['startdir'].joinpath('data')
+config['figdir'] = config['startdir'].joinpath('figures')
+config['scriptdir'] = config['workingdir'].joinpath('scripts')
+config['lockdir'] = config['workingdir'].joinpath('locks')
 
 # runtime options
 config['modules'] = 'python'

@@ -1,19 +1,26 @@
-#!/usr/bin/python
-
-import os
+#!/usr/bin/env/python
 from datetime import datetime as dt
-from os.path import isdir, join as opj
+import os
 from string import Template
-from subprocess import run
+from subprocess import run, DEVNULL
+from tqdm import tqdm
 from embedding_config import config as config
 
 
 # ====== MODIFY ONLY THE CODE BETWEEN THESE LINES ======
-job_script = opj(config['workingdir'], 'embedding_cruncher.py')
-embeddings_dir = opj(config['datadir'], 'embeddings')
-models_dir = opj(config['datadir'], 'fit_reducers')
+job_script = config['workingdir'].joinpath('embedding_cruncher.py')
+embeddings_dir = config['datadir'].joinpath('embeddings')
+models_dir = config['datadir'].joinpath('fit_reducers')
 min_seed = 0
 max_seed = 100
+EXPECTED_FILES_PER_JOB = (
+    # n_neighbors param
+    len(list(range(5, 31, 5)))
+    # min_dist param
+    * len((.1, .2, .3, .4, .5, .6, .7, .8, .9))
+    # spread param
+    * len(list(range(1, 6)))
+)
 
 job_commands = list()
 job_names = list()
@@ -25,18 +32,60 @@ job_names = list()
 # order 5: questions, forces, bos
 # order 6: questions, bos, forces
 
-if not isdir(embeddings_dir):
-    os.mkdir(embeddings_dir)
-if not isdir(models_dir):
-    os.mkdir(models_dir)
+if not embeddings_dir.is_dir():
+    embeddings_dir.mkdir()
+if not models_dir.is_dir():
+    models_dir.mkdir()
 
+
+import pickle
+with open('scripts_done.p', 'rb') as f:
+    scripts_done = pickle.load(f)
+
+pbar = tqdm(total=606, desc="checking completion")
 for order in range(1, 7):
-    os.mkdir(opj(embeddings_dir, f'order{order}'))
-    os.mkdir(opj(models_dir, f'order{order}'))
+    order_emb_dir = embeddings_dir.joinpath(f'order{order}')
+    order_mod_dir = models_dir.joinpath(f'order{order}')
+    if not order_emb_dir.is_dir():
+        order_emb_dir.mkdir()
+    if not order_mod_dir.is_dir():
+        order_mod_dir.mkdir()
 
     for seed in range(min_seed, max_seed + 1):
-        job_commands.append(f'{job_script} {order} {seed}')
-        job_names.append(f'optimize_embedding_order{order}_{seed}')
+        script_id = f"order{order}_seed{seed}"
+        if script_id in scripts_done:
+            pbar.update()
+            continue
+
+        resubmit = False
+        for n_neighbors in range(5, 31, 5):
+            for min_dist in (.1, .2, .3, .4, .5, .6, .7, .8, .9):
+                for spread in range(1, 6):
+                    fname = f"seed{seed}_nn{n_neighbors}_md{min_dist}_sp{spread}.npy"
+                    emb_path = order_emb_dir.joinpath(fname)
+                    mod_path = order_mod_dir.joinpath(fname)
+                    if not (emb_path.is_file() and mod_path.is_file()):
+                        resubmit = True
+                        break
+
+        if resubmit:
+            job_commands.append(f'{job_script} {order} {seed}')
+            job_names.append(f'optimize_embedding_order{order}_{seed}')
+        else:
+            scripts_done.append(script_id)
+
+        pbar.update()
+
+pbar.close()
+with open('scripts_done.p', 'wb') as f:
+    pickle.dump(scripts_done, f)
+
+
+        # n_embs_output = len(tuple(order_emb_dir.glob(f'seed{seed}_*')))
+        # n_mods_output = len(tuple(order_mod_dir.glob(f'seed{seed}_*')))
+        # if n_embs_output < EXPECTED_FILES_PER_JOB or n_mods_output < EXPECTED_FILES_PER_JOB:
+        #     job_commands.append(f'{job_script} {order} {seed}')
+        #     job_names.append(f'optimize_embedding_order{order}_{seed}')
 
 # ====== MODIFY ONLY THE CODE BETWEEN THESE LINES ======
 
@@ -62,7 +111,7 @@ JOBSCRIPT_TEMPLATE = Template(
 #PBS -l walltime=${walltime}
 
 echo ---
-script name: $job_name
+echo script name: $job_name
 echo loading modules: $modules
 module load $modules
 
@@ -95,22 +144,22 @@ class ScriptTemplate:
 
         # create directories if they don't already exist
         try:
-            os.stat(self.scriptdir)
+            self.scriptdir.stat()
         except FileNotFoundError:
-            os.mkdir(self.scriptdir)
+            self.scriptdir.mkdir()
         try:
-            os.stat(self.lockdir)
+            self.lockdir.stat()
         except FileNotFoundError:
-            os.mkdir(self.lockdir)
+            self.lockdir.mkdir()
 
     def lock(self, job_name):
-        lockfile_path = opj(self.lockdir, f'{job_name}.LOCK')
+        lockfile_path = self.lockdir.joinpath(f'{job_name}.LOCK')
         self.locks.append(lockfile_path)
         try:
-            os.stat(lockfile_path)
+            lockfile_path.stat()
             return True
         except FileNotFoundError:
-            with open(lockfile_path, 'w') as f:
+            with lockfile_path.open('w') as f:
                 f.writelines(f'LOCK CREATE TIME: {dt.now()} \n')
                 f.writelines(f'HOST: {self.hostname} \n')
                 f.writelines(f'USER: {self.username} \n')
@@ -121,35 +170,41 @@ class ScriptTemplate:
 
     def release_locks(self):
         for l in self.locks:
-            os.remove(l)
-        os.rmdir(self.lockdir)
+            l.unlink()
+        self.lockdir.rmdir()
 
     def submit_job(self, jobscript_path):
-        submission_cmd = f'echo "[SUBMITTING JOB: {jobscript_path}]"; {self.submit_cmd} {jobscript_path}'
-        run([submission_cmd], shell=True)
+        # submission_cmd = f'echo "[SUBMITTING JOB: {jobscript_path}]"; {self.submit_cmd} {jobscript_path}'
+        submission_cmd = f'{self.submit_cmd} {jobscript_path}'
+        run([submission_cmd], shell=True, stdout=DEVNULL)
 
     def write_scriptfile(self, job_name, job_command):
-        filepath = opj(self.scriptdir, job_name)
+        filepath = self.scriptdir.joinpath(job_name)
         try:
-            os.stat(filepath)
-            return
+            filepath.stat()
+            return None
         except FileNotFoundError:
             template_vals = self.config
             template_vals['job_name'] = job_name
             template_vals['job_command'] = job_command
             script_content = self.template.substitute(template_vals)
-            with open(filepath, 'w+') as f:
+            with filepath.open('w+') as f:
                 f.write(script_content)
             return filepath
 
 
 script_template = ScriptTemplate(JOBSCRIPT_TEMPLATE, config)
 
+pbar = tqdm(total=len(job_names))
 for job_n, job_c in zip(job_names, job_commands):
+    pbar.set_description(f"submitting {job_n}")
     lockfile_exists = script_template.lock(job_n)
     if not lockfile_exists:
         script_filepath = script_template.write_scriptfile(job_n, job_c)
         if script_filepath:
             script_template.submit_job(script_filepath)
 
+    pbar.update()
+
+pbar.close()
 script_template.release_locks()
