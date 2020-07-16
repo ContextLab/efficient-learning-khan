@@ -206,12 +206,17 @@ class Experiment:
         return self.avg_participant
 
     def save_participants(self, filepaths=None, allow_overwrite=False):
+        to_save = list(self.participants)
+        if self.avg_participant is not None:
+            to_save = np.append(to_save, self.avg_participant)
         if filepaths is None:
-            filepaths = [None] * (len(self.participants) + 1)
-        if len(filepaths) != len(self.participants) + 1:
-            raise ValueError("`filepaths` should contain one path per "
-                             "participant (including average participant, last)")
-        for p, fpath in zip(list(self.participants) + [self.avg_participant], filepaths):
+            filepaths = [None] * len(to_save)
+        elif len(filepaths) != len(to_save):
+            msg = "`filepaths` must contain one path per participant"
+            if self.avg_participant is not None:
+                msg += " (including average participant, last)"
+            raise ValueError(msg)
+        for p, fpath in zip(to_save, filepaths):
             p.save(filepath=fpath, allow_overwrite=allow_overwrite)
 
     def load_transcript(self, lecture, splitlines=False):
