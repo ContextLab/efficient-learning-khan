@@ -6,7 +6,6 @@ import numpy as np
 from IPython.display import HTML
 from IPython.core.oinspect import pylight
 from scipy.interpolate import interp1d
-from scipy.stats import entropy
 
 from .constants import STOP_WORDS
 
@@ -17,7 +16,7 @@ def _ts_to_sec(ts):
     return timedelta(minutes=int(mins), seconds=int(secs)).total_seconds()
 
 
-def corr_mean(rs, axis=0):
+def corr_mean(rs, axis=None):
     # computes the mean of correlation coefficients, performing the
     # Fisher z-transformation & inverse z-transformation before & after
     return z2r(np.nanmean([r2z(r) for r in rs], axis=axis))
@@ -85,11 +84,6 @@ def show_source(obj):
     except AttributeError:
         # pylight just doesn't work on certain types
         return src
-
-
-def symmetric_kl(a, b, c=1e-11):
-    # symmetrized KL divergence
-    return np.divide(entropy(a + c, b + c) + entropy(b + c, a + c), 2)
 
 
 def z2r(z):

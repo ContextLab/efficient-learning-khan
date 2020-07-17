@@ -7,7 +7,6 @@ import pandas as pd
 from scipy.spatial.distance import cdist
 
 from .constants import PARTICIPANTS_DIR, RAW_DIR
-from .functions import symmetric_kl
 
 
 class Participant:
@@ -137,7 +136,7 @@ class Participant:
             return self.knowledge_maps[kmap_key]
         except KeyError as e:
             raise KeyError(
-                f"No knowledge map stored for {self} under {kmap_key}. Stored "
+                f'No knowledge map stored for {self} under "{kmap_key}". Stored '
                 f"knowledge maps are: {', '.join(self.knowledge_maps.keys())}"
             ) from e
 
@@ -210,7 +209,7 @@ class Participant:
                     "lecture should be one of: str, int, iterable of str/int"
                 )
         # compute timepoints by questions weights matrix
-        wz = 1 - cdist(content, question_vecs, metric=symmetric_kl)
+        wz = 1 - cdist(content, question_vecs, metric='correlation')
         # normalize
         wz -= wz.min()
         wz /= wz.max()
