@@ -4,6 +4,7 @@ from inspect import getsource
 from typing import Iterator
 
 import numpy as np
+import pandas as pd
 from IPython.display import display, HTML
 from IPython.core.oinspect import pylight
 from scipy.interpolate import interp1d
@@ -57,8 +58,10 @@ def interp_lecture(lec_traj, timestamps):
 
 def multicol_display(*outputs,
                      ncols=2,
+                     caption=None,
                      col_headers=None,
                      table_css=None,
+                     caption_css=None,
                      header_css=None,
                      row_css=None,
                      cell_css=None):
@@ -74,12 +77,15 @@ def multicol_display(*outputs,
     ncols:        (int; default: 2) The number of columns for the display.
                   If the number of outputs passed is greater than ncols,
                   the display will include multiple rows
+    caption:      (str; optional) Text passed to the table's <caption> tag
     col_headers:  (list-like; optional) Content to fill the table header
                   (<th>) element for each column. If passed, must have a
                   length of ncols.
     table_css:    (dict; optional) Additional CSS properties to be applied
                   to the outermost table (<table>) element. For simplicity,
                   these are passed to the .style HTML attribute.
+    caption_css   (dict; optional) Analogous to `table_css`, but specifies
+                  properties passed to the table caption (<caption>) element.
     header_css:   (dict; optional) Analogous to `table_css`, but specifies
                   properties passed to each table header (<th>) element.
     row_css:      (dict; optional) Analogous to `table_css`, but specifies
@@ -97,42 +103,47 @@ def multicol_display(*outputs,
         elif isinstance(obj, dict):
             return '<br><br>'.join(f'<b>{k}</b>:&emsp;{_fmt_python_types(v)}'
                                    for k, v in obj.items())
+        elif isinstance(obj, pd.DataFrame):
+            return obj.to_html()
         else:
             return obj
 
-    outs_fmt = []
-    for out in outputs:
-        outs_fmt.append(_fmt_python_types(out))
     if col_headers is None:
         col_headers = []
     else:
         assert hasattr(col_headers, '__iter__') and len(col_headers) == ncols
 
+    outs_fmt = []
+    for out in outputs:
+        outs_fmt.append(_fmt_python_types(out))
+
     # coerce to proper types for string replacement
     table_css = {} if table_css is None else table_css
+    caption_css = {} if caption_css is None else caption_css
     header_css = {} if header_css is None else header_css
     row_css = {} if row_css is None else row_css
     cell_css = {} if cell_css is None else cell_css
 
     table_css = ";".join(f"{prop}:{val}" for prop, val in table_css.items())
+    caption_css = ";".join(f"{prop}:{val}" for prop, val in caption_css.items())
     header_css = ";".join(f"{prop}:{val}" for prop, val in header_css.items())
     row_css = ";".join(f"{prop}:{val}" for prop, val in row_css.items())
     cell_css = ";".join(f"{prop}:{val}" for prop, val in cell_css.items())
 
     # individual element templates with some reasonable pre-set style properties
-    html_table = f"<table style='width:100%; border:0px;{table_css}'>{{header}}{{content}}</table>"
+    html_table = f"<table style='width:100%; border:0px;{table_css}'>{{caption}}{{header}}{{content}}</table>"
+    html_caption = f"<caption style='text-align:center;color:unset;font-size:2em;font-weight:bold;{caption_css}'>{{content}}</caption>"
     html_header = f"<th style='border:0px;{header_css}'>{{content}}</th>"
     html_row = f"<tr style='border:0px;{row_css}'>{{content}}</tr>"
     html_cell = f"<td style='width:{100 / ncols}%;vertical-align:top;border:0px;{cell_css}'>{{content}}</td>"
 
     # deal with HTML formatting and substitutions from style dicts
+    cap = html_caption.format(content=caption) if caption is not None else ''
     headers = [html_header.format(content=h) for h in col_headers]
     cells = [html_cell.format(content=out) for out in outs_fmt]
-    cells.extend([html_cell.format(content="")] * (ncols - len(outs_fmt) % ncols))
-    header_row = html_row.format(content="".join(headers))
     rows = [html_row.format(content="".join(cells[i: i + ncols])) for i in range(0, len(cells), ncols)]
     # render notebook display cell
-    display(HTML(html_table.format(header="".join(headers), content="".join(rows))))
+    display(HTML(html_table.format(caption=cap, header="".join(headers), content="".join(rows))))
 
 
 def parse_windows(transcript, wsize):

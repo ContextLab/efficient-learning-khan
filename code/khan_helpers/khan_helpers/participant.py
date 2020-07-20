@@ -97,7 +97,6 @@ class Participant:
             return "Individual data unavailable"
 
     def head(self, *args, **kwargs):
-        print(self.__str__())
         return self.data.head(*args, **kwargs)
 
     def get_data(self, qset=None, lecture=None):
