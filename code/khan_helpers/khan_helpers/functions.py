@@ -40,15 +40,6 @@ def format_text(textlist, sw=STOP_WORDS):
     return clean_textlist
 
 
-def rbf(obs_coords, pred_coords, width, metric='euclidean'):
-    return np.exp(-cdist(obs_coords, pred_coords, metric=metric) ** 2 / width)
-
-
-def rbf_interp(obs_coords, obs_vals, pred_coords, width, metric='euclidean'):
-    weights = rbf(obs_coords, pred_coords, width=width, metric=metric)
-    return (weights.T * obs_vals).sum(axis=1) / weights.sum(axis=0)
-
-
 def interp_lecture(lec_traj, timestamps):
     # interpolates lecture trajectories to 1 vector per second
     new_tpts = np.arange(timestamps[-1])
@@ -173,6 +164,10 @@ def r2z(r):
     # computes the Fisher z-transformation
     with np.errstate(invalid='ignore', divide='ignore'):
         return 0.5 * (np.log(1 + r) - np.log(1 - r))
+
+
+def rbf(obs_coords, pred_coords, width, metric='euclidean'):
+    return np.exp(-cdist(obs_coords, pred_coords, metric=metric) ** 2 / width)
 
 
 def show_source(obj):

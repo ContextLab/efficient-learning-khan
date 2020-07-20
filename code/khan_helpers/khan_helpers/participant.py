@@ -7,7 +7,7 @@ import pandas as pd
 from scipy.spatial.distance import cdist
 
 from .constants import PARTICIPANTS_DIR, RAW_DIR
-from .functions import rbf, rbf_interp
+from .functions import rbf
 
 
 class Participant:
@@ -234,21 +234,39 @@ class Participant:
                                 store=None):
         assert isinstance(qset, int), "Must select data from a single question set"
         lec_keys = {1: 'forces', 2: 'bos'}
-        stack_data = False
 
+        # coerce lecture arg type
         if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
-            stack_data = True
-            if not all(isinstance(l, str) for l in lecture):
-                lecture = (lec_keys[l] if isinstance(l, int) else l for l in lecture)
-        elif isinstance(lecture, int):
-            lecture = lec_keys[lecture]
+            # should always be in this order for consistency
+            assert len(lecture) == 2 and lecture[0] in ('forces', 1) and lecture[1] in ('bos', 2)
+            lecture = list(lecture)
+        else:
+            if isinstance(lecture, int):
+                lecture = lec_keys[lecture]
+            lecture = [lecture]
 
-        lec_embedding = exp.get
+        map_vertices = map_grid.reshape(map_grid.shape[0] * map_grid.shape[1], 2)
+        qset_data = self.get_data(lecture=lecture, qset=qset)
+        qids_seen = qset_data['qID']
+        qids_correct = qset_data.loc[qset_data['accuracy'] == 1, 'qID']
+        qembs_seen = exp.question_embeddings[qids_seen - 1]
+        qembs_correct = exp.question_embeddings[qids_correct - 1]
 
+        raw_map = rbf(obs_coords=qembs_correct,
+                      pred_coords=map_vertices,
+                      width=rbf_width,
+                      metric=rbf_metric).sum(axis=0)
+        # normalize knowledge map by max possible knowledge given questions seen
+        weights_map = rbf(obs_coords=qembs_seen,
+                          pred_coords=map_vertices,
+                          width=rbf_width,
+                          metric=rbf_metric).sum(axis=0)
 
+        knowledge_map = (raw_map / weights_map).reshape(map_grid.shape[:2])
+        if store is not None:
+            self.store_kmap(knowledge_map, store_key=store)
 
-
-
+        return knowledge_map
 
     def save(self, filepath=None, allow_overwrite=False):
         if filepath is None:
