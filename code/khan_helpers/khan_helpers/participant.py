@@ -7,6 +7,7 @@ import pandas as pd
 from scipy.spatial.distance import cdist
 
 from .constants import PARTICIPANTS_DIR, RAW_DIR
+from .functions import rbf, rbf_interp
 
 
 class Participant:
@@ -223,6 +224,32 @@ class Participant:
         if store is not None:
             self.store_trace(trace=trace, store_key=store)
         return trace
+
+    def construct_knowledge_map(self,
+                                exp,
+                                lecture,
+                                qset,
+                                map_grid,
+                                rbf_width,
+                                rbf_metric='euclidean',
+                                store=None):
+        assert isinstance(qset, int), "Must select data from a single question set"
+        lec_keys = {1: 'forces', 2: 'bos'}
+        stack_data = False
+
+        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
+            stack_data = True
+            if not all(isinstance(l, str) for l in lecture):
+                lecture = (lec_keys[l] if isinstance(l, int) else l for l in lecture)
+        elif isinstance(lecture, int):
+            lecture = lec_keys[lecture]
+
+        lec_embedding = exp.get
+
+
+
+
+
 
     def save(self, filepath=None, allow_overwrite=False):
         if filepath is None:
