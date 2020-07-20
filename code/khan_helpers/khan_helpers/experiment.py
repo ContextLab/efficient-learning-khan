@@ -13,37 +13,50 @@ from .constants import (
     RAW_DIR,
     TRAJS_DIR,
     N_PARTICIPANTS,
-    CV_PARAMS,
-    LDA_PARAMS,
-    UMAP_PARAMS
 )
 from .functions import _ts_to_sec
 
 
+class LazyLoader:
+    """Descriptor class that handles lazy loading and caching of data"""
+    def __init__(self, loader, *loader_args, **loader_kwargs):
+        self.loader = loader
+        self.loader_args = loader_args
+        self.loader_kwargs = loader_kwargs
+
+    def __set_name__(self, owner, name):
+        self.name = name
+
+    def __get__(self, obj, owner=None):
+        obj.__dict__[self.name] = getattr(obj, self.loader)(*self.loader_args, **self.loader_kwargs)
+        return obj.__dict__[self.name]
+
+
 class Experiment:
-    def __init__(self):
-        self.participants = None
-        self.avg_participant = None
-        self.forces_transcript = None
-        self.bos_transcript = None
-        self.questions = None
-        self.forces_windows = None
-        self.bos_windows = None
-        self.forces_traj = None
-        self.bos_traj = None
-        self.question_vectors = None
-        self.answer_vectors = None
-        self.embedding_space = None
-        self.forces_embedding = None
-        self.bos_embedding = None
-        self.question_embeddings = None
-        self.wordle_mask = None
-        self.cv = None
-        self.cv_params = CV_PARAMS
-        self.lda = None
-        self.lda_params = LDA_PARAMS
-        self.umap_reducer = None
-        self.umap_params = UMAP_PARAMS
+    participants = LazyLoader('_load_participants')
+    avg_participant = LazyLoader('_load_avg_participant')
+
+    forces_transcript = LazyLoader('_load_transcript', 'forces')
+    bos_transcript = LazyLoader('_load_transcript', 'bos')
+    questions = LazyLoader('_load_questions')
+
+    forces_windows = LazyLoader('_load_windows', 'forces')
+    bos_windows = LazyLoader('_load_windows', 'bos')
+
+    forces_traj = LazyLoader('_load_topic_vectors', 'forces')
+    bos_traj = LazyLoader('_load_topic_vectors', 'bos')
+    question_vectors = LazyLoader('_load_topic_vectors', 'questions')
+    answer_vectors = LazyLoader('_load_topic_vectors', 'answers')
+
+    forces_embedding = LazyLoader('_load_embedding', 'forces')
+    bos_embedding = LazyLoader('_load_embedding', 'bos')
+    question_embeddings = LazyLoader('_load_embedding', 'questions')
+
+    fit_cv = LazyLoader('_load_fit_model', 'CV')
+    fit_lda = LazyLoader('_load_fit_model', 'LDA')
+    fit_umap = LazyLoader('_load_fit_model', 'UMAP')
+
+    wordle_mask = LazyLoader('_load_wordle_mask')
 
     def get_lecture_traj(self, lecture):
         if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
@@ -56,12 +69,12 @@ class Experiment:
         elif lecture in ('bos', 2):
             return self.bos_traj
         else:
-            raise ValueError("Lecture should be either 1, 'forces', 2, or 'bos'")
+            raise ValueError('`lecture` should be either 1, "forces", 2, or "bos"')
 
     def get_question_vecs(self, qids=None, lectures=None):
         # get question topic vectors by question ID(s) or lecture(s)
         if (qids is lectures is None) or (qids is not None and lectures is not None):
-            raise ValueError("must pass either qids or lecture (not both)")
+            raise ValueError("must pass either `qids` or `lecture` (not both)")
         if lectures is not None:
             qids = []
             if 'forces' in lectures:
@@ -81,9 +94,7 @@ class Experiment:
             transcript = self.bos_transcript
         else:
             raise ValueError("Lecture must be either 'forces' or 'bos'")
-        # make sure necessary data is loaded
-        if transcript is None:
-            transcript = self.load_transcript(lecture)
+
         # get timestamps and text from transcript
         transcript = transcript.splitlines()
         timestamps = np.fromiter(map(_ts_to_sec, transcript[::2]), dtype=np.int)
@@ -129,11 +140,11 @@ class Experiment:
         :param kwargs: various types
                 Keyword arguments passed to `hypertools.plot`, then forwarded to
                 matplotlib
-        :return: plot: hypertools.datageometry.DataGeometry
+        :return: plot: hypertools.DataGeometry
                 A plot of the specified data
         """
         if (participants is not None) and (keys is None):
-            raise ValueError("Must pass keys if passing participants")
+            raise ValueError("Must pass `keys` if passing `participants`")
         # funnel args into iterables
         if lectures is None:
             lectures = []
@@ -161,7 +172,7 @@ class Experiment:
         for key in keys:
             if not ('forces' in key or 'bos' in key):
                 warn(f"couldn't determine corresponding lecture for trace key "
-                     f"'{key}'. Trace will be excluded from plot")
+                     f'"{key}". Trace will be excluded from plot')
         keys = [k for k in keys if k not in skip_keys]
 
         to_plot = [self.get_lecture_traj(l) for l in lectures]
@@ -185,29 +196,9 @@ class Experiment:
 
         return hyp.plot(to_plot, **kwargs)
 
-    ##########################################
-    #              DATA LOADERS              #
-    ##########################################
-    def load_participants(self, load_avg=False):
-        participants = []
-        for pid in range(1, N_PARTICIPANTS + 1):
-            path = PARTICIPANTS_DIR.joinpath(f'P{pid}.npy')
-            p = np.load(path, allow_pickle=True).item()
-            participants.append(p)
-        self.participants = np.array(participants)
-        if load_avg:
-            self.load_avg_participant()
-            return self.participants, self.avg_participant
-        return self.participants
-
-    def load_avg_participant(self):
-        path = PARTICIPANTS_DIR.joinpath('avg.npy')
-        self.avg_participant = np.load(path, allow_pickle=True).item()
-        return self.avg_participant
-
     def save_participants(self, filepaths=None, allow_overwrite=False):
         to_save = list(self.participants)
-        if self.avg_participant is not None:
+        if 'avg_participant' in self.__dict__:
             to_save = np.append(to_save, self.avg_participant)
         if filepaths is None:
             filepaths = [None] * len(to_save)
@@ -219,85 +210,55 @@ class Experiment:
         for p, fpath in zip(to_save, filepaths):
             p.save(filepath=fpath, allow_overwrite=allow_overwrite)
 
-    def load_transcript(self, lecture, splitlines=False):
-        if isinstance(lecture, str):
-            if lecture not in ('forces', 'bos'):
-                raise ValueError("lecture must be one of: 'forces', 'bos'")
-            path = RAW_DIR.joinpath(f'{lecture}_transcript_timestamped.txt')
-            with path.open() as f:
-                transcript = f.read()
-            if lecture == 'forces':
-                self.forces_transcript = transcript
-            else:
-                self.bos_transcript = transcript
-            if splitlines:
-                transcript = transcript.splitlines()
-        elif hasattr(lecture, '__iter__'):
-            transcript = []
-            for l in lecture:
-                transcript.append(self.load_transcript(l, splitlines=splitlines))
-        else:
-            raise ValueError("lecture must be either a str or an iterable of strs")
-        return transcript
+    ##########################################
+    #              DATA LOADERS              #
+    ##########################################
+    def _load_participants(self):
+        participants = []
+        for pid in range(1, N_PARTICIPANTS + 1):
+            path = PARTICIPANTS_DIR.joinpath(f'P{pid}.npy')
+            p = np.load(path, allow_pickle=True).item()
+            participants.append(p)
+        return np.array(participants)
 
-    def load_questions(self):
+    def _load_avg_participant(self):
+        path = PARTICIPANTS_DIR.joinpath('avg.npy')
+        return np.load(path, allow_pickle=True).item()
+
+    def _load_transcript(self, lecture):
+        path = RAW_DIR.joinpath(f'{lecture}_transcript_timestamped.txt')
+        with path.open() as f:
+            return f.read()
+
+    def _load_questions(self):
         path = RAW_DIR.joinpath('questions.tsv')
-        self.questions = pd.read_csv(
-            path,
-            sep='\t',
-            names=['index', 'lecture', 'question', 'A', 'B', 'C', 'D'],
-            index_col='index'
-        )
-        return self.questions
+        return pd.read_csv(path,
+                           sep='\t',
+                           names=['index', 'lecture', 'question', 'A', 'B', 'C', 'D'],
+                           index_col='index')
 
-    def load_windows(self, lecture):
-        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
-            windows = []
-            for l in lecture:
-                windows.append(self.load_windows(l))
-        elif lecture not in ('forces', 'bos'):
-            raise ValueError("lecture may be one of: 'forces', 'bos'")
-        else:
-            windows = np.load(RAW_DIR.joinpath(f'{lecture}_windows.npy'))
-            if lecture == 'forces':
-                self.forces_windows = windows
-            else:
-                self.bos_windows = windows
-        return windows
+    def _load_windows(self, lecture):
+        return np.load(RAW_DIR.joinpath(f'{lecture}_windows.npy'))
 
-    def load_lecture_trajs(self):
-        self.forces_traj = np.load(TRAJS_DIR.joinpath('forces_lecture.npy'))
-        self.bos_traj = np.load(TRAJS_DIR.joinpath('bos_lecture.npy'))
-        return self.forces_traj, self.bos_traj
+    def _load_topic_vectors(self, file_key):
+        filename_map = {
+            'forces': 'forces_lecture',
+            'bos': 'bos_lecture',
+            'questions': 'all_questions',
+            'answers': 'all_answers'
+        }
+        return np.load(TRAJS_DIR.joinpath(f'{filename_map[file_key]}.npy'))
 
-    def load_question_vectors(self):
-        self.question_vectors = np.load(TRAJS_DIR.joinpath('all_questions.npy'))
-        return self.question_vectors
+    def _load_embedding(self, file_key):
+        filename_map = {
+            'forces': 'forces_lecture',
+            'bos': 'bos_lecture',
+            'questions': 'questions',
+        }
+        return np.load(EMBS_DIR.joinpath(f'{filename_map[file_key]}.npy'))
 
-    def load_answer_vectors(self):
-        self.answer_vectors = np.load(TRAJS_DIR.joinpath('all_answers.npy'))
-        return self.answer_vectors
+    def _load_fit_model(self, model):
+        return np.load(MODELS_DIR.joinpath(f'fit_{model}.npy'), allow_pickle=True).item()
 
-    def load_embeddings(self):
-        self.forces_embedding = np.load(EMBS_DIR.joinpath('forces_lecture.npy'))
-        self.bos_embedding = np.load(EMBS_DIR.joinpath('bos_lecture.npy'))
-        self.question_embeddings = np.load(EMBS_DIR.joinpath('questions.npy'))
-        return self.forces_embedding, self.bos_embedding, self.question_embeddings
-
-    def load_cv(self):
-        self.cv = np.load(MODELS_DIR.joinpath('fit_CV.npy'), allow_pickle=True).item()
-        return self.cv
-
-    def load_lda(self):
-        self.lda = np.load(MODELS_DIR.joinpath('fit_LDA.npy'), allow_pickle=True).item()
-        return self.lda
-
-    def load_umap(self):
-        self.umap_reducer = np.load(MODELS_DIR.joinpath('fit_UMAP.npy'), allow_pickle=True).item()
-        return self.umap_reducer
-
-    def load_wordle_mask(self, path=None):
-        if path is None:
-            path = DATA_DIR.joinpath('wordle-mask.jpg')
-        self.wordle_mask = np.array(open_image(path))
-        return self.wordle_mask
+    def _load_wordle_mask(self):
+        return np.array(open_image(DATA_DIR.joinpath('wordle-mask.jpg')))
