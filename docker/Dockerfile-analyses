@@ -1,0 +1,49 @@
+# Dockerfile for running eficient-Learning-Khan analyses
+# Use Dockerfile-experiment to build an environment for running the experiment
+FROM debian:stretch
+MAINTAINER Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu>
+
+# install some basic stuff on top of minbase debian
+RUN apt-get update --fix-missing && apt-get install -y eatmydata
+RUN eatmydata apt-get install -y \
+    wget \
+    bzip2 \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    libfreetype6-dev \
+    swig \
+    mpich \
+    pkg-config \
+    gcc \
+    procps \
+    git \
+    curl \
+    vim
+
+# force "apt-get update" to happen in later intermediates
+RUN rm -rf /var/lib/apt/lists/*
+
+# install anaconda (Python=3.7)
+RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+    wget --quiet https://repo.continuum.io/archive/Anaconda3-2019.10-Linux-x86_64.sh -O ~/anaconda.sh && \
+    /bin/bash ~/anaconda.sh -b -p /opt/conda && \
+    rm ~/anaconda.sh
+
+# set conda path
+ENV PATH /opt/conda/bin:$PATH
+
+# enable UTF-8 locale
+ENV LANG C.UTF-8
+
+# copy in files for build
+COPY docker/docker-pysetup.py docker/analyses-requirements.txt /buildfiles/
+COPY code/khan_helpers/ /buildfiles/khan_helpers/
+
+# run setup script
+RUN python -Bu /buildfiles/docker-pysetup.py && rm -rf /buildfiles
+
+# expose a port to run jupyter notebooks
+EXPOSE 22364

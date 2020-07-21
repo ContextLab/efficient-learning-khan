@@ -10,10 +10,11 @@ Human knowledge is growing exponentially as new discoveries build upon one anoth
 ## Running the experiment
 The locally deployable version of the experiment may be run inside a Docker container as described here (for the MTURK-compatible version of the experiment, see the `mturk` branch).  A pre-configured image for the local experiment can be built from `Dockerfile-experiment`.  
 0. Install Docker on your computer using the appropriate guide below:
-- [OSX](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac)
+- [MacOS](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac)
 - [Windows](https://docs.docker.com/docker-for-windows/install/)
 - [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/)
 - [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian/)
+# TODO: fix repo setup so `exp` is sent to build context for experiment container
 1. Build the image from the `Dockerfile-experiment` file in this repository
  - `docker build -f Dockerfile-experiment -t khan-exp .`
 2. Run a container from the image, exposing a port to run the experiment in a web browser
@@ -35,9 +36,9 @@ The locally deployable version of the experiment may be run inside a Docker cont
 ## Running the analyses
 A separate Docker container is available for reproducing and experimenting with the analyses performed in the paper. To create it:
 0. Install Docker if you haven't already (see step 0 in **Running the experiment**)
-1. Build the image from the `Dockerfile-analyses` file
-- `docker build -f Dockerfile-analyses -t khan .`
-2. Create a container based on the newly created image, exposing a port to run Jupyter Notebooks and bind-mounting the container to the repository's root directory to access the code and data files
+1. _From the repository's root directory_, build the image from the `Dockerfile-analyses` file in the `docker` directory
+- `docker build -f docker/Dockerfile-analyses -t khan .`
+2. Create a container based on the newly built image, exposing a port to run Jupyter Notebooks and bind-mounting the container to the repository's root directory to access the code and data files
 - `docker run -it -p 22364:22364 --name Khan -v <PATH_TO_LOCAL_REPO>:/mnt khan`
 3. You should now be inside the container, in the root directory (`/`). Navigate to the folder containing the analysis notebooks and.
 - `cd /mnt/code/notebooks`

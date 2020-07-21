@@ -40,16 +40,16 @@ def correlation_exp(x, y):
     return dist, grad
 
 
-@numba.njit(fastmath=True)
-def euclidean_exp(x, y):
-    x = e ** x
-    y = e ** y
-    result = 0.0
-    for i in range(x.shape[0]):
-        result += (x[i] - y[i]) ** 2
-    d = np.sqrt(result)
-    grad = (x - y) / (1e-6 + d)
-    return d, grad
+# @numba.njit(fastmath=True)
+# def euclidean_exp(x, y):
+#     x = e ** x
+#     y = e ** y
+#     result = 0.0
+#     for i in range(x.shape[0]):
+#         result += (x[i] - y[i]) ** 2
+#     d = np.sqrt(result)
+#     grad = (x - y) / (1e-6 + d)
+#     return d, grad
 
 
 # @numba.njit(fastmath=True)
@@ -81,8 +81,8 @@ def euclidean_exp(x, y):
 #     return dist, grad
 
 
-distance_funcs = {
-    'euclidean': euclidean_exp,
-    'correlation': correlation_exp
-    # 'kl': symmetric_kl_exp
-}
+# distance_funcs = {
+#     'euclidean': euclidean_exp,
+#     'correlation': correlation_exp
+#     # 'kl': symmetric_kl_exp
+# }

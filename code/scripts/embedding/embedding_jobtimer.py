@@ -1,14 +1,13 @@
 import os
 import time
-from glob import glob
 from os import listdir
 from os.path import join as opj
 from embedding_config import config
 
 BAR_LENGTH = 80
 
-embeddings_dir = opj(config['datadir'], 'embeddings')
-models_dir = opj(config['datadir'], 'fit_reducers')
+embeddings_dir = config['datadir'].joinpath('embeddings')
+models_dir = config['datadir'].joinpath('fit_reducers')
 
 orders = [f'order{o}' for o in range(1, 7)]
 done = []

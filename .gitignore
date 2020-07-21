@@ -1,8 +1,26 @@
+# Mac Finder display config
 *.DS_Store
+
+# notebook checkpoints
 *.ipynb_checkpoints/
+
+# PyCharm config
 *.idea
+
+# bytecode
 *__pycache__
+
+# khan-helpers package distribution
+*.egg-info
+
+# contains private keys for PsiTurk & AWS
 exp/.psiturkconfig
+
+# raw participant data
 data/db/
+
+# contains private keys for Google Cloud API
 exp/google-credentials
+
+# contains access info for SQL db & MTurk listing
 exp/config.txt
