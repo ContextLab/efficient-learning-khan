@@ -58,6 +58,11 @@ class Experiment:
 
     wordle_mask = LazyLoader('_load_wordle_mask')
 
+    @property
+    def all_data(self):
+        return pd.concat(map(lambda p: p.data, self.participants),
+                         keys=map(str, self.participants))
+
     def get_lecture_traj(self, lecture):
         if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
             if len(lecture) > 1:
