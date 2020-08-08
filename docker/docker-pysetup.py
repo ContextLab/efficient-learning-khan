@@ -2,37 +2,39 @@
 # It deals with installing conda, pip, and local packages,
 # as well as downloading some data and configuring some jupyter
 # extensions needed to run the analysis notebooks
-
+import sys
+import time
 from shlex import split as split_command
-from subprocess import PIPE, Popen, SubprocessError, TimeoutExpired
-from sys import exc_info, exit
+from subprocess import PIPE, Popen, CalledProcessError, TimeoutExpired
 
 
-def run_with_live_output(command):
+def run_with_live_output(command, timeout=None, **popen_kwargs):
     """
-    runs a shell command via subprocess.Popen,
-    avoids Python's stdout  buffering to show
-    real-time output
+    Runs a shell command via subprocess.Popen and captures
+    stdout in real-time.
     """
     cmd = split_command(command)
-    try:
-        process = Popen(cmd, stdout=PIPE)
-        # poll returns None when process terminates
-        while process.poll() is None:
-            output = process.stdout.readline()
+    process = Popen(cmd, stdout=PIPE, stderr=PIPE, **popen_kwargs)
+    if timeout is not None:
+        start_time = time.time()
+
+    # poll method returns None until process terminates
+    while True:
+        retcode = process.poll()
+        if retcode is None:
+            output = process.stdout.readline().strip().decode()
             if output:
-                print(output.strip().decode())
-    except TimeoutExpired as e:
-        # shouldn't occur, but handle it just to be safe
-        # so we can clean up child processes
-        process.kill()
-        raise SubprocessError(f"Child process timed out while running "
-                              f"{command}") from e
-    except SubprocessError as e:
-        raise SubprocessError(f"ERROR {exc_info()[1]} occurred while running "
-                              f"{command} ") from e
-    # return the completed process's return code
-    return process.poll()
+                print(output)
+            if (timeout is not None) and (time.time() - start_time > timeout):
+                # clean up child process
+                process.kill()
+                raise TimeoutExpired(cmd=command, timeout=timeout)
+
+        elif retcode != 0:
+            # process returned non-zero exit status
+            raise CalledProcessError(returncode=retcode, cmd=command)
+        else:
+            return process
 
 
 commands = [
@@ -47,14 +49,12 @@ commands = [
     "pip install /buildfiles/khan_helpers",
     # install js & css files for some convenient jupyter notebook extensions
     "jupyter contrib nbextension install --user",
-    # download nltk stop-words corpus
-    # (have to run in subprocess because package wasn't installed when this
-    # interpreter was loaded)
-    '''python -uc "import nltk; nltk.download('stopwords')"'''
+    # download various nltk packages
+    # (has to be run in a subprocess because nltk wasn't installed when this interpreter was loaded)
+    # (Warnings filter ignores harmless RuntimeWarning https://github.com/nltk/nltk/issues/2162)
+    "python -W ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet"
 ]
 
 for i, command in enumerate(commands):
     print(f'\n\nRunning step {i + 1}/{len(commands)}: "{command}"')
-    return_code = run_with_live_output(command)
-    if return_code != 0:
-        exit(return_code)
+    run_with_live_output(command, timeout=120)
