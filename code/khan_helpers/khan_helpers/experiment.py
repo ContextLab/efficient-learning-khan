@@ -18,7 +18,7 @@ from .functions import _ts_to_sec
 
 
 class LazyLoader:
-    """Descriptor class that handles lazy loading and caching of data"""
+    # Descriptor class that handles deferred loading and caching of data
     def __init__(self, loader, *loader_args, **loader_kwargs):
         self.loader = loader
         self.loader_args = loader_args

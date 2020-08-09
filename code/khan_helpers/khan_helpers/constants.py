@@ -3,9 +3,10 @@ from pathlib import Path
 from nltk.corpus import stopwords
 
 
-##########################################
-#                 PATHS                  #
-##########################################
+########################################
+#                PATHS                 #
+########################################
+
 DATA_DIR = Path('/mnt/data')
 RAW_DIR = DATA_DIR.joinpath('raw')
 PARTICIPANTS_DIR = DATA_DIR.joinpath('participants')
@@ -14,21 +15,28 @@ EMBS_DIR = DATA_DIR.joinpath('embeddings')
 MODELS_DIR = DATA_DIR.joinpath('models')
 FIG_DIR = Path('/mnt/paper/figs/')
 
-##########################################
-#            MODEL PARAMETERS            #
-##########################################
+
+########################################
+#           MODEL PARAMETERS           #
+########################################
+
+# standard English stop words + some corpus-specific words
+STOP_WORDS = stopwords.words('english') + ['also', 'billion', 'bit', 'e',
+                                           'even', 'first', 'four', 'hundred',
+                                           'let', 'like', 'mc^2', 'million',
+                                           'one', 'really', 'saw', 'see',
+                                           'seen', 'ten', 'thing', 'things',
+                                           'two', 'us', 'would']
+
 # CountVectorizer parameters
-STOP_WORDS = stopwords.words('english') + ["even", "i'll", "i'm", "let", "let's",
-                                           "really", "they'd", "they're",
-                                           "they've", "they'll", "that's"]
 CV_PARAMS = {
     'strip_accents': 'unicode',
-    'stop_words': STOP_WORDS
+    'stop_words': None  # stop words removed during text preprocessing
 }
 
 # LatentDirichletAllocation parameters
 LDA_PARAMS = {
-    'n_components': 10,
+    'n_components': 15,
     'learning_method': 'batch',
     'random_state': 0
 }
@@ -43,11 +51,12 @@ UMAP_PARAMS = {
 }
 
 
-##########################################
-#                 OTHERS                 #
-##########################################
+########################################
+#                OTHERS                #
+########################################
+
 # number of participants in dataset
 N_PARTICIPANTS = 50
 
 # number of timestamped lines in lecture transcript sliding windows
-LECTURE_WSIZE = 20
+LECTURE_WSIZE = 30

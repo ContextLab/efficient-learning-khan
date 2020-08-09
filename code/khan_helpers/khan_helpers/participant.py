@@ -7,7 +7,7 @@ import pandas as pd
 from scipy.spatial.distance import cdist
 
 from .constants import PARTICIPANTS_DIR, RAW_DIR
-from .functions import rbf
+from .functions import rbf_sum
 
 
 class Participant:
@@ -99,7 +99,7 @@ class Participant:
     def head(self, *args, **kwargs):
         return self.data.head(*args, **kwargs)
 
-    def get_data(self, qset=None, lecture=None):
+    def get_data(self, lecture=None, qset=None):
         # return (a subset of) the subject's data
         if self.data is None:
             return f"No data for participant: {self.subID}"
@@ -252,21 +252,65 @@ class Participant:
         qembs_seen = exp.question_embeddings[qids_seen - 1]
         qembs_correct = exp.question_embeddings[qids_correct - 1]
 
-        raw_map = rbf(obs_coords=qembs_correct,
-                      pred_coords=map_vertices,
-                      width=rbf_width,
-                      metric=rbf_metric).sum(axis=0)
+        # raw_map = rbf(obs_coords=qembs_correct,
+        #               pred_coords=map_vertices,
+        #               width=rbf_width,
+        #               metric=rbf_metric).sum(axis=0)
+        # # no correct answers results in raw map of all 0's
+        # if ~np.all(raw_map == 0):
+        #     raw_map /= raw_map.max()
+        # # normalize knowledge map by max possible knowledge given questions seen
+        # weights_map = rbf(obs_coords=qembs_seen,
+        #                   pred_coords=map_vertices,
+        #                   width=rbf_width,
+        #                   metric=rbf_metric).sum(axis=0)
+        # weights_map /= weights_map.max()
+
         # normalize knowledge map by max possible knowledge given questions seen
-        weights_map = rbf(obs_coords=qembs_seen,
+        _weights_map = rbf_sum(obs_coords=qembs_seen,
+                               pred_coords=map_vertices,
+                               width=rbf_width,
+                               metric=rbf_metric)
+        weights_map = _weights_map / _weights_map.max()
+
+        raw_map = rbf_sum(obs_coords=qembs_correct,
                           pred_coords=map_vertices,
                           width=rbf_width,
-                          metric=rbf_metric).sum(axis=0)
+                          metric=rbf_metric)
+        raw_map /= _weights_map.max()
+
 
         knowledge_map = (raw_map / weights_map).reshape(map_grid.shape[:2])
         if store is not None:
             self.store_kmap(knowledge_map, store_key=store)
 
         return knowledge_map
+
+    def construct_learning_map(self,
+                               qset_before,
+                               qset_after,
+                               lecture,
+                               rbf_width,
+                               rbf_metric='euclidean',
+                               store=None):
+        assert isinstance(qset_before, int) and isinstance(qset_after, int)
+        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
+            # should always be in this order for consistency
+            assert len(lecture) == 2 and lecture[0] in ('forces', 1) and lecture[1] in ('bos', 2)
+            kmap_key = 'forces_bos'
+        elif lecture in ('forces', 1):
+            kmap_key = 'forces'
+        elif lecture in ('bos', 2):
+            kmap_key = 'bos'
+        else:
+            raise ValueError('`lecture` may be either "forces" (or 1), "bos" '
+                             '(or 2), or an iterable containing both')
+
+        kmap_before = self.get_kmap(f'{kmap_key}_qset{qset_before}')
+        kmap_after = self.get_kmap(f'{kmap_key}_qset{qset_after}')
+
+
+
 
     def save(self, filepath=None, allow_overwrite=False):
         if filepath is None:
