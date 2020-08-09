@@ -18,7 +18,7 @@ from .functions import _ts_to_sec
 
 
 class LazyLoader:
-    """Descriptor class that handles lazy loading and caching of data"""
+    # Descriptor class that handles deferred loading and caching of data
     def __init__(self, loader, *loader_args, **loader_kwargs):
         self.loader = loader
         self.loader_args = loader_args
@@ -57,6 +57,11 @@ class Experiment:
     fit_umap = LazyLoader('_load_fit_model', 'UMAP')
 
     wordle_mask = LazyLoader('_load_wordle_mask')
+
+    @property
+    def all_data(self):
+        return pd.concat(map(lambda p: p.data, self.participants),
+                         keys=map(str, self.participants))
 
     def get_lecture_traj(self, lecture):
         if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
