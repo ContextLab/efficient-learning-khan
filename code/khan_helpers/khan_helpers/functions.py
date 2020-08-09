@@ -389,6 +389,8 @@ def multicol_display(*outputs,
         # formats some common Python objects for display
         if isinstance(obj, str):
             return obj.replace('\n', '<br>')
+        elif isinstance(obj, (int, float)):
+            return str(obj)
         elif (isinstance(obj, (list, tuple, set, Iterator))
               or type(obj).__module__ == 'numpy'):
             return ', '.join(obj)
@@ -409,33 +411,69 @@ def multicol_display(*outputs,
     for out in outputs:
         outs_fmt.append(_fmt_python_types(out))
 
-    # coerce to proper types for string replacement
     table_css = {} if table_css is None else table_css
     caption_css = {} if caption_css is None else caption_css
     header_css = {} if header_css is None else header_css
     row_css = {} if row_css is None else row_css
     cell_css = {} if cell_css is None else cell_css
 
-    table_css = ";".join(f"{prop}:{val}" for prop, val in table_css.items())
-    caption_css = ";".join(f"{prop}:{val}" for prop, val in caption_css.items())
-    header_css = ";".join(f"{prop}:{val}" for prop, val in header_css.items())
-    row_css = ";".join(f"{prop}:{val}" for prop, val in row_css.items())
-    cell_css = ";".join(f"{prop}:{val}" for prop, val in cell_css.items())
+    # set some reasonable default style properties
+    table_css_defaults = {
+        'width': '100%',
+        'border': '0px',
+        'margin-left': 'auto',
+        'margin-right': 'auto'
+    }
+    caption_css_defaults = {
+        'color': 'unset',
+        'text-align': 'center',
+        'font-size': '2em',
+        'font-weight': 'bold'
+    }
+    header_css_defaults = {
+        'border': '0px',
+        'font-size': '16px',
+        'text-align': 'center'
+    }
+    row_css_defaults = {'border': '0px'}
+    cell_css_defaults = {
+        'border': '0px',
+        'width': f'{100 / ncols}%',
+        'vertical-align': 'top',
+        'font-size': '14px',
+        'text-align': 'center'
+    }
 
-    # individual element templates with some reasonable pre-set style properties
-    html_table = f"<table style='width:100%; border:0px;{table_css}'>{{caption}}{{header}}{{content}}</table>"
-    html_caption = f"<caption style='text-align:center;color:unset;font-size:2em;font-weight:bold;{caption_css}'>{{content}}</caption>"
-    html_header = f"<th style='border:0px;{header_css}'>{{content}}</th>"
-    html_row = f"<tr style='border:0px;{row_css}'>{{content}}</tr>"
-    html_cell = f"<td style='width:{100 / ncols}%;vertical-align:top;border:0px;{cell_css}'>{{content}}</td>"
+    # update/overwrite style defaults with passed properties
+    table_css = dict(table_css_defaults, **table_css)
+    caption_css = dict(caption_css_defaults, **caption_css)
+    header_css = dict(header_css_defaults, **header_css)
+    row_css = dict(row_css_defaults, **row_css)
+    cell_css = dict(cell_css_defaults, **cell_css)
 
-    # deal with HTML formatting and substitutions from style dicts
+    # format for string replacement in style tag
+    table_style = ";".join(f"{prop}:{val}" for prop, val in table_css.items())
+    caption_style = ";".join(f"{prop}:{val}" for prop, val in caption_css.items())
+    header_style = ";".join(f"{prop}:{val}" for prop, val in header_css.items())
+    row_style = ";".join(f"{prop}:{val}" for prop, val in row_css.items())
+    cell_style = ";".join(f"{prop}:{val}" for prop, val in cell_css.items())
+
+    # string templates for individual elements
+    html_table = f"<table style={table_style}>{{caption}}{{header}}{{content}}</table>"
+    html_caption = f"<caption style={caption_style}>{{content}}</caption>"
+    html_header = f"<th style={header_style}>{{content}}</th>"
+    html_row = f"<tr style={row_style}>{{content}}</tr>"
+    html_cell = f"<td style={cell_style}>{{content}}</td>"
+
+    # fill element templates with content
     cap = html_caption.format(content=caption) if caption is not None else ''
     headers = [html_header.format(content=h) for h in col_headers]
     cells = [html_cell.format(content=out) for out in outs_fmt]
-    rows = [html_row.format(content="".join(cells[i: i + ncols])) for i in range(0, len(cells), ncols)]
+    rows = [html_row.format(content="".join(cells[i:i+ncols])) for i in range(0, len(cells), ncols)]
     # render notebook display cell
-    display(HTML(html_table.format(caption=cap, header="".join(headers), content="".join(rows))))
+    display(HTML(html_table.format(caption=cap,
+                                   header="".join(headers),
+                                   content="".join(rows))))
 
 
 def show_source(obj):
