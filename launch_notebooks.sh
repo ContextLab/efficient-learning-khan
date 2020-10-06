@@ -327,7 +327,7 @@ check_docker_daemon() {
 
 
 local_image_exists() {
-    [ -n "$(docker image ls -qf "reference=^$IMAGE_NAME$")" ]
+    [ -n "$(docker image ls -qf "reference=$IMAGE_NAME")" ]
 }
 
 
