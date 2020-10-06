@@ -8,6 +8,7 @@ ARG NB_PORT=8888
 ARG WORKDIR="/mnt"
 
 ENV NOTEBOOK_PORT $NB_PORT
+ENV NOTEBOOK_DIR $WORKDIR
 
 COPY code/khan_helpers/ /tmp/khan_helpers/
 
@@ -28,7 +29,7 @@ RUN apt-get update --fix-missing \
         wordcloud=1.8.0 \
     && conda clean -afy \
     && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet \
-    && pip install git+https://github.com/ContextLab/hypertools.git@3f45375682a8f12a1278dd1720290d75a50062a9 \
+    && pip install hypertools==0.6.3 \
     && pip install  /tmp/khan_helpers \
     && rm -rf ~/.cache/pip \
     && rm -rf /tmp/*
