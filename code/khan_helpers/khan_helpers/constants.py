@@ -21,12 +21,12 @@ FIG_DIR = Path('/mnt/paper/figs/')
 ########################################
 
 # standard English stop words + some corpus-specific words
-STOP_WORDS = stopwords.words('english') + ['also', 'billion', 'bit', 'e',
-                                           'even', 'first', 'four', 'hundred',
-                                           'let', 'like', 'mc^2', 'million',
-                                           'one', 'really', 'saw', 'see',
-                                           'seen', 'ten', 'thing', 'things',
-                                           'two', 'us', 'would']
+STOP_WORDS = stopwords.words('english') + ['actual', 'actually', 'also', 'billion', 'bit', 'could', 'e',
+                                           'even', 'first', 'four', 'hugh',
+                                           'hundred', 'let', 'like', 'mc',
+                                           'million', 'one', 'really', 'saw',
+                                           'see', 'seen', 'ten', 'thing',
+                                           'things', 'two', 'us', 'would']
 
 # CountVectorizer parameters
 CV_PARAMS = {

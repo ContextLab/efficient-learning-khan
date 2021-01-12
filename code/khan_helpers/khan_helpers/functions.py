@@ -25,7 +25,7 @@ from .constants import LECTURE_WSIZE, STOP_WORDS
 def _ts_to_sec(ts):
     # converts timestamp of elapsed time from "MM:SS" format to scalar
     mins, secs = ts.split(':')
-    return timedelta(minutes=int(mins), seconds=int(secs)).total_seconds()
+    return timedelta(minutes=int(mins), seconds=float(secs)).total_seconds()
 
 
 def parse_windows(transcript, wsize=LECTURE_WSIZE):
@@ -116,20 +116,28 @@ def preprocess_text(textlist, man_changes=None):
                               ['n', 'n', 'v', 'a', 'a', 'r']):
         tagset_mapping[tb_tag] = wn_tag
 
-    # indices to map processed words back to correct textlist item
-    chunk_ix = [ix for ix, chunk in enumerate(textlist) for _ in chunk.split()]
-    processed_chunks = [[] for i in textlist]
+    # insert delimiters between text samples to map processed text back
+    # to original chunk
+    chunk_delimiter = 'chunkdelimiter'
+    processed_chunks = [[] for _ in textlist]
     # clean spacing, normalize case, strip puncutation
     # (temporarily leave punctuation useful for POS tagging)
-    full_text = ' '.join(textlist).lower()
-    punc_stripped = re.sub("[^a-zA-Z\s'-]+", '', full_text)
+    full_text = f' {chunk_delimiter} '.join(textlist).lower()
+    # ALTERNATIVE (1) punc_stripped = re.sub("[^a-zA-Z\s'-]+", '', full_text)
+    punc_stripped = re.sub("[^a-zA-Z\s']+", '', full_text.replace('-', ' '))
     # POS tagging (works better on full transcript, more context provided)
     words_tags = pos_tag(punc_stripped.split())
 
-    for i, (word, tag) in enumerate(words_tags):
-        # discard contraction clitics (always stop words) post-tagging
+    chunk_ix = 0
+    for word, tag in words_tags:
+        if word == chunk_delimiter:
+            # denotes end of a text chunk
+            chunk_ix += 1
+            continue
+
+        # discard contraction clitics (always stop words or possessive)
         # irregular stems (don, isn, etc.) handled by stop word removal
-        if "'" in word:
+        elif "'" in word:
             word = word.split("'")[0]
 
         # remove stop words & digits
@@ -153,8 +161,9 @@ def preprocess_text(textlist, man_changes=None):
                 # record changes made this way to spot-check later
                 man_changes[(word, lemma)] += 1
 
-        # split on hyphens, place back in correct text chunk
-        processed_chunks[chunk_ix[i]].append(lemma.replace('-', ' '))
+        # place back in correct text chunk
+        # ALTERNATIVE (1) processed_chunks[chunk_ix].append(lemma.replace('-', ' '))
+        processed_chunks[chunk_ix].append(lemma)
 
     # join words within each chunk
     return [' '.join(c) for c in processed_chunks]
@@ -256,7 +265,7 @@ def interp_lecture(lec_traj, timestamps):
 
     """
     new_tpts = np.arange(timestamps[-1])
-    interp_func = interp1d(timestamps, lec_traj, axis=0)
+    interp_func = interp1d(timestamps, lec_traj, axis=0, fill_value='extrapolate')
     return interp_func(new_tpts)
 
 
