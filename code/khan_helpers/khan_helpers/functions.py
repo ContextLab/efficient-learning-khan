@@ -38,7 +38,7 @@ def parse_windows(transcript, wsize=LECTURE_WSIZE):
     ----------
     transcript : str
         The lecture transcript as a single string, with alternating,
-        `\n`-separated lines of timestamps and transcribed speech.
+        '\n'-separated lines of timestamps and transcribed speech.
     wsize : int, optional
         The number of text lines comprising each sliding window (with
         tapering window sizes at the beginning and end).  Defaults to
@@ -71,7 +71,7 @@ def parse_windows(transcript, wsize=LECTURE_WSIZE):
     return windows, timestamps
 
 
-def preprocess_text(textlist, man_changes=None):
+def preprocess_text(textlist, correction_counter=None):
     """
     Handles text preprocessing of lecture transcripts and quiz questions
     & answers.  Performs case and whitespace normalization, punctuation
@@ -90,35 +90,52 @@ def preprocess_text(textlist, man_changes=None):
     textlist : list of str
         List of text samples (lecture transcript lines, quiz questions,
         or quiz answers) to be processed.
-    man_changes : collections.defaultdict, optional
-        A `collections.defaultdict` instance with `default_factory=int`,
-        used for recording instances where lemmatization was performed
-        manually. If provided, keys of (word, lemma) will be added or
-        incremented for each manual replacement.
+    correction_counter : collections.defaultdict, optional
+        A 'collections.defaultdict' instance with 'default_factory=int'.
+        Records detected "misses" by the 'WordNetLemmatizer' (usually
+        caused by the POS tagger mis-labeling a word) corrected by
+        parsing the word's synset directly (via the 'synset_match'
+        function). If provided, keys of (word, lemma) will be added or
+        incremented for each correction. Useful for spot-checking
+        corrections to ensure only proper substitutions were made.
 
     Returns
     -------
     processed_textlist : list of str
-        The original `textlist` with preprocessing steps applied to each
+        The original 'textlist' with preprocessing steps applied to each
         element.
 
     """
-    if man_changes is not None:
-        assert isinstance(man_changes, defaultdict)
+    if correction_counter is not None:
+        if isinstance(correction_counter, defaultdict):
+            if not correction_counter.default_factory is int:
+                raise ValueError(
+                    "'default_factory for 'correction_counter' must be 'int''"
+                )
+        else:
+            raise TypeError(
+                "'correction_counter' must be a 'collections.defaultdict' "
+                "with 'default_factory=int'"
+            )
 
     # define some constants only used in this function:
     lemmatizer = WordNetLemmatizer()
-    # suffixes to detect for manual lemmatization
-    man_lemmatize_sfxs = ('s', 'ing', 'ly', 'ed', 'er', 'est')
-    # mapping between Treebank and WordNet POS tags
-    tagset_mapping = defaultdict(lambda: 'n')
-    for tb_tag, wn_tag in zip(['N', 'P', 'V', 'J', 'D', 'R'],
-                              ['n', 'n', 'v', 'a', 'a', 'r']):
-        tagset_mapping[tb_tag] = wn_tag
+    correctable_sfxs = ('s', 'ing', 'ly', 'ed', 'er', 'est')
+    # POS tag mapping, format: {Treebank tag (1st letter only): Wordnet}
+    tagset_mapping = defaultdict(
+        lambda: 'n',   # defaults to noun
+        {
+            'N': 'n',  # noun types
+            'P': 'n',  # pronoun types, predeterminers
+            'V': 'v',  # verb types
+            'J': 'a',  # adjective types
+            'D': 'a',  # determiner
+            'R': 'r'   # adverb types
+        })
 
     # indices to map processed words back to correct textlist item
     chunk_ix = [ix for ix, chunk in enumerate(textlist) for _ in chunk.split()]
-    processed_chunks = [[] for i in textlist]
+    processed_chunks = [[] for _ in textlist]
     # clean spacing, normalize case, strip puncutation
     # (temporarily leave punctuation useful for POS tagging)
     full_text = ' '.join(textlist).lower()
@@ -131,27 +148,25 @@ def preprocess_text(textlist, man_changes=None):
         # irregular stems (don, isn, etc.) handled by stop word removal
         if "'" in word:
             word = word.split("'")[0]
-
         # remove stop words & digits
         if word in STOP_WORDS or word[0].isdigit():
             continue
 
-        # convert Treebank POS tags to WordNet POS tags
+        # convert Treebank POS tags to WordNet POS tags; lemmatize
         tag = tagset_mapping[tag[0]]
-        # lemmatize
         lemma = lemmatizer.lemmatize(word, tag)
-
-        # handles most cases where POS tagger misidentifies a word, causing
-        # WordNet Morphy to use the wrong syntactic transformation and fail
+        # handles most cases where POS tagger misidentifies a word,
+        # causing WordNet Morphy to use the wrong syntactic
+        # transformation and fail
         if (
-                lemma == word
-                and any(word.endswith(sfx) for sfx in man_lemmatize_sfxs)
-                and len(word) > 4
+                lemma == word and
+                any(word.endswith(sfx) for sfx in correctable_sfxs) and
+                len(word) > 4
         ):
             lemma = synset_match(word)
-            if lemma != word and man_changes is not None:
+            if lemma != word and correction_counter is not None:
                 # record changes made this way to spot-check later
-                man_changes[(word, lemma)] += 1
+                correction_counter[(word, lemma)] += 1
 
         # split on hyphens, place back in correct text chunk
         processed_chunks[chunk_ix[i]].append(lemma.replace('-', ' '))
@@ -162,13 +177,13 @@ def preprocess_text(textlist, man_changes=None):
 
 def synset_match(word, min_similarity=0.6):
     """
-    Attempts to manually identify the proper lemma for a given `word`.
-    Searches WordNet's database of cognitive synonyms for the provided
-    `word` (its "synset") as well as the pertainyms of each word in the
-    synset (to handle adverb-adjective relationships).
+    Attempts to identify the proper lemma for a given 'word'. Searches
+    WordNet's database of cognitive synonyms for the provided 'word'
+    (its "synset") as well as the pertainyms of each word in the synset
+    (to handle adverb-adjective relationships).
 
     Works based on the assumption that the correct lemma is the most
-    similar choice (via `difflib.SequenceMatcher`) to the original word
+    similar choice (via 'difflib.SequenceMatcher') to the original word
     *that is also shorter than the original word*.
 
     Parameters
@@ -219,12 +234,12 @@ def corr_mean(rs, axis=None, **kwargs):
     Parameters
     ----------
     rs : array_like
-        Array of *r*-values.  May be any type accepted by `numpy.mean`
+        Array of *r*-values.  May be any type accepted by 'numpy.mean'
     axis : None or int or tuple of ints, optional
         Axis or axes along which the means are computed. If None
         (default), the mean of the flattened array is computed.
     kwargs : various types, optional
-        Additional keyword arguments passed to `numpy.mean` (see
+        Additional keyword arguments passed to 'numpy.mean' (see
         https://numpy.org/doc/stable/reference/generated/numpy.mean.html)
 
     Returns
@@ -278,7 +293,7 @@ def rbf_sum(obs_coords, pred_coords, width, metric='euclidean'):
         The Width of the Gaussian kernel.
     metric : str or callable, optional
         The metric used for measuring distance between two points.  May
-        be any metric accepted by `scipy.spatial.distance.cdist`.
+        be any metric accepted by 'scipy.spatial.distance.cdist'.
 
     Returns
     -------
@@ -344,40 +359,40 @@ def multicol_display(*outputs,
     """
     Renders notebook cell output in multiple side-by-side columns using
     an HTML table.  Accepts a variable number of output items and
-    "wraps" the columns into multiple rows if `len(outputs) > ncols`
+    "wraps" the columns into multiple rows if 'len(outputs) > ncols'
 
     Parameters
     ----------
     outputs : Objects
         Objects to be placed in each table cell, passed as positional
-        arguments.  May be any Python class that defines a `__str__`
-        and/or `__repr__` method.
+        arguments.  May be any Python class that defines a '__str__'
+        and/or '__repr__' method.
     ncols : int, optional
         The number of columns for the display (default: 2).  If less
         than the number of outputs passed, the display will include
         multiple rows.
     caption : str, optional
-        Text passed to the table's `<caption>` tag, displayed above the
+        Text passed to the table's '<caption>' tag, displayed above the
         table.
     col_headers : list-like of str, optional
-        Contents of table header (`<th>`) elements for each column.  If
-        passed, must have length equal `ncols`.  If `None` (default),
+        Contents of table header ('<th>') elements for each column.  If
+        passed, must have length equal 'ncols'.  If 'None' (default),
         table header elements are not created.
     table_css : dict, optional
         Additional CSS properties to be applied to the outermost
-        (`<table>`) element.
+        ('<table>') element.
     caption_css : dict, optional
         Additional CSS properties to be applied to the table *caption*
-        (`<caption>`) element.
+        ('<caption>') element.
     header_css : dict, optional
         Additional CSS properties to be applied to each table *header*
-        (`<th>`) element.
+        ('<th>') element.
     row_css : dict, optional
         Additional CSS properties to be applied to each table *row*
-        (`<tr>`) element.
+        ('<tr>') element.
     cell_css : dict, optional
         Additional CSS properties to be applied to each table *cell*
-        (`<td>`) element.
+        ('<td>') element.
 
     Returns
     -------
@@ -483,7 +498,7 @@ def show_source(obj):
     Parameters
     ----------
     obj : Object
-        The object to display.  If `obj` is a module, class, method,
+        The object to display.  If 'obj' is a module, class, method,
         function, traceback, frame, or other code object, its source
         code will be displayed inline with syntax highlighting.
         Otherwise, a string representation of the object will be
