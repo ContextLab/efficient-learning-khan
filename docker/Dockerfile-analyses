@@ -1,8 +1,8 @@
-# Dockerfile for reproducing eficient-Learning-khan analyses
-# Use Dockerfile-experiment to build an environment for running the experiment
-FROM contextlab/cdl-jupyter:3.8
+# Builds an image for reproducing the efficient-learning-khan analyses.
+# Use Dockerfile-experiment to build an environment for running the experiment.
+FROM debian:buster-slim
 
-LABEL maintainer="Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu>"
+LABEL maintainer="Paxton Fitzpatrick <Paxton.C.Fitzpatrick.GR@Dartmouth.edu>"
 
 ARG NB_PORT=8888
 ARG WORKDIR="/mnt"
