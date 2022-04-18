@@ -4,34 +4,50 @@ FROM debian:buster-slim
 
 LABEL maintainer="Paxton Fitzpatrick <Paxton.C.Fitzpatrick.GR@Dartmouth.edu>"
 
-ARG NB_PORT=8888
-ARG WORKDIR="/mnt"
+ARG notebook_ip=0.0.0.0
+ARG notebook_port=8888
+ARG notebook_dir="/mnt/code/notebooks"
+ARG DEBIAN_FRONTEND=noninteractive
 
-ENV NOTEBOOK_PORT $NB_PORT
-ENV NOTEBOOK_DIR $WORKDIR
+ENV NOTEBOOK_IP="$notebook_ip" \
+    NOTEBOOK_PORT="$notebook_port" \
+    NOTEBOOK_DIR="$notebook_dir" \
+    PATH="/opt/conda/bin:$PATH"
 
-COPY code/khan_helpers/ /tmp/khan_helpers/
+COPY code/khan_helpers docker/jupyter_notebook_config.py /root/
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# TODO: can probably apt-get purge ca-certificates too since it gets installed by conda and that's first in path anyway
+# TODO: deal with numba -- wants to downgrade numpy
+# TODO: deal with wordcloud -- needs to be compiled from source for Python>3.7, and must ust 3.9 for M1 support
 RUN apt-get update --fix-missing \
-    && eatmydata apt-get install -y --no-install-recommends git \
+    && apt-get install -y --no-install-recommends eatmydata \
+    && eatmydata apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        vim-tiny \
+    && curl --progress-bar \
+        -L "https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-$(uname -m).sh" \
+        -o "$HOME/mambaforge.sh" \
+    && apt-get purge -y --auto-remove curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && conda install -Sy \
-        numpy=1.19.1 \
-        scipy=1.5.2 \
-        pandas=1.1.2 \
-        numba=0.50.1 \
-        nltk=3.4.4 \
-        matplotlib=3.2.2 \
-        seaborn=0.11.0 \
-        scikit-learn=0.23.2 \
-        umap-learn=0.4.6 \
-        wordcloud=1.8.0 \
-    && conda clean -afy \
-    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet \
-    && pip install git+https://github.com/paxtonfitzpatrick/hypertools.git@c98c49b08e0c8b067ec5c3b06065a7f9979f751a \
-    && pip install /tmp/khan_helpers \
-    && rm -rf ~/.cache/pip \
-    && rm -rf /tmp/*
+    && /bin/bash "$HOME/mambaforge.sh" -bp /opt/conda \
+    && rm  "$HOME/mambaforge.sh" \
+    && mamba install -Sy \
+        ipython=8.0.1 \
+        jupyter_contrib_nbextensions=0.5.1 \
+        matplotlib=3.5.1 \
+        notebook=6.4.7 \
+        nltk=3.6.7 \
+        numba=0.53.1 \
+        numpy=1.22.0 \
+        pandas=1.3.5 \
+        seaborn=0.11.2 \
+        scikit-learn=1.0.2 \
+        scipy=1.8.0 \
+        umap-learn=0.5.2 \
+    && mamba clean -afy \
+    && python -uBW ignore -m nltk.downloader
 
-WORKDIR $WORKDIR
