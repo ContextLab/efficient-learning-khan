@@ -77,4 +77,6 @@ RUN apt-get update --fix-missing \
     && rm -rf /var/lib/apt/lists/* \
     && rm -f "$HOME/nltk_data/*/*.zip" 
 
-WORKDIR "$notebook_dir"
+WORKDIR "/mnt"
+
+CMD ["jupyter", "notebook"]
