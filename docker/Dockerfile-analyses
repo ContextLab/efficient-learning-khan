@@ -9,7 +9,8 @@ ARG notebook_port=8888
 ARG notebook_dir="/mnt/code/notebooks"
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV NOTEBOOK_IP="$notebook_ip" \
+ENV MAMBA_NO_BANNER=1 \
+    NOTEBOOK_IP="$notebook_ip" \
     NOTEBOOK_PORT="$notebook_port" \
     NOTEBOOK_DIR="$notebook_dir" \
     PATH="/opt/conda/bin:$PATH"
@@ -18,23 +19,20 @@ COPY code/khan_helpers docker/jupyter_notebook_config.py /root/
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# TODO: can probably apt-get purge ca-certificates too since it gets installed by conda and that's first in path anyway
-# TODO: deal with numba -- wants to downgrade numpy
-# TODO: deal with wordcloud -- needs to be compiled from source for Python>3.7, and must ust 3.9 for M1 support
 RUN apt-get update --fix-missing \
     && apt-get install -y --no-install-recommends eatmydata \
     && eatmydata apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
+        gcc \
+        git \
+        libc6-dev \
         vim-tiny \
     && curl --progress-bar \
         -L "https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-$(uname -m).sh" \
         -o "$HOME/mambaforge.sh" \
-    && apt-get purge -y --auto-remove curl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
     && /bin/bash "$HOME/mambaforge.sh" -bp /opt/conda \
-    && rm  "$HOME/mambaforge.sh" \
+    && rm "$HOME/mambaforge.sh" \
     && mamba install -Sy \
         ipython=8.0.1 \
         jupyter_contrib_nbextensions=0.5.1 \
@@ -47,7 +45,24 @@ RUN apt-get update --fix-missing \
         seaborn=0.11.2 \
         scikit-learn=1.0.2 \
         scipy=1.8.0 \
+        tqdm=4.62.3 \
         umap-learn=0.5.2 \
+    && pip install --disable-pip-version-check --no-cache-dir \
+        hypertools==0.8.0 \
+        youtube_transcript_api==0.4.4 \
+        git+https://github.com/amueller/word_cloud.git@35ce9b7 \
+        "$HOME/khan_helpers" \
+    && rm -rf "$HOME/khan_helpers" \
     && mamba clean -afy \
-    && python -uBW ignore -m nltk.downloader
+    && apt-get purge -y --auto-remove  \
+        ca-certificates \
+        curl \
+        gcc \
+        git \
+        libc6-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet \
+    && rm -f "$HOME/nltk_data/*/*.zip" 
 
+WORKDIR "$notebook_dir"
