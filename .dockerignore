@@ -1,4 +1,6 @@
 # Since repo will be mounted to container, can ignore almost everything...
 * 
-# ...except for local helper package copied in during build
+# ...except for local helper package copied in during build...
 !/code/khan_helpers/
+# ... and Jupyter notebook config file
+!/docker/jupyter_notebook_config.py
