@@ -7,6 +7,8 @@ based on arguments passed during build.
 from os import getenv
 
 
+c.Completer.use_jedi = False
+c.IPCompleter.use_jedi = False
 c.NotebookApp.ip = getenv("NOTEBOOK_IP")
 c.NotebookApp.port = int(getenv("NOTEBOOK_PORT"))
 c.NotebookApp.notebook_dir = getenv("NOTEBOOK_DIR")
