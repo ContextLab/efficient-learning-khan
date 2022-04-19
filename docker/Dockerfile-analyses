@@ -15,12 +15,14 @@ ENV MAMBA_NO_BANNER=1 \
     NOTEBOOK_DIR="$notebook_dir" \
     PATH="/opt/conda/bin:$PATH"
 
-COPY code/khan_helpers docker/jupyter_notebook_config.py /root/
+COPY code/khan_helpers docker/jupyter_notebook_config.py /khan_helpers/
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get update --fix-missing \
     && apt-get install -y --no-install-recommends eatmydata \
+    # temporarily install libraries needed to download & build Python
+    # requirements, plus a mini text editor for convenience
     && eatmydata apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
@@ -28,11 +30,13 @@ RUN apt-get update --fix-missing \
         git \
         libc6-dev \
         vim-tiny \
+    # install mamba (faster C++ conda reimplementation, uses conda-forge)
     && curl --progress-bar \
         -L "https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-$(uname -m).sh" \
         -o "$HOME/mambaforge.sh" \
     && /bin/bash "$HOME/mambaforge.sh" -bp /opt/conda \
     && rm "$HOME/mambaforge.sh" \
+    # install required packages
     && mamba install -Sy \
         ipython=8.0.1 \
         jupyter_contrib_nbextensions=0.5.1 \
@@ -47,12 +51,21 @@ RUN apt-get update --fix-missing \
         scipy=1.8.0 \
         tqdm=4.62.3 \
         umap-learn=0.5.2 \
+    # install additional requirements not available via conda
+    # wordcloud must be built from source for ARM/Python>3.7
     && pip install --disable-pip-version-check --no-cache-dir \
         hypertools==0.8.0 \
         youtube_transcript_api==0.4.4 \
         git+https://github.com/amueller/word_cloud.git@35ce9b7 \
-        "$HOME/khan_helpers" \
-    && rm -rf "$HOME/khan_helpers" \
+    # set up jupyter notebook config
+    && mkdir "$HOME/.jupyter" \
+    && mv "/khan_helpers/jupyter_notebook_config.py" "$HOME/.jupyter/" \
+    # download NLTK corpora & models
+    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet \
+    # install khan_helpers package (NLTK data must be downloaded first)
+    && pip install --disable-pip-version-check --no-cache-dir /khan_helpers \
+    # various cleanup to reduce image size
+    && rm -rf /khan_helpers \
     && mamba clean -afy \
     && apt-get purge -y --auto-remove  \
         ca-certificates \
@@ -62,7 +75,6 @@ RUN apt-get update --fix-missing \
         libc6-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet \
     && rm -f "$HOME/nltk_data/*/*.zip" 
 
 WORKDIR "$notebook_dir"
