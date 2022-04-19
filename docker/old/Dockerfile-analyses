@@ -1,0 +1,37 @@
+# Dockerfile for reproducing eficient-Learning-khan analyses
+# Use Dockerfile-experiment to build an environment for running the experiment
+FROM contextlab/cdl-jupyter:3.8
+
+LABEL maintainer="Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu>"
+
+ARG NB_PORT=8888
+ARG WORKDIR="/mnt"
+
+ENV NOTEBOOK_PORT $NB_PORT
+ENV NOTEBOOK_DIR $WORKDIR
+
+COPY code/khan_helpers/ /tmp/khan_helpers/
+
+RUN apt-get update --fix-missing \
+    && eatmydata apt-get install -y --no-install-recommends git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && conda install -Sy \
+        numpy=1.19.1 \
+        scipy=1.5.2 \
+        pandas=1.1.2 \
+        numba=0.50.1 \
+        nltk=3.4.4 \
+        matplotlib=3.2.2 \
+        seaborn=0.11.0 \
+        scikit-learn=0.23.2 \
+        umap-learn=0.4.6 \
+        wordcloud=1.8.0 \
+    && conda clean -afy \
+    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet \
+    && pip install git+https://github.com/paxtonfitzpatrick/hypertools.git@c98c49b08e0c8b067ec5c3b06065a7f9979f751a \
+    && pip install /tmp/khan_helpers \
+    && rm -rf ~/.cache/pip \
+    && rm -rf /tmp/*
+
+WORKDIR $WORKDIR

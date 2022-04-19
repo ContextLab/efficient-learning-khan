@@ -16,6 +16,8 @@ declare -ir CONTAINER_PORT=8888                          # container port used t
 declare -ir LOCAL_PORT=8888                              # host port bound to container port and used to run notebooks in browser
 
 
+# TODO: add extra configurable options for notebook-related --build-args (port, IP, etc.) and help to show_help()
+# TODO: check uname -m to set value passed to --platform=linux/<XXX>64. Will need to convert x86_64 to amd64
 ########################################
 #         CLI PARSING FUNCTIONS        #
 ########################################
