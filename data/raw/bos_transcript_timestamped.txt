@@ -1,355 +1,415 @@
-00:00.52
-Let's imagine we have a huge cloud
-00:02.65
-of hydrogen atoms floating in space.
-00:05.47
-Huge, and when I say huge cloud, huge both in distance
-00:08.24
-and in mass.
-00:09.36
-If you were to combine all of the hydrogen atoms,
-00:11.72
-it would just be this really, really massive thing.
-00:15.
-So you have this huge cloud.
-00:16.83
-Well, we know that gravity would make the atoms actually
-00:20.51
-attracted to each other.
-00:21.65
-It's-- we normally don't think about the gravity of atoms.
-00:25.1
-But it would slowly affect these atoms.
-00:27.62
-And they would slowly draw close to each other.
-00:30.38
-It would slowly condense.
-00:31.63
-They'd slowly move towards the center
-00:34.64
-of mass of all of the atoms.
-00:37.65
-They'd slowly move in.
-00:39.18
-So if we fast forward, this cloud's
-00:42.86
-going to get denser and denser.
-00:46.712
-And the hydrogen atoms are going to start
-00:48.42
-bumping into each other and rubbing up against each other
-00:51.3
-and interacting with each other.
-00:53.28
-And so it's going to get denser and denser and denser.
-00:56.1
-Now remember, it's a huge mass of hydrogen atoms.
-00:58.43
-So the temperature is going up.
-01:03.4
-And it'll-- they'll keep condensing.
-01:05.43
-They'll just keep condensing and condensing
-01:07.87
-until something really interesting happens.
-01:09.98
-So let's imagine that they've gotten really dense here
-01:12.677
-in the center.
-01:16.16
-And there's a bunch of hydrogen atoms all over.
-01:19.55
-It's really dense.
-01:20.31
-I could never draw the actual number of atoms here.
-01:22.6
-This is really to give you an idea.
-01:24.058
-There's a huge amount of inward pressure from gravity,
-01:28.026
-from everything that wants to get
-01:29.4
-to that center of mass of our entire cloud.
-01:32.54
-The temperature here is approaching 10 million Kelvin.
-01:38.9
-And at that point, something neat happens.
-01:40.78
-And to kind of realize the neat thing that's happening,
-01:43.68
-let's remember what a hydrogen atom looks like.
-01:46.39
-A hydrogen-- and even more, I'm just
-01:48.01
-going to focus on the hydrogen nucleus.
-01:49.39
-So the hydrogen nucleus is a proton.
-01:50.9
-If you want to think about a hydrogen atom,
-01:52.691
-it also has an electron orbiting around or floating around.
-01:57.2
-And let's draw another hydrogen atom over here.
-01:59.93
-And obviously this distance isn't to scale.
-02:02.05
-This distance is also not to scale.
-02:04.127
-Atoms are actually-- the nucleus of atoms
-02:05.835
-are actually much, much, much, much smaller
-02:07.98
-than the actual radius of an atom.
-02:10.199
-And so is the electron.
-02:11.29
-But anyway, this just gives you an idea.
-02:13.222
-So we know from the Coulomb forces,
-02:14.68
-from electromagnetic forces, that these two positively
-02:17.48
-charged nucleuses will not want to get anywhere
-02:20.97
-near each other.
-02:22.3
-But we do know from our-- from what we learned about the four
-02:25.52
-forces-- that if they did get close enough to each other,
-02:28.26
-that if they did get-- if somehow under huge temperatures
-02:31.54
-and huge pressures you were able to get these two protons close
-02:35.3
-enough to each other, then all of a sudden,
-02:37.21
-the strong force will overtake.
-02:39.13
-It's much stronger than the Coulomb force.
-02:41.79
-And then these two hydrogens will actually--
-02:43.8
-these nucleuses would actually fuse-- or is it nuclei?
-02:48.04
-Well, anyway, they would actually fuse together.
-02:50.75
-And so that is what actually happens
-02:53.57
-once this gets hot and dense enough.
-02:57.36
-You now have enough pressure and enough temperature
-02:59.83
-to overcome the Coulomb force and bring
-03:02.62
-these protons close enough to each other for fusion
-03:05.48
-to occur, for fusion ignition.
-03:12.186
-And the reason why-- and I want to be very careful.
-03:14.31
-It's not ignition.
-03:15.02
-It's not combustion in the traditional sense.
-03:16.894
-It's not like you're burning a carbon molecule
-03:20.91
-in the presence of oxygen.
-03:22.39
-It's not combustion.
-03:23.46
-It's ignition.
-03:24.085
-And the reason why it's called ignition
-03:25.71
-is because when two of these protons,
-03:27.88
-or two of the nucleuses fuse, the resulting nucleus
-03:32.76
-has a slightly smaller mass.
-03:35.064
-And so in the first stage of this,
-03:36.48
-you actually have two protons under enough pressure--
-03:42.12
-obviously, this would not happen with just the Coulomb forces--
-03:44.99
-with enough pressure they get close enough.
-03:46.781
-And then the strong interaction actually keeps them together.
-03:51.15
-One of these guys degrades into a neutron.
-03:56.83
-And the resulting mass of the combined protons
-03:59.46
-is lower than the mass of each of the original.
-04:01.86
-By a little bit, but that little bit of mass
-04:04.52
-results in a lot of energy-- plus energy.
-04:11.27
-And this energy is why we call it ignition.
-04:13.96
-And so what this energy does is it provides
-04:16.019
-a little bit of outward pressure,
-04:17.839
-so that this thing doesn't keep collapsing.
-04:21.42
-So once you get pressure enough, the fusion occurs.
-04:24.13
-And then that energy provides outward pressure
-04:26.26
-to balance what is now a star.
-04:30.88
-So now we are at where we actually
-04:32.66
-have the ignition at the center.
-04:35.8
-We have-- and we still have all of the other molecules trying
-04:39.05
-to get in providing the pressure for this fusion ignition.
-04:43.52
-Now, what is the hydrogen being fused into?
-04:46.3
-Well, in the first step of the reaction-- and I'm just
-04:50.58
-kind of doing the most basic type of fusion that happens
-04:54.64
-in stars-- the hydrogen gets fused into deuterium.
-05:00.02
-I have trouble spelling.
-05:01.442
-Which is another way of calling heavy hydrogen.
-05:03.4
-This is still hydrogen because it
-05:04.775
-has one proton and one neutron now.
-05:07.2
-It is not helium yet.
-05:08.1
-This does not have two-- it does not have two protons.
-05:12.29
-But then the deuterium keeps fusing.
-05:14.52
-And then we eventually end up with helium.
-05:19.01
-And we can even see that on the periodic table.
-05:21.1
-Oh, I lost my periodic table.
-05:22.48
-Well, I'll show you the next video.
-05:23.938
-But we know hydrogen in its atomic state
-05:30.04
-has an atomic number of 1.
-05:32.32
-And it also has a mass of 1.
-05:34.56
-It only has one nucleon in its nucleus.
-05:38.
-But it's being fused.
-05:39.08
-It goes to hydrogen-2, which is deuterium,
-05:42.21
-which is one neutron, one proton in its nucleus, two nucleons.
-05:46.59
-And then that eventually gets fused--
-05:48.35
-and I'm not going into the detail of the reaction--
-05:50.475
-into helium.
-05:51.32
-And by definition, helium has two protons and two neutrons.
-05:56.04
-So it has-- or we're talking about helium-4,
-05:58.28
-in particular, that isotope of helium--
-06:00.59
-it has an atomic mass of 4.
-06:03.35
-And this process releases a ton of energy.
-06:06.42
-Because the atomic mass of the helium that gets produced
-06:09.74
-is slightly lower than four times the atomic mass
-06:15.22
-of each of the constituent hydrogens.
-06:17.44
-So all of this energy, all this energy from the fusion-- but it
-06:21.74
-needs super high pressure, super high temperatures to happen--
-06:24.9
-keeps the star from collapsing.
-06:28.82
-And once a star is in this stage,
-06:31.51
-once it is using hydrogen-- it is fusing hydrogen
-06:35.346
-in its core, where the pressure and the temperature
-06:37.47
-is the most, to form helium-- it is now in its main sequence.
-06:41.35
-This is now a main sequence star.
-06:48.13
-And that's actually where the sun is right now.
-06:50.77
-Now there's questions of, well, what if there just
-06:53.58
-wasn't enough mass to get to this level over here?
-06:56.304
-And there actually are things that
-06:57.72
-never get to quite that threshold
-06:59.63
-to fuse all the way into helium.
-07:00.985
-There are a few things that don't quite
-07:02.61
-make the threshold of stars that only fuse to this level.
-07:05.09
-So they are generating some of their heat.
-07:06.839
-Or there are even smaller objects
-07:08.58
-that just get to the point there's
-07:10.28
-a huge temperature and pressure, but fusion is not actually
-07:13.6
-occurring inside of the core.
-07:15.042
-And something like Jupiter would be an example.
-07:17.
-And you could go several masses above Jupiter
-07:20.074
-where you get something like that.
-07:21.49
-So you have to reach a certain threshold
-07:23.156
-where the mass, where the pressure and the temperature
-07:25.47
-due to the heavy mass, get so large that you
-07:27.47
-start this fusion.
-07:28.77
-And-- but the smaller you are above that threshold,
-07:31.96
-the slower the fusion will occur.
-07:33.83
-But if you're super massive, the fusion
-07:35.57
-will occur really, really fast.
-07:37.68
-So that's the general idea of just how stars get formed
-07:40.7
-and why they don't collapse on themselves
-07:43.37
-and why they are these kind of balls
-07:45.64
-of fusion reactions existing in the universe.
-07:48.954
-In the next few videos, we'll talk
-07:50.37
-about what happens once that hydrogen fuel in the core
-07:54.12
-starts to run out.
-07:56.878
+00:00.03
+let's imagine we have a huge cloud of
+00:02.399
+hydrogen atoms floating in space Hugh
+00:05.67
+and I say huge cloud huge both in
+00:07.44
+distance and in mass if you were to
+00:09.69
+combine all of the hydrogen atoms it
+00:11.79
+would just be this really really massive
+00:14.549
+thing so you have this huge cloud well
+00:16.92
+we know that gravity would make the
+00:19.17
+atoms actually attracted to each other
+00:21.42
+instantly we normally don't think about
+00:23.13
+the gravity of atoms but it would slowly
+00:25.949
+affect these atoms and they'd slowly
+00:28.199
+draw close to each other it would slowly
+00:30.779
+condense they'd slowly they slowly move
+00:33.63
+towards the center of mass of all of the
+00:36.329
+atoms
+00:36.84
+they'd slowly move in and so if we fast
+00:39.69
+forward if we fast forward this cloud is
+00:42.84
+going to get denser and denser it's
+00:45.3
+going to get denser and denser and the
+00:46.95
+hydrogen atoms are going to start
+00:48.329
+bumping into each other and rubbing up
+00:50.43
+against each other and interacting with
+00:52.199
+each other and so it's going to get
+00:53.94
+denser and denser and denser and
+00:56.07
+remember was a huge mass of hydrogen
+00:57.78
+atoms so the temperature is going up the
+01:00.539
+temperature is going up and it'll
+01:03.69
+they'll keep condensing they'll just
+01:05.76
+keep condensing and condensing until
+01:08.13
+something really interesting happens so
+01:09.99
+let's imagine that they've gotten really
+01:11.43
+dense here in the center they've gotten
+01:14.61
+really dense here in the center and
+01:16.14
+there's a bunch of hydrogen atoms all
+01:18.2
+over it's really dense I could never
+01:20.67
+draw the actual number of atoms here
+01:22.439
+this is really give you an idea there's
+01:23.64
+a huge amount of inward pressure from
+01:27.36
+gravity from everything that wants to
+01:29.1
+get to that center of mass of our entire
+01:31.71
+cloud the temperature here the
+01:34.049
+temperature here is approaching 10
+01:36.71
+million Kelvin and at that point
+01:39.54
+something neat happens it to kind of
+01:41.67
+realize the neat thing that's happening
+01:43.53
+let's remember what a hydrogen atom
+01:45.0
+looks like a hydrogen and even more I'm
+01:47.82
+just going to focus on the hydrogen
+01:48.96
+nucleus so the hydrogen nucleus is a
+01:50.34
+proton if you want to think about a
+01:51.479
+hydrogen atom it also has an electron
+01:53.72
+orbiting around or floating around and
+01:56.63
+let's draw another hydrogen atom over
+01:59.43
+here and obviously this distance isn't
+02:00.96
+to scale this distance is also not to
+02:03.42
+scale atoms are actually the nucleus of
+02:05.61
+atoms are actually much much much much
+02:07.2
+smaller than the actual radius of an
+02:09.929
+atom and so is the electron but anyway
+02:11.64
+this just gives you an idea
+02:12.94
+so we know from the Coulomb forces from
+02:14.77
+electromagnetic forces that these two
+02:16.72
+positively charged nucleus is will not
+02:19.27
+want to get anywhere near each other but
+02:22.33
+we do know from ours from what we
+02:24.67
+learned about the four force is that if
+02:26.05
+they did get close enough to each other
+02:27.79
+that if they did get if somehow they're
+02:29.92
+under huge temperatures and huge
+02:31.9
+pressures you were able to get these two
+02:34.3
+protons close enough to each other then
+02:36.61
+all of a sudden the strong force will
+02:38.38
+overtake it's much stronger than the
+02:40.63
+Coulomb force and that these two
+02:42.52
+hydrogen's will actually these this
+02:44.53
+these nucleuses would actually fuse or
+02:47.47
+that nuclei well anyway they would
+02:49.0
+actually fuse together and so that is
+02:51.46
+what actually happens once this gets hot
+02:55.48
+and dense enough you now have enough
+02:58.18
+pressure enough temperature to overcome
+03:00.67
+the Coulomb force and bring these
+03:02.74
+protons close enough to each other for
+03:04.87
+fusion to occur for fusion fusion
+03:09.66
+ignition ignition and the reason why is
+03:12.91
+and I want to be very careful it's not
+03:14.38
+ignition it's not combustion in the
+03:16.12
+traditional sense it's not like you're
+03:17.38
+burning a carbon molecule with out in
+03:21.459
+the presence of oxygen it's not
+03:22.69
+combustion it's ignition and the reason
+03:25.03
+why it's called ignition is because when
+03:26.17
+two of these protons or two of the
+03:28.33
+nucleus is fuse the resulting the
+03:31.66
+resulting nucleus has a slightly smaller
+03:33.88
+mass and so in the first stage of this
+03:36.34
+you actually have you actually have two
+03:38.44
+protons two protons under enough
+03:41.56
+pressure obviously this would not happen
+03:43.0
+with just the Coulomb forces at with
+03:45.13
+enough pressure to get close enough and
+03:46.36
+then the strong interaction actually
+03:48.09
+actually keeps them together one of
+03:51.37
+these guys degrades in a neutron
+03:53.08
+degrades into a neutron and the
+03:57.01
+resulting mass of the combined protons
+03:59.32
+is lower than the mass of each of the
+04:01.45
+original by a little bit but that a
+04:03.16
+little bit of mass results in a lot of
+04:05.44
+energy plus plus energy and this energy
+04:11.68
+is why we call it ignition and so what
+04:14.26
+this energy does is it provides a little
+04:16.239
+bit of outward pressure so that this
+04:18.31
+thing doesn't keep keep collapsing so
+04:21.43
+once you get pressure enough the fusion
+04:23.32
+occurs and then that energy provides
+04:25.3
+outward pressure to
+04:26.71
+what is now a star what is now a star so
+04:30.91
+now we are at where we actually have the
+04:32.949
+ignition at the center we have and we
+04:36.46
+still have all of the other molecules
+04:37.979
+trying to get in providing the pressure
+04:40.81
+for this fusion ignition now what is the
+04:44.56
+hydrogen being fused into well on the
+04:46.57
+first step of the first step of the
+04:49.15
+reaction and I'm just kind of doing the
+04:51.639
+most basic type of fusion that exhibit
+04:54.61
+ours
+04:55.15
+the hydrogen gets fused into deuterium
+04:58.0
+deuterium of trouble spelling which is
+05:01.81
+another way of calling heavy hydrogen
+05:03.16
+this is still hydrogen because it has
+05:04.75
+one proton and one Neutron now it is not
+05:07.479
+helium yet it does not have two it does
+05:10.27
+not have two protons but then the
+05:12.669
+deuterium keeps fusing and then we
+05:14.86
+eventually end up with and then we end
+05:18.16
+up with helium and we can even see that
+05:19.75
+on the periodic table I lost my periodic
+05:21.849
+table well I'll show you in the next
+05:22.99
+video but we know hydrogen hydrogen
+05:25.99
+hydrogen in its atomic state has an
+05:30.58
+atomic number of one and it also has a
+05:33.19
+mass of one it only has one nucleon and
+05:36.789
+it's nucleus but it's being fused it
+05:39.159
+goes to hydrogen too which is deuterium
+05:41.74
+which is one Neutron one proton in its
+05:44.979
+nucleus two nucleons and then that
+05:47.08
+eventually gets fused and I'm not going
+05:48.789
+to the detail of the reaction into
+05:50.32
+helium and by definition helium has two
+05:53.62
+protons and two neutrons so it has or
+05:56.65
+we're talking about helium four in
+05:58.33
+particular that isotope of helium it has
+06:00.82
+an atomic mass of four and the whole
+06:03.729
+this process releases a ton of energy
+06:05.83
+because the atomic mass of the helium
+06:08.56
+that gets produced is slightly lower
+06:10.84
+than four of its of the atomic four
+06:13.659
+times the atomic mass of each of the
+06:15.909
+Constituent hydrogen's so all of this
+06:18.19
+energy all of this energy from the
+06:20.8
+fusion but it needs super high pressure
+06:23.05
+super high temperatures to happen keeps
+06:25.15
+keeps the star from collapsing and once
+06:29.199
+the star is in in this stage once it is
+06:32.139
+once it is using hydrogen it is fusing
+06:35.11
+hydrogen in its core where the pressure
+06:36.849
+and the temperatures of most to form
+06:38.68
+helium it is now in its main
+06:40.81
+sequence this is now a main sequence
+06:42.22
+star main main sequence star and that's
+06:48.19
+actually where the Sun is right now now
+06:50.68
+there's there's questions of well what
+06:52.36
+if what if there just wasn't enough mass
+06:54.46
+to get to this level over here and there
+06:56.53
+actually are things that never get to
+06:58.33
+that quite that threshold to fuse all
+07:00.25
+the way into helium there are a few
+07:01.75
+things that don't quite make the
+07:02.77
+threshold of stars that only fuse to
+07:04.45
+this level so they are generating some
+07:05.98
+of their eat or there are even smaller
+07:07.54
+objects that just get to the point
+07:10.0
+there's a huge temperature and pressure
+07:12.04
+but fusion is not actually occurring
+07:13.93
+inside of the core and something like
+07:15.94
+Jupiter would be an example and you can
+07:17.41
+go several several masses above Jupiter
+07:20.44
+where you get something like that so you
+07:21.52
+have to reach a certain threshold or the
+07:22.84
+mass where the pressure and the
+07:24.94
+temperature due to the heavy mass gets
+07:26.65
+so large that you start this fusion at
+07:28.6
+but the smaller you have above that
+07:31.24
+threshold this the slower the fusion
+07:33.07
+will occur but if you're supermassive
+07:34.81
+the fusion will occur really really fast
+07:37.09
+so that's a general idea of just how
+07:39.28
+stars get formed and why they don't
+07:41.74
+collapse on themselves and why they are
+07:44.32
+these kind of little balls of fusion
+07:47.08
+reactions existing in the universe and
+07:48.94
+the next few videos we'll talk about
+07:50.44
+what happens once that hydrogen fuel and
+07:52.81
+the cure in the core starts to run out
+07:57.75
