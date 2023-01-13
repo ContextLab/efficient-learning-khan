@@ -13,8 +13,8 @@ class Participant:
     def __init__(self, subid, data=None, raw_data=None, date_collected=None):
         self.subID = subid
         self.data = data
-        _fallback_msg = "Attribute only set for participant created from raw " \
-                       "PsiTurk data"
+        _fallback_msg = ("Attribute only set for participant created from raw "
+                         "PsiTurk data")
         if raw_data is None:
             self.raw_data = _fallback_msg
         else:
@@ -91,7 +91,7 @@ class Participant:
                 # set accuracy for response
                 acc = 1 if ans_let == 'A' else 0
                 data.append([qid, acc, ans_let, set_num, lec])
-        return pd.DataFrame(data, columns=['qID', 'accuracy', 'response', 'qset', 'lecture'])
+        return pd.DataFrame(data, columns=['qID', 'accuracy', 'response', 'quiz', 'lecture'])
 
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
@@ -104,14 +104,14 @@ class Participant:
     def head(self, *args, **kwargs):
         return self.data.head(*args, **kwargs)
 
-    def get_data(self, lecture=None, qset=None):
+    def get_data(self, lecture=None, quiz=None):
         # return (a subset of) the subject's data
         if self.data is None:
             return f"No data for participant: {self.subID}"
 
         lec_keys = {'general': 0, 'forces': 1, 'bos': 2}
-        if isinstance(qset, int):
-            qset = [qset]
+        if isinstance(quiz, int):
+            quiz = [quiz]
         # funnel ints, strings, lists of either into list of ints
         if isinstance(lecture, int):
             lecture = [lecture]
@@ -123,8 +123,8 @@ class Participant:
                     lecture[l] = lec_keys[lecture[l]]
 
         d = self.data
-        if qset is not None:
-            d = d.loc[d['qset'].isin(qset)]
+        if quiz is not None:
+            d = d.loc[d['quiz'].isin(quiz)]
         if lecture is not None:
             d = d.loc[d['lecture'].isin(lecture)]
         return d
