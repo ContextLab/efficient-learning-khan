@@ -8,7 +8,6 @@ import pandas as pd
 from .constants import PARTICIPANTS_DIR, RAW_DIR
 
 
-# TODO: replace qset with quiz throughout, and also in notebooks?
 class Participant:
     def __init__(self, subid, data=None, raw_data=None, date_collected=None):
         self.subID = subid
@@ -163,7 +162,7 @@ class Participant:
 
     def save(self, filepath=None, allow_overwrite=False):
         if filepath is None:
-            filepath = PARTICIPANTS_DIR.joinpath(f'{self.subID}.npy')
+            filepath = PARTICIPANTS_DIR.joinpath(f'{self.subID}.p')
         else:
             filepath = Path(filepath)
         if not allow_overwrite and filepath.is_file():

@@ -1,4 +1,4 @@
-from warnings import warn
+import pickle
 
 import hypertools as hyp
 import numpy as np
@@ -161,7 +161,7 @@ class Experiment:
     def save_participants(self, filepaths=None, allow_overwrite=False):
         to_save = list(self.participants)
         if 'avg_participant' in self.__dict__:
-            to_save = np.append(to_save, self.avg_participant)
+            to_save.append(self.avg_participant)
         if filepaths is None:
             filepaths = [None] * len(to_save)
         elif len(filepaths) != len(to_save):
@@ -178,14 +178,13 @@ class Experiment:
     def _load_participants(self):
         participants = []
         for pid in range(1, N_PARTICIPANTS + 1):
-            path = PARTICIPANTS_DIR.joinpath(f'P{pid}.npy')
-            p = np.load(path, allow_pickle=True).item()
-            participants.append(p)
+            path = PARTICIPANTS_DIR.joinpath(f'P{pid}.p')
+            participants.append(pickle.loads(path.read_bytes()))
         return np.array(participants)
 
     def _load_avg_participant(self):
-        path = PARTICIPANTS_DIR.joinpath('avg.npy')
-        return np.load(path, allow_pickle=True).item()
+        path = PARTICIPANTS_DIR.joinpath('avg.p')
+        return pickle.loads(path.read_bytes())
 
     def _load_transcript(self, lecture):
         path = RAW_DIR.joinpath(f'{lecture}_transcript_timestamped.txt')
