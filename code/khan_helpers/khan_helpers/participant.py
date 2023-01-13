@@ -8,6 +8,7 @@ import pandas as pd
 from .constants import PARTICIPANTS_DIR, RAW_DIR
 
 
+# TODO: replace qset with quiz throughout, and also in notebooks?
 class Participant:
     def __init__(self, subid, data=None, raw_data=None, date_collected=None):
         self.subID = subid

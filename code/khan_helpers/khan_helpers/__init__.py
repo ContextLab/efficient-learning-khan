@@ -1,5 +1,8 @@
 from pathlib import Path
+
+import matplotlib as mpl
 from IPython.display import display, Markdown
+
 from .experiment import Experiment
 from .participant import Participant
 
@@ -25,3 +28,5 @@ try:
     display(message)
 except NameError:
     pass
+
+mpl.rcParams['pdf.fonttype'] = 42
