@@ -6,6 +6,7 @@ from difflib import get_close_matches
 from inspect import getsource
 from typing import Iterator
 
+import matplotlib.pyplot as plt
 import numba
 import numpy as np
 import pandas as pd
@@ -24,6 +25,99 @@ def _ts_to_sec(ts):
     # converts timestamp of elapsed time from "MM:SS" format to scalar
     mins, secs = ts.split(':')
     return timedelta(minutes=int(mins), seconds=float(secs)).total_seconds()
+
+
+def bootstrap_ci_plot(
+        M,
+        ci=95,
+        n_boots=1000,
+        color='#1f77b4',
+        alpha=0.3,
+        return_bounds=False,
+        label=None,
+        ax=None,
+        line_kwargs=None,
+        ribbon_kwargs=None
+):
+    """
+    Plots a timeseries of observations with error ribbons denoting the
+    bootstrap-estimated confidence interval at each timepoint. Looks
+    very similar to `seaborn.lineplot`, but runs about 2-3 times faster.
+
+    Parameters
+    ----------
+    M : numpy.ndarray
+        A (timepoints, observations) array of values for plotting
+    ci : int, optional
+        The size of the confidence interval as a percentage (default: 95).
+    n_boots : int, optional
+        The number of bootstraps to use for computing the confidence
+        interval (default: 1,000). Full-size resamples of observations
+        are constructed (with replacement) independently for each
+        timepoint.
+    color : str or tuple of float, optional
+        Any color specification accepted by Matplotlib. See
+        https://matplotlib.org/3.5.1/tutorials/colors/colors.html for a
+        full list of options. Unless otherwise specified in
+        `ribbon_kwargs`, this also sets the color of the CI ribbon.
+        Defaults to the first color in the currently set palette.
+    alpha : float, optional
+        Alpha value for the CI ribbon (default: 0.3).
+    return_bounds : bool, optional
+        If True (default: False), return arrays containing the lower and
+        upper bounds of the computed confidence interval for each
+        timepoint in addition to the axis object.
+    label : str, optional
+        Label assigned to the line if constructing a legend.
+    ax : matplotlib.axes.Axes, optional
+        The axes on which to draw the plot. Defaults to the current Axes
+        object (via `plt.gca()`).
+    line_kwargs : dict, optional
+        Additional keyword arguments forwarded to
+        `matplotlib.axes.Axes.plot`.
+    ribbon_kwargs : dict, optional
+        Additional keyword arguments forwarded to
+        `matplotlib.axes.Axes.fill_between`.
+
+    Returns
+    -------
+    returns : matplotlib.axes.Axes or list of objects
+        Return value depends on the value passed to `return_bounds`. If
+        False (default), the Axes object alone is returned. If True, a
+        3-tuple is returned, where the first item is the Axes object and
+        the second and third items are 1-D Numpy arrays respectively
+        containing the lower and upper bounds of the confidence interval
+        at each timepoint.
+    """
+    line_kwargs = {} if line_kwargs is None else line_kwargs
+    ribbon_kwargs = {} if ribbon_kwargs is None else ribbon_kwargs
+
+    if color is None:
+        color = plt.rcParams['axes.prop_cycle'].by_key()['color'][0]
+    if 'color' not in ribbon_kwargs:
+        ribbon_kwargs['color'] = color
+    if ax is None:
+        ax = plt.gca()
+
+    timepoints = np.arange(M.shape[0])
+    obs_mean = M.mean(axis=1)
+
+    # (n_tpts, n_obs, n_boots) column indices to subsample each row of M
+    rand_ixs = np.random.randint(0, M.shape[1], size=(*M.shape, n_boots))
+    # (n_tpts, n_boots) subsample means for each timepoint
+    boot_means = np.take_along_axis(M[:, np.newaxis],
+                                    rand_ixs,
+                                    axis=2).mean(axis=1)
+    ci_low = np.percentile(boot_means, (100 - ci) / 2, axis=1)
+    ci_high = np.percentile(boot_means, (100 + ci) / 2, axis=1)
+
+    ax.fill_between(timepoints, ci_low, ci_high, alpha=alpha, **ribbon_kwargs)
+    ax.plot(timepoints, obs_mean, color=color, label=label, **line_kwargs)
+
+    if return_bounds:
+        return ax, ci_low, ci_high
+    else:
+        return ax
 
 
 def corr_mean(rs, axis=None, **kwargs):
