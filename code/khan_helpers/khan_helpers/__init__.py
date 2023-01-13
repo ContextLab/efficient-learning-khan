@@ -19,6 +19,8 @@ message = Markdown(
 
 try:
     # check whether imported from notebook
+    # noinspection PyUnresolvedReferences
+    #   function is defined globally by IPython
     get_ipython()
     display(message)
 except NameError:

@@ -21,12 +21,15 @@ FIG_DIR = Path('/mnt/paper/figs/')
 ########################################
 
 # standard English stop words + some corpus-specific words
-STOP_WORDS = stopwords.words('english') + ['actual', 'actually', 'also', 'billion', 'bit', 'could', 'e',
-                                           'even', 'first', 'four', 'hugh',
-                                           'hundred', 'let', 'like', 'mc',
-                                           'million', 'one', 'really', 'saw',
-                                           'see', 'seen', 'ten', 'thing',
-                                           'things', 'two', 'us', 'would']
+STOP_WORDS = stopwords.words('english') + ['actual', 'actually', 'also', 'bit',
+                                           'could', 'e', 'even', 'first',
+                                           'four', 'let', 'like', 'mc',
+                                           'really', 'saw', 'see', 'seen',
+                                           'thing', 'things', 'two', 'follow',
+                                           'following']
+
+# corpus-specific words to exclude from WordNet-based lemmatization
+DONT_LEMMATIZE = ['stronger', 'strongest', 'strongly', 'especially']
 
 # CountVectorizer parameters
 CV_PARAMS = {
@@ -45,9 +48,10 @@ LDA_PARAMS = {
 UMAP_PARAMS = {
     'n_components': 2,
     'n_neighbors': 15,
-    'min_dist': 0.8,
+    'min_dist': 0.1,
     'spread': 1.0,
     'random_state': 0
+    # TODO: add metric=correlation_exp
 }
 
 

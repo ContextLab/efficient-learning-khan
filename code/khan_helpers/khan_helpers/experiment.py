@@ -93,6 +93,8 @@ class Experiment:
         return self.question_vectors[qids]
 
     def get_timepoint_text(self, lecture, timepoint, buffer=15):
+        # TODO: map backwards through window timepoints rather than
+        #  directly to transcript for more accuracy?
         if lecture == 'forces':
             transcript = self.forces_transcript
         elif lecture == 'bos':
@@ -102,9 +104,9 @@ class Experiment:
 
         # get timestamps and text from transcript
         transcript = transcript.splitlines()
-        timestamps = np.fromiter(map(_ts_to_sec, transcript[::2]), dtype=np.int)
+        timestamps = np.fromiter(map(_ts_to_sec, transcript[::2]), dtype=np.int16)
         text = np.array(transcript[1::2])
-        # compute start and end time from timeoint and buffer
+        # compute start and end time from timepoint and buffer
         onset, offset = timepoint - buffer, timepoint + buffer
         # make sure times are within bounds
         if onset < 0:
@@ -115,70 +117,38 @@ class Experiment:
         text_ixs = np.where((timestamps >= onset) & (timestamps < offset))[0]
         return ' '.join(text[text_ixs])
 
-    def plot(
-            self,
-            lectures=None,
-            questions=None,
-            participants=None,
-            keys=None,
-            **kwargs
-    ):
+    def plot(self, lectures=None, questions=None, **kwargs):
         """
         Wraps hypertools.plot for multi-subject plots and plotting
         lectures/questions. Plotting order is:
             1. lectures (if multiple, plotted in order passed)
             2. questions (plotted in order passed)
-            3. traces (for each participant, in order passed, the trace given by
-                each key, in order passed)
-        :param lectures: str, int, or iterable of strs/ints (optional)
-                Lecture topic trajectories to plot
-        :param questions: str, int, or iterable of str/int (optional)
-                If str or iterable of strs, the category of questions ("forces",
-                "bos", "general") to plot. If int or iterable of ints, the IDs
-                of questions to plot
-        :param participants: str, int or iterable of strs/ints (optional)
-                The participant(s) in `self.participants` whose reconstructed
-                traces (given by keys arg) to plot.  May also be "all" for all
-                participants or "avg" for `self.avg_participant`
-        :param keys: str or iterable of str (required if passing `participants`)
-                The keys of reconstructed traces to plot for each participant
-        :param kwargs: various types
-                Keyword arguments passed to `hypertools.plot`, then forwarded to
-                matplotlib
-        :return: plot: hypertools.DataGeometry
-                A plot of the specified data
+
+        Parameters
+        ----------
+        lectures : str, int, or iterable of str/int, optional
+            Lecture topic trajectories to plot
+        questions : str, int, or iterable of str/int, optional
+            If str or iterable of str, the categor(y/ies) of questions
+            ("forces", "bos", "general") to plot. If int or iterable of
+            int, the ID(s) of questions to plot
+        kwargs : various types
+            Keyword arguments passed to `hypertools.plot`, then
+            forwarded to matplotlib
+
+        Returns
+        -------
+        hypertools.DataGeometry
+            A plot of the specified data
         """
-        if (participants is not None) and (keys is None):
-            raise ValueError("Must pass `keys` if passing `participants`")
-        # funnel args into iterables
         if lectures is None:
             lectures = []
-        elif isinstance(lectures, str):
+        elif isinstance(lectures, (str, int)):
             lectures = [lectures]
         if questions is None:
             questions = []
         elif isinstance(questions, (str, int)):
             questions = [questions]
-        if participants is None:
-            participants = []
-            keys = []
-        elif isinstance(participants, str):
-            if participants == 'all':
-                participants = self.participants
-            elif participants == 'avg':
-                participants = [self.avg_participant]
-            else:
-                participants = [participants]
-        elif isinstance(participants, int):
-            participants = [f'P{participants}']
-        if isinstance(keys, str):
-            keys = [keys]
-        skip_keys = []
-        for key in keys:
-            if not ('forces' in key or 'bos' in key):
-                warn(f"couldn't determine corresponding lecture for trace key "
-                     f'"{key}". Trace will be excluded from plot')
-        keys = [k for k in keys if k not in skip_keys]
 
         to_plot = [self.get_lecture_traj(l) for l in lectures]
         for q in questions:
@@ -186,19 +156,6 @@ class Experiment:
                 to_plot.append(self.get_question_vecs(lectures=q))
             else:
                 to_plot.append(self.get_question_vecs(qids=q))
-
-        for p in participants:
-            if isinstance(p, int):
-                p = f"P{p}"
-            if isinstance(p, str):
-                p = self.participants[self.participants == p][0]
-            for key in keys:
-                lec = 'forces' if 'forces' in key else 'bos'
-                lec_traj = self.get_lecture_traj(lec)
-                trace = p.get_trace(key)
-                # weight each timepoint of lecture by knowledge
-                to_plot.append(lec_traj * trace[:, np.newaxis])
-
         return hyp.plot(to_plot, **kwargs)
 
     def save_participants(self, filepaths=None, allow_overwrite=False):

@@ -1,13 +1,11 @@
+import pickle
 from ast import literal_eval
 from html import unescape
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
-from scipy.spatial.distance import cdist
 
 from .constants import PARTICIPANTS_DIR, RAW_DIR
-from .functions import rbf_sum
 
 
 class Participant:
@@ -44,6 +42,12 @@ class Participant:
                            names=['index', 'video', 'question',
                                   'A', 'B', 'C', 'D'],
                            index_col='index')
+
+    def __repr__(self):
+        output = f'Participant(subid="{self}"'
+        if self.subID != 'avg':
+            output = f'{output}, date_collected="{self.date_collected}"'
+        return f'{output})'
 
     def __str__(self):
         return self.subID
@@ -90,7 +94,7 @@ class Participant:
 
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
-        print(self.__str__())
+        print(repr(self))
         try:
             return self.data.to_html()
         except AttributeError:
@@ -156,181 +160,19 @@ class Participant:
                 f"are: {', '.join(self.traces.keys())}"
             ) from e
 
-    def reconstruct_trace(
-            self,
-            exp,
-            content=None,
-            lecture=None,
-            qset=None,
-            store=None,
-            recon_lec=None
-    ):
-        """
-        Reconstructs a participant's knowledge trace based on a lecture's
-        trajectory, a set of questions' topic vectors, and binary accuracy scores
-        :param exp: Experiment object
-                Used to access lecture trajectory and question topic vectors
-        :param content: numpy.ndarray
-                The content against which to weight knowledge, as derived by
-                question accuracy
-        :param lecture: str, int, or iterable of strs/ints
-                The lecture(s) for which to get questions and scores. If
-                [default] None, get questions and scores for both lectures
-                (& general knowledge)
-        :param qset: int or iterable of ints
-                The question set for which to get questions and scores. If
-                [default] None, get data for all question sets
-        :param store: str or None
-                The key under which the reconstructed trace should be stored in
-                self.traces. If [default] None, don't store the trace
-        :param recon_lec: int or str
-                The lecture trajectory to use in reconstructing the trace (if
-                not passed directly via content). Useful if passing an iterable
-                to lecture in order to get questions related to multiple lectures
-        :return trace: numpy.ndarray
-                The reconstructed trace, describing "knowledge" for each
-                timepoint of given content.
-        """
-        data = self.get_data(qset=qset, lecture=lecture)
-        acc = data['accuracy'].astype(bool)
-        qids = data['qID'].tolist()
-        question_vecs = exp.get_question_vecs(qids=qids)
-        if content is None:
-            if isinstance(lecture, (int, str)):
-                content = exp.get_lecture_traj(lecture)
-            elif hasattr(lecture, '__iter__'):
-                if recon_lec is not None:
-                    content = exp.get_lecture_traj(recon_lec)
-                else:
-                    raise ValueError("Must specify `content` or `recon_lec` if "
-                                     "passing multiple `lecture`s")
-            else:
-                raise ValueError(
-                    "lecture should be one of: str, int, iterable of str/int"
-                )
-        # compute timepoints by questions weights matrix
-        wz = 1 - cdist(content, question_vecs, metric='correlation')
-        # normalize
-        wz -= wz.min()
-        wz /= wz.max()
-        # sum over questions (total possible weights for each timepoint)
-        a = wz.sum(axis=1)
-        # sum weights from correctly answered questions at each timepoint
-        b = wz[:, acc].sum(axis=1)
-        # divide weight from correct answers by total weight
-        trace = b / a
-        # store trace in object
-        if store is not None:
-            self.store_trace(trace=trace, store_key=store)
-        return trace
-
-    def construct_knowledge_map(self,
-                                exp,
-                                lecture,
-                                qset,
-                                map_grid,
-                                rbf_width,
-                                rbf_metric='euclidean',
-                                store=None):
-        assert isinstance(qset, int), "Must select data from a single question set"
-        lec_keys = {1: 'forces', 2: 'bos'}
-
-        # coerce lecture arg type
-        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
-            # should always be in this order for consistency
-            assert len(lecture) == 2 and lecture[0] in ('forces', 1) and lecture[1] in ('bos', 2)
-            lecture = list(lecture)
-        else:
-            if isinstance(lecture, int):
-                lecture = lec_keys[lecture]
-            lecture = [lecture]
-
-        map_vertices = map_grid.reshape(map_grid.shape[0] * map_grid.shape[1], 2)
-        qset_data = self.get_data(lecture=lecture, qset=qset)
-        qids_seen = qset_data['qID']
-        qids_correct = qset_data.loc[qset_data['accuracy'] == 1, 'qID']
-        qembs_seen = exp.question_embeddings[qids_seen - 1]
-        qembs_correct = exp.question_embeddings[qids_correct - 1]
-
-        # raw_map = rbf(obs_coords=qembs_correct,
-        #               pred_coords=map_vertices,
-        #               width=rbf_width,
-        #               metric=rbf_metric).sum(axis=0)
-        # # no correct answers results in raw map of all 0's
-        # if ~np.all(raw_map == 0):
-        #     raw_map /= raw_map.max()
-        # # normalize knowledge map by max possible knowledge given questions seen
-        # weights_map = rbf(obs_coords=qembs_seen,
-        #                   pred_coords=map_vertices,
-        #                   width=rbf_width,
-        #                   metric=rbf_metric).sum(axis=0)
-        # weights_map /= weights_map.max()
-
-        # normalize knowledge map by max possible knowledge given questions seen
-        _weights_map = rbf_sum(obs_coords=qembs_seen,
-                               pred_coords=map_vertices,
-                               width=rbf_width,
-                               metric=rbf_metric)
-        weights_map = _weights_map / _weights_map.max()
-
-        raw_map = rbf_sum(obs_coords=qembs_correct,
-                          pred_coords=map_vertices,
-                          width=rbf_width,
-                          metric=rbf_metric)
-        raw_map /= _weights_map.max()
-
-
-        knowledge_map = (raw_map / weights_map).reshape(map_grid.shape[:2])
-        if store is not None:
-            self.store_kmap(knowledge_map, store_key=store)
-
-        return knowledge_map
-
-    def construct_learning_map(self,
-                               qset_before,
-                               qset_after,
-                               lecture,
-                               rbf_width,
-                               rbf_metric='euclidean',
-                               store=None):
-        assert isinstance(qset_before, int) and isinstance(qset_after, int)
-        if hasattr(lecture, '__iter__') and not isinstance(lecture, str):
-            # should always be in this order for consistency
-            assert len(lecture) == 2 and lecture[0] in ('forces', 1) and lecture[1] in ('bos', 2)
-            kmap_key = 'forces_bos'
-        elif lecture in ('forces', 1):
-            kmap_key = 'forces'
-        elif lecture in ('bos', 2):
-            kmap_key = 'bos'
-        else:
-            raise ValueError('`lecture` may be either "forces" (or 1), "bos" '
-                             '(or 2), or an iterable containing both')
-
-        kmap_before = self.get_kmap(f'{kmap_key}_qset{qset_before}')
-        kmap_after = self.get_kmap(f'{kmap_key}_qset{qset_after}')
-
-
-
-
     def save(self, filepath=None, allow_overwrite=False):
         if filepath is None:
             filepath = PARTICIPANTS_DIR.joinpath(f'{self.subID}.npy')
-        if not allow_overwrite and Path(filepath).is_file():
+        else:
+            filepath = Path(filepath)
+        if not allow_overwrite and filepath.is_file():
             print(f"{self.subID} not saved because {filepath} already exists. "
                   "Set allow_overwrite to True to replace the existing file")
         else:
-            np.save(filepath, self)
+            filepath.write_bytes(pickle.dumps(self))
 
     def store_kmap(self, kmap, store_key):
         self.knowledge_maps[store_key] = kmap
 
     def store_trace(self, trace, store_key):
         self.traces[store_key] = trace
-
-    # def plot(self, keys, **kwargs):
-    #     # wraps hypertools.plot for plotting multiple reconstructed traces
-    #     # (see Experiment.plot for multisubject plotting)
-    #     if isinstance(keys, str):
-    #         keys = [keys]
-    #     traces_toplot = [self.traces[k] for k in keys]
-    #     return hyp.plot(traces_toplot, **kwargs)
