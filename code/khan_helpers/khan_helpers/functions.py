@@ -403,7 +403,7 @@ def parse_windows(transcript, wsize=LECTURE_WSIZE):
     return windows, timestamps
 
 
-def preprocess_text(textlist, correction_counter=None, dont_lemmatize=None):
+def preprocess_text(textlist, correction_counter=None):
     """
     Handles text preprocessing of lecture transcripts and quiz questions
     & answers.  Performs case and whitespace normalization, punctuation
@@ -430,8 +430,6 @@ def preprocess_text(textlist, correction_counter=None, dont_lemmatize=None):
         function). If provided, keys of (word, lemma) will be added or
         incremented for each correction. Useful for spot-checking
         corrections to ensure only proper substitutions were made.
-    dont_lemmatize : iterable of str, optional
-        List of words to exclude from lemmatization.
 
     Returns
     -------
@@ -451,14 +449,13 @@ def preprocess_text(textlist, correction_counter=None, dont_lemmatize=None):
                 "'correction_counter' must be a 'collections.defaultdict' "
                 "with 'default_factory=int'"
             )
-    if dont_lemmatize is None:
-        dont_lemmatize = set()
-    else:
-        dont_lemmatize = set(dont_lemmatize)
 
     # define some constants only used in this function:
     lemmatizer = WordNetLemmatizer()
+    # suffixes to look for when correcting lemmatization errors
     correctable_sfxs = ('s', 'ing', 'ly', 'ed', 'er', 'est')
+    # corpus-specific words to exclude from lemma correction
+    dont_lemmatize = ['stronger', 'strongest', 'strongly', 'especially']
     # POS tag mapping, format: {Treebank tag (1st letter only): Wordnet}
     tagset_mapping = defaultdict(
         lambda: 'n',   # defaults to noun
@@ -596,7 +593,7 @@ def reconstruct_trace(lecture, questions, accuracy):
         question was answered correctly (True/1) or incorrectly
         (False/0).
     """
-    assert len(questions) == len(accuracy), "Accuracy "
+    assert len(questions) == len(accuracy)
     acc = np.array(accuracy, dtype=bool)
 
     # compute timepoints by questions weights matrix

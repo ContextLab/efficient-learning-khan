@@ -28,9 +28,6 @@ STOP_WORDS = stopwords.words('english') + ['actual', 'actually', 'also', 'bit',
                                            'thing', 'things', 'two', 'follow',
                                            'following']
 
-# corpus-specific words to exclude from WordNet-based lemmatization
-DONT_LEMMATIZE = ['stronger', 'strongest', 'strongly', 'especially']
-
 # CountVectorizer parameters
 CV_PARAMS = {
     'strip_accents': 'unicode',
