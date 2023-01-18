@@ -1,6 +1,5 @@
 import pickle
 
-import hypertools as hyp
 import numpy as np
 import pandas as pd
 from PIL.Image import open as open_image
@@ -42,6 +41,9 @@ class Experiment:
 
     forces_windows = LazyLoader('_load_windows', 'forces')
     bos_windows = LazyLoader('_load_windows', 'bos')
+
+    forces_timestamps = LazyLoader('_load_timestamps', 'forces')
+    bos_timestamps = LazyLoader('_load_timestamps', 'bos')
 
     forces_traj = LazyLoader('_load_topic_vectors', 'forces')
     bos_traj = LazyLoader('_load_topic_vectors', 'bos')
@@ -117,47 +119,7 @@ class Experiment:
         text_ixs = np.where((timestamps >= onset) & (timestamps < offset))[0]
         return ' '.join(text[text_ixs])
 
-    def plot(self, lectures=None, questions=None, **kwargs):
-        """
-        Wraps hypertools.plot for multi-subject plots and plotting
-        lectures/questions. Plotting order is:
-            1. lectures (if multiple, plotted in order passed)
-            2. questions (plotted in order passed)
-
-        Parameters
-        ----------
-        lectures : str, int, or iterable of str/int, optional
-            Lecture topic trajectories to plot
-        questions : str, int, or iterable of str/int, optional
-            If str or iterable of str, the categor(y/ies) of questions
-            ("forces", "bos", "general") to plot. If int or iterable of
-            int, the ID(s) of questions to plot
-        kwargs : various types
-            Keyword arguments passed to `hypertools.plot`, then
-            forwarded to matplotlib
-
-        Returns
-        -------
-        hypertools.DataGeometry
-            A plot of the specified data
-        """
-        if lectures is None:
-            lectures = []
-        elif isinstance(lectures, (str, int)):
-            lectures = [lectures]
-        if questions is None:
-            questions = []
-        elif isinstance(questions, (str, int)):
-            questions = [questions]
-
-        to_plot = [self.get_lecture_traj(l) for l in lectures]
-        for q in questions:
-            if isinstance(q, str):
-                to_plot.append(self.get_question_vecs(lectures=q))
-            else:
-                to_plot.append(self.get_question_vecs(qids=q))
-        return hyp.plot(to_plot, **kwargs)
-
+    # TODO: delete if not used
     def save_participants(self, filepaths=None, allow_overwrite=False):
         to_save = list(self.participants)
         if 'avg_participant' in self.__dict__:
@@ -200,6 +162,9 @@ class Experiment:
 
     def _load_windows(self, lecture):
         return np.load(RAW_DIR.joinpath(f'{lecture}_windows.npy'))
+
+    def _load_timestamps(self, lecture):
+        return np.load(RAW_DIR.joinpath(f'{lecture}_timestamps.npy'))
 
     def _load_topic_vectors(self, file_key):
         filename_map = {
