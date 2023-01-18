@@ -24,3 +24,13 @@ exp/google-credentials
 
 # contains access info for SQL db & MTurk listing
 exp/config.txt
+
+# latex extensions
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.blg
+*.bbl
