@@ -29,4 +29,5 @@ try:
 except NameError:
     pass
 
+# embed text in PDFs for illustrator
 mpl.rcParams['pdf.fonttype'] = 42

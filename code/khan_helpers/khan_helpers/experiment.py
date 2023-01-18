@@ -10,8 +10,7 @@ from .constants import (
     MODELS_DIR,
     PARTICIPANTS_DIR,
     RAW_DIR,
-    TRAJS_DIR,
-    N_PARTICIPANTS,
+    TRAJS_DIR
 )
 from .functions import _ts_to_sec
 
@@ -139,7 +138,7 @@ class Experiment:
     ##########################################
     def _load_participants(self):
         participants = []
-        for pid in range(1, N_PARTICIPANTS + 1):
+        for pid in range(1, 51):
             path = PARTICIPANTS_DIR.joinpath(f'P{pid}.p')
             participants.append(pickle.loads(path.read_bytes()))
         return np.array(participants)
