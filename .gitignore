@@ -22,11 +22,11 @@ scratch/
 # raw participant data
 data/db/
 
-# contains private keys for PsiTurk & AWS
+# psiTurk console command history
+exp/.psiturk_history
+
+# contains private keys for psiTurk & AWS
 exp/.psiturkconfig
 
 # contains private keys for Google Cloud API
 exp/google-credentials
-
-# contains access info for SQL db & MTurk listing
-exp/config.txt
