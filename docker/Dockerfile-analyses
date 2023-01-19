@@ -1,49 +1,82 @@
-# Dockerfile for running eficient-Learning-Khan analyses
-# Use Dockerfile-experiment to build an environment for running the experiment
-FROM debian:stretch
-MAINTAINER Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu>
+# Builds an image for reproducing the efficient-learning-khan analyses.
+# Use Dockerfile-experiment to build an environment for running the experiment.
+FROM debian:buster-slim
 
-# install some basic stuff on top of minbase debian
-RUN apt-get update --fix-missing && apt-get install -y eatmydata
-RUN eatmydata apt-get install -y \
-    wget \
-    bzip2 \
-    ca-certificates \
-    libglib2.0-0 \
-    libxext6 \
-    libsm6 \
-    libxrender1 \
-    libfreetype6-dev \
-    swig \
-    mpich \
-    pkg-config \
-    gcc \
-    procps \
-    git \
-    curl \
-    vim
+LABEL maintainer="Paxton Fitzpatrick <Paxton.C.Fitzpatrick.GR@Dartmouth.edu>"
 
-# force "apt-get update" to happen in later intermediates
-RUN rm -rf /var/lib/apt/lists/*
+ARG notebook_ip=0.0.0.0
+ARG notebook_port=8888
+ARG notebook_dir="/mnt/code/notebooks"
+ARG DEBIAN_FRONTEND=noninteractive
 
-# install anaconda (Python=3.7)
-RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/archive/Anaconda3-2019.10-Linux-x86_64.sh -O ~/anaconda.sh && \
-    /bin/bash ~/anaconda.sh -b -p /opt/conda && \
-    rm ~/anaconda.sh
+ENV MAMBA_NO_BANNER=1 \
+    NOTEBOOK_IP="$notebook_ip" \
+    NOTEBOOK_PORT="$notebook_port" \
+    NOTEBOOK_DIR="$notebook_dir" \
+    PATH="/opt/conda/bin:$PATH"
 
-# set conda path
-ENV PATH /opt/conda/bin:$PATH
+COPY code/khan_helpers docker/jupyter_notebook_config.py /khan_helpers/
 
-# enable UTF-8 locale
-ENV LANG C.UTF-8
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# copy in files for build
-COPY docker/docker-pysetup.py docker/analyses-requirements.txt /buildfiles/
-COPY code/khan_helpers/ /buildfiles/khan_helpers/
+RUN apt-get update --fix-missing \
+    && apt-get install -y --no-install-recommends eatmydata \
+    # temporarily install libraries needed to download & build Python
+    # requirements, plus a mini text editor for convenience
+    && eatmydata apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        gcc \
+        git \
+        libc6-dev \
+        vim-tiny \
+    # install mamba (faster C++ conda reimplementation, uses conda-forge)
+    && curl --progress-bar \
+        -L "https://github.com/conda-forge/miniforge/releases/download/4.11.0-0/Mambaforge-4.11.0-0-Linux-$(uname -m).sh" \
+        -o "$HOME/mambaforge.sh" \
+    && /bin/bash "$HOME/mambaforge.sh" -bp /opt/conda \
+    && rm "$HOME/mambaforge.sh" \
+    # install required packages
+    && mamba install -Sy \
+        ipython=8.0.1 \
+        jupyter_contrib_nbextensions=0.5.1 \
+        matplotlib=3.5.1 \
+        notebook=6.4.7 \
+        nltk=3.6.7 \
+        numba=0.53.1 \
+        numpy=1.22.0 \
+        pandas=1.3.5 \
+        seaborn=0.11.2 \
+        scikit-learn=1.0.2 \
+        scipy=1.8.0 \
+        tqdm=4.62.3 \
+        umap-learn=0.5.2 \
+    # install additional requirements not available via conda
+    # wordcloud must be built from source for ARM/Python>3.7
+    && pip install --disable-pip-version-check --no-cache-dir \
+        hypertools==0.8.0 \
+        youtube_transcript_api==0.4.4 \
+        git+https://github.com/amueller/word_cloud.git@35ce9b7 \
+    # set up jupyter notebook config
+    && mkdir "$HOME/.jupyter" \
+    && mv "/khan_helpers/jupyter_notebook_config.py" "$HOME/.jupyter/" \
+    # download NLTK corpora & models
+    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet omw-1.4 \
+    # install khan_helpers package (NLTK data must be downloaded first)
+    && pip install --disable-pip-version-check --no-cache-dir /khan_helpers \
+    # various cleanup to reduce image size
+    && rm -rf /khan_helpers \
+    && mamba clean -afy \
+    && apt-get purge -y --auto-remove  \
+        ca-certificates \
+        curl \
+        gcc \
+        git \
+        libc6-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -f "$HOME/nltk_data/*/*.zip" 
 
-# run setup script
-RUN python -Bu /buildfiles/docker-pysetup.py && rm -rf /buildfiles
+WORKDIR "/mnt"
 
-# expose a port to run jupyter notebooks
-EXPOSE 22364
+CMD ["jupyter", "notebook"]
