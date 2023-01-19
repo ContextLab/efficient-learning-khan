@@ -1,5 +1,8 @@
 from pathlib import Path
+
+import matplotlib as mpl
 from IPython.display import display, Markdown
+
 from .experiment import Experiment
 from .participant import Participant
 
@@ -19,7 +22,12 @@ message = Markdown(
 
 try:
     # check whether imported from notebook
+    # noinspection PyUnresolvedReferences
+    #   function is defined globally by IPython
     get_ipython()
     display(message)
 except NameError:
     pass
+
+# embed text in PDFs for illustrator
+mpl.rcParams['pdf.fonttype'] = 42
