@@ -21,3 +21,11 @@ STOP_WORDS = stopwords.words('english') + ['actual', 'actually', 'also', 'bit',
                                            'really', 'saw', 'see', 'seen',
                                            'thing', 'things', 'two', 'follow',
                                            'following']
+
+FORCES_LECTURE_COLOR = '#3f54a5'
+BOS_LECTURE_COLOR = '#0f8140'
+FORCES_QUESTION_COLOR = '#7d9ed2'
+BOS_QUESTION_COLOR = '#70c167'
+GENERAL_QUESTION_COLOR = '#b96bac'
+
+WORDLE_COLORS = ('#ffde17', '#ec008c', '#f26522')
