@@ -1,53 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
-<style>text{font-family:'Myriad Pro';font-weight:normal;font-style:normal;}</style>
-<text transform="translate(41,363)" font-size="90" style="fill:rgb(64, 86, 166)">overview</text>
-<text transform="translate(12,263)" font-size="86" style="fill:rgb(17, 130, 65)">supermassive</text>
-<text transform="translate(86,167)" font-size="86" style="fill:rgb(17, 130, 65)">general</text>
-<text transform="translate(222,435)" font-size="86" style="fill:rgb(17, 130, 65)">fuel</text>
-<text transform="translate(120,100)" font-size="72" style="fill:rgb(64, 86, 166)">snowball</text>
-<text transform="translate(77,416)" font-size="72" style="fill:rgb(17, 130, 65)">exist</text>
-<text transform="translate(362,194)" font-size="72" style="fill:rgb(17, 130, 65)">ball</text>
-<text transform="translate(176,472)" font-size="72" style="fill:rgb(64, 86, 166)">wow</text>
-<text transform="translate(332,304)" font-size="56" style="fill:rgb(64, 86, 166)">good</text>
-<text transform="translate(123,290)" font-size="54" style="fill:rgb(17, 130, 65)">space</text>
-<text transform="translate(214,196)" font-size="53" style="fill:rgb(64, 86, 166)">moon</text>
-<text transform="translate(351,408)" font-size="53" style="fill:rgb(64, 86, 166)">else</text>
-<text transform="translate(175,52)" font-size="40" style="fill:rgb(64, 86, 166)">galaxy</text>
-<text transform="translate(388,349)" font-size="40" style="fill:rgb(64, 86, 166)">milky</text>
-<text transform="translate(19,310)" font-size="40" style="fill:rgb(15, 129, 64)">need</text>
-<text transform="translate(357,429)" font-size="40" style="fill:rgb(15, 129, 64)">use</text>
-<text transform="translate(26,213)" font-size="39" style="fill:rgb(15, 129, 64)">constituent</text>
-<text transform="translate(354,134)" font-size="30" style="fill:rgb(15, 129, 64)">produce</text>
-<text transform="translate(8,286)" font-size="30" style="fill:rgb(15, 129, 64)">inside</text>
-<text transform="translate(245,498)" font-size="30" style="fill:rgb(15, 129, 64)">due</text>
-<text transform="translate(321,461)" font-size="30" style="fill:rgb(15, 129, 64)">reach</text>
-<text transform="translate(153,314)" font-size="30" style="fill:rgb(15, 129, 64)">massive</text>
-<text transform="translate(253,386)" font-size="30" style="fill:rgb(15, 129, 64)">certain</text>
-<text transform="translate(444,213)" font-size="30" style="fill:rgb(15, 129, 64)">ton</text>
-<text transform="translate(86,188) rotate(-90)" font-size="30" style="fill:rgb(15, 129, 64)">release</text>
-<text transform="translate(238,217)" font-size="29" style="fill:rgb(15, 129, 64)">exhibit</text>
-<text transform="translate(111,458)" font-size="29" style="fill:rgb(15, 129, 64)">basic</text>
-<text transform="translate(224,121)" font-size="28" style="fill:rgb(64, 86, 166)">become</text>
-<text transform="translate(251,282)" font-size="26" style="fill:rgb(15, 129, 64)">isotope</text>
-<text transform="translate(117,120)" font-size="25" style="fill:rgb(64, 86, 166)">molecular</text>
-<text transform="translate(387,374)" font-size="21" style="fill:rgb(15, 129, 64)">instantly</text>
-<text transform="translate(224,25)" font-size="20" style="fill:rgb(15, 129, 64)">normally</text>
-<text transform="translate(399,103)" font-size="20" style="fill:rgb(15, 129, 64)">heat</text>
-<text transform="translate(175,487)" font-size="20" style="fill:rgb(64, 86, 166)">monitor</text>
-<text transform="translate(131,181)" font-size="20" style="fill:rgb(64, 86, 166)">computer</text>
-<text transform="translate(380,153)" font-size="20" style="fill:rgb(15, 129, 64)">affect</text>
-<text transform="translate(77,377)" font-size="20" style="fill:rgb(64, 86, 166)">notice</text>
-<text transform="translate(322,215)" font-size="20" style="fill:rgb(64, 86, 166)">wallet</text>
-<text transform="translate(306,48)" font-size="20" style="fill:rgb(64, 86, 166)">phone</text>
-<text transform="translate(136,60)" font-size="20" style="fill:rgb(64, 86, 166)">cell</text>
-<text transform="translate(114,429)" font-size="18" style="fill:rgb(15, 129, 64)">generate</text>
-<text transform="translate(25,185)" font-size="18" style="fill:rgb(15, 129, 64)">spell</text>
-<text transform="translate(277,304)" font-size="18" style="fill:rgb(15, 129, 64)">trouble</text>
-<text transform="translate(299,485)" font-size="18" style="fill:rgb(64, 86, 166)">glue</text>
-<text transform="translate(385,317)" font-size="18" style="fill:rgb(15, 129, 64)">definition</text>
-<text transform="translate(267,315)" font-size="14" style="fill:rgb(64, 86, 166)">radioactive</text>
-<text transform="translate(454,304)" font-size="14" style="fill:rgb(64, 86, 166)">minus</text>
-<text transform="translate(104,311)" font-size="14" style="fill:rgb(15, 129, 64)">towards</text>
-<text transform="translate(332,274)" font-size="14" style="fill:rgb(64, 86, 166)">intuitive</text>
-<text transform="translate(319,471)" font-size="14" style="fill:rgb(64, 86, 166)">visualize</text>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#4056A6;}
+	.st1{font-family:'MyriadPro-Regular';}
+	.st2{font-size:90px;}
+	.st3{fill:#118241;}
+	.st4{font-size:86px;}
+	.st5{font-size:72px;}
+	.st6{font-size:56px;}
+	.st7{font-size:54px;}
+	.st8{font-size:53px;}
+	.st9{font-size:40px;}
+	.st10{fill:#0F8140;}
+	.st11{font-size:39px;}
+	.st12{font-size:30px;}
+	.st13{font-size:29px;}
+	.st14{font-size:28px;}
+	.st15{font-size:26px;}
+	.st16{font-size:25px;}
+	.st17{font-size:21px;}
+	.st18{font-size:20px;}
+	.st19{font-size:18px;}
+	.st20{font-size:14px;}
+</style>
+<text transform="matrix(1 0 0 1 41 363)" class="st0 st1 st2">overview</text>
+<text transform="matrix(1 0 0 1 12 263)" class="st3 st1 st4">supermassive</text>
+<text transform="matrix(1 0 0 1 86 167)" class="st3 st1 st4">general</text>
+<text transform="matrix(1 0 0 1 222 435)" class="st3 st1 st4">fuel</text>
+<text transform="matrix(1 0 0 1 120 100)" class="st0 st1 st5">snowball</text>
+<text transform="matrix(1 0 0 1 77 416)" class="st3 st1 st5">exist</text>
+<text transform="matrix(1 0 0 1 362 194)" class="st3 st1 st5">ball</text>
+<text transform="matrix(1 0 0 1 176 472)" class="st0 st1 st5">wow</text>
+<text transform="matrix(1 0 0 1 332 304)" class="st0 st1 st6">good</text>
+<text transform="matrix(1 0 0 1 123 290)" class="st3 st1 st7">space</text>
+<text transform="matrix(1 0 0 1 214 196)" class="st0 st1 st8">moon</text>
+<text transform="matrix(1 0 0 1 351 408)" class="st0 st1 st8">else</text>
+<text transform="matrix(1 0 0 1 175 52)" class="st0 st1 st9">galaxy</text>
+<text transform="matrix(1 0 0 1 388 349)" class="st0 st1 st9">milky</text>
+<text transform="matrix(1 0 0 1 19 310)" class="st10 st1 st9">need</text>
+<text transform="matrix(1 0 0 1 357 429)" class="st10 st1 st9">use</text>
+<text transform="matrix(1 0 0 1 26 213)" class="st10 st1 st11">constituent</text>
+<text transform="matrix(1 0 0 1 354 134)" class="st10 st1 st12">produce</text>
+<text transform="matrix(1 0 0 1 8 286)" class="st10 st1 st12">inside</text>
+<text transform="matrix(1 0 0 1 245 498)" class="st10 st1 st12">due</text>
+<text transform="matrix(1 0 0 1 321 461)" class="st10 st1 st12">reach</text>
+<text transform="matrix(1 0 0 1 153 314)" class="st10 st1 st12">massive</text>
+<text transform="matrix(1 0 0 1 253 386)" class="st10 st1 st12">certain</text>
+<text transform="matrix(1 0 0 1 444 213)" class="st10 st1 st12">ton</text>
+<text transform="matrix(6.123234e-17 -1 1 6.123234e-17 86 188)" class="st10 st1 st12">release</text>
+<text transform="matrix(1 0 0 1 238 217)" class="st10 st1 st13">exhibit</text>
+<text transform="matrix(1 0 0 1 111 458)" class="st10 st1 st13">basic</text>
+<text transform="matrix(1 0 0 1 224 121)" class="st0 st1 st14">become</text>
+<text transform="matrix(1 0 0 1 251 282)" class="st10 st1 st15">isotope</text>
+<text transform="matrix(1 0 0 1 117 120)" class="st0 st1 st16">molecular</text>
+<text transform="matrix(1 0 0 1 387 374)" class="st10 st1 st17">instantly</text>
+<text transform="matrix(1 0 0 1 224 25)" class="st10 st1 st18">normally</text>
+<text transform="matrix(1 0 0 1 399 103)" class="st10 st1 st18">heat</text>
+<text transform="matrix(1 0 0 1 175 487)" class="st0 st1 st18">monitor</text>
+<text transform="matrix(1 0 0 1 131 181)" class="st0 st1 st18">computer</text>
+<text transform="matrix(1 0 0 1 380 153)" class="st10 st1 st18">affect</text>
+<text transform="matrix(1 0 0 1 77 377)" class="st0 st1 st18">notice</text>
+<text transform="matrix(1 0 0 1 322 215)" class="st0 st1 st18">wallet</text>
+<text transform="matrix(1 0 0 1 306 48)" class="st0 st1 st18">phone</text>
+<text transform="matrix(1 0 0 1 136 60)" class="st0 st1 st18">cell</text>
+<text transform="matrix(1 0 0 1 114 429)" class="st10 st1 st19">generate</text>
+<text transform="matrix(1 0 0 1 25 185)" class="st10 st1 st19">spell</text>
+<text transform="matrix(1 0 0 1 277 304)" class="st10 st1 st19">trouble</text>
+<text transform="matrix(1 0 0 1 299 485)" class="st0 st1 st19">glue</text>
+<text transform="matrix(1 0 0 1 385 317)" class="st10 st1 st19">definition</text>
+<text transform="matrix(1 0 0 1 267 315)" class="st0 st1 st20">radioactive</text>
+<text transform="matrix(1 0 0 1 454 304)" class="st0 st1 st20">minus</text>
+<text transform="matrix(1 0 0 1 104 311)" class="st10 st1 st20">towards</text>
+<text transform="matrix(1 0 0 1 332 274)" class="st0 st1 st20">intuitive</text>
+<text transform="matrix(1 0 0 1 319 471)" class="st0 st1 st20">visualize</text>
 </svg>
