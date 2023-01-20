@@ -10,7 +10,12 @@
 \usepackage{hyperref}
 \usepackage{lineno}
 
-\newcommand{\demo}{S1}
+% supplemental tables
+\newcommand{\questions}{S1}
+
+% supplemental figures
+
+
 
 \doublespacing
 \linenumbers
@@ -240,11 +245,42 @@ College and careers (7 participants), or other courses not listed in
 our survey (6 participants).
 
 
-% alertness + impairments
-
-% education
-
 \subsection*{Experiment}
+
+We hand-selected two roughly 10-minute course videos from the Khan Academy
+platform: \textit{The Four Fundamental Forces} (an introduction to gravity,
+electromagnetism, the weak nuclear force, and the strong nuclear force;
+duration: 10 minutes and 29 seconds) and \textit{Birth of Stars} (an
+introduction to how stars are formed; duration: 7 minutes and 57 seconds). We
+hand-wrote 30 multiple choice questions: 10 about the conceptual content of
+\textit{The Four Fundamental Forces}, another 10 about the conceptual content
+of \textit{Birth of Stars}, and 10 other questions that tested for general
+conceptual knowledge about basic physics (covering material that was not
+presented in either video). The full set of questions may be found in
+Table~\questions.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=\textwidth]{figs/experiment}
+
+\caption{\textbf{Experimental paradigm.} Participants alternate between
+answering 10-question multiple choice quizzes and watching two Khan academy
+videos. Each quiz contains a mix of 10 questions about each of: lecture 1,
+lecture 2, and general physics knowledge. The specific questions reflected on
+each quiz, and the orders of each quiz's questions, are randomized across
+participants.}
+
+\label{fig:experiment}
+\end{figure}
+
+Participants began the main experiment by answering a battery of 10 randomly
+selected questions (chosen from the full set of 30). Then they watched the
+\textit{The Four Fundamental Forces} video. Next, they answered a second set of
+10 questions (chosen at random from the remaining 20 questions). Fourth,
+participants watch the \textit{Birth of Stars} video, and finally they answered
+the remaining 10 questions. Our experimental procedure is diagramed in
+Figure~\ref{fig:experiment}. We used the experiment to develop and test our
+computational framework for estimating knowledge and learning maps.
 
 \subsection*{Analysis}
 
