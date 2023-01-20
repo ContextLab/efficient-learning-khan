@@ -286,6 +286,31 @@ computational framework for estimating knowledge and learning maps.
 
 \subsubsection*{Constructing text embeddings of multiple videos and questions}
 
+
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=\textwidth]{figs/sliding_windows}
+
+\caption{\textbf{Constructing video content \textit{trajectories}. \textbf{A.
+Building a document pool from sliding windows of text.} We decompose each
+video's transcript into a series of overlapping sliding windows. The set of
+transcript snippets (across all windows) may be treated as a set of
+``documents'' for training a text embedding model. After training a text
+embedding model using the two videos' sliding windows, along with the text from
+each question in our pool (Tab.~\questions), } we construct ``trajectories''
+through text embedding space by joining the embedding coordinates of successive
+sliding windows from each video. \textbf{B. Embedding multiple videos and
+questions.} Applying the same text embedding approach to each video, along with
+the text of each question, results in one trajectory per video and one
+embedding coordinate (dot) per question (blue: Four Fundamental Forces; green:
+Birth of Stars; pink: general physics knowledge).}
+
+\label{fig:sliding-windows}
+\end{figure}
+
+\subsubsection*{Estimating dynamic knowledge traces}
+
 \subsubsection*{Estimating held-out conceptual knowledge}
 
 \subsubsection*{Creating knowledge and learning map visualizations}
