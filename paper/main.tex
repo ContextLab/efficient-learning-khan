@@ -12,6 +12,7 @@
 
 % supplemental tables
 \newcommand{\questions}{S1}
+\newcommand{\topics}{S2}
 
 % supplemental figures
 
@@ -286,7 +287,19 @@ computational framework for estimating knowledge and learning maps.
 
 \subsubsection*{Constructing text embeddings of multiple videos and questions}
 
-
+We extended an approach developed by~\citep{HeusEtal21} to construct text
+embeddings for each moment of each lecture, and of each question in our pool.
+Briefly, our approach uses a topic model~\citep{BleiEtal03}, trained on a set
+of documents, to discover a set of $k$ ``topics'' or ``themes.'' Formally, each
+topic is defined as a set of weights over each word in the model's vocabulary
+(i.e., the union of all unique words, across all documents, excluding ``stop
+words.''). Conceptually, each topic is intended to give larger weights to set
+of words that appear conceptually related or that tend to co-occur in the same
+documents. After fitting a topic model, each document in the training set, or
+any \textit{new} document that contains at least some of the words in the
+model's vocabulary, may be represented as a $k$-dimensional vector describing
+how much the document (most probably) reflects each topic. (Unless, otherwise
+noted, we used $k = 15$ topics.)
 
 \begin{figure}[tp]
 \centering
@@ -304,12 +317,57 @@ sliding windows from each video. \textbf{B. Embedding multiple videos and
 questions.} Applying the same text embedding approach to each video, along with
 the text of each question, results in one trajectory per video and one
 embedding coordinate (dot) per question (blue: Four Fundamental Forces; green:
-Birth of Stars; pink: general physics knowledge).}
+Birth of Stars; pink: general physics knowledge). Here we have projected the
+15-dimensional embeddings into a 3D space using Uniform Manifold Approximation
+and Projection~\citep[UMAP;][]{McInEtal18a}.}
 
 \label{fig:sliding-windows}
 \end{figure}
 
+As illustrated in Figure~\ref{fig:sliding-windows}A, we start by building up a
+corpus of documents using overlapping sliding windows that span each video's
+transcript. Khan Academy videos are hosted on the YouTube platform, and all
+YouTube videos are run through Google's speech-to-text API~\citep{HalpEtal16}
+to derive a timestamped transcript of any detected speech in the video. The
+resulting transcripts contain one timestamped row per line, and each line
+generally corresponds to a few seconds of spoken content from the video. We
+defined a sliding window length of (up to) $w = 30$ transcript lines, and we
+assigned each window a timestamp according to the midpoint between its first
+and last lines' timestamps. These sliding windows ramped up and down in length
+at the very beginning and end of the transcript, respectively. In other words,
+the first sliding window covered only the first line from the transcript; the
+second sliding window covered the first two lines; and so on. This ensured that
+each line of the transcript appeared in the same number ($w$) of sliding
+windows. We treated the text from each sliding window as a single ``document,''
+and we combined these documents across the two videos' windows to create a single
+training corpus for the topic model.  The top words from each of the 15 discovered
+topics may be found in Table~\topics.
+
+After fitting a topic model to each videos' transcripts, we could use the
+trained model to transform arbitrary (potentially new) documents into
+$k$-dimensional topic vectors. A convenient property of these topic vectors is
+that documents that reflect similar blends of topics (i.e., documents that
+reflect similar themes, according to the model) will yield similar (in terms of
+Euclidean distance, correlation, etc.) topic vectors. In general, the
+similarity between different documents' topic vectors may be used to
+characterize the similarity in content between the documents.
+
+We transformed each sliding window's text into a topic vector, and then used
+linear interpolation (independently for each topic dimension) to resample the
+resulting timeseries to once per second. This yielded a single topic vector for
+each second of each video. We also used the fitted model to obtain topic
+vectors for each question in our pool (Tab.~\questions). Taken together, we
+obtained a \textit{trajectory} for each video, describing its path through
+topic space, and a single coordinate for each question
+(Fig.~\ref{fig:sliding-windows}B). Embedding both videos and all of the
+questions using a common model enables us to compare the content from different
+moments of videos, compare the content across videos, and estimate potential
+associations between specific questions and specific moments of video.
+
+
 \subsubsection*{Estimating dynamic knowledge traces}
+
+
 
 \subsubsection*{Estimating held-out conceptual knowledge}
 
