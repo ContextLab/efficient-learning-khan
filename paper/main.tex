@@ -140,12 +140,30 @@ real-world conceptual learning.
 
 \section*{Results}
 
-% \begin{figure}[tp]
-% \centering
-% \includegraphics[width=0.8\textwidth]{figs/content-mastery}
-% \caption{\textbf{Caption.} Placeholder text.}
-% \label{fig:demo}
-% \end{figure}
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figs/content-mastery}
+    
+    \caption{\textbf{Estimating moment-by-moment knowledge acquisition.}
+    \textbf{A. Moment-by-moment knowledge about the \textit{Four Fundamental
+    Forces}}. Each trace displays the weighted proportion of correctly answered
+    questions about the content reflected in each moment of the lecture (see
+    \textit{Estimating dynamic knowledge traces}), using responses from one
+    quiz (color). The traces are averaged across participants. \textbf{B.
+    Average estimated knowledge about the \textbf{Four Fundamental Forces}.}
+    Each bar displays the across-timepoint average knowledge, estimated using
+    the responses to one quiz's questions. \textbf{C. Moment-by-moment
+    knowledge about the \textit{Birth of Stars}}. The panel is in the same
+    format as Panel A, but here the knowledge estimates are for the
+    moment-by-moment content of the \textit{Birth of Stars} lecture. \textbf{D.
+    Average estimated knowledge about the \textit{Birth of Stars}.} The panel
+    is in the same format as Panel B, but here the knowledge estimates are for
+    the content of the \textit{Birth of Stars} lecture. All panels: error
+    ribbons and error bars denote 95\% confidence intervals, estimated across
+    participants.}
+    
+    \label{fig:knowledge-timeseries}
+    \end{figure}
 
 \section*{Discussion}
 
@@ -336,7 +354,7 @@ assigned each window a timestamp according to the midpoint between its first
 and last lines' timestamps. These sliding windows ramped up and down in length
 at the very beginning and end of the transcript, respectively. In other words,
 the first sliding window covered only the first line from the transcript; the
-second sliding window covered the first two lines; and so on. This ensured that
+second sliding window covered the first two lines; and so on. This insured that
 each line of the transcript appeared in the same number ($w$) of sliding
 windows. We treated the text from each sliding window as a single ``document,''
 and we combined these documents across the two videos' windows to create a single
@@ -368,11 +386,44 @@ associations between specific questions and specific moments of video.
 \subsubsection*{Estimating dynamic knowledge traces}
 
 
+We used the following equation to estimate each participant's knowledge about
+timepoint $t$ of a given lecture, $\hat{k}(t)$:
+\begin{equation} 
+    \hat{k}(t) = \frac{\sum_{i \in \mathrm{correct}}\mathrm{ncorr}(t, i)}{\sum_{j = 1}^N \mathrm{ncorr}(t, j)},
+    \label{eqn:prop}
+\end{equation}
+where 
+
+\begin{equation} 
+    \mathrm{ncorr}(x, y) = \frac{\mathrm{corr}(x, y) - \mathrm{mincorr}}{\mathrm{maxcorr} - \mathrm{mincorr}},
+\end{equation} 
+and where $\mathrm{mincorr}$ and $\mathrm{maxcorr}$ are the minimum and maximum
+correlations between any lecture timepoint and question, taken over all
+timepoints and questions across both lectures and all three question sets.
+
+Intuitively, $\mathrm{ncorr}(x, y)$ is the correlation between two topic
+vectors (e.g., the topic vector from one timepoint in a lecture, $x$, and the
+topic vector for one question, $y$), normalized by the minimum and maximum
+correlations (across all timepoints and questions) to range between 0 and 1,
+inclusive. Equation~\ref{eqn:prop} then computes the weighted average
+proportion of correctly answered questions about the content presented at
+timepoint $t$, where the weights are given by the normalized correlations
+between timepoint $t$'s topic vector and the topic vectors for each question.
+The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
+correlations) insures that every question (except the least-relevant question)
+contributes some non-zero amount to the knowledge estimate.
 
 \subsubsection*{Estimating held-out conceptual knowledge}
 
 \subsubsection*{Creating knowledge and learning map visualizations}
 
+\begin{equation}
+    \hat{k}(x) = \frac{\sum_{i \in \mathrm{correct}} \mathrm{RBF}(x, q_i, \lambda)}{\sum_{j = 1}^N \mathrm{RBF}(x, q_j, \lambda)},
+\end{equation}
+where
+\begin{equation}
+    \mathrm{RBF}(x, \mu, \lambda) = \exp\left\{-\frac{||x - \mu||^2}{\lambda}\right\}.
+\end{equation}
 
 
 \bibliographystyle{apa}
