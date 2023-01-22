@@ -15,8 +15,11 @@
 \newcommand{\topics}{S2}
 
 % supplemental figures
-
-
+\newcommand{\individualKnowledgeMapsA}{S1}
+\newcommand{\individualKnowledgeMapsB}{S2}
+\newcommand{\individualKnowledgeMapsC}{S3}
+\newcommand{\individualLearningMapsA}{S4}
+\newcommand{\individualLearningMapsB}{S5}
 
 \doublespacing
 \linenumbers
@@ -163,6 +166,38 @@ real-world conceptual learning.
     participants.}
     
     \label{fig:knowledge-timeseries}
+    \end{figure}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figs/knowledge_and_learning_maps}
+    
+    \caption{\textbf{Mapping out the geometry of knowledge and learning.}
+    \textbf{A. Average ``knowledge maps'' estimated using each quiz.} Each map
+    displays a 2D projection of the estimated knowledge about the content
+    reflected by \textit{all} regions of topic space (see \textit{Creating
+    knowledge and learning map visualizations}). The topic trajectories of each
+    lecture and the coordinates of each question are indicated by dotted lines
+    and dots. Each map reflects an average across all participants. For
+    individual participants' maps, see
+    Figures~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,
+    and~\individualKnowledgeMapsC. \textbf{B. Average ``learning maps''
+    estiamted between each successive pair of quizzes.} The learning maps are
+    in the same general format as the knowledge maps in Panel A, but each
+    coordinate in the learning maps indicates the \textit{difference} between
+    the corresponding coordinates in the indicated \textit{pair} of knowledge
+    maps-- i.e., how much the estimated knowledge ``changed'' across the two
+    quizzes. Each map reflects an average across all participants. For
+    individual participants' maps, see
+    Figures~\individualLearningMapsA~and~\individualLearningMapsB. \textbf{C.
+    Word clouds for sampled points in topic space.} Each word cloud displays
+    the relative weights of each word reflected by the blend of topics
+    represented at the locations of the stars in the maps. The words' colors
+    indicate how much each word is weighted on average across all timepoints'
+    topic vectors in the \textit{Four Fundamental Forces} (blue) and
+    \textit{Birth of Stars} (green) videos, respectively.}
+    
+    \label{fig:knowledge-maps}
     \end{figure}
 
 \section*{Discussion}
@@ -385,7 +420,6 @@ associations between specific questions and specific moments of video.
 
 \subsubsection*{Estimating dynamic knowledge traces}
 
-
 We used the following equation to estimate each participant's knowledge about
 timepoint $t$ of a given lecture, $\hat{k}(t)$:
 \begin{equation} 
@@ -417,13 +451,44 @@ contributes some non-zero amount to the knowledge estimate.
 
 \subsubsection*{Creating knowledge and learning map visualizations}
 
-\begin{equation}
-    \hat{k}(x) = \frac{\sum_{i \in \mathrm{correct}} \mathrm{RBF}(x, q_i, \lambda)}{\sum_{j = 1}^N \mathrm{RBF}(x, q_j, \lambda)},
-\end{equation}
-where
+An important feature of our approach is that, given a trained text embedding
+model and participants' quiz performance on each question, we can estimate
+their knowledge about \textit{any} content expressable by the embedding model--
+not solely the content explicitly probed by the quiz questions. To visualize
+these estimates
+(Figs.~\ref{fig:knowledge-maps},~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
+and~\individualLearningMapsB), we used UMAP~\citep{McInEtal18a} to define a 2D
+projection of the text embedding space. Sampling the original 100-dimensional
+space at high resolution to obtain an adequate set of topic vectors spanning
+the embedding space would be computationally intractable. However, sampling a
+2D grid is much more feasible. We defined a rectangle enclosing the 2D
+projections of the lectures' and quizzes' embeddings, and we sampled points
+from a regular $100 \times 100$ grid of coordinates that evenly tiled the
+enclosing rectangle. We sought to estimate participants' knoweldge (and
+learning-- i.e., changes in knowledge) at each of the resulting 10000
+coordinates.
+
+To generate our estimates, we placed a set of 39 radial basis functions (RBFs)
+throughout the embedding space, centered on the 2D projections for each
+question (i.e., we included one RBF for each question). At coordinate $x$, the
+value of an RBF centered on a question's coordinate $\mu$, is given by:
 \begin{equation}
     \mathrm{RBF}(x, \mu, \lambda) = \exp\left\{-\frac{||x - \mu||^2}{\lambda}\right\}.
+    \label{eqn:rbf}
 \end{equation}
+The $\lambda$ term in the RBF equation controls the ``smoothness'' of the
+function, where larger values of $\lambda$ result in smoother maps. In our
+implementation we used $\lambda = 50$.  Next, we estimated the ``knowledge''
+at each coordinate, $x$, using:
+\begin{equation}
+    \hat{k}(x) = \frac{\sum_{i \in \mathrm{correct}} \mathrm{RBF}(x, q_i, \lambda)}{\sum_{j = 1}^N \mathrm{RBF}(x, q_j, \lambda)}.
+    \label{eqn:rbf-knowledge}
+\end{equation}
+Intuitively, Equation~\ref{eqn:rbf-knowledge} computes the weighted proportion of
+correctly answered questions, where the weights are given by how nearby (in the 2D space)
+each question is to the $x$.  We also defined \textit{learning maps} as the coordinate-by-coordinate
+differences between any pair of knowledge maps.  Intuitively, learning maps reflect the \textit{change}
+in knowledge across two maps.
 
 
 \bibliographystyle{apa}
