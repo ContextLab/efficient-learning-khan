@@ -58,18 +58,32 @@ how their knowledge changes over time as they learn.
 
 \section*{Introduction}
 
-How do we acquire conceptual knowledge? Memorizing course lectures or textbook
-chapters by rote can lead to the superficial \textit{appearance} of
-understanding the underlying content, but achieving true conceptual
-understanding seems to require something deeper and richer. Does conceptual
-understanding entail connecting newly acquired information to the scaffolding
-of one's existing knowledge or experience~\citep{BlayEtal06,CaraMaho03,
-ConsEtal16, DeacEtal04, SimoEtal04}? Or weaving a lecture's atomic
-elements (e.g., its component words) into a structured network that describes
-how those individual elements are related? Conceptual understanding could also
-involve building a mental model that transcends the meanings of those
-individual atomic elements by reflecting the deeper meaning underlying the
-gestalt whole~\citep{Kint70, Macl05, ScotEtal07}.
+Suppose that a teacher had access to a complete ``map'' of everything a student
+knew. Defining what such a map might even look like, let alone how it might be
+constructed or filled in, is itself a non-trivial problem. But if a teacher
+\textit{were} to gain access to such a map, how might that change their ability
+to teach the student? Perhaps they might start by checking how well the student
+knew the to-be-learned information already, or how much they knew about related
+concepts. For some students, they could potentially optimize their teaching
+efforts to maximize efficiency by focusing primarily on not-yet-known content.
+For other students (or other content areas), it might be more effective to
+optimize for direct connections between already-known content and any new
+material. Observing how the student's knowledge was changing over time, in
+response to their training, could also help to guide the teacher.
+
+Designing and building procedures and tools for mapping out knowledge touches
+on deep questions about what it means to learn. For example, how do we acquire
+conceptual knowledge? Memorizing course lectures or textbook chapters by rote
+can lead to the superficial \textit{appearance} of understanding the underlying
+content, but achieving true conceptual understanding seems to require something
+deeper and richer. Does conceptual understanding entail connecting newly
+acquired information to the scaffolding of one's existing knowledge or
+experience~\citep{BlayEtal06,CaraMaho03, ConsEtal16, DeacEtal04, SimoEtal04}?
+Or weaving a lecture's atomic elements (e.g., its component words) into a
+structured network that describes how those individual elements are related?
+Conceptual understanding could also involve building a mental model that
+transcends the meanings of those individual atomic elements by reflecting the
+deeper meaning underlying the gestalt whole~\citep{Kint70, Macl05, ScotEtal07}.
 
 The difference between ``understanding'' and ``memorizing,'' as framed by the
 researchers in education, cognitive psychology, and cognitive
@@ -95,12 +109,12 @@ conceptually related documents. A model that succeeds at capturing an analog of
 related documents, \textit{even when the words contained in those documents
 have very little overlap}.
 
-What form might the representation of the sum total of a person's knowledge
-take? First, we might require a means of systematically describing or
-representing the nearly infinite set of possible things a person could know.
-Second, we might want to account for potential associations between different
-concepts. For example, the concepts of ``fish'' and ``water'' might be
-associated in the sense that fish live in water. Third, knowledge may have a
+Given these insights, what form might the representation of the sum total of a
+person's knowledge take? First, we might require a means of systematically
+describing or representing the nearly infinite set of possible things a person
+could know. Second, we might want to account for potential associations between
+different concepts. For example, the concepts of ``fish'' and ``water'' might
+be associated in the sense that fish live in water. Third, knowledge may have a
 critical dependency structure, such that knowing about a particular concept
 might require first knowing about a set of other concepts. For example,
 understanding the concept of a fish swimming in water first requires
@@ -117,9 +131,9 @@ extent to which each concept is currently known and (b) a \textit{learning map}
 that describes the extent to which each concept could be learned. Each location
 on these maps represents a single concept, and the geometries are defined such
 that related concepts are located nearby in space. We use this framework to
-analyzing and interpreting behavioral data collected from an experiment that
-has participants watch and answer conceptual questions about a series of
-recorded course lectures.
+analyze and interpret behavioral data collected from an experiment that has
+participants watch and answer conceptual questions about a series of recorded
+course lectures.
 
 Our primary research goal is to advance our understanding of what it means to
 acquire deep real-world conceptual knowledge. Traditional laboratory approaches
@@ -139,9 +153,136 @@ about \textit{how} people learn are inspired by experimental paradigms and
 models that have only peripheral relevance to the kinds of learning that
 students and teachers actually seek. To help bridge this gap, our study uses
 course materials from real online courses to inform, fit, and test models of
-real-world conceptual learning.
+real-world conceptual learning. We also provide a ``proof of concept''
+demonstration of how our models might be used to construct ``maps'' of what
+students know, and how their knowledge changes with training. In addition to
+helping to visualize knowledge (and changes in knowledge), we hope that such
+maps might lead to real-world tools for improving how we educate.
 
 \section*{Results}
+
+At its core, our main modeling approach is based around a simple assumption
+that we sought to test empirically: all else being equal, knowledge about a
+given concept is predictive of knowledge about similar or related concepts.
+From a geometric perspective, this assumption implies that knowledge is
+fundamentally ``smooth.'' In other words, as one moves through a space
+representing someone's knowledge (where similar concepts occupy nearby
+coordinates), their ``level of knowledge'' should change relatively gradually
+throughout that space. To begin to test this smoothness assumption, we sought
+to track our participants' knowledge and how it changed over time in response
+to training.
+
+We asked our participants to answer questions from several multiple choice
+quizzes and watch two lecture videos from the \textit{Khan Academy} platform
+(Fig.~\ref{fig:experiment}). One lecture video, entitled \textit{Four
+Fundamental Forces}, was about the four fundamental forces in physics: gravity,
+strong and weak interactions, and electromagnetism. The second lecture video,
+entitled \textit{Birth of Stars}, provides an overview of our current
+understanding of how stars form. We selected both lessons to be (a) accessible
+to a broad audience, e.g., by minimizing prerequisite knowledge, (b) largely
+independent of each other, e.g., so that the two videos focused on different
+material and did not depend on each other, and (c) related to each other, e.g.,
+so that both videos contained at least \textit{some} similar or overlapping
+content. The two videos we selected are introductory, about different primary
+concepts, but also touch on ``physics'' and ``astronomy'' themes. We also wrote
+a set of multiple choice quiz questions that would enable us to test
+participants' knoweldge about each individual video and about related content
+not specifically presented in either video (Tab.~\questions). Participants
+answered questions randomly drawn from each content area (lecture 1, lecture 2,
+and general physics knowledge) across each of three quizzes. Quiz 1 was
+intended to assessed participants' knowledge before training; quiz 2 assessed
+knowledge after watching the Four Fundamental Forces video (i.e., lecture 1);
+and quiz 3 assessed knowledge after watching the Birth of Stars video (i.e.,
+lecture 2).
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figs/experiment}
+    
+    \caption{\textbf{Experimental paradigm.} Participants alternate between
+    answering 13-question multiple choice quizzes and watching two Khan academy
+    videos. Each quiz contains a mix of 5 questions about lecture 1, 5
+    questions about lecture 2, and 3 general physics knowledge questions. The
+    specific questions reflected on each quiz, and the orders of each quiz's
+    questions, were randomized across participants.}
+    
+    \label{fig:experiment}
+\end{figure}
+
+We trained a text embedding model using sliding windows of text from the two
+videos' transcripts (see \textit{Constructing text embeddings of multiple
+videos and questions}). We also used the same model (i.e., trained on the
+videos' transcripts) to embed the text of each question in our pool. This
+yielded, for each second of each video, and for each question, a single topic
+vector-- i.e., a coordinate in a text embedding space
+(Fig.~\ref{fig:sliding-windows}). Intuitively, each dimension of the embedding
+space corresponds to a ``theme'' or ``topic'' reflected in some part(s) of the
+videos (Tab.~\topics), and the coordinates in embedding space denote the blend
+of themes reflected by a particular excerpt of text (e.g., from part of a
+video's transcript, from a question, etc.).
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figs/lecture-question-similarity}
+    
+    \caption{\textbf{Which parts of each lecture are captured by each
+    question?} Each panel displays timeseries plots showing how each question's
+    topic vector correlates with each video timepoint's topic vector. The left
+    panel displays these correlations for the \textit{Four Fundamental Forces}
+    lecture and associated questions, and the right panels displays these
+    correlations for the \textit{Birth of Stars} lecture and associated
+    questions. The colors denote question identities. The diamonds in each
+    panel denote the moment of peak correlation between the indicated
+    questions, in the indicated lectures. The associated questions' text, and
+    snippets of the lectures' transcripts in the best-matching sliding windows,
+    are displayed at the bottom of the figure.}
+    
+    \label{fig:question-correlations}
+\end{figure}
+
+Although a single lecture may be organized a single broad theme at a coarse
+scale, at a finer scale each moment of a lecture typically covers a narrower
+range of content. We wondered whether a text embedding model trained on the
+lectures' transcripts might capture some of this finer scale content. For
+example, if a particular question asks about the content from one small part of
+a lecture, we wondered whether our text embedding model could be used to
+automatically identify the ``matching'' moment(s) in the lecture. When we
+correlated each question's topic vector with the topic vectors for each second
+of the lectures, we found some evidence that each question is temporally
+specific (Fig.~\ref{fig:question-correlations}). In particular, most questions'
+topic vectors were maximally correlated with a well-defined range of timepoints
+from their corresponding lectures, and the correlations fell off sharply
+outside of that range. We also examined the best-matching intervals for each
+question qualitatively by comparing the text of the question to the text of the
+most-correlated parts of the lectures. Despite that the questions were excluded
+from the text embedding model's training set, in general we found a close
+correspondence between the conceptual content that each question covered and
+the content covered by the best-matching moments of the lectures. Two
+representative examples are shown at the bottom of
+Fig.~\ref{fig:question-correlations}.
+
+The ability to quantify how much each question is ``asking about'' each moment
+of the lectures could enable high-resolution insights into participants'
+knowledge. Traditional approaches to estimating how much a student ``knows''
+about the content of a given lecture entail computing the proportion of
+correctly answered questions. But if two students receive identical scores on
+an exam, might our modeling framework help us to gain more naunced insights
+into the \textit{specific} content that each student has mastered (or failed to
+master)? For example, a student who misses three questions that were all about
+the same concept (e.g., concept $A$) will have gotten the same
+\textit{proportion} of questions correct as another student who missed three
+questions about three \textit{different} concepts (e.g., $A$, $B$, and $C$).
+But if we wanted to fill in the ``gaps'' in the two students' understandings,
+we might do well to focus on concept $A$ for the first student, but add in
+concepts $B$ and $C$ for the second student.
+
+\textbf{JRM STOPPED HERE...}
+
+
+
+As a sanity check, we anticipated that our knowledge estimates
+should show a content-specific ``boost'' in participants' knowledge after
+watching each video.
 
 \begin{figure}[tp]
     \centering
@@ -166,7 +307,7 @@ real-world conceptual learning.
     participants.}
     
     \label{fig:knowledge-timeseries}
-    \end{figure}
+\end{figure}
 
 \begin{figure}[tp]
     \centering
@@ -313,19 +454,7 @@ conceptual knowledge about basic physics (covering material that was not
 presented in either video). The full set of questions may be found in
 Table~\questions.
 
-\begin{figure}[tp]
-\centering
-\includegraphics[width=\textwidth]{figs/experiment}
 
-\caption{\textbf{Experimental paradigm.} Participants alternate between
-answering 13-question multiple choice quizzes and watching two Khan academy
-videos. Each quiz contains a mix of 5 questions about lecture 1, 5 questions about lecture 2,
-and 3 general physics knowledge questions. The specific questions reflected on
-each quiz, and the orders of each quiz's questions, were randomized across
-participants.}
-
-\label{fig:experiment}
-\end{figure}
 
 Participants began the main experiment by answering a battery of 13 randomly
 selected questions (chosen from the full set of 39). Then they watched the
