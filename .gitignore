@@ -23,7 +23,7 @@ scratch/
 data/db/
 
 # license-restricted font file
-Data/Myriad\ Pro\ Regular.ttf
+data/Myriad\ Pro\ Regular.ttf
 
 # psiTurk console command history
 exp/.psiturk_history
@@ -33,9 +33,6 @@ exp/.psiturkconfig
 
 # contains private keys for Google Cloud API
 exp/google-credentials
-
-# contains access info for SQL db & MTurk listing
-exp/config.txt
 
 # latex extensions
 *.aux
