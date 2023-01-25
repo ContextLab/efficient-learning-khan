@@ -9,7 +9,7 @@ PARTICIPANTS_DIR = DATA_DIR.joinpath('participants')
 TRAJS_DIR = DATA_DIR.joinpath('trajectories')
 EMBS_DIR = DATA_DIR.joinpath('embeddings')
 MODELS_DIR = DATA_DIR.joinpath('models')
-FIG_DIR = Path('/mnt/paper/figs/')
+FIG_DIR = Path('/mnt/paper/figs/source/')
 
 # number of timestamped lines in lecture transcript sliding windows
 LECTURE_WSIZE = 30
