@@ -341,6 +341,15 @@ watching each video.
     \label{fig:knowledge-maps}
     \end{figure}
 
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figs/held-out-question-analyses}
+    
+    \caption{\textbf{Estimating knowledge for held-out questions.}}
+    
+    \label{fig:predictions}
+\end{figure}
+
 \section*{Discussion}
 
 \section*{Materials and methods}
@@ -576,8 +585,6 @@ The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
 correlations) insures that every question (except the least-relevant question)
 contributes some non-zero amount to the knowledge estimate.
 
-\subsubsection*{Estimating held-out conceptual knowledge}
-
 \subsubsection*{Creating knowledge and learning map visualizations}
 
 An important feature of our approach is that, given a trained text embedding
@@ -618,6 +625,65 @@ correctly answered questions, where the weights are given by how nearby (in the 
 each question is to the $x$.  We also defined \textit{learning maps} as the coordinate-by-coordinate
 differences between any pair of knowledge maps.  Intuitively, learning maps reflect the \textit{change}
 in knowledge across two maps.
+
+
+\subsubsection*{Testing the ``smoothness'' of knowledge}
+
+A core assumption of our modeling framework is that knowledge is ``smooth''
+such that knowing about one concept implies knowledge about other related
+concepts (i.e., concepts that are nearby in text embedding space). Conversely,
+\textit{not} knowing about a given concept implies \textit{less} knowledge
+about other related concepts. We characterized how estimated knowledge (and
+lack of knowledge) fell off with distance in the text embedding space
+(Fig.~\ref{fig:predictions}, top panels).
+
+For each participant, for each quiz, for each of $c$ correctly answered
+question $q$ in turn, we sorted all of the other correctly answered questions
+in descending order of their topic vectors' correlations with $q$'s topic
+vector. We repeated this for all correctly answered questions to obtain a $c
+\times (c - 1)$ matrix of correlations, where the rows corresponded to held-out
+questions and the columns corresponded to the most similar (leftmost column),
+second most similar (second column), other correctly answered questions. Note
+that each correlation for each pair of questions ($a$ and $b$) appears exactly
+twice in this matrix: once when $a$ is the held-out question, and once when $b$
+is the held-out question. We applied the Fisher $z$-transformation to these
+correlations, averaged down the rows, and then applied the inverse Fisher
+$z$-transformation to obtain a $1 \times (c - 1)$ array of average correlations
+for the participant. We repeated this process across all $n$ participants,
+yielding an $n \times 14$ matrix (15 is the maximum number of questions that
+could have been answered correctly on any single 15-question quiz, so at most
+14 correctly answered questions could be compared to a held-out correctly
+answered question). Note that some of the entries, for some of the
+participants, were empty (e.g., if a given participant answered at least one
+question incorrectly, they would never have 14 other correctly answered
+questions to compare to a held-out correctly answered question). If a
+participant answered \textit{no} questions correctly on a given quiz, their
+entire row would be empty.
+
+The blue ribbon plots in the top panels of Figure~\ref{fig:predictions} display
+the mean (across participants) and bootstrap-estimated 95\% confidence
+intervals of these matrices (i.e., one per quiz, each plotted in a separate
+panel). We repeated the same process for \textit{incorrectly} answered
+questions (i.e., comparing held-out incorrectly answered questions to other
+incorrectly answered questions from the same quiz, for each participant in
+turn) to obtain the red ribbon plots in the top panels of
+Figure~\ref{fig:predictions}.
+
+\subsubsection*{Estimating held-out conceptual knowledge}
+
+If we are able to accurately estimate a participant's knowledge about the
+content tested by a given question, the estimated knowledge should have some
+predictive information about whether the participant is likely ot answer the
+question correctly or incorrectly. For each question in turn, for each
+participant, we used Equation~\ref{eqn:prop} to estimate (using all
+\textit{other} questions from the same quiz, from the same participant) the
+participant's knowledge at the held-out question's embedding coordinate. For
+each quiz, we aggregated these estimates into two distributions: one for the
+estimated knowledge at the coordinates of each \textit{correctly} answered
+question, and anotehr for the estimated knowledge at the coordinates of each
+\textit{incorrectly} answered question (Fig.~\ref{fig:predictions}, bottom
+panels). We then used independent samples $t$-tests to compare the means of
+these distributions of estimated knowledge.
 
 
 \bibliographystyle{apa}
