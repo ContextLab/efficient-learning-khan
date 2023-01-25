@@ -14,13 +14,14 @@ import numpy as np
 import pandas as pd
 from IPython.display import display, HTML
 from IPython.core.oinspect import pylight
+from matplotlib import font_manager
 from nltk import pos_tag
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 from scipy.interpolate import interp1d
 from scipy.spatial.distance import cdist
 
-from .constants import LECTURE_WSIZE, STOP_WORDS
+from .constants import FONTS_DIR, LECTURE_WSIZE, STOP_WORDS
 
 
 def _ts_to_sec(ts):
@@ -637,6 +638,23 @@ def reconstruct_trace(lecture, questions, accuracy):
     b = wz[:, acc].sum(axis=1)
     # divide weight from correct answers by total possible weight
     return b / a
+
+
+def set_figure_style():
+    # embed text in PDFs for illustrator
+    plt.rcParams['pdf.fonttype'] = 42
+
+    # use Myriad Pro font, if available
+    if FONTS_DIR.is_dir() and next(FONTS_DIR.iterdir(), None) is not None:
+        myriad_pro_fonts = [f for f in font_manager.fontManager.ttflist
+                            if f.name == 'Myriad Pro']
+        if len(myriad_pro_fonts) == 0:
+            for font_file in font_manager.findSystemFonts(fontpaths=[FONTS_DIR]):
+                font_manager.fontManager.addfont(font_file)
+
+        plt.rcParams['font.family'] = 'sans-serif'
+        plt.rcParams['font.sans-serif'] = (['Myriad Pro']
+                                           + plt.rcParams['font.sans-serif'])
 
 
 def show_source(obj):

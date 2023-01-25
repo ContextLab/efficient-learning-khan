@@ -1,10 +1,10 @@
 from pathlib import Path
 
-import matplotlib as mpl
 from IPython.display import display, Markdown
 
 from .experiment import Experiment
 from .participant import Participant
+from .functions import set_figure_style
 
 
 version_info = (0, 0, 1)
@@ -29,5 +29,4 @@ try:
 except NameError:
     pass
 
-# embed text in PDFs for illustrator
-mpl.rcParams['pdf.fonttype'] = 42
+set_figure_style()
