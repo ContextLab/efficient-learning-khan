@@ -1,6 +1,8 @@
 import math
 import re
+import warnings
 from collections import defaultdict
+from contextlib import contextmanager, nullcontext
 from datetime import timedelta
 from difflib import get_close_matches
 from inspect import getsource
@@ -31,7 +33,8 @@ def bootstrap_ci_plot(
         M,
         ci=95,
         n_boots=1000,
-        color='#1f77b4',
+        ignore_nan=False,
+        color=None,
         alpha=0.3,
         return_bounds=False,
         label=None,
@@ -49,12 +52,17 @@ def bootstrap_ci_plot(
     M : numpy.ndarray
         A (timepoints, observations) array of values for plotting
     ci : int, optional
-        The size of the confidence interval as a percentage (default: 95).
+        The size of the confidence interval as a percentage (default:
+        95).
     n_boots : int, optional
         The number of bootstraps to use for computing the confidence
         interval (default: 1,000). Full-size resamples of observations
         are constructed (with replacement) independently for each
         timepoint.
+    ignore_nan : bool, optional
+        If True (default: False), ignore NaNs in all calculations
+        (handle them with numpy NaN-aware functions and suppress common
+        NaN-related warnigns).
     color : str or tuple of float, optional
         Any color specification accepted by Matplotlib. See
         https://matplotlib.org/3.5.1/tutorials/colors/colors.html for a
@@ -89,38 +97,49 @@ def bootstrap_ci_plot(
         containing the lower and upper bounds of the confidence interval
         at each timepoint.
     """
-    line_kwargs = {} if line_kwargs is None else line_kwargs
-    ribbon_kwargs = {} if ribbon_kwargs is None else ribbon_kwargs
-
+    # set defaults
+    if ignore_nan:
+        nan_context = filter_nan_warnings
+        mean_func = np.nanmean
+        percentile_func = np.nanpercentile
+    else:
+        nan_context = nullcontext
+        mean_func = np.mean
+        percentile_func = np.percentile
+    if ax is None:
+        ax = plt.gca()
+    if line_kwargs is None:
+        line_kwargs = {}
+    if ribbon_kwargs is None:
+        ribbon_kwargs = {}
     if color is None:
         color = plt.rcParams['axes.prop_cycle'].by_key()['color'][0]
     if 'color' not in ribbon_kwargs:
         ribbon_kwargs['color'] = color
-    if ax is None:
-        ax = plt.gca()
 
     timepoints = np.arange(M.shape[0])
-    obs_mean = M.mean(axis=1)
+    with nan_context():
+        obs_mean = mean_func(M, axis=1)
 
     # (n_tpts, n_obs, n_boots) column indices to subsample each row of M
     rand_ixs = np.random.randint(0, M.shape[1], size=(*M.shape, n_boots))
     # (n_tpts, n_boots) subsample means for each timepoint
-    boot_means = np.take_along_axis(M[:, np.newaxis],
-                                    rand_ixs,
-                                    axis=2).mean(axis=1)
-    ci_low = np.percentile(boot_means, (100 - ci) / 2, axis=1)
-    ci_high = np.percentile(boot_means, (100 + ci) / 2, axis=1)
+    boots = np.take_along_axis(M[:, None], rand_ixs, axis=2)
+    with nan_context():
+        boot_means = mean_func(boots, axis=1)
+
+        ci_low = percentile_func(boot_means, (100 - ci) / 2, axis=1)
+        ci_high = percentile_func(boot_means, (100 + ci) / 2, axis=1)
 
     ax.fill_between(timepoints, ci_low, ci_high, alpha=alpha, **ribbon_kwargs)
     ax.plot(timepoints, obs_mean, color=color, label=label, **line_kwargs)
 
     if return_bounds:
         return ax, ci_low, ci_high
-    else:
-        return ax
+    return ax
 
 
-def corr_mean(rs, axis=None, **kwargs):
+def corr_mean(rs, axis=None, fix_inf=False, **kwargs):
     """
     Computes the mean of a set of correlation coefficients, performing
     the Fisher *z*-transformation before averaging and the inverse
@@ -129,13 +148,14 @@ def corr_mean(rs, axis=None, **kwargs):
     Parameters
     ----------
     rs : array_like
-        Array of *r*-values.  May be any type accepted by 'numpy.mean'
+        Array of *r*-values.  May be any type accepted by `numpy.nanmean`
     axis : None or int or tuple of ints, optional
         Axis or axes along which the means are computed. If None
         (default), the mean of the flattened array is computed.
     kwargs : various types, optional
-        Additional keyword arguments passed to 'numpy.mean' (see
-        https://numpy.org/doc/stable/reference/generated/numpy.mean.html)
+        Additional keyword arguments passed to `numpy.nanmean` (see
+        https://numpy.org/doc/stable/reference/generated/numpy.nanmean.html
+        for details).
 
     Returns
     -------
@@ -143,7 +163,7 @@ def corr_mean(rs, axis=None, **kwargs):
         The average correlation coefficient
 
     """
-    return z2r(np.nanmean([r2z(r) for r in rs], axis=axis, **kwargs))
+    return z2r(np.nanmean(r2z(np.asanyarray(rs), fix_inf=fix_inf), axis=axis, **kwargs))
 
 
 @numba.njit
@@ -326,6 +346,16 @@ def multicol_display(*outputs,
     display(HTML(html_table.format(caption=cap,
                                    header="".join(headers),
                                    content="".join(rows))))
+
+
+@contextmanager
+def filter_nan_warnings():
+    message = 'Mean of empty slice|All-NaN slice encountered'
+    with warnings.catch_warnings():
+        warnings.filterwarnings('ignore',
+                                message=message,
+                                category=RuntimeWarning)
+        yield
 
 
 def interp_lecture(lec_traj, timestamps):
