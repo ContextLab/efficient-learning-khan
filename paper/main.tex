@@ -273,16 +273,28 @@ the same concept (e.g., concept $A$) will have gotten the same
 \textit{proportion} of questions correct as another student who missed three
 questions about three \textit{different} concepts (e.g., $A$, $B$, and $C$).
 But if we wanted to fill in the ``gaps'' in the two students' understandings,
-we might do well to focus on concept $A$ for the first student, but add in
-concepts $B$ and $C$ for the second student.
+we might do well to focus on concept $A$ for the first student, but to also add
+in materials pertaining to concepts $B$ and $C$ for the second student.
 
-\textbf{JRM STOPPED HERE...}
+We developed a simple formula (Eqn.~\ref{eqn:prop}) for using a participant's
+responses to a small set of multiple choice questions to estimate how much the
+participant ``knows'' about the concept reflected by any arbitrary coordinate,
+$x$, in text embedding space (e.g., the content reflected by any moment in a
+lecture they had watched; see \textit{Estimating dynamic knowledge traces}).
+Essentially, the estimated knowledge at the coordinate is given by the weighted
+average proportion of quiz questions the participant answered correctly, where
+the weights reflect how much each question is ``about'' the content at $x$.
+When we apply this approach to estimate the participant's knowledge about the
+content presented in each moment of each lecture, we can obtain a detailed
+timecourse describing how much ``knowledge'' the participant has about any part
+of the lecture. As shown in Figures~\ref{fig:knowledge-timeseries}A and C), we
+can also apply this approach separately for the questions from each quiz the
+participants took throughout the experiment. From just 13 questions per quiz,
+we obtain a high-resolution snapshot (at the time each quiz was taken) of what
+the participants knew about any moment's content, from either of the two
+lectures they watched (comprising a total of 1106 samples across the two
+lectures).
 
-
-
-As a sanity check, we anticipated that our knowledge estimates
-should show a content-specific ``boost'' in participants' knowledge after
-watching each video.
 
 \begin{figure}[tp]
     \centering
@@ -308,6 +320,95 @@ watching each video.
     
     \label{fig:knowledge-timeseries}
 \end{figure}
+
+Of course, even though the timecourses in
+Figure~\ref{fig:knowledge-timeseries}A and C provide detailed
+\textit{estimates} about participants' knowlege, those estimates are only
+\textit{useful} to the extent that they accurately reflect what participants
+actually know. As one sanity check, we anticipated that the knowledge estimates
+should show a content-specific ``boost'' in participants' knowledge after
+watching each lecture. In other words, if participants learn about each
+lecture's content when they watch each lecture, the knowledge estimates should
+reflect that. After watching the \textit{Four Fundamental Forces} lecture,
+participants should show more knowledge for the content of that lecture than
+they had before, and that knowledge should persist for the remainder of the
+experiment. Specifically, knowledge about that lecture's content should be
+relatively low when estimated using Quiz 1 responses, but should increase when
+estimated using Quiz 2 or 3 responses (Fig.~\ref{fig:knowledge-timeseries}B).
+Indeed, we found that participants' estimated knowledge about the content of
+the \textit{Four Fundamental Forces} was substantially higher on Quiz 2 versus
+Quiz 1 ($t(XX) = XX, p = XX$) and on Quiz 3 versus Quiz 1 ($t(XX) = XX, p =
+XX$). We found no reliable differences in estimated knowledge about that
+lecture's content on Quiz 2 versus 3 ($t(XX) = XX, p = XX$). Similarly, we
+hypothesized (and subsequently confirmed) that participants should show more
+estimated knowledge about the content of the \textit{Birth of Stars} lecture
+after (versus before) watching it (Fig.~\ref{fig:knowledge-timeseries}D).
+Specifically, since participants watched that lecture after taking Quiz 2 (but
+before Quiz 3), we hypothesized that their knowledge estimates should be
+relatively low on Quizzes 1 and 2, but should show a ``boost'' on Quiz 3.
+Consistent with this prediction, we found no reliable differences in estimated
+knowledge about the \textit{Birth of Stars} lecture content on Quizzes 1 versus
+2 ($t(XX) = XX, p = XX$), but the estimated knowledge was substantially higher
+on Quiz 3 versus 2 ($t(XX) = XX, p = XX$) and Quiz 3 versus 1 ($t(XX) = XX, p =
+XX$).
+
+If we are able to accurately estimate a participant's knowledge about the
+content tested by a given question, the estimated knowledge should have some
+predictive information about whether the participant is likely ot answer the
+question correctly or incorrectly. For each question in turn, for each
+participant, we used Equation~\ref{eqn:prop} to estimate (using all
+\textit{other} questions from the same quiz, from the same participant) the
+participant's knowledge at the held-out question's embedding coordinate. For
+each quiz, we aggregated these estimates into two distributions: one for the
+estimated knowledge at the coordinates of each \textit{correctly} answered
+question, and another for the estimated knowledge at the coordinates of each
+\textit{incorrectly} answered question (Fig.~\ref{fig:predictions}). We then
+used independent samples $t$-tests to compare the means of these distributions
+of estimated knowledge.
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figs/held-out-question-analyses}
+    
+    \caption{\textbf{Estimating knowledge at the embedding coordinates of
+    held-out questions.} Separately for each quiz (panel), we plot the
+    distributions of predicted knowledge at the embedding coordinates of each
+    held out correctly (blue) or incorrectly (red) answered question. The
+    $t$-tests reported in each panel are between the distributions of estimated
+    knowledge at the coordinates of correctly versus incorrectly answered
+    held-out questions.}
+    
+    \label{fig:predictions}
+\end{figure}
+
+For the initial quizzes participants took (prior to watching either lecture),
+participants' estimated knowledge tended to be low overall, and relatively
+unstructured (Fig.~\ref{fig:predictions}, left panel). When we held out
+individual questions and estimated their knowledge at the held-out questions'
+embedding coordinates, we found no reliable differences in the estimates when
+the held-out question had been correctly versus incorrectly answered ($t(633) =
+0.577, p = 0.564$). After watching the first video, estimated knowledge for
+held-out correctly answered questions (from the second quiz;
+Fig.~\ref{fig:predictions}, middle panel) exhibited a positive shift relative
+to held-out incorrectly answered questions ($t(633) = 3.961, p < 0.001$). After
+watching the second video, estimated knowledge (from the third quiz;
+Fig.~\ref{fig:predictions}, right panel) for \textit{all} questions exhibited a
+positive shift. However, the increase in estimated knowledge for held-out
+correctly answered questions was larger than for held-out incorrectly answered
+questions ($t(628) = 2.045, p = 0.041$).
+
+Knowledge estimates need not be limited to the content of the lectures. As
+illustrated in Figure~\ref{fig:knowledge-maps}, our general approach to
+estimating knowledge from a small number of quiz questions may be applied to
+\textit{any} content, given its text embedding coordinate. To visualize how
+knowledge ``spreads'' through text embedding space to content beyond the
+lectures participants watched, we first fit a new topic model to the lectures'
+sliding windows with $k = 100$ topics. We hoped that increasing the number of
+topics from 15 to 100 might help us to generalize the knowledge predictions.
+(Aside from increasing the number of topics from 15 to 100, all other
+procedures and model parameters were carried over from the preceding analyses.)
+We resampled each lecture's topic trajectory to 1~Hz and also projected each
+question into the same 100-dimensional topic space.
 
 \begin{figure}[tp]
     \centering
@@ -340,6 +441,63 @@ watching each video.
     
     \label{fig:knowledge-maps}
     \end{figure}
+
+We projected the resulting 100-dimensional topic vectors (for each second of
+video and for each question) into a shared 2-dimensional space (see
+\textit{Creating knowledge and learning map visualizations}). Next, we sampled
+points evenly from a $100 \times 100$ grid of coordinates that evenly tiled a
+rectangle enclosing the 2D projections of the video trajectories and questions.
+We used Equation~\ref{eqn:rbf-knowledge} to estimate participants' knowledge at
+each of these 10K sampled locations, and we averaged these estimates across
+participants to obtain an estimated average \textit{knowledge map}
+(Fig.~\ref{fig:knowledge-maps}). Intuitively, the knowledge map constructed
+from a given quiz's responses provides a visualization of how ``much''
+participants know about any content expressible by the fitted model.
+
+Several features of the resulting knowledge maps are worth noting. The average
+knowledge map estimated from Quiz 1 responses (Fig.~\ref{fig:knowledge-maps},
+leftmost map) shows that participants tended to have relatively little
+knowledge about any parts of the text embedding space (i.e., the shading is
+relatively dark everywhere). The knowledge map estimated from Quiz 2 responses
+shows a marked increase in knowledge on the left side of the map (around
+roughly the same range of coordinates covered by the \textit{Four Fundamental
+Forces} lecture, indicated by the dotted blue line). In other words,
+participants' estimated increase in knowledge is localized to conceptual
+content that is nearby (i.e., related to) the content from the lecture they
+watched prior to taking Quiz 2. This localization is non-trivial: the knowledge
+estimates are informed only by the embedded coordinates of the \textit{quiz
+questions}, not by the embeddings of either lecture. Finally, the knowledge map
+estimated from Quiz 3 responses shows a second increase in knowledge, localized
+to the region surrounding the embedding of the \textit{Birth of Stars} lecture
+participants watched prior to taken Quiz 3.
+
+Another way of visualizing these content-specific increases in knowledge
+(apparently driven by watching each lecture) is displayed in
+Figure~\ref{fig:knowledge-maps}B. Taking the point-by-point difference between
+the knowledge maps estimated from responses to a successive pair of quizzes
+yields a \textit{learning map} that describes the \textit{change} in knowledge
+estimates from one quiz to the next. These learning maps highlight that the
+estimated knowledge increases we observed across maps were specific to the
+regions around the embeddings of each lecture in turn.
+
+Because the 2D projection we used to construct the knowledge and learning maps
+is (partially) invertable, we may gain additional insights into the estimates
+by reconstructing the original high-dimensional topic vectors for any point(s)
+in the maps we are interested in. For example, this could serve as a useful
+tool for an instructor looking to better understand which content areas a
+student (or a group of students) knows well (or poorly). As a demonstration, we
+show the top-weighted words from the blends of topics reconstructed from three
+locations on the maps (Fig.~\ref{fig:knowledge-maps}C): one point near the
+\textit{Four Fundamental Forces} embedding (yellow); a second point near the
+\textit{Birth of Stars} embedding (orange), and a third point somewhere in
+between the two lectures' embeddings (pink). As shown in the word clouds in the
+Panel, the top-weighted words at the coordinate near the \textit{Four
+Fundamental Forces} embedding also tended to be weighted heavily by the topics
+expressed in that lecture. Similarly, the top-weighted words at the coordinate
+near the \textit{Birth of Stars} embedding tended to be weighted most heavily
+by the topics expressed in \textit{that} lecture. And the top-weighted words at
+the coordinate between the two lectures' embeddings show a roughly even mix of
+words most strongly associated with each lecture.
 
 \section*{Discussion}
 
@@ -575,8 +733,6 @@ between timepoint $t$'s topic vector and the topic vectors for each question.
 The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
 correlations) insures that every question (except the least-relevant question)
 contributes some non-zero amount to the knowledge estimate.
-
-\subsubsection*{Estimating held-out conceptual knowledge}
 
 \subsubsection*{Creating knowledge and learning map visualizations}
 
