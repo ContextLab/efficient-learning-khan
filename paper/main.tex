@@ -352,81 +352,50 @@ knowledge about the \textit{Birth of Stars} lecture content on Quizzes 1 versus
 on Quiz 3 versus 2 ($t(XX) = XX, p = XX$) and Quiz 3 versus 1 ($t(XX) = XX, p =
 XX$).
 
-A core assumption of our modeling framework is that knowledge is ``smooth''
-such that knowing about one concept implies knowledge about other related
-concepts (i.e., concepts that are nearby in text embedding space). Conversely,
-\textit{not} knowing about a given concept implies \textit{less} knowledge
-about other related concepts. We characterized how estimated knowledge (and
-lack of knowledge) fell off with distance in the text embedding space
-(Fig.~\ref{fig:predictions}, top panels).
+If we are able to accurately estimate a participant's knowledge about the
+content tested by a given question, the estimated knowledge should have some
+predictive information about whether the participant is likely ot answer the
+question correctly or incorrectly. For each question in turn, for each
+participant, we used Equation~\ref{eqn:prop} to estimate (using all
+\textit{other} questions from the same quiz, from the same participant) the
+participant's knowledge at the held-out question's embedding coordinate. For
+each quiz, we aggregated these estimates into two distributions: one for the
+estimated knowledge at the coordinates of each \textit{correctly} answered
+question, and another for the estimated knowledge at the coordinates of each
+\textit{incorrectly} answered question (Fig.~\ref{fig:predictions}). We then
+used independent samples $t$-tests to compare the means of these distributions
+of estimated knowledge.
 
 \begin{figure}[tp]
     \centering
     \includegraphics[width=\textwidth]{figs/held-out-question-analyses}
     
     \caption{\textbf{Estimating knowledge at the embedding coordinates of
-    held-out questions.} \textbf{Top panels.} Separately for each quiz (panel
-    column), we plot the average correlations between the topic vectors of
-    held-out correctly (blue) and incorrectly (red) answered questions, and the
-    topic vectors for the $n$ closest remaining correctly or incorrectly
-    answered questions, respectively. For details, see \textit{Testing the
-    ``smoothness'' of knowledge}. \textbf{Bottom panels.} Separately for each
-    quiz (panel column), we plot the distributions of predicted knowledge at
-    the embedding coordinates of each held out correctly (blue) or incorrectly
-    (red) answered question. The $t$-tests reported in each panel are between
-    the distributions of estimated knowledge at the coordinates of correctly
-    versus incorrectly answered held-out questions. For details, see
-    \textit{Estimating held-out conceptual knowledge}.}
+    held-out questions.} Separately for each quiz (panel), we plot the
+    distributions of predicted knowledge at the embedding coordinates of each
+    held out correctly (blue) or incorrectly (red) answered question. The
+    $t$-tests reported in each panel are between the distributions of estimated
+    knowledge at the coordinates of correctly versus incorrectly answered
+    held-out questions.}
     
     \label{fig:predictions}
 \end{figure}
 
-For each participant, for each quiz, for each of $c$ correctly answered
-question $q$ in turn, we sorted all of the other correctly answered questions
-in descending order of their topic vectors' correlations with $q$'s topic
-vector. We repeated this for all correctly answered questions to obtain a $c
-\times (c - 1)$ matrix of correlations, where the rows corresponded to held-out
-questions and the columns corresponded to the most similar (leftmost column),
-second most similar (second column), other correctly answered questions. Each
-correlation for each pair of questions ($a$ and $b$) appears exactly twice in
-this matrix: once when $a$ is the held-out question, and once when $b$ is the
-held-out question. We applied the Fisher $z$-transformation to these
-correlations, averaged down the rows, and then applied the inverse Fisher
-$z$-transformation to obtain a $1 \times (c - 1)$ array of average correlations
-for the participant. We repeated this process across all $n$ participants,
-yielding an $n \times 14$ matrix (15 is the maximum number of questions that
-could have been answered correctly on any single 15-question quiz, so at most
-14 correctly answered questions could be compared to a held-out correctly
-answered question). Note that some of the entries, for some of the
-participants, were empty (e.g., if a given participant answered at least one
-question incorrectly, they would never have 14 other correctly answered
-questions to compare to a held-out correctly answered question). If a
-participant answered \textit{no} questions correctly on a given quiz, their
-entire row would be empty.
-
-The blue ribbon plots in the top panels of Figure~\ref{fig:predictions} display
-the mean (across participants) and bootstrap-estimated 95\% confidence
-intervals of these matrices (i.e., one per quiz, each plotted in a separate
-panel). We repeated the same process for \textit{incorrectly} answered
-questions (i.e., comparing held-out incorrectly answered questions to other
-incorrectly answered questions from the same quiz, for each participant in
-turn) to obtain the red ribbon plots in the top panels of
-Figure~\ref{fig:predictions}.
-
-The correlation plots for both curves, in all three top panels of
-Figure~\ref{fig:predictions}, confirm one aspect of our ``smoothness''
-assumption. Specifically, given the topic vector of a correctly answered
-question, other correctly answered questions also tend to have similar topic
-vectors...
-
-\textbf{JRM NOTE 1: need to think about these results more; stopping here
-temporarily to back up progress...}
-
-\textbf{JRM NOTE 2: consider moving ``estimating held-out conceptual
-knowledge'' from methods to here.}
-
-
-
+For the initial quizzes participants took (prior to watching either lecture),
+participants' estimated knowledge tended to be low overall, and relatively
+unstructured (Fig.~\ref{fig:predictions}, left panel). When we held out
+individual questions and estimated their knowledge at the held-out questions'
+embedding coordinates, we found no reliable differences in the estimates when
+the held-out question had been correctly versus incorrectly answered ($t(633) =
+0.577, p = 0.564$). After watching the first video, estimated knowledge for
+held-out correctly answered questions (from the second quiz;
+Fig.~\ref{fig:predictions}, middle panel) exhibited a positive shift relative
+to held-out incorrectly answered questions ($t(633) = 3.961, p < 0.001$). After
+watching the second video, estimated knowledge (from the third quiz;
+Fig.~\ref{fig:predictions}, right panel) for \textit{all} questions exhibited a
+positive shift. However, the increase in estimated knowledge for held-out
+correctly answered questions was larger than for held-out incorrectly answered
+questions ($t(628) = 2.045, p = 0.041$).
 
 Knowledge estimates need not be limited to the content of the lectures. As
 illustrated in Figure~\ref{fig:knowledge-maps}, our general approach to
@@ -438,7 +407,8 @@ sliding windows with $k = 100$ topics. We hoped that increasing the number of
 topics from 15 to 100 might help us to generalize the knowledge predictions.
 (Aside from increasing the number of topics from 15 to 100, all other
 procedures and model parameters were carried over from the preceding analyses.)
-
+We resampled each lecture's topic trajectory to 1~Hz and also projected each
+question into the same 100-dimensional topic space.
 
 \begin{figure}[tp]
     \centering
@@ -471,6 +441,63 @@ procedures and model parameters were carried over from the preceding analyses.)
     
     \label{fig:knowledge-maps}
     \end{figure}
+
+We projected the resulting 100-dimensional topic vectors (for each second of
+video and for each question) into a shared 2-dimensional space (see
+\textit{Creating knowledge and learning map visualizations}). Next, we sampled
+points evenly from a $100 \times 100$ grid of coordinates that evenly tiled a
+rectangle enclosing the 2D projections of the video trajectories and questions.
+We used Equation~\ref{eqn:rbf-knowledge} to estimate participants' knowledge at
+each of these 10K sampled locations, and we averaged these estimates across
+participants to obtain an estimated average \textit{knowledge map}
+(Fig.~\ref{fig:knowledge-maps}). Intuitively, the knowledge map constructed
+from a given quiz's responses provides a visualization of how ``much''
+participants know about any content expressible by the fitted model.
+
+Several features of the resulting knowledge maps are worth noting. The average
+knowledge map estimated from Quiz 1 responses (Fig.~\ref{fig:knowledge-maps},
+leftmost map) shows that participants tended to have relatively little
+knowledge about any parts of the text embedding space (i.e., the shading is
+relatively dark everywhere). The knowledge map estimated from Quiz 2 responses
+shows a marked increase in knowledge on the left side of the map (around
+roughly the same range of coordinates covered by the \textit{Four Fundamental
+Forces} lecture, indicated by the dotted blue line). In other words,
+participants' estimated increase in knowledge is localized to conceptual
+content that is nearby (i.e., related to) the content from the lecture they
+watched prior to taking Quiz 2. This localization is non-trivial: the knowledge
+estimates are informed only by the embedded coordinates of the \textit{quiz
+questions}, not by the embeddings of either lecture. Finally, the knowledge map
+estimated from Quiz 3 responses shows a second increase in knowledge, localized
+to the region surrounding the embedding of the \textit{Birth of Stars} lecture
+participants watched prior to taken Quiz 3.
+
+Another way of visualizing these content-specific increases in knowledge
+(apparently driven by watching each lecture) is displayed in
+Figure~\ref{fig:knowledge-maps}B. Taking the point-by-point difference between
+the knowledge maps estimated from responses to a successive pair of quizzes
+yields a \textit{learning map} that describes the \textit{change} in knowledge
+estimates from one quiz to the next. These learning maps highlight that the
+estimated knowledge increases we observed across maps were specific to the
+regions around the embeddings of each lecture in turn.
+
+Because the 2D projection we used to construct the knowledge and learning maps
+is (partially) invertable, we may gain additional insights into the estimates
+by reconstructing the original high-dimensional topic vectors for any point(s)
+in the maps we are interested in. For example, this could serve as a useful
+tool for an instructor looking to better understand which content areas a
+student (or a group of students) knows well (or poorly). As a demonstration, we
+show the top-weighted words from the blends of topics reconstructed from three
+locations on the maps (Fig.~\ref{fig:knowledge-maps}C): one point near the
+\textit{Four Fundamental Forces} embedding (yellow); a second point near the
+\textit{Birth of Stars} embedding (orange), and a third point somewhere in
+between the two lectures' embeddings (pink). As shown in the word clouds in the
+Panel, the top-weighted words at the coordinate near the \textit{Four
+Fundamental Forces} embedding also tended to be weighted heavily by the topics
+expressed in that lecture. Similarly, the top-weighted words at the coordinate
+near the \textit{Birth of Stars} embedding tended to be weighted most heavily
+by the topics expressed in \textit{that} lecture. And the top-weighted words at
+the coordinate between the two lectures' embeddings show a roughly even mix of
+words most strongly associated with each lecture.
 
 \section*{Discussion}
 
@@ -747,22 +774,6 @@ correctly answered questions, where the weights are given by how nearby (in the 
 each question is to the $x$.  We also defined \textit{learning maps} as the coordinate-by-coordinate
 differences between any pair of knowledge maps.  Intuitively, learning maps reflect the \textit{change}
 in knowledge across two maps.
-
-\subsubsection*{Estimating held-out conceptual knowledge}
-
-If we are able to accurately estimate a participant's knowledge about the
-content tested by a given question, the estimated knowledge should have some
-predictive information about whether the participant is likely ot answer the
-question correctly or incorrectly. For each question in turn, for each
-participant, we used Equation~\ref{eqn:prop} to estimate (using all
-\textit{other} questions from the same quiz, from the same participant) the
-participant's knowledge at the held-out question's embedding coordinate. For
-each quiz, we aggregated these estimates into two distributions: one for the
-estimated knowledge at the coordinates of each \textit{correctly} answered
-question, and anotehr for the estimated knowledge at the coordinates of each
-\textit{incorrectly} answered question (Fig.~\ref{fig:predictions}, bottom
-panels). We then used independent samples $t$-tests to compare the means of
-these distributions of estimated knowledge.
 
 
 \bibliographystyle{apa}
