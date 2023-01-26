@@ -22,8 +22,8 @@ scratch/
 # raw participant data
 data/db/
 
-# license-restricted font file
-data/Myriad\ Pro\ Regular.ttf
+# license-restricted font files
+data/fonts/
 
 # psiTurk console command history
 exp/.psiturk_history
