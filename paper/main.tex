@@ -27,9 +27,10 @@
 \title{Text embedding models reveal high resolution insights into conceptual
 knowledge from short multiple choice quizzes}
 
-\author{Paxton C. Fitzpatrick and Jeremy R.
-Manning\textsuperscript{*}\\Dartmouth
-College\\\textsuperscript{*}Corresponding author:
+\author{Paxton C. Fitzpatrick\textsuperscript{1},
+Andrew C. Heusser\textsuperscript{1, 2}, and Jeremy R.
+Manning\textsuperscript{1, *}\\\textsuperscript{1}Dartmouth
+College\\\textsuperscript{2}Akili Interactive\\\textsuperscript{*}Corresponding author:
 jeremy.r.manning@dartmouth.edu}
 
 \date{}
@@ -550,6 +551,87 @@ embeddings show a roughly even mix of words most strongly associated with each
 lecture.
 
 \section*{Discussion}
+
+
+
+Teaching, like effective writing and speaking, is fundamentally about
+empathy~\citep{AldrEtal22, StojEtal12, MeyeEtal19}. Great teachers consider
+students' interests~\citep{SwarEtal12, Clar10}, backgrounds~\citep{MuijReyn10,
+Rose76, denBEtal10}, and working memory capacities~\citep{Allo12}, and flexibly
+optimize their teaching strategies within those constraints~\citep{GoodEtal07,
+AndeEtal21, John02}. In the classroom, empathizing with students also means
+maintaining open lines of communication~\citep{WulfWulf10} by fostering an
+environment in which all students feel comfortable speaking up if they have an
+exciting new idea, or if they are having trouble understanding
+something~\citep{TurnBrai15, GarrRasm14}. In-person instruction also often
+entails dynamic student-teacher and student-student interactions. These
+in-person interactions can provide the instructor with valuable information
+about students' understanding of the course material, beyond what they can
+glean solely from exams or assignments~\citep{Engl09, vandEtal10c, HallWals02}.
+In turn, this can allow the instructor to adapt their teaching approaches
+on-the-fly according to students' questions and behaviors. But what does great
+teaching look like in asynchronous online courses, when the instructor
+typically prepares course lectures and materials without knowing who will
+ultimately be learning from them? Can the empathetic side of teaching be
+automated and scaled?
+
+The notion of empathy also related to ``theory of mind'' of other
+individuals~\citep{GoldWinn12, KansEtal15, Melt11}. Considering others' unique
+perspectives, prior experiences, knowledge, goals, etc., can help us to more
+effectively interact and communicate~\citep{ShaoEtal18, StepBaer06, Ratk18}.
+The knowledge and learning maps we estimate in our study
+(Fig.~\ref{fig:knowledge-maps}) hint at one potential form that an automated
+``empathetic'' teacher might take. We imagine that automated content delivery
+systems that adapt lessons on the fly according to continually updated
+estimates of what students know and how quickly they are learning different
+conceptual content~\citep[e.g., building on ideas such as ][and
+others]{AndeSkwa86, Half88, Kuma05, WolzEtal88}.
+
+Over the past several years, the global pandemic has forced many educators to
+teach remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21, Whal20}. This change
+in world circumstances is happening alongside (and perhaps accelerating)
+geometric growth in the availability of high quality online courses on
+platforms such as Khan Academy~\citep{Khan04}, Coursera~\citep{Youn12},
+EdX~\citep{Kolo13}, and others~\citep{RhoaEtal13}. Continued expansion of the
+global internet backbone and improvements in computing hardware have also
+facilitated improvements in video streaming, enabling videos to be easily
+downloaded and shared by large segments of the world's population. This
+exciting time for online course instruction provides an opportunity to
+re-evaluate how we, as a global community, educate ourselves and each other.
+For example, we can ask: what makes an effective course or training program?
+Which aspects of teaching might be optimized or automated? How and why do
+learning needs and goals vary across people? How might we lower barriers to
+achieving a high quality education?
+
+Alongside these questions, there is a growing desire to extend existing
+theories beyond the domain of lab testing rooms and into real
+classrooms~\citep{Kauf03}. In part, this has led to a recent resurgence of
+``naturalistic'' or ``observational'' experimental paradigms that attempt to
+better reflect more ethologically valid phenomena that are more directly
+relevant to real-world situations and behaviors~\citep{NastEtal20}. In turn,
+this has brought new challenges in data analysis and interpretation. A key step
+towards solving these challenges will be to build explicit models of real-world
+scenarios and how people behave in them (e.g., models of how people learn
+conceptual content from real-world courses, as in our current study). A second
+key step will be to understand which sorts of signals derived from behaviors
+and/or other measurements~\citep[e.g., neurophysiological data; ][]{NguyEtal22,
+MeshEtal20, PoulEtal17, BeviEtal19, DikkEtal17} might help to inform these
+models. A third major step will be to develop and employ reliable ways of
+evaluating the complex models and data that are a hallmark of naturalistic
+paradigms.
+
+Ultimately, our work suggests a new line of questions regarding the future of
+education: which aspects of teaching can be optimized and/or automated? The
+social benefits of face-to-face instruction, such as social interactions,
+friendships, and emotional support, cannot (and perhaps should not) be fully
+replaced by an automated computer-based system. Nor can modern computer systems
+experience emotional empathy in the human sense of the word. On the other hand,
+perhaps it is possible to separate out the social aspects of classroom
+instruction from the purely learning-related aspects. Our study shows that text
+embedding models can uncover detailed insights into students' knowledge and how
+it changes over time during learning.  We hope that these advances might help
+pave the way for new ways of teaching or delivering educational content
+that are tailored to individual students' learning needs and goals.
 
 \section*{Materials and methods}
 
