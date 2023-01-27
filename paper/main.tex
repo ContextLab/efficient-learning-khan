@@ -42,16 +42,16 @@ jeremy.r.manning@dartmouth.edu}
 processing models, for tracking and characterizing the acquisition of
 conceptual knowledge. Our approach embeds each concept in a high dimensional
 representation space, where nearby coordinates reflect similar or related
-concepts. We test our approach using behavioral data collected from a group of
-college students. In the experiment, we ask the participants to answer small
-sets of multiple choice quiz questions interleaved between watching two course
-videos from the Khan Academy platform. We applied our framework to the videos'
-transcripts, and to text of the quiz questions, to quantify the content of each
-moment of video and each quiz question. We used these embeddings, along with
-participants' quiz responses, to track how the learners' knowledge changed
-after watching each video. Our findings show how a small set of quiz questions
-may be used to obtain rich and meaningful high resolution insights into what
-each learner knows, and how their knowledge changes over time as they learn.
+concepts. We test our approach using behavioral data from participants who
+answered small sets of multiple choice quiz questions interleaved between
+watching two course videos from the Khan Academy platform. We applied our
+framework to the videos' transcripts, and to text of the quiz questions, to
+quantify the content of each moment of video and each quiz question. We used
+these embeddings, along with participants' quiz responses, to track how the
+learners' knowledge changed after watching each video. Our findings show how a
+small set of quiz questions may be used to obtain rich and meaningful high
+resolution insights into what each learner knows, and how their knowledge
+changes over time as they learn.
 
 \textbf{Keywords: education, learning, knowledge, concepts, natural language processing}
 
@@ -135,7 +135,7 @@ represents a single concept, and the maps' geometries are defined such that
 related concepts are located nearby in space. We use this framework to analyze
 and interpret behavioral data collected from an experiment that has
 participants watch and answer multiple choice questions about a series of
-recorded course lectures.
+recorded course lectures. 
 
 Our primary research goal is to advance our understanding of what it means to
 acquire deep real-world conceptual knowledge. Traditional laboratory approaches
@@ -203,7 +203,7 @@ content. The two videos we selected are introductory (i.e., minimizing specific
 prerequisite knowledge), and are about different primary concepts, but they
 both also touch on ``physics'' and ``astronomy'' themes. We also wrote a set of
 multiple choice quiz questions that would enable us to test participants'
-knoweldge about each individual video and about related content not
+knowledge about each individual video and about related content not
 specifically presented in either video (Tab.~\questions). Participants answered
 questions randomly drawn from each content area (lecture 1, lecture 2, and
 general physics knowledge) across each of three quizzes. Quiz 1 was intended to
@@ -258,9 +258,9 @@ topic relates to how much ``information''~\citep{Fish22} the lecture (or
 questions) reflect about that topic. When we compared the variability in topic
 weights across each lecture's timepoints with the variability in topic weights
 across each question set, we found a strong correspondence
-(Fig.~|ref{fig:topics}). The most variable topics from the \textit{Four
+(Fig.~\ref{fig:topics}). The most variable topics from the \textit{Four
 Fundamental Forces} lecture, and questions about that lecture, are 2, 3, 8, 12,
-13, 14, and 15. The most variable topics from the \textbf{Birth of Stars}
+13, 14, and 15. The most variable topics from the \textit{Birth of Stars}
 lecture, and questions about that lecture, are 1, 4, 5, 6, and 7. This strong
 overlap between the lectures and questions specifically about each lecture
 indicates that the topic model captures some of the underlying conceptual
@@ -306,7 +306,7 @@ training set, in general we found (through manual inspection) a close
 correspondence between the conceptual content that each question covered and
 the content covered by the best-matching moments of the lectures. Two
 representative examples are shown at the bottom of
-Fig.~\ref{fig:question-correlations}.
+Figure~\ref{fig:question-correlations}.
 
 The ability to quantify how much each question is ``asking about'' the content
 from each moment of the lectures could enable high-resolution insights into
@@ -314,7 +314,7 @@ participants' knowledge. Traditional approaches to estimating how much a
 student ``knows'' about the content of a given lecture entail computing the
 proportion of correctly answered questions. But if two students receive
 identical scores on an exam, might our modeling framework help us to gain more
-naunced insights into the \textit{specific} content that each student has
+nuanced insights into the \textit{specific} content that each student has
 mastered (or failed to master)? For example, a student who misses three
 questions that were all about the same concept (e.g., concept $A$) will have
 gotten the same \textit{proportion} of questions correct as another student who
@@ -407,7 +407,7 @@ question correctly or incorrectly. For each question in turn, for each
 participant, we used Equation~\ref{eqn:prop} to estimate (using all
 \textit{other} questions from the same quiz, from the same participant) the
 participant's knowledge at the held-out question's embedding coordinate. For
-each quiz, we aggregated these estimates into two distributions: one for the
+each quiz, we grouped these estimates into two distributions: one for the
 estimated knowledge at the coordinates of each \textit{correctly} answered
 question, and another for the estimated knowledge at the coordinates of each
 \textit{incorrectly} answered question (Fig.~\ref{fig:predictions}). We then
@@ -472,7 +472,7 @@ and also projected each question into a shared text embedding space.
     individual participants' maps, see
     Figures~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,
     and~\individualKnowledgeMapsC. \textbf{B. Average ``learning maps''
-    estiamted between each successive pair of quizzes.} The learning maps are
+    estimated between each successive pair of quizzes.} The learning maps are
     in the same general format as the knowledge maps in Panel A, but each
     coordinate in the learning maps indicates the \textit{difference} between
     the corresponding coordinates in the indicated \textit{pair} of knowledge
@@ -531,7 +531,7 @@ estimated knowledge increases we observed across maps were specific to the
 regions around the embeddings of each lecture in turn.
 
 Because the 2D projection we used to construct the knowledge and learning maps
-is (partially) invertable, we may gain additional insights into the estimates
+is (partially) invertible, we may gain additional insights into the estimates
 by reconstructing the original high-dimensional topic vectors for any point(s)
 in the maps we are interested in. For example, this could serve as a useful
 tool for an instructor looking to better understand which content areas a
@@ -551,8 +551,6 @@ embeddings show a roughly even mix of words most strongly associated with each
 lecture.
 
 \section*{Discussion}
-
-
 
 Teaching, like effective writing and speaking, is fundamentally about
 empathy~\citep{AldrEtal22, StojEtal12, MeyeEtal19}. Great teachers consider
@@ -581,10 +579,10 @@ perspectives, prior experiences, knowledge, goals, etc., can help us to more
 effectively interact and communicate~\citep{ShaoEtal18, StepBaer06, Ratk18}.
 The knowledge and learning maps we estimate in our study
 (Fig.~\ref{fig:knowledge-maps}) hint at one potential form that an automated
-``empathetic'' teacher might take. We imagine that automated content delivery
+``empathetic'' teacher might take. We imagine automated content delivery
 systems that adapt lessons on the fly according to continually updated
 estimates of what students know and how quickly they are learning different
-conceptual content~\citep[e.g., building on ideas such as ][and
+conceptual content~\citep[e.g., building on ideas such as][and
 others]{AndeSkwa86, Half88, Kuma05, WolzEtal88}.
 
 Over the past several years, the global pandemic has forced many educators to
@@ -655,7 +653,7 @@ Participants reported their races as White (32 participants), Asian
 (14 participants), Black or African American (5 participants),
 American Indian or Alaska Native (1 participant), and Native Hawaiian or
 Other Pacific Islander (1 participant). (Note that some participants
-selected multiple recial categories.)
+selected multiple racial categories.)
 
 A total of 49 participants reporting having normal hearing and 1
 participant reported having some hearing impairment. A total of 49
@@ -677,7 +675,7 @@ scores as follows: ``very sluggish'' (-2), ``a little sluggish'' (-1),
 all participants, a range of alertness levels were reported (range: -2
 -- 1; mean: -0.10; standard deviation: 0.84).
 
-Particpants reported their undergraduate major(s) as Social Sciences (28
+Participants reported their undergraduate major(s) as Social Sciences (28
 participants), Natural sciences (16), Professional (e.g., pre-med or pre-law; 8
 participants), Mathematics and engineering (7 participants), Humanities (4
 participants), or Undecided (3 participants). Note that some participants
@@ -701,7 +699,7 @@ participants), AP Statistics (2 participants), Linear Algebra (2 participants),
 Early Math (1 participant), Arithmetic (1 participant), and other videos not
 listed in our survey (6 participants). In the ``Science and engineering'' area
 participants reported having watched videos on Chemistry, AP Chemistry, or
-Organic Chemstry (21 participants); Physics, AP Physics I, or AP Physics II (15
+Organic Chemistry (21 participants); Physics, AP Physics I, or AP Physics II (15
 participants); Biology, AP Biology; or High school Biology (15 participants);
 Health and Medicine (1 participant); or other videos not listed in our survey
 (20 participants). We also asked participants if they had specifically seen the
@@ -868,7 +866,7 @@ contributes some non-zero amount to the knowledge estimate.
 
 An important feature of our approach is that, given a trained text embedding
 model and participants' quiz performance on each question, we can estimate
-their knowledge about \textit{any} content expressable by the embedding model--
+their knowledge about \textit{any} content expressible by the embedding model--
 not solely the content explicitly probed by the quiz questions. To visualize
 these estimates
 (Figs.~\ref{fig:knowledge-maps},~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
@@ -879,7 +877,7 @@ the embedding space would be computationally intractable. However, sampling a
 2D grid is much more feasible. We defined a rectangle enclosing the 2D
 projections of the lectures' and quizzes' embeddings, and we sampled points
 from a regular $100 \times 100$ grid of coordinates that evenly tiled the
-enclosing rectangle. We sought to estimate participants' knoweldge (and
+enclosing rectangle. We sought to estimate participants' knowledge (and
 learning---i.e., changes in knowledge) at each of the resulting 10000
 coordinates.
 
@@ -904,6 +902,34 @@ correctly answered questions, where the weights are given by how nearby (in the 
 each question is to the $x$.  We also defined \textit{learning maps} as the coordinate-by-coordinate
 differences between any pair of knowledge maps.  Intuitively, learning maps reflect the \textit{change}
 in knowledge across two maps.
+
+\section*{Author contributions}
+
+Conceptualization: PCF, ACH, and JRM. Methodology: PCF, ACH, and JRM. Software:
+PCF. Validation: PCF. Formal analysis: PCF. Resources: PCF, ACH, and JRM. Data
+curation: PCF. Writing (original draft): JRM. Writing (review and editing):
+PCF, ACH, and JRM. Visualization: PCH and JRM. Supervision: JRM. Project
+administration: PCH. Funding acquisition: JRM.
+
+
+\section*{Data and code availability}
+
+All of the data analyzed in this manuscript, along with all of the code for
+running our experiment and carrying out the analyses may be found at
+https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
+
+\section*{Acknowledgements}
+
+We acknowledge useful discussions, assistance in setting up an earlier
+(unpublished) version of this study, and assistance with some of the data
+collection efforts from Will Baxley, Max Bluestone, Daniel Carstensen, Kunal
+Jha, Caroline Lee, Lucy Owen, Xinming Xu, and Kirsten Ziman. Our work was
+supported in part by NSF CAREER Award Number 2145172 to JRM. The content is
+solely the responsibility of the authors and does not necessarily represent the
+official views of our supporting organizations. The funders had no role in
+study design, data collection and analysis, decision to publish, or preparation
+of the manuscript.
+
 
 
 \bibliographystyle{apa}
