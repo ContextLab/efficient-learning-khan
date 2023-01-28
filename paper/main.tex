@@ -101,7 +101,7 @@ language understanding. For example, considering the raw contents of a document
 (e.g., its constituent symbols, letters, and words) might provide some
 information about what the document is about, just as memorizing a passage
 might provide some ability to answer simple questions about it~\citep[e.g., whether
-it might contain words related to furniture versus physics;][]{LandDuma97,
+it contains words related to furniture versus physics;][]{LandDuma97,
 BleiEtal03, BleiLaff06}. However, modern natural language processing
 models~\citep[e.g.,][]{MikoEtal13a, CerEtal18, BrowEtal20} also attempt to
 capture the deeper meaning \textit{underlying} those atomic elements. These
@@ -133,14 +133,14 @@ unlock any now-satisfied dependencies of those newly learned concepts so that
 they are ``tagged'' as available for future learning.
 % TODO: is the second half of this paragraph relevant to this paper??
 
-Here we develop a framework for modelling how knowledge is acquired during
+Here we develop a framework for modeling how knowledge is acquired during
 learning. The central idea is to use text embedding models to define the
 coordinate systems of two maps: (a) a \textit{knowledge map} that describes the
 extent to which each concept is currently known and (b) a \textit{learning map}
 that describes changes in knowledge over time. Each location on these maps
 represents a single concept, and the maps' geometries are defined such that
 related concepts are located nearby in space. We use this framework to analyze
-and interpret behavioral data collected from an experiment that has
+and interpret behavioral data collected from an experiment that had
 participants watch and answer multiple choice questions about a series of
 recorded course lectures.
 
@@ -160,7 +160,7 @@ sense, the gap between modern learning theories and modern pedagogical
 approaches and classroom learning strategies is enormous: most of our theories
 about \textit{how} people learn are inspired by experimental paradigms and
 models that have only peripheral relevance to the kinds of learning that
-students and teachers actually seek. To help bridge this gap, our study uses
+students and teachers actually seek \citep{Macl05}. To help bridge this gap, our study uses
 course materials from real online courses to inform, fit, and test models of
 real-world conceptual learning. We also provide a ``proof of concept''
 demonstration of how our models might be used to construct ``maps'' of what
@@ -175,7 +175,7 @@ that we sought to test empirically: all else being equal, knowledge about a
 given concept is predictive of knowledge about similar or related concepts.
 From a geometric perspective, this assumption implies that knowledge is
 fundamentally ``smooth.'' In other words, as one moves through a space
-representing someone's knowledge (where similar concepts occupy nearby
+representing an individual's knowledge (where similar concepts occupy nearby
 coordinates), their ``level of knowledge'' should change relatively gradually
 throughout that space. To begin to test this smoothness assumption, we sought
 to track our participants' knowledge and how it changed over time in response
