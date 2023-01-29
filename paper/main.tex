@@ -141,7 +141,7 @@ that describes changes in knowledge over time. Each location on these maps
 represents a single concept, and the maps' geometries are defined such that
 related concepts are located nearby in space. We use this framework to analyze
 and interpret behavioral data collected from an experiment that had
-participants watch and answer multiple choice questions about a series of
+participants watch and answer multiple-choice questions about a series of
 recorded course lectures.
 
 Our primary research goal is to advance our understanding of what it means to
@@ -160,7 +160,7 @@ sense, the gap between modern learning theories and modern pedagogical
 approaches and classroom learning strategies is enormous: most of our theories
 about \textit{how} people learn are inspired by experimental paradigms and
 models that have only peripheral relevance to the kinds of learning that
-students and teachers actually seek \citep{Macl05}. To help bridge this gap, our study uses
+students and teachers actually seek \citep{Macl05, HallGree08}. To help bridge this gap, our study uses
 course materials from real online courses to inform, fit, and test models of
 real-world conceptual learning. We also provide a ``proof of concept''
 demonstration of how our models might be used to construct ``maps'' of what
@@ -186,42 +186,45 @@ to training.
     \includegraphics[width=\textwidth]{figs/experiment}
 
     \caption{\textbf{Experimental paradigm.} Participants alternate between
-    answering 13-question multiple choice quizzes and watching two Khan academy
-    videos. Each quiz contains a mix of 5 questions about lecture 1, 5
-    questions about lecture 2, and 3 general physics knowledge questions. The
+    answering 13-question multiple-choice quizzes and watching two Khan Academy
+    lectures. Each quiz contains a mix of 5 questions about lecture 1, 5
+    questions about lecture 2, and 3 questions about general physics knowledge. The
     specific questions reflected on each quiz, and the orders of each quiz's
     questions, were randomized across participants.}
 
     \label{fig:experiment}
 \end{figure}
 
-We asked our participants to answer questions from several multiple choice
-quizzes and watch two lecture videos from the \textit{Khan Academy} platform
-(Fig.~\ref{fig:experiment}). One lecture video, entitled \textit{Four
-Fundamental Forces}, was about the four fundamental forces in physics: gravity,
-strong and weak interactions, and electromagnetism. The second lecture video,
-entitled \textit{Birth of Stars}, provides an overview of our current
-understanding of how stars form. We selected both lessons to be (a) accessible
-to a broad audience, e.g., by minimizing prerequisite knowledge, (b) largely
-independent of each other, e.g., so that the two videos focused on different
-material and did not depend on each other, and (c) related to each other, e.g.,
-so that both videos contained at least \textit{some} similar or overlapping
-content. The two videos we selected are introductory (i.e., minimizing specific
-prerequisite knowledge), and are about different primary concepts, but they
-both also touch on ``physics'' and ``astronomy'' themes. We also wrote a set of
-multiple choice quiz questions that would enable us to test participants'
-knowledge about each individual video and about related content not
-specifically presented in either video (Tab.~\questions). Participants answered
+We asked participants in our study to answer questions from several multiple-choice
+quizzes and watch two lecture videos from the Khan Academy platform
+(Fig.~\ref{fig:experiment}). The first lecture video, entitled \textit{Four
+Fundamental Forces}, discussed the four fundamental forces in physics: gravity,
+strong and weak interactions, and electromagnetism. The second,
+entitled \textit{Birth of Stars}, provided an overview of our current
+understanding of how stars form. We selected these lessons to be (a) accessible
+to a broad audience, i.e., requiring minimal prerequisite knowledge to understand;
+(b) conceptually related to each other, i.e., covering at least \textit{some}
+similar or overlapping content; and (c) largely independent of each other, i.e., focused
+on sufficiently different material that understanding one did not require having seen
+the other. Thus, the two videos we selected are introductory, high-level lectures that both 
+belong to Khan Academy's ``Cosmology and Astronomy" course domain, but come from
+different lecture series (``Scale of the Universe" and ``Stars, Black Holes, and Galaxies" 
+for the first and second lectures, respectively). 
+
+We also wrote a set of
+multiple-choice quiz questions that would enable us to test participants'
+knowledge about each individual lecture, as well as related content not
+specifically presented in either video ( see Tab.~\questions). Participants answered
 questions randomly drawn from each content area (lecture 1, lecture 2, and
 general physics knowledge) across each of three quizzes. Quiz 1 was intended to
-assessed participants' knowledge before training; quiz 2 assessed knowledge
-after watching the \textit{Four Fundamental Forces} video (i.e., lecture 1);
+assessed participants' ``baseline" knowledge before training, quiz 2 assessed knowledge
+after watching the \textit{Four Fundamental Forces} video (i.e., lecture 1),
 and quiz 3 assessed knowledge after watching the \textit{Birth of Stars} video
 (i.e., lecture 2).
 
-We trained a text embedding model using sliding windows of text from the two
-videos' transcripts (see \textit{Constructing text embeddings of multiple
-videos and questions}). We also used the same model (i.e., trained on the
+We trained a topic model \citep{BleiEtal03} using sliding windows of text from the two
+lectures' transcripts (see \hyperref[subsec:topic-modeling]{\textit{Constructing text embeddings of multiple
+lectures and questions}}). We also used the same model (i.e., trained on the
 videos' transcripts) to embed the text of each question in our pool. This
 yielded, for each second of each video, and for each question, a single
 15-dimensional topic vector---i.e., a coordinate in a text embedding space
@@ -233,12 +236,12 @@ video's transcript, from a question, etc.).
 
 \begin{figure}[tp]
     \centering
-    \includegraphics[width=0.6\textwidth]{figs/active-topics}
+    \includegraphics[width=0.7\textwidth]{figs/active-topics}
 
 \caption{\textbf{Lecture and question topic overlap.} The bar plots display the
 variability in topic weights across lecture timepoints (top panels) and
 questions (bottom panels); colors denote topics. The top-weighted words from
-the most ``expressive'' (i.e., variable across observations) topics from each
+the most ``expressive'' (i.e., variable across observations) topic from each
 lecture are displayed in the upper right (orange: topic 2; yellow-green: topic
 4). The top-weighted words from the full set of topics may be found in
 Table~\topics.}
@@ -332,7 +335,7 @@ but to also add in materials pertaining to concepts $B$ and $C$ for the second
 student.
 
 We developed a simple formula (Eqn.~\ref{eqn:prop}) for using a participant's
-responses to a small set of multiple choice questions to estimate how much the
+responses to a small set of multiple-choice questions to estimate how much the
 participant ``knows'' about the concept reflected by any arbitrary coordinate,
 $x$, in text embedding space (e.g., the content reflected by any moment in a
 lecture they had watched; see \textit{Estimating dynamic knowledge traces}).
@@ -682,21 +685,20 @@ scores as follows: ``very sluggish'' (-2), ``a little sluggish'' (-1),
 all participants, a range of alertness levels were reported (range: -2
 -- 1; mean: -0.10; standard deviation: 0.84).
 
-Participants reported their undergraduate major(s) as Social Sciences (28
-participants), Natural sciences (16), Professional (e.g., pre-med or pre-law; 8
-participants), Mathematics and engineering (7 participants), Humanities (4
-participants), or Undecided (3 participants). Note that some participants
+Participants reported their undergraduate major(s) as ``social sciences" (28
+participants), ``natural sciences" (16 participants), ``professional" (e.g., pre-med or pre-law; 8
+participants), ``mathematics and engineering" (7 participants), ``humanities" (4
+participants), or ``undecided" (3 participants). Note that some participants
 selected multiple categories for their undergraduate major. We also asked
-participants about the courses they had taken. In total, 46 participants
-reported having taken at least one Khan academy course in the past or being
-familiar with the Khan academy, and 4 reported not having taken any Khan
-academy courses. Of the participants who reported having watched at least one
-Khan academy course, 1 participant declined to report the number of courses
-they had watched; 7 participants reported having watched 1--2 courses; 11
-reported having watched 3--5 courses; 8 reported having watched 5--10 courses;
+participants about the courses they had taken. In total, 45 participants
+reported having taken at least one Khan Academy course in the past, 
+and 5 reported not having taken any Khan
+Academy courses. Of those who reported having watched at least one
+Khan Academy course, 7 participants reported having watched 1--2 courses, 11
+reported having watched 3--5 courses, 8 reported having watched 5--10 courses,
 and 19 reported having watched 10 or more courses. We also asked participants
 about the specific courses they had watched, categorized under different
-subject areas. In the ``Mathematics'' area participants reported having watched
+subject areas. In the ``Mathematics'' area, participants reported having watched
 videos on AP Calculus AB (21 participants), Precalculus (17 participants),
 Algebra 2 (14 participants), AP Calculus BC (12 participants), Trigonometry (11
 participants), Algebra 1 (10 participants), Geometry (8 participants),
@@ -704,19 +706,16 @@ Pre-algebra (7 participants), Multivariable Calculus (5 participants),
 Differential Equations (5 participants), Statistics and Probability (4
 participants), AP Statistics (2 participants), Linear Algebra (2 participants),
 Early Math (1 participant), Arithmetic (1 participant), and other videos not
-listed in our survey (6 participants). In the ``Science and engineering'' area
+listed in our survey (5 participants). In the ``Science and engineering'' area,
 participants reported having watched videos on Chemistry, AP Chemistry, or
 Organic Chemistry (21 participants); Physics, AP Physics I, or AP Physics II (15
 participants); Biology, AP Biology; or High school Biology (15 participants);
 Health and Medicine (1 participant); or other videos not listed in our survey
-(20 participants). We also asked participants if they had specifically seen the
-videos used in our experiment. When we asked about the \textit{Four Fundamental
-Forces} video, 45 participants reported not having watched it before, 1
-participant reported that they were not sure if they had watched it before, and
-4 participants declined to respond. When we asked about the \textit{Birth of
-Stars} video, 46 participants reported not having watched it before and 4
-participants declined to respond. When we asked participants about non-Khan
-academy online courses, they reported having watched or taken courses on
+(19 participants). We also asked participants whether they had specifically seen the
+videos used in our experiment. Of the 45 participants who reported having having
+taken at least one Khan Academy course in the past, 44 participants reported that they had not watched the \textit{Four Fundamental Forces} video, and 1 participant reported that they were not sure whether they had watched it. All participants reported that they had not watched the \textit{Birth of Stars} video.
+When we asked participants about non-Khan
+Academy online courses, they reported having watched or taken courses on
 Mathematics (15 participants), Science and engineering (11 participants), Test
 preparation (9 participants), Economics and finance (3 participants), Arts and
 humanities (2 participants), Computing (2 participants), and other categories
@@ -735,18 +734,19 @@ We hand-selected two course videos from the Khan Academy platform: \textit{Four
 Fundamental Forces} (an introduction to gravity, electromagnetism, the weak
 nuclear force, and the strong nuclear force; duration: 10 minutes and 29
 seconds) and \textit{Birth of Stars} (an introduction to how stars are formed;
-duration: 7 minutes and 57 seconds). We hand-wrote 39 multiple choice
+duration: 7 minutes and 57 seconds). We hand-wrote 39 multiple-choice
 questions: 15 about the conceptual content of \textit{Four Fundamental Forces},
-another 15 about the conceptual content of \textit{Birth of Stars}, and 9 other
+15 about the conceptual content of \textit{Birth of Stars}, and 9
 questions that tested for general conceptual knowledge about basic physics
 (covering material that was not presented in either video). The full set of
-questions may be found in Table~\questions.
+questions and answer options may be found in Table~\questions.
 
+%Over the course of the experiment, participants completed three multiple-choice quizzes 
 
 
 Participants began the main experiment by answering a battery of 13 randomly
 selected questions (chosen from the full set of 39). Then they watched the
-\textit{The Four Fundamental Forces} video. Next, they answered a second set of
+\textit{The Four Fundamental Forces} lecture video. Next, they answered a second set of
 13 questions (chosen at random from the remaining 26 questions). Fourth,
 participants watch the \textit{Birth of Stars} video, and finally they answered
 the remaining 13 questions. Our experimental procedure is diagramed in
@@ -755,7 +755,7 @@ computational framework for estimating knowledge and learning.
 
 \subsection*{Analysis}
 
-\subsubsection*{Constructing text embeddings of multiple videos and questions}
+\subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
 
 We extended an approach developed by~\citep{HeusEtal21} to construct text
 embeddings for each moment of each lecture, and of each question in our pool.
