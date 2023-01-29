@@ -10,6 +10,8 @@
 \usepackage{hyperref}
 \usepackage{lineno}
 
+\usepackage{xcolor}
+
 % supplemental tables
 \newcommand{\questions}{S1}
 \newcommand{\topics}{S2}
@@ -54,7 +56,7 @@ framework to the videos' transcripts and the text of the quiz questions to
 quantify the conceptual content presented in each moment of video and knowledge probed by each quiz question. We used
 these embeddings, along with participants' quiz responses, to track how the
 learners' knowledge changed after watching each video. Our findings demonstrate how a
-small set of quiz questions may be used to obtain rich and meaningful 
+small set of quiz questions may be used to obtain rich and meaningful
 high-resolution insights into individual students' knowledge, and how it
 changes over time as they learn.
 
@@ -145,12 +147,12 @@ participants watch and answer multiple-choice questions about a series of
 recorded course lectures.
 
 Our primary research goal is to advance our understanding of what it means to
-acquire deep real-world conceptual knowledge. Traditional laboratory approaches
+acquire deep, real-world conceptual knowledge. Traditional laboratory approaches
 to studying learning and memory (e.g., list learning studies) often draw little
 distinction between memorization and understanding. Instead, these studies
 typically focus on whether information is effectively encoded or retrieved,
 rather than whether the information is \textit{understood}. Approaches to
-studying conceptual learning, such as category learning experiments, can start
+studying conceptual learning, such as category learning experiments, can begin
 to investigate the distinction between memorization and understanding, often by
 training participants to distinguish arbitrary or random features in otherwise
 meaningless categorized stimuli. However the objective of real-world training,
@@ -162,8 +164,8 @@ about \textit{how} people learn are inspired by experimental paradigms and
 models that have only peripheral relevance to the kinds of learning that
 students and teachers actually seek \citep{Macl05, HallGree08}. To help bridge this gap, our study uses
 course materials from real online courses to inform, fit, and test models of
-real-world conceptual learning. We also provide a ``proof of concept''
-demonstration of how our models might be used to construct ``maps'' of what
+real-world conceptual learning. We also provide a
+demonstration of how our models can be used to construct ``maps'' of what
 students know, and how their knowledge changes with training. In addition to
 helping to visualize knowledge (and changes in knowledge), we hope that such
 maps might lead to real-world tools for improving how we educate.
@@ -178,7 +180,7 @@ fundamentally ``smooth.'' In other words, as one moves through a space
 representing an individual's knowledge (where similar concepts occupy nearby
 coordinates), their ``level of knowledge'' should change relatively gradually
 throughout that space. To begin to test this smoothness assumption, we sought
-to track our participants' knowledge and how it changed over time in response
+to track participants' knowledge and how it changed over time in response
 to training.
 
 \begin{figure}[tp]
@@ -195,32 +197,91 @@ to training.
     \label{fig:experiment}
 \end{figure}
 
-We asked participants in our study to answer questions from several multiple-choice
-quizzes and watch two lecture videos from the Khan Academy platform
-(Fig.~\ref{fig:experiment}). The first lecture video, entitled \textit{Four
+We asked participants in our study to complete brief multiple-choice quizzes before, between, and after watching two lecture videos from the Khan Academy \citep{Khan04} platform (Fig.~\ref{fig:experiment}). The first lecture video, entitled \textit{Four
 Fundamental Forces}, discussed the four fundamental forces in physics: gravity,
 strong and weak interactions, and electromagnetism. The second,
 entitled \textit{Birth of Stars}, provided an overview of our current
-understanding of how stars form. We selected these lessons to be (a) accessible
+understanding of how stars form.
+%(See \hyperref[subsec:experiment]{\textit{Experiment}} for more information on how these lectures were chosen.)
+%Each multiple-choice quiz consisted of 13 questions that would enable us to test participants'
+%knowledge about each individual lecture, as well as related content not
+%specifically presented in either video ( see Tab.~\questions).
+%
+%We selected these lessons to be accessible to a broad audience (i.e., requiring minimal prerequisite knowledge to understand) and largely independent of each other (i.e., focused on sufficiently different material that understanding one did not require having seen the other), but conceptually related to each other (covering at least \textit{some} similar or overlapping content).
+We selected these lessons to be (a) accessible
 to a broad audience, i.e., requiring minimal prerequisite knowledge to understand;
 (b) conceptually related to each other, i.e., covering at least \textit{some}
 similar or overlapping content; and (c) largely independent of each other, i.e., focused
 on sufficiently different material that understanding one did not require having seen
-the other. Thus, the two videos we selected are introductory, high-level lectures that both 
-belong to Khan Academy's ``Cosmology and Astronomy" course domain, but come from
-different lecture series (``Scale of the Universe" and ``Stars, Black Holes, and Galaxies" 
-for the first and second lectures, respectively). 
+the other. The two videos we selected are introductory lectures that both
+belong to Khan Academy's ``Cosmology and Astronomy'' course domain, but are taken from
+different lecture series (``Scale of the Universe'' and ``Stars, Black Holes, and Galaxies''
+for the first and second lectures, respectively).
 
-We also wrote a set of
+%We asked participants in our study to answer questions from several multiple-choice
+%quizzes and watch two lecture videos from the Khan Academy platform
+%(Fig.~\ref{fig:experiment}). The first lecture video, entitled \textit{Four
+%Fundamental Forces}, discussed the four fundamental forces in physics: gravity,
+%strong and weak interactions, and electromagnetism. The second,
+%entitled \textit{Birth of Stars}, provided an overview of our current
+%understanding of how stars form. We selected these lessons to be (a) accessible
+%to a broad audience, i.e., requiring minimal prerequisite knowledge to understand;
+%(b) conceptually related to each other, i.e., covering at least \textit{some}
+%similar or overlapping content; and (c) largely independent of each other, i.e., focused
+%on sufficiently different material that understanding one did not require having seen
+%the other. Thus, the two videos we selected are introductory, high-level lectures that both
+%belong to Khan Academy's ``Cosmology and Astronomy'' course domain, but come from
+%different lecture series (``Scale of the Universe'' and ``Stars, Black Holes, and Galaxies''
+%for the first and second lectures, respectively).
+
+We then created a pool of
 multiple-choice quiz questions that would enable us to test participants'
 knowledge about each individual lecture, as well as related content not
 specifically presented in either video ( see Tab.~\questions). Participants answered
 questions randomly drawn from each content area (lecture 1, lecture 2, and
-general physics knowledge) across each of three quizzes. Quiz 1 was intended to
-assessed participants' ``baseline" knowledge before training, quiz 2 assessed knowledge
+general physics knowledge) on each of the three quizzes. Quiz 1 was intended to
+assess participants' ``baseline'' knowledge before training, quiz 2 assessed knowledge
 after watching the \textit{Four Fundamental Forces} video (i.e., lecture 1),
 and quiz 3 assessed knowledge after watching the \textit{Birth of Stars} video
 (i.e., lecture 2).
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=\textwidth]{figs/sliding_windows}
+
+\caption{\textbf{Constructing video content \textit{trajectories}. \textbf{A}.
+Building a document pool from sliding windows of text.} We decompose each
+video's transcript into a series of overlapping sliding windows. The set of
+transcript snippets (across all windows) may be treated as a set of
+``documents'' for training a text embedding model. After training a text
+embedding model on the two videos' sliding windows, we construct ``trajectories''
+through text embedding space by joining the embedding coordinates of successive
+sliding windows from each video. \textbf{B. Embedding multiple videos and
+questions.} Applying the same text embedding approach to each video, along with
+the text of each question in our pool (Tab.~\questions), results in one trajectory per video and one
+embedding coordinate (dot) per question (blue: \textit{Four Fundamental
+Forces}; green: \textit{Birth of Stars}; purple: general physics knowledge). \color{red}{Here
+we have projected the 15-dimensional embeddings into a 3D space using Uniform
+Manifold Approximation and Projection~\citep[UMAP;][]{McInEtal18a}}.}
+
+\label{fig:sliding-windows}
+\end{figure}
+
+To study how participants' conceptual knowledge changed over the course of the experiment, 
+we first sought to characterize the abstract concepts presented to them in each of the two 
+lectures. We adapted an approach we developed in prior work \citep{HeusEtal21} to extract 
+the latent themes from the lectures' contents using a topic model \citep{BleiEtal03}. Briefly, 
+topic models take as input a collection of text documents and learn a set of ``topics'' (i.e., 
+latent themes) from their contents. Once fit, a topic model can be used to transform arbitrary 
+(potentially new) documents into sets of ``topic proportions,'' describing the weighted blend 
+of learned topics reflected in their texts. We parsed automatically generated transcripts of 
+the two lectures into overlapping sliding windows, and used these as documents to fit our 
+model (Fig.~\ref{fig:sliding-windows}A; see 
+\hyperref[subsec:topic-modeling]{\textit{Constructing text embeddings of multiple lectures 
+and questions}}). The ($k$=15) topics 
+
+
+%To construct a corpus of text documents for the two lectures, we parsed their transcripts into overlapping sliding windows (Fig.~\ref{fig:sliding-windows}A; see \hyperref[subsec:topic-modeling]{\textit{Constructing text embeddings of multiple lectures and questions}})
 
 We trained a topic model \citep{BleiEtal03} using sliding windows of text from the two
 lectures' transcripts (see \hyperref[subsec:topic-modeling]{\textit{Constructing text embeddings of multiple
@@ -685,13 +746,13 @@ scores as follows: ``very sluggish'' (-2), ``a little sluggish'' (-1),
 all participants, a range of alertness levels were reported (range: -2
 -- 1; mean: -0.10; standard deviation: 0.84).
 
-Participants reported their undergraduate major(s) as ``social sciences" (28
-participants), ``natural sciences" (16 participants), ``professional" (e.g., pre-med or pre-law; 8
-participants), ``mathematics and engineering" (7 participants), ``humanities" (4
-participants), or ``undecided" (3 participants). Note that some participants
+Participants reported their undergraduate major(s) as ``social sciences'' (28
+participants), ``natural sciences'' (16 participants), ``professional'' (e.g., pre-med or pre-law; 8
+participants), ``mathematics and engineering'' (7 participants), ``humanities'' (4
+participants), or ``undecided'' (3 participants). Note that some participants
 selected multiple categories for their undergraduate major. We also asked
 participants about the courses they had taken. In total, 45 participants
-reported having taken at least one Khan Academy course in the past, 
+reported having taken at least one Khan Academy course in the past,
 and 5 reported not having taken any Khan
 Academy courses. Of those who reported having watched at least one
 Khan Academy course, 7 participants reported having watched 1--2 courses, 11
@@ -728,38 +789,48 @@ Computing (15 participants), College and careers (7 participants), or other
 courses not listed in our survey (6 participants).
 
 
-\subsection*{Experiment}
+\subsection*{Experiment}\label{subsec:experiment}
 
 We hand-selected two course videos from the Khan Academy platform: \textit{Four
 Fundamental Forces} (an introduction to gravity, electromagnetism, the weak
 nuclear force, and the strong nuclear force; duration: 10 minutes and 29
 seconds) and \textit{Birth of Stars} (an introduction to how stars are formed;
-duration: 7 minutes and 57 seconds). We hand-wrote 39 multiple-choice
-questions: 15 about the conceptual content of \textit{Four Fundamental Forces},
-15 about the conceptual content of \textit{Birth of Stars}, and 9
+duration: 7 minutes and 57 seconds). We then hand-created 39 multiple-choice
+questions: 15 about the conceptual content of \textit{Four Fundamental Forces} (i.e., lecture 1),
+15 about the conceptual content of \textit{Birth of Stars} (i.e., lecture 2), and 9
 questions that tested for general conceptual knowledge about basic physics
 (covering material that was not presented in either video). The full set of
-questions and answer options may be found in Table~\questions.
+questions and answer choices may be found in Table~\questions.
 
-%Over the course of the experiment, participants completed three multiple-choice quizzes 
-
-
-Participants began the main experiment by answering a battery of 13 randomly
-selected questions (chosen from the full set of 39). Then they watched the
-\textit{The Four Fundamental Forces} lecture video. Next, they answered a second set of
-13 questions (chosen at random from the remaining 26 questions). Fourth,
-participants watch the \textit{Birth of Stars} video, and finally they answered
-the remaining 13 questions. Our experimental procedure is diagramed in
-Figure~\ref{fig:experiment}. We used the experiment to develop and test our
-computational framework for estimating knowledge and learning.
+Over the course of the experiment, participants completed three 13-question 
+multiple-choice quizzes: the first before viewing lecture 1, the second between 
+lectures 1 and 2, and the third after viewing lecture 2 (Fig.~\ref{fig:experiment}). 
+The questions appearing on each quiz, for each participant, were randomly 
+chosen from the full set of 39, with the constraints that (a) each quiz contain 5
+questions about lecture 1, 5 questions about lecture 2, and 3 questions, and 
+(b) each question appear exactly once. The order of questions on each quiz,
+and the order of answer options for each question, were also randomized. Our
+experimental protocol was approved by the Committee for the Protection of 
+Human Subjects at Dartmouth College.  We used the experiment to develop 
+and test our computational framework for estimating knowledge and learning.
 
 \subsection*{Analysis}
 
 \subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
 
-We extended an approach developed by~\citep{HeusEtal21} to construct text
-embeddings for each moment of each lecture, and of each question in our pool.
-Briefly, our approach uses a topic model~\citep{BleiEtal03}, trained on a set
+We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
+each moment of the two lectures and each question in our pool in a common representational space.
+Briefly, our approach uses a topic model~\citep[Latent Dirichlet Allocation;][]{BleiEtal03}, 
+fit to a corpus of documents to discover a set of $k$ ``topics'' or ``themes'' from their contents.
+Formally, each topic is defined as a set of weights over each word in the model's vocabulary
+(i.e., the union of all unique words, across all documents, excluding ``stop
+words.'').
+
+
+
+We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
+each moment of the two lectures and each question in our pool in a common representational space.
+Briefly, our approach uses a topic model~\citep[Latent Dirichlet Allocation;][]{BleiEtal03}, trained on a set
 of documents, to discover a set of $k$ ``topics'' or ``themes.'' Formally, each
 topic is defined as a set of weights over each word in the model's vocabulary
 (i.e., the union of all unique words, across all documents, excluding ``stop
@@ -771,32 +842,37 @@ vocabulary, may be represented as a $k$-dimensional vector describing how much
 the document (most probably) reflects each topic. (Unless, otherwise noted, we
 used $k = 15$ topics.)
 
-\begin{figure}[tp]
-\centering
-\includegraphics[width=\textwidth]{figs/sliding_windows}
+%\begin{figure}[tp]
+%\centering
+%\includegraphics[width=\textwidth]{figs/sliding_windows}
+%
+%\caption{\textbf{Constructing video content \textit{trajectories}. \textbf{A}.
+%Building a document pool from sliding windows of text.} We decompose each
+%video's transcript into a series of overlapping sliding windows. The set of
+%transcript snippets (across all windows) may be treated as a set of
+%``documents'' for training a text embedding model. After training a text
+%embedding model on the two videos' sliding windows, we construct ``trajectories''
+%through text embedding space by joining the embedding coordinates of successive
+%sliding windows from each video. \textbf{B. Embedding multiple videos and
+%questions.} Applying the same text embedding approach to each video, along with
+%the text of each question in our pool (Tab.~\questions), results in one trajectory per video and one
+%embedding coordinate (dot) per question (blue: \textit{Four Fundamental
+%Forces}; green: \textit{Birth of Stars}; purple: general physics knowledge). \color{red}{Here
+%we have projected the 15-dimensional embeddings into a 3D space using Uniform
+%Manifold Approximation and Projection~\citep[UMAP;][]{McInEtal18a}}.}
+%
+%\label{fig:sliding-windows}
+%\end{figure}
 
-\caption{\textbf{Constructing video content \textit{trajectories}. \textbf{A.
-Building a document pool from sliding windows of text.} We decompose each
-video's transcript into a series of overlapping sliding windows. The set of
-transcript snippets (across all windows) may be treated as a set of
-``documents'' for training a text embedding model. After training a text
-embedding model using the two videos' sliding windows, along with the text from
-each question in our pool (Tab.~\questions), } we construct ``trajectories''
-through text embedding space by joining the embedding coordinates of successive
-sliding windows from each video. \textbf{B. Embedding multiple videos and
-questions.} Applying the same text embedding approach to each video, along with
-the text of each question, results in one trajectory per video and one
-embedding coordinate (dot) per question (blue: \textit{Four Fundamental
-Forces}; green: \textit{Birth of Stars}; pink: general physics knowledge). Here
-we have projected the 15-dimensional embeddings into a 3D space using Uniform
-Manifold Approximation and Projection~\citep[UMAP;][]{McInEtal18a}.}
+As illustrated in Figure~\ref{fig:sliding-windows}A, we first 
 
-\label{fig:sliding-windows}
-\end{figure}
 
 As illustrated in Figure~\ref{fig:sliding-windows}A, we start by building up a
 corpus of documents using overlapping sliding windows that span each video's
-transcript. Khan Academy videos are hosted on the YouTube platform, and all
+transcript. Khan Academy provides professionally created, manual transcriptions of all videos for closed captioning. However, such transcripts would not be readily available in all contexts to which our framework could potentially be applied. Khan Academy videos are hosted on the YouTube platform, which additionally provides automated transcripts 
+
+
+Khan Academy videos are hosted on the YouTube platform, and all
 YouTube videos are run through Google's speech-to-text API~\citep{HalpEtal16}
 to derive a timestamped transcript of any detected speech in the video. The
 resulting transcripts contain one timestamped row per line, and each line
