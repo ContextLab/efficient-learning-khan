@@ -202,7 +202,7 @@ Fundamental Forces}, discussed the four fundamental forces in physics: gravity,
 strong and weak interactions, and electromagnetism. The second,
 entitled \textit{Birth of Stars}, provided an overview of our current
 understanding of how stars form.
-%(See \hyperref[subsec:experiment]{\textit{Experiment}} for more information on how these lectures were chosen.)
+%(See \textit{\nameref{subsec:experiment}} for more information on how these lectures were chosen.)
 %Each multiple-choice quiz consisted of 13 questions that would enable us to test participants'
 %knowledge about each individual lecture, as well as related content not
 %specifically presented in either video ( see Tab.~\questions).
@@ -276,16 +276,14 @@ latent themes) from their contents. Once fit, a topic model can be used to trans
 (potentially new) documents into sets of ``topic proportions,'' describing the weighted blend 
 of learned topics reflected in their texts. We parsed automatically generated transcripts of 
 the two lectures into overlapping sliding windows, and used these as documents to fit our 
-model (Fig.~\ref{fig:sliding-windows}A; see 
-\hyperref[subsec:topic-modeling]{\textit{Constructing text embeddings of multiple lectures 
-and questions}}). The ($k$=15) topics 
+model (Fig.~\ref{fig:sliding-windows}A; see \textit{\nameref{subsec:topic-modeling}}).
+The ($k$=15) topics 
 
 
-%To construct a corpus of text documents for the two lectures, we parsed their transcripts into overlapping sliding windows (Fig.~\ref{fig:sliding-windows}A; see \hyperref[subsec:topic-modeling]{\textit{Constructing text embeddings of multiple lectures and questions}})
+%To construct a corpus of text documents for the two lectures, we parsed their transcripts into overlapping sliding windows (Fig.~\ref{fig:sliding-windows}A; see \textit{\nameref{subsec:topic-modeling}})
 
 We trained a topic model \citep{BleiEtal03} using sliding windows of text from the two
-lectures' transcripts (see \hyperref[subsec:topic-modeling]{\textit{Constructing text embeddings of multiple
-lectures and questions}}). We also used the same model (i.e., trained on the
+lectures' transcripts (see \textit{\nameref{subsec:topic-modeling}}). We also used the same model (i.e., trained on the
 videos' transcripts) to embed the text of each question in our pool. This
 yielded, for each second of each video, and for each question, a single
 15-dimensional topic vector---i.e., a coordinate in a text embedding space
@@ -399,7 +397,7 @@ We developed a simple formula (Eqn.~\ref{eqn:prop}) for using a participant's
 responses to a small set of multiple-choice questions to estimate how much the
 participant ``knows'' about the concept reflected by any arbitrary coordinate,
 $x$, in text embedding space (e.g., the content reflected by any moment in a
-lecture they had watched; see \textit{Estimating dynamic knowledge traces}).
+lecture they had watched; see \textit{\nameref{subsec:traces}}).
 Essentially, the estimated knowledge at the coordinate is given by the weighted
 average proportion of quiz questions the participant answered correctly, where
 the weights reflect how much each question is ``about'' the content at $x$.
@@ -423,7 +421,7 @@ lectures).
     \textbf{A. Moment-by-moment knowledge about the \textit{Four Fundamental
     Forces}}. Each trace displays the weighted proportion of correctly answered
     questions about the content reflected in each moment of the lecture (see
-    \textit{Estimating dynamic knowledge traces}), using responses from one
+    \textit{\nameref{subsec:traces}}), using responses from one
     quiz (color). The traces are averaged across participants. \textbf{B.
     Average estimated knowledge about the \textbf{Four Fundamental Forces}.}
     Each bar displays the across-timepoint average knowledge, estimated using
@@ -536,8 +534,8 @@ and also projected each question into a shared text embedding space.
     \caption{\textbf{Mapping out the geometry of knowledge and learning.}
     \textbf{A. Average ``knowledge maps'' estimated using each quiz.} Each map
     displays a 2D projection of the estimated knowledge about the content
-    reflected by \textit{all} regions of topic space (see \textit{Creating
-    knowledge and learning map visualizations}). The topic trajectories of each
+    reflected by \textit{all} regions of topic space (see 
+    \textit{\nameref{subsec:knowledge-maps}}). The topic trajectories of each
     lecture and the coordinates of each question are indicated by dotted lines
     and dots. Each map reflects an average across all participants. For
     individual participants' maps, see
@@ -563,7 +561,7 @@ and also projected each question into a shared text embedding space.
 
 We projected the resulting 100-dimensional topic vectors (for each second of
 video and for each question) into a shared 2-dimensional space (see
-\textit{Creating knowledge and learning map visualizations}). Next, we sampled
+\textit{\nameref{subsec:knowledge-maps}}). Next, we sampled
 points evenly from a $100 \times 100$ grid of coordinates that evenly tiled a
 rectangle enclosing the 2D projections of the videos and questions. We used
 Equation~\ref{eqn:rbf-knowledge} to estimate participants' knowledge at each of
@@ -911,7 +909,7 @@ moments of videos, compare the content across videos, and estimate potential
 associations between specific questions and specific moments of video.
 
 
-\subsubsection*{Estimating dynamic knowledge traces}
+\subsubsection*{Estimating dynamic knowledge traces}\label{subsec:traces}
 
 We used the following equation to estimate each participant's knowledge about
 timepoint $t$ of a given lecture, $\hat{k}(t)$:
@@ -945,7 +943,7 @@ The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
 correlations) insures that every question (except the least-relevant question)
 contributes some non-zero amount to the knowledge estimate.
 
-\subsubsection*{Creating knowledge and learning map visualizations}
+\subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
 
 An important feature of our approach is that, given a trained text embedding
 model and participants' quiz performance on each question, we can estimate
