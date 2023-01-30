@@ -231,21 +231,13 @@ and quiz 3 assessed knowledge after watching the \textit{Birth of Stars} video
 \centering
 \includegraphics[width=\textwidth]{figs/sliding_windows}
 
-\caption{\textbf{Constructing video content \textit{trajectories}. \textbf{A}.
+\caption{\textbf{Modeling course content.} \textbf{A.
 Building a document pool from sliding windows of text.} We decompose each
-video's transcript into a series of overlapping sliding windows. The set of
+lecture's transcript into a series of overlapping sliding windows. The set of
 transcript snippets (across all windows) may be treated as a set of
-``documents'' for training a text embedding model. After training a text
-embedding model on the two videos' sliding windows, we construct ``trajectories''
-through text embedding space by joining the embedding coordinates of successive
-sliding windows from each video. \textbf{B. Embedding multiple videos and
-questions.} Applying the same text embedding approach to each video, along with
-the text of each question in our pool (Tab.~\questions), results in one trajectory per video and one
-embedding coordinate (dot) per question (blue: \textit{Four Fundamental
-Forces}; green: \textit{Birth of Stars}; purple: general physics knowledge). \color{red}{Here
-we have projected the 15-dimensional embeddings into a 3D space using Uniform
-Manifold Approximation and Projection~\citep[UMAP;][]{McInEtal18a}}.}
-
+``documents'' for training a text embedding model. \textbf{B. Constructing lecture content \textit{trajectories}.}  After training our model on the sliding windows from both lectures, we transform each lecture into a ``trajectory'' through text embedding space by joining the embedding coordinates of successive
+sliding windows parsed from its transcript. \textbf{C. Embedding multiple lectures and
+questions in a shared space.} We apply the same model (trained on the two lectures' windows) to both lectures, along with the text of each question in our pool (Tab.~\questions), to project them into a shared text embedding space. This results in one trajectory per lecture and one coordinate for each question. Here we have projected the 15-dimensional embeddings onto their first 3 principal components for visualization.}
 \label{fig:sliding-windows}
 \end{figure}
 
