@@ -25,7 +25,7 @@
 
 % simple command for inline comments
 \newcommand{\comment}[1]{}
-% italicize section names in \nameref and place in \mbox to prevent bug when 
+% italicize section names in \nameref and place in \mbox to prevent bug when
 % text is split across lines or pages
 \NewCommandCopy{\oldnameref}{\nameref}
 \renewcommand{\nameref}[1]{\mbox{\textit{\oldnameref{#1}}}}
@@ -164,7 +164,7 @@ sense, the gap between modern learning theories and modern pedagogical
 approaches and classroom learning strategies is enormous: most of our theories
 about \textit{how} people learn are inspired by experimental paradigms and
 models that have only peripheral relevance to the kinds of learning that
-students and teachers actually seek \citep{Macl05, HallGree08}. To help bridge this gap, our study uses
+students and teachers actually seek~\citep{Macl05, HallGree08}. To help bridge this gap, our study uses
 course materials from real online courses to inform, fit, and test models of
 real-world conceptual learning. We also provide a
 demonstration of how our models can be used to construct ``maps'' of what
@@ -199,7 +199,7 @@ to training.
     \label{fig:experiment}
 \end{figure}
 
-We asked participants in our study to complete brief multiple-choice quizzes before, between, and after watching two lecture videos from the Khan Academy \citep{Khan04} platform (Fig.~\ref{fig:experiment}). The first lecture video, entitled \textit{Four
+We asked participants in our study to complete brief multiple-choice quizzes before, between, and after watching two lecture videos from the Khan Academy~\citep{Khan04} platform (Fig.~\ref{fig:experiment}). The first lecture video, entitled \textit{Four
 Fundamental Forces}, discussed the four fundamental forces in physics: gravity,
 strong and weak interactions, and electromagnetism. The second,
 entitled \textit{Birth of Stars}, provided an overview of our current
@@ -242,8 +242,8 @@ questions in a shared space.} We apply the same model (trained on the two lectur
 To study how participants' conceptual knowledge changed over the course of the
 experiment, we first sought to characterize the abstract concepts presented to
 them in each of the two lectures. We adapted an approach we developed in prior
-work \citep{HeusEtal21} to extract the latent themes from the lectures' contents
-using a topic model \citep{BleiEtal03}. Briefly, topic models take as input a
+work~\citep{HeusEtal21} to extract the latent themes from the lectures' contents
+using a topic model~\citep{BleiEtal03}. Briefly, topic models take as input a
 collection of text documents and learn a set of ``topics'' (i.e., latent
 themes) from their contents. Once fit, a topic model can be used to transform
 arbitrary (potentially new) documents into sets of ``topic proportions,''
@@ -262,6 +262,27 @@ transcript) forms a \textit{trajectory} that captures how its conceptual
 content unfolds over time (Fig.~\ref{fig:sliding-windows}B). We resampled
 these trajectories to a resolution of 1 topic vector for each second of video.
 
+Next, we sought to characterize what information participants' performance on
+each of the three quizzes could provide about their conceptual knowledge at
+that point in time. Traditional approaches to evaluating students'
+performance on short-form knowledge assessments, such as those in our study,
+entail computing the proportion of correctly answered questions to assign a
+simple numeric score. While this may afford some measure of the
+\textit{extent} of a learner's knowledge, such a score provides little
+information to either the teacher or the learner about the particular
+\textit{contents} of their knowledge---in other words, raw
+``proportion-correct'' measures may capture \textit{how much} a student
+knows, but not \textit{what} they know. For instance, suppose a participant
+in our study was highly knowledgeable about fundamental physical forces (i.e
+., lecture 1 content) but unfamiliar with how stars are formed (i.e., lecture
+2 content), while a second participant was unfamiliar with fundamental forces
+but had extensive prior knowledge about star formation. Since quiz 1
+(completed before viewing either lecture) contained an equal number of
+questions about each lecture's content (see Fig.~\ref{fig:experiment}), these
+two participants could easily achieve the same proportion-correct score
+despite their conceptual knowledge differing substantially. How might we
+distinguish these individuals?
+
 \begin{figure}[tp]
     \centering
     \includegraphics[width=0.7\textwidth]{figs/active-topics}
@@ -277,21 +298,48 @@ Table~\topics.}
     \label{fig:topics}
 \end{figure}
 
-Next, we sought to characterize what information participants' performance on each of the three quizzes could provide about their conceptual knowledge at that point in time. Traditional approaches to evaluating students' performance on short-form knowledge assessments, such as those in our study, entail computing the proportion of correctly answered questions to assign a simple numeric score. While this may afford some measure of the \textit{extent} of a learner's knowledge, such a score provides little information to either the teacher or the learner about the particular \textit{contents} of their knowledge---in other words, raw ``proportion-correct'' measures may capture \textit{how much} a student knows, but not \textit{what} they know. For instance, suppose a participant in our study was highly knowledgeable about fundamental physical forces (i.e., lecture 1 content) but unfamiliar with how stars are formed (i.e., lecture 2 content), while a second participant was unfamiliar with fundamental forces but had extensive prior knowledge about star formation. Since quiz 1 (completed before viewing either lecture) contained an equal number of questions about each lecture's content (see Fig.~\ref{fig:experiment}), these two participants could easily achieve the same proportion-correct score despite their conceptual knowledge differing substantially. How might we distinguish these individuals?
+We hypothesized that our text embedding model, which we had trained on
+transcripts of the two lectures to characterize their conceptual contents,
+should also allow us to capture the conceptual knowledge probed by each quiz
+question. If our model successfully represented information about the deeper
+conceptual content of the lectures (i.e., beyond surface-level details such
+as particular word choices) then we should be able to recover a
+correspondence between their embeddings and embeddings of other text that
+reflect related concepts (e.g., quiz questions that were ostensibly, by
+design, ``about'' one of the two lecture) despite differences in exact
+verbiage. Intuitively, while the content of each given lecture will naturally
+vary from moment to moment, the particular combination of dimensions along
+which its trajectory varies across moments correspond to topics that encode
+meaningful ``information''~\citep{Fish22}  about that lecture's dynamic
+conceptual content. We therefore expected that quiz questions pertaining to
+those same concepts might express the same set of topics.
 
-We hypothesized that our text embedding model, which we had trained on transcripts of the two lectures to characterize their conceptual contents, should also allow us to capture the conceptual knowledge probed by each quiz question. If our model successfully represented information about the deeper conceptual content of the lectures (i.e., beyond surface-level details such as particular word choices) then we should be able to recover a correspondence between their embeddings and embeddings of other text that reflect related concepts (e.g., quiz questions that were ostensibly, by design, ``about'' one of the two lecture) despite differences in exact verbiage. Intuitively, while the content of each given lecture will naturally vary from moment to moment, the particular combination of dimensions along which its trajectory varies across moments correspond to the topics that encode meaningful ``information''~\citep{Fish22}  about that lecture's dynamic conceptual content. We therefore expected that quiz questions pertaining to those same concepts might express the same set of topics.
+%Figure~\ref{fig:topics} displays the variability in topic weights across timepoints in each lecture, and across questions in each category (i.e., lecture 1-related, lecture 2-related, and general physics knowledge).
 
-When we compared the variability in topic
-weights across each lecture's timepoints with the variability in topic weights
-across each question set, we found a strong correspondence
-(Fig.~\ref{fig:topics}). The most variable topics from the \textit{Four
-Fundamental Forces} lecture, and questions about that lecture, are 2, 3, 8, 12,
-13, 14, and 15. The most variable topics from the \textit{Birth of Stars}
-lecture, and questions about that lecture, are 1, 4, 5, 6, and 7. This strong
-overlap between the lectures and questions specifically about each lecture
-indicates that the topic model captures some of the underlying conceptual
-content.
-
+We used our model to transformed the text of each question in our pool into
+the same embedding space as the two lectures' trajectories (Fig
+.~\ref{fig:sliding-windows}C). This yielded a single 15-dimensional
+coordinate (i.e., topic vector) for each question. When we compared the
+variability in topic weights across each lecture's timepoints, and across
+questions from each category (i.e., lecture 1-related, lecture 2-related, and
+general physics knowledge), we found multiple interesting patterns. First,
+there is a strong correspondence between the sets of topics expressed by each
+lecture and its relevant questions. This indicates that our model is
+sensitive to the underlying conceptual content tested by different question,
+and should allow us to differentially assess participants' knowledge for the
+two lectures based on the \textit{specific} questions they answered correctly
+or incorrectly on each quiz. Second, the topics expressed by the general
+physics knowledge questions comprise a nonspecific mix of topics from the two
+lectures (4 from lecture 1; 5 from lecture 2), most of which are expressed to
+a relatively low degree. This indicates that our model should enable us to
+discriminate questions that are highly relevant to our assessment of
+participants' knowledge about concepts from the lectures from those that are
+not (or potentially less so). Third, the two lectures' trajectories vary
+along largely non-overlapping topic dimensions (e.g., variations in weight
+for topics 2, 3, 8, 12, 13, and 15 are specific to lecture 1; variations in
+weight for topics 1, 4, 5, 6, 7, and 10 are specific to lecture 2), but also
+share a small number of expressed topics in common (topics 11 and 14). This 
+indicates that our lecture is able to simultaneously capture
 
 \begin{figure}[tp]
     \centering
@@ -772,7 +820,7 @@ and test our computational framework for estimating knowledge and learning.
 \subsection*{Analysis}
 
 \subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
-Following \citet{HeusEtal21}
+Following~\citet{HeusEtal21}
 
 We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
 each moment of the two lectures and each question in our pool in a common representational space.
