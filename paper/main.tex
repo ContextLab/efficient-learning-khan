@@ -202,12 +202,6 @@ Fundamental Forces}, discussed the four fundamental forces in physics: gravity,
 strong and weak interactions, and electromagnetism. The second,
 entitled \textit{Birth of Stars}, provided an overview of our current
 understanding of how stars form.
-%(See \textit{\nameref{subsec:experiment}} for more information on how these lectures were chosen.)
-%Each multiple-choice quiz consisted of 13 questions that would enable us to test participants'
-%knowledge about each individual lecture, as well as related content not
-%specifically presented in either video ( see Tab.~\questions).
-%
-%We selected these lessons to be accessible to a broad audience (i.e., requiring minimal prerequisite knowledge to understand) and largely independent of each other (i.e., focused on sufficiently different material that understanding one did not require having seen the other), but conceptually related to each other (covering at least \textit{some} similar or overlapping content).
 We selected these lessons to be (a) accessible
 to a broad audience, i.e., requiring minimal prerequisite knowledge to understand;
 (b) conceptually related to each other, i.e., covering at least \textit{some}
@@ -217,22 +211,6 @@ the other. The two videos we selected are introductory lectures that both
 belong to Khan Academy's ``Cosmology and Astronomy'' course domain, but are taken from
 different lecture series (``Scale of the Universe'' and ``Stars, Black Holes, and Galaxies''
 for the first and second lectures, respectively).
-
-%We asked participants in our study to answer questions from several multiple-choice
-%quizzes and watch two lecture videos from the Khan Academy platform
-%(Fig.~\ref{fig:experiment}). The first lecture video, entitled \textit{Four
-%Fundamental Forces}, discussed the four fundamental forces in physics: gravity,
-%strong and weak interactions, and electromagnetism. The second,
-%entitled \textit{Birth of Stars}, provided an overview of our current
-%understanding of how stars form. We selected these lessons to be (a) accessible
-%to a broad audience, i.e., requiring minimal prerequisite knowledge to understand;
-%(b) conceptually related to each other, i.e., covering at least \textit{some}
-%similar or overlapping content; and (c) largely independent of each other, i.e., focused
-%on sufficiently different material that understanding one did not require having seen
-%the other. Thus, the two videos we selected are introductory, high-level lectures that both
-%belong to Khan Academy's ``Cosmology and Astronomy'' course domain, but come from
-%different lecture series (``Scale of the Universe'' and ``Stars, Black Holes, and Galaxies''
-%for the first and second lectures, respectively).
 
 We then created a pool of
 multiple-choice quiz questions that would enable us to test participants'
@@ -267,31 +245,28 @@ Manifold Approximation and Projection~\citep[UMAP;][]{McInEtal18a}}.}
 \label{fig:sliding-windows}
 \end{figure}
 
-To study how participants' conceptual knowledge changed over the course of the experiment, 
-we first sought to characterize the abstract concepts presented to them in each of the two 
-lectures. We adapted an approach we developed in prior work \citep{HeusEtal21} to extract 
-the latent themes from the lectures' contents using a topic model \citep{BleiEtal03}. Briefly, 
-topic models take as input a collection of text documents and learn a set of ``topics'' (i.e., 
-latent themes) from their contents. Once fit, a topic model can be used to transform arbitrary 
-(potentially new) documents into sets of ``topic proportions,'' describing the weighted blend 
-of learned topics reflected in their texts. We parsed automatically generated transcripts of 
-the two lectures into overlapping sliding windows, and used these as documents to fit our 
-model (Fig.~\ref{fig:sliding-windows}A; see \textit{\nameref{subsec:topic-modeling}}).
-The ($k$=15) topics 
-
-
-%To construct a corpus of text documents for the two lectures, we parsed their transcripts into overlapping sliding windows (Fig.~\ref{fig:sliding-windows}A; see \textit{\nameref{subsec:topic-modeling}})
-
-We trained a topic model \citep{BleiEtal03} using sliding windows of text from the two
-lectures' transcripts (see \textit{\nameref{subsec:topic-modeling}}). We also used the same model (i.e., trained on the
-videos' transcripts) to embed the text of each question in our pool. This
-yielded, for each second of each video, and for each question, a single
-15-dimensional topic vector---i.e., a coordinate in a text embedding space
-(Fig.~\ref{fig:sliding-windows}). Intuitively, each dimension of the embedding
-space corresponds to a ``theme'' or ``topic'' reflected in some part(s) of the
-videos (Tab.~\topics), and the coordinates in embedding space denote the blend
-of themes reflected by a particular excerpt of text (e.g., from part of a
-video's transcript, from a question, etc.).
+To study how participants' conceptual knowledge changed over the course of the
+experiment, we first sought to characterize the abstract concepts presented to
+them in each of the two lectures. We adapted an approach we developed in prior
+work \citep{HeusEtal21} to extract the latent themes from the lectures' contents
+using a topic model \citep{BleiEtal03}. Briefly, topic models take as input a
+collection of text documents and learn a set of ``topics'' (i.e., latent
+themes) from their contents. Once fit, a topic model can be used to transform
+arbitrary (potentially new) documents into sets of ``topic proportions,''
+describing the weighted blend of learned topics reflected in their texts. We
+parsed automatically generated transcripts of the two lectures into
+overlapping sliding windows, which we treated as documents to fit our model
+(Fig.~\ref{fig:sliding-windows}A; see \textit{\nameref{subsec:topic-modeling}}).
+Transforming these windows with our model resulted in a number-of-windows by
+number-of-topics (15) topic-proportions matrix, denoting the unique mixture
+of broad themes from both lectures reflected in each window's content.
+Intuitively, each window's ``topic vector'' (i.e., column of the
+topic-proportions matrix) is analogous to a coordinate in a 15-dimensional
+space (whose axes are topics learned by the model). Within this space, each lecture's series of
+topic vectors (i.e., corresponding to sliding windows parsed from its
+transcript) forms a \textit{trajectory} that captures how its conceptual
+content unfolds over time (Fig.~\ref{fig:sliding-windows}A). We resampled
+these trajectories to a resolution of 1 topic vector for each second of video.
 
 \begin{figure}[tp]
     \centering
@@ -534,7 +509,7 @@ and also projected each question into a shared text embedding space.
     \caption{\textbf{Mapping out the geometry of knowledge and learning.}
     \textbf{A. Average ``knowledge maps'' estimated using each quiz.} Each map
     displays a 2D projection of the estimated knowledge about the content
-    reflected by \textit{all} regions of topic space (see 
+    reflected by \textit{all} regions of topic space (see
     \textit{\nameref{subsec:knowledge-maps}}). The topic trajectories of each
     lecture and the coordinates of each question are indicated by dotted lines
     and dots. Each map reflects an average across all participants. For
@@ -800,16 +775,16 @@ questions that tested for general conceptual knowledge about basic physics
 (covering material that was not presented in either video). The full set of
 questions and answer choices may be found in Table~\questions.
 
-Over the course of the experiment, participants completed three 13-question 
-multiple-choice quizzes: the first before viewing lecture 1, the second between 
-lectures 1 and 2, and the third after viewing lecture 2 (Fig.~\ref{fig:experiment}). 
-The questions appearing on each quiz, for each participant, were randomly 
+Over the course of the experiment, participants completed three 13-question
+multiple-choice quizzes: the first before viewing lecture 1, the second between
+lectures 1 and 2, and the third after viewing lecture 2 (Fig.~\ref{fig:experiment}).
+The questions appearing on each quiz, for each participant, were randomly
 chosen from the full set of 39, with the constraints that (a) each quiz contain 5
-questions about lecture 1, 5 questions about lecture 2, and 3 questions, and 
+questions about lecture 1, 5 questions about lecture 2, and 3 questions, and
 (b) each question appear exactly once. The order of questions on each quiz,
 and the order of answer options for each question, were also randomized. Our
-experimental protocol was approved by the Committee for the Protection of 
-Human Subjects at Dartmouth College.  We used the experiment to develop 
+experimental protocol was approved by the Committee for the Protection of
+Human Subjects at Dartmouth College.  We used the experiment to develop
 and test our computational framework for estimating knowledge and learning.
 
 \subsection*{Analysis}
@@ -818,7 +793,7 @@ and test our computational framework for estimating knowledge and learning.
 
 We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
 each moment of the two lectures and each question in our pool in a common representational space.
-Briefly, our approach uses a topic model~\citep[Latent Dirichlet Allocation;][]{BleiEtal03}, 
+Briefly, our approach uses a topic model~\citep[Latent Dirichlet Allocation;][]{BleiEtal03},
 fit to a corpus of documents to discover a set of $k$ ``topics'' or ``themes'' from their contents.
 Formally, each topic is defined as a set of weights over each word in the model's vocabulary
 (i.e., the union of all unique words, across all documents, excluding ``stop
@@ -862,12 +837,12 @@ used $k = 15$ topics.)
 %\label{fig:sliding-windows}
 %\end{figure}
 
-As illustrated in Figure~\ref{fig:sliding-windows}A, we first 
+As illustrated in Figure~\ref{fig:sliding-windows}A, we first
 
 
 As illustrated in Figure~\ref{fig:sliding-windows}A, we start by building up a
 corpus of documents using overlapping sliding windows that span each video's
-transcript. Khan Academy provides professionally created, manual transcriptions of all videos for closed captioning. However, such transcripts would not be readily available in all contexts to which our framework could potentially be applied. Khan Academy videos are hosted on the YouTube platform, which additionally provides automated transcripts 
+transcript. Khan Academy provides professionally created, manual transcriptions of all videos for closed captioning. However, such transcripts would not be readily available in all contexts to which our framework could potentially be applied. Khan Academy videos are hosted on the YouTube platform, which additionally provides automated transcripts
 
 
 Khan Academy videos are hosted on the YouTube platform, and all
