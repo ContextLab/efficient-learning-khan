@@ -277,30 +277,11 @@ Table~\topics.}
     \label{fig:topics}
 \end{figure}
 
-Next, we sought to characterize what information participants' performance on each of the three quizzes could provide about their conceptual knowledge at that point in time. Traditional approaches to evaluating students' performance on short-form knowledge assessments such as those in our study entail computing the proportion of correctly answered questions to assign a simple numeric score. While this may provide some measure of the \textit{extent} of a learner's knowledge, such a score affords little information to either the teacher or the learner about the particular \textit{contents} of their knowledge---in other words, raw ``proportion-correct'' measures may capture \textit{how much} a student knows, but not \textit{what} they know. For instance, suppose a participant in our study was highly knowledgeable about fundamental physical forces (i.e., lecture 1 content) but unfamiliar with how stars are formed (i.e., lecture 2 content), while a second participant was unfamiliar with fundamental forces but had extensive prior knowledge about star formation. Since quiz 1 (completed before viewing either lecture) contained an equal number of questions about each lecture's content (see Fig.~\ref{fig:experiment}), these two participants could easily achieve the same proportion-correct score despite their conceptual knowledge differing substantially. How might we distinguish these individuals?
+Next, we sought to characterize what information participants' performance on each of the three quizzes could provide about their conceptual knowledge at that point in time. Traditional approaches to evaluating students' performance on short-form knowledge assessments, such as those in our study, entail computing the proportion of correctly answered questions to assign a simple numeric score. While this may afford some measure of the \textit{extent} of a learner's knowledge, such a score provides little information to either the teacher or the learner about the particular \textit{contents} of their knowledge---in other words, raw ``proportion-correct'' measures may capture \textit{how much} a student knows, but not \textit{what} they know. For instance, suppose a participant in our study was highly knowledgeable about fundamental physical forces (i.e., lecture 1 content) but unfamiliar with how stars are formed (i.e., lecture 2 content), while a second participant was unfamiliar with fundamental forces but had extensive prior knowledge about star formation. Since quiz 1 (completed before viewing either lecture) contained an equal number of questions about each lecture's content (see Fig.~\ref{fig:experiment}), these two participants could easily achieve the same proportion-correct score despite their conceptual knowledge differing substantially. How might we distinguish these individuals?
 
-We hypothesized that our text embedding model, which we had trained on transcripts of the two lectures to characterize their conceptual contents, should also allow us to capture the conceptual knowledge probed by each quiz question. Given that the questions were (ostensibly, by design) ``about'' the content of 
+We hypothesized that our text embedding model, which we had trained on transcripts of the two lectures to characterize their conceptual contents, should also allow us to capture the conceptual knowledge probed by each quiz question. If our model successfully represented information about the deeper conceptual content of the lectures (i.e., beyond surface-level details such as particular word choices) then we should be able to recover a correspondence between their embeddings and embeddings of other text that reflect related concepts (e.g., quiz questions that were ostensibly, by design, ``about'' one of the two lecture) despite differences in exact verbiage. Intuitively, while the content of each given lecture will naturally vary from moment to moment, the particular combination of dimensions along which its trajectory varies across moments correspond to the topics that encode meaningful ``information''~\citep{Fish22}  about that lecture's dynamic conceptual content. We therefore expected that quiz questions pertaining to those same concepts might express the same set of topics.
 
-In other words, given that the questions were (ostensibly, by design) ``about'' one lecture or the other, 
-
-
-
-Given that we trained the text embedding model using the video transcripts, we
-wondered whether the questions that were (ostensibly, by design) ``about'' the
-content of each lecture would ``match up'' correctly with the lectures. In
-other words, we hoped that the text embeddings would capture something about
-the deeper conceptual content of the lectures, beyond surface details such as
-exact wording choices. If so, when we embed \textit{new} text outside of the
-model's training set, we should see a correspondance between the embeddings of
-the training data (i.e., snippets of text from the lectures' transcripts) and
-other text that reflects related concepts (e.g., questions \textit{about} each
-lecture). Further, although the content from any given moment from a lecture
-might stray from the average content (across all timepoints), we hoped that
-\textit{variability} in each topic's expression over timepoints within a
-lecture would match up with the variability in topic expressions for questions
-about that lecture. Intuitively, the variability in the expression of a given
-topic relates to how much ``information''~\citep{Fish22} the lecture (or
-questions) reflect about that topic. When we compared the variability in topic
+When we compared the variability in topic
 weights across each lecture's timepoints with the variability in topic weights
 across each question set, we found a strong correspondence
 (Fig.~\ref{fig:topics}). The most variable topics from the \textit{Four
