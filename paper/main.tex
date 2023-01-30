@@ -25,6 +25,10 @@
 
 % simple command for inline comments
 \newcommand{\comment}[1]{}
+% italicize section names in \nameref and place in \mbox to prevent bug when 
+% text is split across lines or pages
+\NewCommandCopy{\oldnameref}{\nameref}
+\renewcommand{\nameref}[1]{\mbox{\textit{\oldnameref{#1}}}}
 
 \doublespacing
 \linenumbers
@@ -256,7 +260,7 @@ arbitrary (potentially new) documents into sets of ``topic proportions,''
 describing the weighted blend of learned topics reflected in their texts. We
 parsed automatically generated transcripts of the two lectures into
 overlapping sliding windows, which we treated as documents to fit our model
-(Fig.~\ref{fig:sliding-windows}A; see \textit{\nameref{subsec:topic-modeling}}).
+(Fig.~\ref{fig:sliding-windows}A; see \nameref{subsec:topic-modeling}).
 Transforming these windows with our model resulted in a number-of-windows by
 number-of-topics (15) topic-proportions matrix, denoting the unique mixture
 of broad themes from both lectures reflected in each window's content.
@@ -283,6 +287,7 @@ Table~\topics.}
     \label{fig:topics}
 \end{figure}
 
+Next, wondered whether we could use this same model to capture the 
 
 Given that we trained the text embedding model using the video transcripts, we
 wondered whether the questions that were (ostensibly, by design) ``about'' the
@@ -372,7 +377,7 @@ We developed a simple formula (Eqn.~\ref{eqn:prop}) for using a participant's
 responses to a small set of multiple-choice questions to estimate how much the
 participant ``knows'' about the concept reflected by any arbitrary coordinate,
 $x$, in text embedding space (e.g., the content reflected by any moment in a
-lecture they had watched; see \textit{\nameref{subsec:traces}}).
+lecture they had watched; see \nameref{subsec:traces}).
 Essentially, the estimated knowledge at the coordinate is given by the weighted
 average proportion of quiz questions the participant answered correctly, where
 the weights reflect how much each question is ``about'' the content at $x$.
@@ -396,7 +401,7 @@ lectures).
     \textbf{A. Moment-by-moment knowledge about the \textit{Four Fundamental
     Forces}}. Each trace displays the weighted proportion of correctly answered
     questions about the content reflected in each moment of the lecture (see
-    \textit{\nameref{subsec:traces}}), using responses from one
+    \nameref{subsec:traces}), using responses from one
     quiz (color). The traces are averaged across participants. \textbf{B.
     Average estimated knowledge about the \textbf{Four Fundamental Forces}.}
     Each bar displays the across-timepoint average knowledge, estimated using
@@ -510,7 +515,7 @@ and also projected each question into a shared text embedding space.
     \textbf{A. Average ``knowledge maps'' estimated using each quiz.} Each map
     displays a 2D projection of the estimated knowledge about the content
     reflected by \textit{all} regions of topic space (see
-    \textit{\nameref{subsec:knowledge-maps}}). The topic trajectories of each
+    \nameref{subsec:knowledge-maps}). The topic trajectories of each
     lecture and the coordinates of each question are indicated by dotted lines
     and dots. Each map reflects an average across all participants. For
     individual participants' maps, see
@@ -536,7 +541,7 @@ and also projected each question into a shared text embedding space.
 
 We projected the resulting 100-dimensional topic vectors (for each second of
 video and for each question) into a shared 2-dimensional space (see
-\textit{\nameref{subsec:knowledge-maps}}). Next, we sampled
+\nameref{subsec:knowledge-maps}). Next, we sampled
 points evenly from a $100 \times 100$ grid of coordinates that evenly tiled a
 rectangle enclosing the 2D projections of the videos and questions. We used
 Equation~\ref{eqn:rbf-knowledge} to estimate participants' knowledge at each of
@@ -780,8 +785,8 @@ multiple-choice quizzes: the first before viewing lecture 1, the second between
 lectures 1 and 2, and the third after viewing lecture 2 (Fig.~\ref{fig:experiment}).
 The questions appearing on each quiz, for each participant, were randomly
 chosen from the full set of 39, with the constraints that (a) each quiz contain 5
-questions about lecture 1, 5 questions about lecture 2, and 3 questions, and
-(b) each question appear exactly once. The order of questions on each quiz,
+questions about lecture 1, 5 questions about lecture 2, and 3 questions about general physics knowledge, and
+(b) each question appear exactly once for each participant. The order of questions on each quiz,
 and the order of answer options for each question, were also randomized. Our
 experimental protocol was approved by the Committee for the Protection of
 Human Subjects at Dartmouth College.  We used the experiment to develop
@@ -790,6 +795,7 @@ and test our computational framework for estimating knowledge and learning.
 \subsection*{Analysis}
 
 \subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
+Following \citet{HeusEtal21}
 
 We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
 each moment of the two lectures and each question in our pool in a common representational space.
