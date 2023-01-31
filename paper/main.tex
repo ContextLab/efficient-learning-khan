@@ -17,11 +17,12 @@
 \newcommand{\topics}{S2} 
 
 % supplemental figures
-\newcommand{\individualKnowledgeMapsA}{S1}
-\newcommand{\individualKnowledgeMapsB}{S2}
-\newcommand{\individualKnowledgeMapsC}{S3}
-\newcommand{\individualLearningMapsA}{S4}
-\newcommand{\individualLearningMapsB}{S5}
+\newcommand{\topicWeights}{S1} 
+\newcommand{\individualKnowledgeMapsA}{S2}
+\newcommand{\individualKnowledgeMapsB}{S3}
+\newcommand{\individualKnowledgeMapsC}{S4}
+\newcommand{\individualLearningMapsA}{S5}
+\newcommand{\individualLearningMapsB}{S6}
 
 % simple command for inline comments
 \newcommand{\comment}[1]{}
@@ -33,7 +34,7 @@
 \doublespacing
 \linenumbers
 
-\title{Text embedding models reveal high resolution insights into conceptual
+\title{Text embedding models yield high resolution insights into conceptual
 knowledge from short multiple choice quizzes}
 
 \author{Paxton C. Fitzpatrick\textsuperscript{1},
@@ -98,27 +99,26 @@ deeper meaning underlying the gestalt whole~\citep{Kint70, Macl05, ScotEtal07}.
 
 The difference between ``understanding'' and ``memorizing,'' as framed by
 researchers in education, cognitive psychology, and cognitive
-neuroscience~\citep[e.g.,][]{Kato40, Gall00, ScotEtal07, HallGree08, Macl05} has
-profound analogs in the fields of natural language processing and natural
+neuroscience~\citep[e.g.,][]{Kato40, Gall00, ScotEtal07, HallGree08, Macl05}
+has profound analogs in the fields of natural language processing and natural
 language understanding. For example, considering the raw contents of a document
 (e.g., its constituent symbols, letters, and words) might provide some
 information about what the document is about, just as memorizing a passage
-might provide some ability to answer simple questions about it~\citep[e.g., whether
-it contains words related to furniture versus physics;][]{LandDuma97,
-BleiEtal03, BleiLaff06}. However, modern natural language processing
-models~\citep[e.g.,][]{MikoEtal13a, CerEtal18, BrowEtal20} also attempt to
-capture the deeper meaning \textit{underlying} those atomic elements. These
-models consider not only the co-occurrences of those elements within and across
-documents, but also patterns in how those elements appear across different
-scales (e.g., sentences, paragraphs, chapters, etc.), the temporal and
-grammatical properties of the elements, and other high-level characteristics of
-how they are used~\citep{Mann20, Mann21a}. According to these models, the deep
-conceptual meaning of a document may be captured by a feature vector in a
-high-dimensional representation space, where nearby vectors reflect
-conceptually related documents. A model that succeeds at capturing an analog of
-``understanding'' is able to assign nearby feature vectors to two conceptually
-related documents, \textit{even when the words contained in those documents
-have very little overlap}.
+might provide some ability to answer simple questions about it. However, text
+embedding models~\citep[e.g.,][]{LandDuma97, DeerEtal90, BleiEtal03,
+BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20} also attempt to capture the
+deeper meaning \textit{underlying} those atomic elements. These models consider
+not only the co-occurrences of those elements within and across documents, but
+also patterns in how those elements appear across different scales (e.g.,
+sentences, paragraphs, chapters, etc.), the temporal and grammatical properties
+of the elements, and other high-level characteristics of how they are
+used~\citep{Mann20, Mann21a}. According to these models, the deep conceptual
+meaning of a document may be captured by a feature vector in a high-dimensional
+representation space, where nearby vectors reflect conceptually related
+documents. A model that succeeds at capturing an analog of ``understanding'' is
+able to assign nearby feature vectors to two conceptually related documents,
+\textit{even when the words contained in those documents have very little
+overlap}.
 
 Given these insights, what form might the representation of the sum total of a
 person's knowledge take? First, we might require a means of systematically
@@ -182,8 +182,16 @@ fundamentally ``smooth.'' In other words, as one moves through a space
 representing an individual's knowledge (where similar concepts occupy nearby
 coordinates), their ``level of knowledge'' should change relatively gradually
 throughout that space. To begin to test this smoothness assumption, we sought
-to track participants' knowledge and how it changed over time in response
-to training.
+to track participants' knowledge and how it changed over time in response to
+training. Two overarching goals guide our approach. First, we want to gain
+detailed insights into what learners know, at different points in their
+training. For example, rather than simply reporting on the proportions of
+questions participants answer correctly (i.e., their overall performance), we
+seek estimates of their knowledge about a variety of specific concepts.
+Second, we want our approach to be potentially scalable to large numbers of
+concepts, courses, and students. This requires the conceptual content of
+interest to be discovered \textit{automatically}, rather than relying on
+manually produced ratings or labels.
 
 \begin{figure}[tp]
     \centering
@@ -206,25 +214,32 @@ video, entitled \textit{Four Fundamental Forces}, discussed the four
 fundamental forces in physics: gravity, strong and weak interactions, and
 electromagnetism. The second, entitled \textit{Birth of Stars}, provided an
 overview of our current understanding of how stars form. We selected these
-lessons to be (a) accessible to a broad audience, i.e., requiring minimal
-prerequisite knowledge to understand; (b) conceptually related to each other,
-i.e., covering at least \textit{some} similar or overlapping content; and (c)
-largely independent of each other, i.e., focused on sufficiently different
-material that understanding one did not require having seen the other. The two
-videos we selected are introductory lectures that both belong to Khan Academy's
-``Cosmology and Astronomy'' course domain, but are taken from different lecture
-series (``Scale of the Universe'' and ``Stars, Black Holes, and Galaxies'' for
-the first and second lectures, respectively).
+particular lectures to satisfy three general criteria. First, we wanted both
+lectures to be accessible to a broad audience (i.e., with minimal prerequisite
+knowledge) so as to limit the impact of prior training on our participants'
+abilities to learn from the lectures. To this end, we selected two introductory
+videos that were intended to be viewed at the start of students' training in
+their respective content areas. Second, we wanted both lectures to have some
+related content, so that we could test our approach's ability to distinguish
+similar conceptual content. To this end, we chose two videos from the same (per
+instructor annotations) Khan Academy course domain, ``Cosmology and
+Astronomy.'' Third, we sought to minimize dependencies and specific overalp
+between the videos. For example, we did not want participants' abilities to
+understand one video to (directly) influence their abilities to understand the
+other. To satisfy this last criterion, we chose videos from two different
+lecture series (lectures 1 and 2 were from the ``Scale of the Universe'' and
+``Stars, Black Holes, and Galaxies'' series, respectively).
 
-We created a pool of multiple-choice quiz questions that would enable us to
-evaluate participants' knowledge about each individual lecture along with
-related content not specifically presented in either video (see
-Tab.~\questions). Participants answered questions randomly drawn from each
-content area (lecture 1, lecture 2, and general physics knowledge) on each of
-the three quizzes. Quiz 1 was intended to assess participants' ``baseline''
-knowledge before training, quiz 2 assessed knowledge after watching the
-\textit{Four Fundamental Forces} video (i.e., lecture 1), and quiz 3 assessed
-knowledge after watching the \textit{Birth of Stars} video (i.e., lecture 2).
+We also wrote a set of multiple-choice quiz questions that we hoped would
+enable us to evaluate participants' knowledge about each individual lecture,
+along with related knowledge about physics not specifically presented in either
+video (see Tab.~\questions~for the full list of questions in our stimulus
+pool). Participants answered questions randomly drawn from each content area
+(lecture 1, lecture 2, and general physics knowledge) on each of the three
+quizzes. Quiz 1 was intended to assess participants' ``baseline'' knowledge
+before training, quiz 2 assessed knowledge after watching the \textit{Four
+Fundamental Forces} video (i.e., lecture 1), and quiz 3 assessed knowledge
+after watching the \textit{Birth of Stars} video (i.e., lecture 2).
 
 \begin{figure}[tp]
 \centering
@@ -249,68 +264,51 @@ question. Here we have projected the 15-dimensional embeddings onto their first
 \label{fig:sliding-windows}
 \end{figure}
 
-To study how participants' conceptual knowledge changed over the course of the
-experiment, we first sought to characterize the abstract concepts presented to
-them in each of the two lectures. We adapted an approach we developed in prior
-work~\citep{HeusEtal21} to extract the latent themes from the lectures'
-contents using a topic model~\citep{BleiEtal03}. Briefly, topic models take as
-input a collection of text documents and learn a set of ``topics'' (i.e.,
-latent themes) from their contents. Once fit, a topic model can be used to
-transform arbitrary (potentially new) documents into sets of ``topic
-proportions,'' describing the weighted blend of learned topics reflected in
-their texts. We parsed automatically generated transcripts of the two lectures
-into overlapping sliding windows, each containing the text of the lecture
-transcript from a particular time range. We treated the set of text (across all
-of these windows) as documents to fit our model
+To study in detail how participants' conceptual knowledge changed over the
+course of the experiment, we first sought to model the conceptual content
+presented to them at each moment throughout each of the two lectures. We
+adapted an approach we developed in prior work~\citep{HeusEtal21} to identify
+the latent themes in the lectures using a topic model~\citep{BleiEtal03}.
+Briefly, topic models take as input a collection of text documents and learn a
+set of ``topics'' (i.e., latent themes) from their contents. Once fit, a topic
+model can be used to transform arbitrary (potentially new) documents into sets
+of ``topic proportions,'' describing the weighted blend of learned topics
+reflected in their texts. We parsed automatically generated transcripts of the
+two lectures into overlapping sliding windows, where each window contained the
+text of the lecture transcript from a particular time range. We treated the set
+of text snippets (across all of these windows) as documents to fit our model
 (Fig.~\ref{fig:sliding-windows}A; see \nameref{subsec:topic-modeling}).
-Transforming the text from every window with our model yielded a
+Transforming the text from every sliding window with our model yielded a
 number-of-windows by number-of-topics (15) topic-proportions matrix that
 described the unique mixture of broad themes from both lectures reflected in
-each window's content. Intuitively, each window's ``topic vector'' (i.e.,
-column of the topic-proportions matrix) is analogous to a coordinate in a
-15-dimensional space whose axes are topics discovered by the model. Within this
-space, each lecture's sequence of topic vectors (i.e., corresponding to sliding
-windows parsed from its transcript) forms a \textit{trajectory} that captures
-how its conceptual content unfolds over time (Fig.~\ref{fig:sliding-windows}B).
-We resampled these trajectories to a resolution of one topic vector for each
+each window's content. Each window's ``topic vector'' (i.e., column of the
+topic-proportions matrix) is a coordinate in a 15-dimensional space whose axes
+are topics discovered by the model. Within this space, each lecture's sequence
+of topic vectors (i.e., corresponding to its transcript's overlapping text
+snippets across sliding windows) forms a \textit{trajectory} that captures how
+its conceptual content unfolds over time (Fig.~\ref{fig:sliding-windows}B). We
+resampled these trajectories to a resolution of one topic vector for each
 second of video (i.e., 1~Hz).
 
-Next, we sought to characterize what information participants' performance on
-each of the three quizzes could provide about their conceptual knowledge at
-that point in time. Traditional approaches to evaluating students'
-performance on short-form knowledge assessments, such as those in our study,
-entail computing the proportion of correctly answered questions to assign a
-simple numeric score. While this may afford some measure of the
-\textit{extent} of a learner's knowledge, such a score provides little
-information to either the teacher or the learner about the particular
-\textit{contents} of their knowledge---in other words, raw
-``proportion-correct'' measures may capture \textit{how much} a student
-knows, but not \textit{what} they know. For instance, suppose a participant
-in our study was highly knowledgeable about fundamental physical forces (i.e
-., lecture 1 content) but unfamiliar with how stars are formed (i.e., lecture
-2 content), while a second participant was unfamiliar with fundamental forces
-but had extensive prior knowledge about star formation. Since quiz 1
-(completed before viewing either lecture) contained an equal number of
-questions about each lecture's content (see Fig.~\ref{fig:experiment}), these
-two participants could easily achieve the same proportion-correct score
-despite their conceptual knowledge differing substantially. How might we
-distinguish these individuals?
-
-We hypothesized that our text embedding model, which we had trained on
-transcripts of the two lectures to characterize their conceptual contents,
-should also allow us to capture the conceptual knowledge probed by each quiz
-question. If our model successfully represented information about the deeper
-conceptual content of the lectures (i.e., beyond surface-level details such as
-particular word choices) then we should be able to recover a correspondence
-between their embeddings and embeddings of other text that reflects related
-concepts (e.g., quiz questions that were ostensibly, by design, ``about'' one
-of the two lecture) despite differences in exact verbiage. Intuitively, while
-the content of each given lecture will naturally vary from moment to moment,
-the particular combination of dimensions along which its trajectory varies
-across moments correspond to topics that encode meaningful
-``information''~\citep{Fish22} about that lecture's dynamic conceptual content.
-We therefore expected that quiz questions pertaining to those same concepts
-might express the same set of topics.
+We hypothesized that a topic model trained on transcripts of the two lectures,
+should also capture the conceptual knowledge probed by each quiz question. If
+indeed the topic model could capture information about the deeper conceptual
+content of the lectures (i.e., beyond surface-level details such as particular
+word choices) then we should be able to recover a correspondence between each
+lecture and questions \textit{about} each lecture. Importantly, such a
+correspondence could not solely arise from superficial text matching between
+lecture transcripts and questions, since the lectures and questions used
+different words. Simply comparing the average topic weights from each lecture
+and question sets (averaging across time and questions, respectively) reveals a
+striking correspondence (Fig.~\topicWeights). Specifically, the average topic
+weights from lecture 1 are strongly correlated with the average topic weights
+from lecture 1 questions ($r(13) = XX, p = XX$, 95\% confidence interval
+(CI)~$= XX$), and the average topic weights from lecture 2 are strongly
+correlated with the average topic weights from lecture 2 questions ($r(13) =
+XX, p = XX, CI = XX$). At the same time, the average topics from two lectures
+are \textit{negatively} correlated ($r(13) = XX, p = XX, CI = XX$). The full
+set of pairwise comparisons between topic vectors for the lectures and each
+question set is reported in Figure~\topicWeights.
 
 \begin{figure}[tp]
     \centering
@@ -330,19 +328,41 @@ corresponds to a bar plot in Panel A.}
     \label{fig:topics}
 \end{figure}
 
-We used our model to transform the text of each question in our pool into the
-same embedding space as the two lectures' trajectories
+Another, more sensitive, way of summarizing the conceptual content of the
+lectures and questions is to look at \textit{variability} in how topics are
+weighted over time and across different questions (Fig.~\ref{fig:topics}).
+Intuitively, the variability in the expression of a given topic relates to how
+much ``information''~\citep{Fish22} the lecture (or questions) reflect about
+that topic. For example, suppose a given topic is weighted on heavily
+throughout a lecture. That topic might be characteristic of some aspect or
+property of the lecture \textit{overall} (conceptual or otherwise), but unless
+the topic's weights changed in meaningful ways over time, the topic would be a
+poor indicator of any \textit{specific} conceptual content in the lecture. We
+therefore also compared the variance in topic weights (across time or
+questions) between the lectures and questions.  [ADD BACK CORRELATION RESULTS]
+
+\textbf{JRM STOPPED HERE...}
+
+
+
+
+We used the fitted topic model to transform the text of each question in our
+stimulus pool into the same embedding space as the two lectures' trajectories
 (Fig.~\ref{fig:sliding-windows}C). This yielded a single 15-dimensional
 coordinate (i.e., topic vector) for each question. We then computed the
 variance of each topic's weight across timepoints of each lecture, and across
-questions from each category (i.e., lecture 1-related, lecture 2-related, and
+questions from each category (i.e., questions about lecture 1, lecture 2, and
 general physics knowledge; Fig.~\ref{fig:topics}A). Visual inspection of
 Figure~\ref{fig:topics}A suggests a strong correspondence between the sets of
 topics expressed by each lecture and its related questions, with only limited
 overlap in the topics expressed by non-matched lecture-question set pairs. To
 quantify these apparent similarities and differences, we computed the
-correlation between each pair of topic-weight variance distributions
-(Fig.~\ref{fig:topics}B). We found that our model represented the contents of
+correlations between each pair of topic-weight variance vectors (i.e., vectors
+containing the variance across timepoints or questions, for each topic;
+Fig.~\ref{fig:topics}B). 
+
+
+We found that our model represented the contents of
 lecture-related questions using a combination of topic dimensions (and relative
 variation along those topic dimensions) that was highly similar to that of
 their reference lecture (\textit{Four Fundamental Forces} (\textit{FFF})
