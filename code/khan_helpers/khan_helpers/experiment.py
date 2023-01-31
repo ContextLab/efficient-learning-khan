@@ -94,8 +94,6 @@ class Experiment:
         return self.question_vectors[qids]
 
     def get_timepoint_text(self, lecture, timepoint, buffer=15):
-        # TODO: map backwards through window timepoints rather than
-        #  directly to transcript for more accuracy?
         if lecture == 'forces':
             transcript = self.forces_transcript
         elif lecture == 'bos':
@@ -105,7 +103,7 @@ class Experiment:
 
         # get timestamps and text from transcript
         transcript = transcript.splitlines()
-        timestamps = np.fromiter(map(_ts_to_sec, transcript[::2]), dtype=np.int16)
+        timestamps = np.fromiter(map(_ts_to_sec, transcript[::2]), dtype=float)
         text = np.array(transcript[1::2])
         # compute start and end time from timepoint and buffer
         onset, offset = timepoint - buffer, timepoint + buffer
@@ -115,10 +113,9 @@ class Experiment:
         if offset > timestamps[-1]:
             offset = timestamps[-1]
         # get timestamps of text between those times
-        text_ixs = np.where((timestamps >= onset) & (timestamps < offset))[0]
+        text_ixs = np.where((timestamps >= onset) & (timestamps <= offset))[0]
         return ' '.join(text[text_ixs])
 
-    # TODO: delete if not used
     def save_participants(self, filepaths=None, allow_overwrite=False):
         to_save = list(self.participants)
         if 'avg_participant' in self.__dict__:
