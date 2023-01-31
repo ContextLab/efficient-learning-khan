@@ -283,21 +283,6 @@ two participants could easily achieve the same proportion-correct score
 despite their conceptual knowledge differing substantially. How might we
 distinguish these individuals?
 
-\begin{figure}[tp]
-    \centering
-    \includegraphics[width=0.7\textwidth]{figs/active-topics}
-
-\caption{\textbf{Lecture and question topic overlap.} The bar plots display the
-variability in topic weights across lecture timepoints (top panels) and
-questions (bottom panels); colors denote topics. The top-weighted words from
-the most ``expressive'' (i.e., variable across observations) topic from each
-lecture are displayed in the upper right (orange: topic 2; yellow-green: topic
-4). The top-weighted words from the full set of topics may be found in
-Table~\topics.}
-
-    \label{fig:topics}
-\end{figure}
-
 We hypothesized that our text embedding model, which we had trained on
 transcripts of the two lectures to characterize their conceptual contents,
 should also allow us to capture the conceptual knowledge probed by each quiz
@@ -305,7 +290,7 @@ question. If our model successfully represented information about the deeper
 conceptual content of the lectures (i.e., beyond surface-level details such
 as particular word choices) then we should be able to recover a
 correspondence between their embeddings and embeddings of other text that
-reflect related concepts (e.g., quiz questions that were ostensibly, by
+reflects related concepts (e.g., quiz questions that were ostensibly, by
 design, ``about'' one of the two lecture) despite differences in exact
 verbiage. Intuitively, while the content of each given lecture will naturally
 vary from moment to moment, the particular combination of dimensions along
@@ -314,37 +299,77 @@ meaningful ``information''~\citep{Fish22}  about that lecture's dynamic
 conceptual content. We therefore expected that quiz questions pertaining to
 those same concepts might express the same set of topics.
 
-%Figure~\ref{fig:topics} displays the variability in topic weights across timepoints in each lecture, and across questions in each category (i.e., lecture 1-related, lecture 2-related, and general physics knowledge).
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figs/active-topics}
 
-We used our model to transformed the text of each question in our pool into
-the same embedding space as the two lectures' trajectories (Fig
-.~\ref{fig:sliding-windows}C). This yielded a single 15-dimensional
-coordinate (i.e., topic vector) for each question. When we compared the
-variability in topic weights across each lecture's timepoints, and across
+\caption{\textbf{Lecture and question topic overlap.} \textbf{A. Topic 
+weight variability}. The bar plots display the variance of each topic's weight 
+across lecture timepoints (top row) and questions (bottom row); colors 
+denote topics. The top-weighted words from the most ``expressive'' (i.e., 
+variable across observations) topic from each lecture are displayed in the 
+upper right (orange: topic 2; yellow-green: topic 4). The top-weighted words 
+from the full set of topics may be found in Table~\topics. \textbf{B. Relationships between topic weight variability.} Pairwise correlations between the distributions of topic weight variance for each lecture and question category. Each row/column corresponds to a bar plot in panel A.}
+
+    \label{fig:topics}
+\end{figure}
+
+We used our model to transform the text of each question in our pool into
+the same embedding space as the two lectures' trajectories 
+(Fig.~\ref{fig:sliding-windows}C). This yielded a single 15-dimensional
+coordinate (i.e., topic vector) for each question. We then computed the variance
+of each topic's weight across timepoints of each lecture, and across 
 questions from each category (i.e., lecture 1-related, lecture 2-related, and
-general physics knowledge), we found multiple interesting patterns. First,
-there is a strong correspondence between the sets of topics expressed by each
-lecture and its relevant questions. This indicates that our model is
-sensitive to the underlying conceptual content tested by different question,
-and should allow us to differentially assess participants' knowledge for the
-two lectures based on the \textit{specific} questions they answered correctly
-or incorrectly on each quiz. Second, the topics expressed by the general
-physics knowledge questions comprise a nonspecific mix of topics from the two
-lectures (4 from lecture 1; 5 from lecture 2), most of which are expressed to
-a relatively low degree. This indicates that our model should enable us to
-discriminate questions that are highly relevant to our assessment of
-participants' knowledge about concepts from the lectures from those that are
-not (or potentially less so). Third, the two lectures' trajectories vary
-along largely non-overlapping topic dimensions (e.g., variations in weight
-for topics 2, 3, 8, 12, 13, and 15 are specific to lecture 1; variations in
-weight for topics 1, 4, 5, 6, 7, and 10 are specific to lecture 2), but also
-share a small number of expressed topics in common (topics 11 and 14). This 
-indicates that our lecture is able to simultaneously capture
+general physics knowledge; Fig.~\ref{fig:topics}A). Visual inspection of 
+Figure~\ref{fig:topics}A reveals a strong correspondence between the sets of 
+topics expressed by each lecture and its related questions, as well as limited 
+overlap in the topics expressed by non-matched lecture-question set pairs. 
+To quantify these apparent similarities and differences, we computed the correlation 
+between each pair of topic-weight variance distributions (Fig.~\ref{fig:topics}B). 
+We found that our model captured the contents of lecture-related questions 
+using a weighted blend of topic dimensions that was highly similar to that of 
+their reference lecture (\textit{Four Fundamental Forces} (\textit{FFF}) 
+questions vs.~lecture: Pearson's $r(13) = 
+0.824,~p<0.001,~95\%~\mathrm{confidence~interval~(CI)} = [0.696, 0.973]$; 
+\textit{Birth of Stars} (\textit{BoS}) questions vs.~lecture: $r(13) = 
+0.801,~p<0.001,~95\%~\mathrm{CI} = [0.539, 0.958]$) but diverged significantly 
+from that of the non-reference lecture (\textit{FFF} questions vs.~\textit{BoS} 
+lecture: $r(13) = -0.620,~p = 0.014,~95\%~\mathrm{CI} = [-0.871, -0.326]$; 
+\textit{BoS} questions vs.~\textit{FFF} lecture: $r(13) = -0.550,~p = 
+0.034,~95\%~\mathrm{CI} = [-0.803, -0.246]$). This indicated that our model 
+was sufficiently sensitive to the conceptual content tested by different quiz questions to differentiate between those relating to one lecture versus the other, and allow us to 
+
+
+sensitive to the underlying conceptual 
+content tested by different question,and should allow us to differentially assess 
+participants' knowledge for the two lectures based on the \textit{specific}
+questions they answered correctly or incorrectly on each quiz.
+%When we compared the
+%variability in topic weights across each lecture's timepoints, and across
+%questions from each category (i.e., lecture 1-related, lecture 2-related, and
+%general physics knowledge), we found multiple interesting patterns (Fig.~\ref{fig:topics}). First,
+%there is a strong correspondence between the sets of topics expressed by each
+%lecture and its relevant questions. This indicates that our model is
+%sensitive to the underlying conceptual content tested by different question,
+%and should allow us to differentially assess participants' knowledge for the
+%two lectures based on the \textit{specific} questions they answered correctly
+%or incorrectly on each quiz. Second, the topics expressed by the general
+%physics knowledge questions comprise a nonspecific mix of topics from the two
+%lectures (4 from lecture 1; 5 from lecture 2), most of which are expressed to
+%a relatively low degree. This indicates that our model should enable us to
+%discriminate questions that are highly relevant to our assessment of
+%participants' knowledge about concepts from the lectures from those that are
+%not (or potentially less so). Third, the two lectures' trajectories vary
+%along largely non-overlapping topic dimensions (e.g., variations in weight
+%for topics 2, 3, 8, 12, 13, and 15 are specific to lecture 1; variations in
+%weight for topics 1, 4, 5, 6, 7, and 10 are specific to lecture 2), but also
+%share a small number of expressed topics in common (topics 11 and 14). This
+%indicates that our lecture is able to simultaneously capture 
+
 
 \begin{figure}[tp]
     \centering
     \includegraphics[width=\textwidth]{figs/lecture-question-similarity}
-
     \caption{\textbf{Which parts of each lecture are captured by each
     question?} Each panel displays timeseries plots showing how each question's
     topic vector correlates with each video timepoint's topic vector (Panel
@@ -360,7 +385,7 @@ indicates that our lecture is able to simultaneously capture
     \label{fig:question-correlations}
 \end{figure}
 
-Although a single lecture may be organized around a single broad theme at a
+Although an individual lecture may be organized around a single broad theme at a
 coarse scale, at a finer scale each moment of a lecture typically covers a
 narrower range of content. We wondered whether a text embedding model trained
 on the lectures' transcripts might capture some of this finer scale content.
