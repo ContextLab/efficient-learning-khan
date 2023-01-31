@@ -339,44 +339,19 @@ property of the lecture \textit{overall} (conceptual or otherwise), but unless
 the topic's weights changed in meaningful ways over time, the topic would be a
 poor indicator of any \textit{specific} conceptual content in the lecture. We
 therefore also compared the variance in topic weights (across time or
-questions) between the lectures and questions.  [ADD BACK CORRELATION RESULTS]
-
-\textbf{JRM STOPPED HERE...}
-
-
-
-
-We used the fitted topic model to transform the text of each question in our
-stimulus pool into the same embedding space as the two lectures' trajectories
-(Fig.~\ref{fig:sliding-windows}C). This yielded a single 15-dimensional
-coordinate (i.e., topic vector) for each question. We then computed the
-variance of each topic's weight across timepoints of each lecture, and across
-questions from each category (i.e., questions about lecture 1, lecture 2, and
-general physics knowledge; Fig.~\ref{fig:topics}A). Visual inspection of
-Figure~\ref{fig:topics}A suggests a strong correspondence between the sets of
-topics expressed by each lecture and its related questions, with only limited
-overlap in the topics expressed by non-matched lecture-question set pairs. To
-quantify these apparent similarities and differences, we computed the
-correlations between each pair of topic-weight variance vectors (i.e., vectors
-containing the variance across timepoints or questions, for each topic;
-Fig.~\ref{fig:topics}B). 
-
-
-We found that our model represented the contents of
-lecture-related questions using a combination of topic dimensions (and relative
-variation along those topic dimensions) that was highly similar to that of
-their reference lecture (\textit{Four Fundamental Forces} (\textit{FFF})
-questions vs.~lecture: Pearson's $r(13) =
-0.824,~p<0.001,~95\%~\mathrm{confidence~interval~(CI)} = [0.696, 0.973]$;
-\textit{Birth of Stars} (\textit{BoS}) questions vs.~lecture: $r(13) =
-0.801,~p<0.001,~95\%~\mathrm{CI} = [0.539, 0.958]$) but diverged significantly
-from that of the non-reference lecture (\textit{FFF} questions vs.~\textit{BoS}
-lecture: $r(13) = -0.620,~p = 0.014,~95\%~\mathrm{CI} = [-0.871, -0.326]$;
-\textit{BoS} questions vs.~\textit{FFF} lecture: $r(13) = -0.550,~p =
-0.034,~95\%~\mathrm{CI} = [-0.803, -0.246]$). This indicated that our model
-captured the conceptual contents of the lectures and quiz questions
-sufficiently well to differentiate between questions relating to one lecture
-versus the other.
+questions) between the lectures and questions. The variability in topic
+expression (over time and across questions) was similar for the lecture 1 video
+and questions ($r(13) = 0.824,~p<0.001, CI = [0.696, 0.973]$) and the lecture 2
+video and questions ($r(13) = 0.801,~p<0.001,~95\%~\mathrm{CI} = [0.539,
+0.958]$). However, as reported in Figure~\ref{fig:topics}B, the variability in
+topic expressions across \textit{different} videos and lecture-specific
+questions (i.e., lecture 1 video versus lecture 2 questions; lecture 2 video
+versus lecture 1 questions) were \textit{negatively} correlated, and neither
+video's topic variability was reliably correlated with the topic variability
+across general physics knowledge questions. Taken together, the analyses
+reported in Figures~\ref{fig:topics} and~\topicWeights~indicate that a topic
+model fit to the videos' transcripts can also reveal correspondances (at a
+coarse scale) between the lectures and (held-out) questions.
 
 Although a single lecture may be organized around a single broad theme at a
 coarse scale, at a finer scale each moment of a lecture typically covers a
@@ -431,7 +406,11 @@ missed three questions about three \textit{different} concepts (e.g., $A$, $B$,
 and $C$). But if we wanted to fill in the ``gaps'' in the two students'
 understandings, we might do well to focus on concept $A$ for the first student,
 but to also add in materials pertaining to concepts $B$ and $C$ for the second
-student.
+student. In other words, raw ``proportion-correct'' measures may capture
+\textit{how much} a student knows, but not \textit{what} they know. We wondered
+whether our modeling framework might enable us to (formally and automatically)
+infer participants' knowledge at the scale of individual concepts (e.g., as
+captured by a single question).
 
 We developed a simple formula (Eqn.~\ref{eqn:prop}) for using a participant's
 responses to a small set of multiple-choice questions to estimate how much the
@@ -450,7 +429,6 @@ throughout the experiment. From just 13 questions per quiz, we obtain a
 high-resolution snapshot (at the time each quiz was taken) of what the
 participants knew about any moment's content, from either of the two lectures
 they watched (comprising a total of 1106 samples across the two lectures).
-
 
 \begin{figure}[tp]
     \centering
@@ -493,20 +471,20 @@ relatively low when estimated using Quiz 1 responses, but should increase when
 estimated using Quiz 2 or 3 responses (Fig.~\ref{fig:knowledge-timeseries}B).
 Indeed, we found that participants' estimated knowledge about the content of
 the \textit{Four Fundamental Forces} was substantially higher on Quiz 2 versus
-Quiz 1 ($t(49) = 8.764, p < 0.001$) and on Quiz 3 versus Quiz 1 ($t(49) = 10.519, p <
-0.001$). We found no reliable differences in estimated knowledge about that
-lecture's content on Quiz 2 versus 3 ($t(49) = 0.160, p = 0.874$). Similarly, we
-hypothesized (and subsequently confirmed) that participants should show more
-estimated knowledge about the content of the \textit{Birth of Stars} lecture
-after (versus before) watching it (Fig.~\ref{fig:knowledge-timeseries}D).
-Specifically, since participants watched that lecture after taking Quiz 2 (but
-before Quiz 3), we hypothesized that their knowledge estimates should be
-relatively low on Quizzes 1 and 2, but should show a ``boost'' on Quiz 3.
-Consistent with this prediction, we found no reliable differences in estimated
-knowledge about the \textit{Birth of Stars} lecture content on Quizzes 1 versus
-2 ($t(49) = 1.013, p = 0.316$), but the estimated knowledge was substantially higher
-on Quiz 3 versus 2 ($t(49) = 10.561, p < 0.001$) and Quiz 3 versus 1 ($t(49) = 8.969, p <
-0.001$).
+Quiz 1 ($t(49) = 8.764, p < 0.001$) and on Quiz 3 versus Quiz 1 ($t(49) =
+10.519, p < 0.001$). We found no reliable differences in estimated knowledge
+about that lecture's content on Quiz 2 versus 3 ($t(49) = 0.160, p = 0.874$).
+Similarly, we hypothesized (and subsequently confirmed) that participants
+should show more estimated knowledge about the content of the \textit{Birth of
+Stars} lecture after (versus before) watching it
+(Fig.~\ref{fig:knowledge-timeseries}D). Specifically, since participants
+watched that lecture after taking Quiz 2 (but before Quiz 3), we hypothesized
+that their knowledge estimates should be relatively low on Quizzes 1 and 2, but
+should show a ``boost'' on Quiz 3. Consistent with this prediction, we found no
+reliable differences in estimated knowledge about the \textit{Birth of Stars}
+lecture content on Quizzes 1 versus 2 ($t(49) = 1.013, p = 0.316$), but the
+estimated knowledge was substantially higher on Quiz 3 versus 2 ($t(49) =
+10.561, p < 0.001$) and Quiz 3 versus 1 ($t(49) = 8.969, p < 0.001$).
 
 If we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, the estimated knowledge should have some
