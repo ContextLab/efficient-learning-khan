@@ -83,6 +83,20 @@ and new material. Observing how the student's knowledge changed over time, in
 response to their teaching, could also help to guide the teacher towards the
 most effective strategy for that individual student.
 
+A common approach to assessing students' learning is to compile a set of quiz
+questions, tally up the proportion of correctly answered questions, and provide
+the student with feedback in the form of a letter grade. Although numerical or
+letter grades give \textit{some} indication about whether the student has
+mastered the to-be-learned material, any univariate measure of performance on a
+complex task is at risk of conflating underlying factors, losing relevant
+information, and so on. For example, consider the relative utility of the
+imaginary map described above that characterizes in detail a student's
+knowledge, versus a single annotation saying that the student answered 85\% of
+their quiz questions correctly, or that they received a `B'. Here, we show that
+the same quiz data required to compute proportion correct scores or letter
+grades can be used to instead obtain much more detailed insights into what the
+student knows at the time they took the quiz.
+
 Designing and building procedures and tools for mapping out knowledge touches
 on deep questions about what it means to learn. For example, how do we acquire
 conceptual knowledge? Memorizing course lectures or textbook chapters by rote
@@ -223,7 +237,7 @@ their respective content areas. Second, we wanted both lectures to have some
 related content, so that we could test our approach's ability to distinguish
 similar conceptual content. To this end, we chose two videos from the same (per
 instructor annotations) Khan Academy course domain, ``Cosmology and
-Astronomy.'' Third, we sought to minimize dependencies and specific overalp
+Astronomy.'' Third, we sought to minimize dependencies and specific overlap
 between the videos. For example, we did not want participants' abilities to
 understand one video to (directly) influence their abilities to understand the
 other. To satisfy this last criterion, we chose videos from two different
@@ -281,7 +295,7 @@ of text snippets (across all of these windows) as documents to fit our model
 Transforming the text from every sliding window with our model yielded a
 number-of-windows by number-of-topics (15) topic-proportions matrix that
 described the unique mixture of broad themes from both lectures reflected in
-each window's content. Each window's ``topic vector'' (i.e., column of the
+each window's text. Each window's ``topic vector'' (i.e., column of the
 topic-proportions matrix) is a coordinate in a 15-dimensional space whose axes
 are topics discovered by the model. Within this space, each lecture's sequence
 of topic vectors (i.e., corresponding to its transcript's overlapping text
@@ -290,7 +304,7 @@ its conceptual content unfolds over time (Fig.~\ref{fig:sliding-windows}B). We
 resampled these trajectories to a resolution of one topic vector for each
 second of video (i.e., 1~Hz).
 
-We hypothesized that a topic model trained on transcripts of the two lectures,
+We hypothesized that a topic model trained on transcripts of the two lectures
 should also capture the conceptual knowledge probed by each quiz question. If
 indeed the topic model could capture information about the deeper conceptual
 content of the lectures (i.e., beyond surface-level details such as particular
@@ -302,13 +316,15 @@ different words. Simply comparing the average topic weights from each lecture
 and question sets (averaging across time and questions, respectively) reveals a
 striking correspondence (Fig.~\topicWeights). Specifically, the average topic
 weights from lecture 1 are strongly correlated with the average topic weights
-from lecture 1 questions ($r(13) = XX, p = XX$, 95\% confidence interval
-(CI)~$= XX$), and the average topic weights from lecture 2 are strongly
-correlated with the average topic weights from lecture 2 questions ($r(13) =
-XX, p = XX, CI = XX$). At the same time, the average topics from two lectures
-are \textit{negatively} correlated ($r(13) = XX, p = XX, CI = XX$). The full
-set of pairwise comparisons between topic vectors for the lectures and each
-question set is reported in Figure~\topicWeights.
+from lecture 1 questions ($r(13) = 0.809, p < 0.001$, 95\% confidence interval
+(CI)~$= [0.633, 0.962]$), and the average topic weights from lecture 2 are
+strongly correlated with the average topic weights from lecture 2 questions
+($r(13) = 0.728, p = 0.002, CI = [0.456, 0.920]$). At the same time, the
+average topics from two lectures are \textit{negatively} correlated ($r(13) =
+-0.634, p = 0.011, CI = [-0.924, -0.237]$), indicating that the topic model
+also exhibits some degree of specificity. The full set of pairwise comparisons
+between topic vectors for the lectures and each question set is reported in
+Figure~\topicWeights.
 
 \begin{figure}[tp]
     \centering
@@ -338,7 +354,7 @@ throughout a lecture. That topic might be characteristic of some aspect or
 property of the lecture \textit{overall} (conceptual or otherwise), but unless
 the topic's weights changed in meaningful ways over time, the topic would be a
 poor indicator of any \textit{specific} conceptual content in the lecture. We
-therefore also compared the variance in topic weights (across time or
+therefore also compared the variances in topic weights (across time or
 questions) between the lectures and questions. The variability in topic
 expression (over time and across questions) was similar for the lecture 1 video
 and questions ($r(13) = 0.824,~p<0.001, CI = [0.696, 0.973]$) and the lecture 2
@@ -346,7 +362,7 @@ video and questions ($r(13) = 0.801,~p<0.001,~95\%~\mathrm{CI} = [0.539,
 0.958]$). However, as reported in Figure~\ref{fig:topics}B, the variability in
 topic expressions across \textit{different} videos and lecture-specific
 questions (i.e., lecture 1 video versus lecture 2 questions; lecture 2 video
-versus lecture 1 questions) were \textit{negatively} correlated, and neither
+versus lecture 1 questions) were negatively correlated, and neither
 video's topic variability was reliably correlated with the topic variability
 across general physics knowledge questions. Taken together, the analyses
 reported in Figures~\ref{fig:topics} and~\topicWeights~indicate that a topic
@@ -358,9 +374,9 @@ coarse scale, at a finer scale each moment of a lecture typically covers a
 narrower range of content. We wondered whether a text embedding model trained
 on the lectures' transcripts might capture some of this finer scale content.
 For example, if a particular question asks about the content from one small
-part of a lecture, we wondered whether our text embedding model could be used
-to automatically identify the ``matching'' moment(s) in the lecture. When we
-correlated each question's topic vector with the topic vectors for each second
+part of a lecture, we wondered whether the text embeddings could be used to
+automatically identify the ``matching'' moment(s) in the lecture. When we
+correlated each question's topic vector with the topic vectors from each second
 of the lectures, we found some evidence that each question is temporally
 specific (Fig.~\ref{fig:question-correlations}). In particular, most questions'
 topic vectors were maximally correlated with a well-defined (and relatively
@@ -578,9 +594,9 @@ and also projected each question into a shared text embedding space.
 
 We projected the resulting 100-dimensional topic vectors (for each second of
 video and for each question) into a shared 2-dimensional space (see
-\nameref{subsec:knowledge-maps}). Next, we sampled
-points evenly from a $100 \times 100$ grid of coordinates that evenly tiled a
-rectangle enclosing the 2D projections of the videos and questions. We used
+\nameref{subsec:knowledge-maps}). Next, we sampled points from a $100 \times
+100$ grid of coordinates that evenly tiled a rectangle enclosing the 2D
+projections of the videos and questions. We used
 Equation~\ref{eqn:rbf-knowledge} to estimate participants' knowledge at each of
 these 10,000 sampled locations, and we averaged these estimates across
 participants to obtain an estimated average \textit{knowledge map}
@@ -638,38 +654,20 @@ lecture.
 
 \section*{Discussion}
 
-Teaching, like effective writing and speaking, is fundamentally about
-empathy~\citep{AldrEtal22, StojEtal12, MeyeEtal19}. Great teachers consider
-students' interests~\citep{SwarEtal12, Clar10}, backgrounds~\citep{MuijReyn10,
-Rose76, denBEtal10}, and working memory capacities~\citep{Allo12}, and flexibly
-optimize their teaching strategies within those constraints~\citep{GoodEtal07,
-AndeEtal21, John02}. In the classroom, empathizing with students also means
-maintaining open lines of communication~\citep{WulfWulf10} by fostering an
-environment in which all students feel comfortable speaking up if they have an
-exciting new idea, or if they are having trouble understanding
-something~\citep{TurnBrai15, GarrRasm14}. In-person instruction also often
-entails dynamic student-teacher and student-student interactions. These
-in-person interactions can provide the instructor with valuable information
-about students' understanding of the course material, beyond what they can
-glean solely from exams or assignments~\citep{Engl09, vandEtal10c, HallWals02}.
-In turn, this can allow the instructor to adapt their teaching approaches
-on-the-fly according to students' questions and behaviors. But what does great
-teaching look like in asynchronous online courses, when the instructor
-typically prepares course lectures and materials without knowing who will
-ultimately be learning from them? Can the empathetic side of teaching be
-automated and scaled?
-
-The notion of empathy also related to ``theory of mind'' of other
-individuals~\citep{GoldWinn12, KansEtal15, Melt11}. Considering others' unique
-perspectives, prior experiences, knowledge, goals, etc., can help us to more
-effectively interact and communicate~\citep{ShaoEtal18, StepBaer06, Ratk18}.
-The knowledge and learning maps we estimate in our study
-(Fig.~\ref{fig:knowledge-maps}) hint at one potential form that an automated
-``empathetic'' teacher might take. We imagine automated content delivery
-systems that adapt lessons on the fly according to continually updated
-estimates of what students know and how quickly they are learning different
-conceptual content~\citep[e.g., building on ideas such as][and
-others]{AndeSkwa86, Half88, Kuma05, WolzEtal88}.
+We developed a computational framework that uses short multiple choice quizzes
+to provide nuanced insights into what learners know and how their knowledge
+changes with training. First, we show that our approach can automatically match
+up the conceptual content of individual questions with the corresponding
+moments in lecture videos when those concepts were presented
+(Fig.~\ref{fig:question-correlations}). Next, we demonstrate how we can
+estimate moment-by-moment ``knowledge traces'' that reflect how much knowledge
+participants have about each video's content before and after watching each
+lecture video (Fig.~\ref{fig:knowledge-timeseries}). We also show that these
+knowledge estimates can generalize to held-out questions
+(Fig.~\ref{fig:predictions}). Finally, we use our framework to construct visual
+maps that provide snapshot estimates of how much participants know about any
+concept within the scope of our text embedding model, and how much their
+knowledge changes with training (Fig.~\ref{fig:knowledge-maps}).
 
 Over the past several years, the global pandemic has forced many educators to
 teach remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21, Whal20}. This change
@@ -683,7 +681,7 @@ downloaded and shared by large segments of the world's population. This
 exciting time for online course instruction provides an opportunity to
 re-evaluate how we, as a global community, educate ourselves and each other.
 For example, we can ask: what makes an effective course or training program?
-Which aspects of teaching might be optimized or automated? How can we provide  How and why do
+Which aspects of teaching might be optimized or automated? How and why do
 learning needs and goals vary across people? How might we lower barriers to
 achieving a high quality education?
 
@@ -704,18 +702,31 @@ models. A third major step will be to develop and employ reliable ways of
 evaluating the complex models and data that are a hallmark of naturalistic
 paradigms.
 
-Ultimately, our work suggests a new line of questions regarding the future of
-education: which aspects of teaching can be optimized and/or automated? The
-social benefits of face-to-face instruction, such as social interactions,
-friendships, and emotional support, cannot (and perhaps should not) be fully
-replaced by an automated computer-based system. Nor can modern computer systems
-experience emotional empathy in the human sense of the word. On the other hand,
-perhaps it is possible to separate out the social aspects of classroom
-instruction from the purely learning-related aspects. Our study shows that text
-embedding models can uncover detailed insights into students' knowledge and how
-it changes over time during learning.  We hope that these advances might help
-pave the way for new ways of teaching or delivering educational content
-that are tailored to individual students' learning needs and goals.
+Beyond specifically predicting what people \textit{know}, the fundamental ideas
+we develop here also relate to the notion of ``theory of mind'' of other
+individuals~\citep{GoldWinn12, KansEtal15, Melt11}. Considering others' unique
+perspectives, prior experiences, knowledge, goals, etc., can help us to more
+effectively interact and communicate~\citep{ShaoEtal18, StepBaer06, Ratk18}.
+One could imagine future extensions of our work (e.g., analogous to the
+knowledge and learning maps shown in Fig.~\ref{fig:knowledge-maps}), that
+attempt to characterize how well-aligned different people's knowledge bases or
+backgrounds are. In turn, this might be used to model how knowledge (or other
+forms of communicable information) flows not just between teachers and
+students, but between friends having a conversation, individuals out on a first
+date, participants at a business meeting, doctors and patients, experts and
+non-experts, political allies or adversaries, and more. For example, the extent
+to which two people's knowledge maps ``match'' or ``align'' in a given region
+of text embedding space might serve as a predictor of how effectively the
+people will communicate about the corresponding conceptual content.
+
+Ultimately, our work suggests a rich new line of questions about the geometric
+``form'' of knowledge, how knowledge changes over time, and how we might map
+out the full space of what an individual knows. Our finding that detailed
+estimates about knowledge may be obtained from short quizzes shows one way that
+traditional approaches to evaluation in education might be extended. We hope
+that these advances might help pave the way for new ways of teaching or
+delivering educational content that are tailored to individual students'
+learning needs and goals.
 
 \section*{Materials and methods}
 
@@ -762,21 +773,21 @@ all participants, a range of alertness levels were reported (range: -2
 -- 1; mean: -0.10; standard deviation: 0.84).
 
 Participants reported their undergraduate major(s) as ``social sciences'' (28
-participants), ``natural sciences'' (16 participants), ``professional'' (e.g., pre-med or pre-law; 8
-participants), ``mathematics and engineering'' (7 participants), ``humanities'' (4
-participants), or ``undecided'' (3 participants). Note that some participants
-selected multiple categories for their undergraduate major. We also asked
-participants about the courses they had taken. In total, 45 participants
-reported having taken at least one Khan Academy course in the past,
-and 5 reported not having taken any Khan
-Academy courses. Of those who reported having watched at least one
-Khan Academy course, 7 participants reported having watched 1--2 courses, 11
-reported having watched 3--5 courses, 8 reported having watched 5--10 courses,
-and 19 reported having watched 10 or more courses. We also asked participants
-about the specific courses they had watched, categorized under different
-subject areas. In the ``Mathematics'' area, participants reported having watched
-videos on AP Calculus AB (21 participants), Precalculus (17 participants),
-Algebra 2 (14 participants), AP Calculus BC (12 participants), Trigonometry (11
+participants), ``natural sciences'' (16 participants), ``professional'' (e.g.,
+pre-med or pre-law; 8 participants), ``mathematics and engineering'' (7
+participants), ``humanities'' (4 participants), or ``undecided'' (3
+participants). Note that some participants selected multiple categories for
+their undergraduate major. We also asked participants about the courses they
+had taken. In total, 45 participants reported having taken at least one Khan
+Academy course in the past, and 5 reported not having taken any Khan Academy
+courses. Of those who reported having watched at least one Khan Academy course,
+7 participants reported having watched 1--2 courses, 11 reported having watched
+3--5 courses, 8 reported having watched 5--10 courses, and 19 reported having
+watched 10 or more courses. We also asked participants about the specific
+courses they had watched, categorized under different subject areas. In the
+``Mathematics'' area, participants reported having watched videos on AP
+Calculus AB (21 participants), Precalculus (17 participants), Algebra 2 (14
+participants), AP Calculus BC (12 participants), Trigonometry (11
 participants), Algebra 1 (10 participants), Geometry (8 participants),
 Pre-algebra (7 participants), Multivariable Calculus (5 participants),
 Differential Equations (5 participants), Statistics and Probability (4
@@ -784,13 +795,16 @@ participants), AP Statistics (2 participants), Linear Algebra (2 participants),
 Early Math (1 participant), Arithmetic (1 participant), and other videos not
 listed in our survey (5 participants). In the ``Science and engineering'' area,
 participants reported having watched videos on Chemistry, AP Chemistry, or
-Organic Chemistry (21 participants); Physics, AP Physics I, or AP Physics II (15
-participants); Biology, AP Biology; or High school Biology (15 participants);
-Health and Medicine (1 participant); or other videos not listed in our survey
-(19 participants). We also asked participants whether they had specifically seen the
-videos used in our experiment. Of the 45 participants who reported having having
-taken at least one Khan Academy course in the past, 44 participants reported that they had not watched the \textit{Four Fundamental Forces} video, and 1 participant reported that they were not sure whether they had watched it. All participants reported that they had not watched the \textit{Birth of Stars} video.
-When we asked participants about non-Khan
+Organic Chemistry (21 participants); Physics, AP Physics I, or AP Physics II
+(15 participants); Biology, AP Biology; or High school Biology (15
+participants); Health and Medicine (1 participant); or other videos not listed
+in our survey (19 participants). We also asked participants whether they had
+specifically seen the videos used in our experiment. Of the 45 participants who
+reported having having taken at least one Khan Academy course in the past, 44
+participants reported that they had not watched the \textit{Four Fundamental
+Forces} video, and 1 participant reported that they were not sure whether they
+had watched it. All participants reported that they had not watched the
+\textit{Birth of Stars} video. When we asked participants about non-Khan
 Academy online courses, they reported having watched or taken courses on
 Mathematics (15 participants), Science and engineering (11 participants), Test
 preparation (9 participants), Economics and finance (3 participants), Arts and
@@ -819,44 +833,48 @@ questions and answer choices may be found in Table~\questions.
 
 Over the course of the experiment, participants completed three 13-question
 multiple-choice quizzes: the first before viewing lecture 1, the second between
-lectures 1 and 2, and the third after viewing lecture 2 (Fig.~\ref{fig:experiment}).
-The questions appearing on each quiz, for each participant, were randomly
-chosen from the full set of 39, with the constraints that (a) each quiz contain 5
-questions about lecture 1, 5 questions about lecture 2, and 3 questions about general physics knowledge, and
-(b) each question appear exactly once for each participant. The order of questions on each quiz,
-and the order of answer options for each question, were also randomized. Our
-experimental protocol was approved by the Committee for the Protection of
-Human Subjects at Dartmouth College.  We used the experiment to develop
-and test our computational framework for estimating knowledge and learning.
+lectures 1 and 2, and the third after viewing lecture 2
+(Fig.~\ref{fig:experiment}). The questions appearing on each quiz, for each
+participant, were randomly chosen from the full set of 39, with the constraints
+that (a) each quiz contain 5 questions about lecture 1, 5 questions about
+lecture 2, and 3 questions about general physics knowledge, and (b) each
+question appear exactly once for each participant. The orders of questions on
+each quiz, and the orders of answer options for each question, were also
+randomized. Our experimental protocol was approved by the Committee for the
+Protection of Human Subjects at Dartmouth College. We used the experiment to
+develop and test our computational framework for estimating knowledge and
+learning.
 
 \subsection*{Analysis}
 
 \subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
+
 We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
-each moment of the two lectures and each question in our pool in a common representational space.
-Briefly, our approach uses a topic model (Latent Dirichlet Allocation;~\citealp{BleiEtal03}), trained on a set
-of documents, to discover a set of $k$ ``topics'' or ``themes.'' Formally, each
-topic is defined as a set of weights over each word in the model's vocabulary
-(i.e., the union of all unique words, across all documents, excluding ``stop
-words.''). Conceptually, each topic is intended to give larger weights to words
-that are conceptually related or that tend to co-occur in the same documents.
-After fitting a topic model, each document in the training set, or any
-\textit{new} document that contains at least some of the words in the model's
-vocabulary, may be represented as a $k$-dimensional vector describing how much
-the document (most probably) reflects each topic. (Unless, otherwise noted, we
-used $k = 15$ topics.)
+each moment of the two lectures and each question in our pool in a common
+representational space. Briefly, our approach uses a topic model (Latent
+Dirichlet Allocation;~\citealp{BleiEtal03}), trained on a set of documents, to
+discover a set of $k$ ``topics'' or ``themes.'' Formally, each topic is defined
+as a set of weights over each word in the model's vocabulary (i.e., the union
+of all unique words, across all documents, excluding ``stop words.'').
+Conceptually, each topic is intended to give larger weights to words that are
+semantically related or that tend to co-occur in the same documents. After
+fitting a topic model, each document in the training set, or any \textit{new}
+document that contains at least some of the words in the model's vocabulary,
+may be represented as a $k$-dimensional vector describing how much the document
+(most probably) reflects each topic. (Unless, otherwise noted, we used $k = 15$
+topics.)
 
 As illustrated in Figure~\ref{fig:sliding-windows}A, we start by building up a
 corpus of documents using overlapping sliding windows that span each video's
-transcript. Khan Academy provides professionally created, manual 
-transcriptions of all videos for closed captioning. However, such transcripts 
-would not be readily available in all contexts to which our framework could 
-potentially be applied. Khan Academy videos are hosted on the YouTube 
-platform, which additionally provides automated captions. We opted to use 
-these automated transcripts (which, in prior work, we have found are 
-sufficiently near-human quality yield reliable data in behavioral studies; 
-\citealp{ZimaEtal18}) when developing our framework in order to make it 
-more easily extensible and adaptable by others in the future.
+transcript. Khan Academy provides professionally created, manual transcriptions
+of all videos for closed captioning. However, such transcripts would not be
+readily available in all contexts to which our framework could potentially be
+applied. Khan Academy videos are hosted on the YouTube platform, which
+additionally provides automated captions. We opted to use these automated
+transcripts (which, in prior work, we have found are sufficiently near-human
+quality yield reliable data in behavioral studies; \citealp{ZimaEtal18}) when
+developing our framework in order to make it more directly extensible and
+adaptable by others in the future.
 
 We fetched these automated transcripts using the
 \texttt{youtube-transcript-api} Python package~\citep{Depo19}. The transcripts
@@ -946,10 +964,36 @@ and~\individualLearningMapsB), we used Uniform Manifold Approximation and
 Projection (UMAP; \citealp{McInEtal18a}) to construct a 2D projection of the
 text embedding space. Sampling the original 100-dimensional space at high
 resolution to obtain an adequate set of topic vectors spanning the embedding
-space would be computationally intractable. However, sampling a 2D grid is much
-more feasible. We defined a rectangle enclosing the 2D projections of the
-lectures' and quizzes' embeddings, and we sampled points from a regular $100
-\times 100$ grid of coordinates that evenly tiled the enclosing rectangle. We
+space would be computationally intractable. However, sampling a 2D grid is
+trivial.
+
+At a high level, the UMAP algorithm obtains low-dimensional embeddings by
+minimizing the cross entropy between the pairwise (clustered) distances between
+the observations in their original (e.g., 100-dimensional) space and the
+pairwise (clustered) distances in the low-dimensional embedding space (in our
+approach, the embedding space is 2D). In our implementation, pairwise distances
+in the original high-dimensional space were defined as 1 minus the correlation
+between the pair of coordinates, and pairwise distances in the low-dimensional
+embedding space were defiend as the Euclidean distance between the pair of
+coordinates.
+
+In our application, all of the coordinates we embedded were topic vectors,
+whose elements are always non-negative. Although UMAP is an invertible
+transformation at the embedding locations of the original data, other locations
+in the embedding space will not necessarily follow the same implicit ``rules''
+as the original high-dimensional data. For example, inverting an arbitrary
+coordinate in the embedding space might result in negative-valued vectors,
+which are incompatable with the topic modeling framework. To protect against
+this issue, we log-transformed the topic vectors prior to embedding them in the
+2D space. When we inverted the embedded vectors (e.g., to estimate topic
+vectors or word clouds, as in Fig.~\ref{fig:knowledge-maps}C), we passed the
+inverted (log-transformed) values through the exponential function to obtain a
+vector of non-negative values.
+
+After embedding both lectures' topic trajectories and the topic vectors of
+every question, we defined a rectangle enclosing the 2D projections of the
+lectures' and quizzes' embeddings. We then sampled points from a regular $100
+\times 100$ grid of coordinates that evenly tiled this enclosing rectangle. We
 sought to estimate participants' knowledge (and learning, i.e., changes in
 knowledge) at each of the resulting 10,000 coordinates.
 
