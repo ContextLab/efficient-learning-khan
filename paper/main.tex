@@ -858,26 +858,25 @@ sufficiently near-human quality yield reliable data in behavioral studies;
 \citealp{ZimaEtal18}) when developing our framework in order to make it 
 more easily extensible and adaptable by others in the future.
 
-We fetched these automated transcripts using the \texttt{youtube-transcript-api} 
-Python package (\textcolor{red}{\textbf{Jeremy can you add a citation for this?} 
-https://github.com/jdepoix/youtube-transcript-api}). The transcripts consisted of 
-one timestamped line of text for every few seconds (mean: 2.34s; standard 
-deviation: 0.83s) of spoken content in the video (i.e., corresponding to each 
-individual caption that would appear on-screen if viewing the lecture via YouTube, 
-and when those lines would appear). We
-defined a sliding window length of (up to) $w = 30$ transcript lines, and
-assigned each window a timestamp corresponding to the midpoint between its first
-and last lines' timestamps. These sliding windows ramped up and down in length
-at the very beginning and end of the transcript, respectively. In other words,
-the first sliding window covered only the first line from the transcript; the
-second sliding window covered the first two lines; and so on. This insured that
-each line of the transcript appeared in the same number ($w$) of sliding
-windows. After performing various standard text preprocessing (e.g., normalizing case, 
-lemmatizing, removing punctuation and stop-words), we treated the text from each 
-sliding window as a single ``document,''
-and we combined these documents across the two videos' windows to create a single
-training corpus for the topic model.  The top words from each of the 15 discovered
-topics may be found in Table~\topics.
+We fetched these automated transcripts using the
+\texttt{youtube-transcript-api} Python package~\citep{Depo19}. The transcripts
+consisted of one timestamped line of text for every few seconds (mean: 2.34~s;
+standard deviation: 0.83~s) of spoken content in the video (i.e., corresponding
+to each individual caption that would appear on-screen if viewing the lecture
+via YouTube, and when those lines would appear). We defined a sliding window
+length of (up to) $w = 30$ transcript lines, and assigned each window a
+timestamp corresponding to the midpoint between its first and last lines'
+timestamps. These sliding windows ramped up and down in length at the very
+beginning and end of the transcript, respectively. In other words, the first
+sliding window covered only the first line from the transcript; the second
+sliding window covered the first two lines; and so on. This insured that each
+line of the transcript appeared in the same number ($w$) of sliding windows.
+After performing various standard text preprocessing (e.g., normalizing case,
+lemmatizing, removing punctuation and stop-words), we treated the text from
+each sliding window as a single ``document,'' and we combined these documents
+across the two videos' windows to create a single training corpus for the topic
+model. The top words from each of the 15 discovered topics may be found in
+Table~\topics.
 
 After fitting a topic model to each videos' transcripts, we could use the
 trained model to transform arbitrary (potentially new) documents into
@@ -913,17 +912,15 @@ where
 \begin{equation}
     \mathrm{ncorr}(x, y) = \frac{\mathrm{corr}(x, y) - \mathrm{mincorr}}{\mathrm{maxcorr} - \mathrm{mincorr}},
 \end{equation}
-
 and where $\mathrm{mincorr}$ and $\mathrm{maxcorr}$ are the minimum and maximum
 correlations between any lecture timepoint and question, taken over all
 timepoints and questions across both lectures and all five question used to
-estimate the knowledge trace \textcolor{red}{\textbf{Note: make sure this is
-correct in results section; not sure i caught all instances}}. We also define
-$f(s, \Omega)$ as the $s$\textsuperscript{th} topic vector from the set of
-topic vectors $\Omega$. Here $t$ indexes the set of lecture topic vectors, $L$,
-and $i$ and $j$ index the topic vectors of questions used to estimate the
-knowledge trace, $Q$. Note that ``correct'' denotes the set of indices of the
-questions the participant answered correctly on the given quiz.
+estimate the knowledge trace. We also define $f(s, \Omega)$ as the
+$s$\textsuperscript{th} topic vector from the set of topic vectors $\Omega$.
+Here $t$ indexes the set of lecture topic vectors, $L$, and $i$ and $j$ index
+the topic vectors of questions used to estimate the knowledge trace, $Q$. Note
+that ``correct'' denotes the set of indices of the questions the participant
+answered correctly on the given quiz.
 
 Intuitively, $\mathrm{ncorr}(x, y)$ is the correlation between two topic
 vectors (e.g., the topic vector from one timepoint in a lecture, $x$, and the
