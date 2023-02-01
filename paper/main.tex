@@ -677,7 +677,7 @@ maps that provide snapshot estimates of how much participants know about any
 concept within the scope of our text embedding model, and how much their
 knowledge changes with training (Fig.~\ref{fig:knowledge-maps}).
 
-Over the past several years, the global pandemic has forced numerous educators to
+Over the past several years, the global pandemic has forced many educators to
 teach remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21, Whal20}. This change
 in world circumstances is happening alongside (and perhaps accelerating)
 geometric growth in the availability of high quality online courses on
@@ -742,7 +742,7 @@ learning needs and goals.
 
 We enrolled a total of 50 Dartmouth undergraduate students in our study.
 Participants received course credit for enrolling. We asked each participant to
-fill out a demographic survey that included questions about their age, gender,
+complete a demographic survey that included questions about their age, gender,
 native spoken language, ethnicity, race, hearing, color vision, sleep, coffee
 consumption, level of alertness, and several aspects of their educational
 background and prior coursework.
@@ -865,7 +865,7 @@ discover a set of $k$ ``topics'' or ``themes.'' Formally, each topic is defined
 as a set of weights over each word in the model's vocabulary (i.e., the union
 of all unique words, across all documents, excluding ``stop words.'').
 Conceptually, each topic is intended to give larger weights to words that are
-semantically related or that tend to co-occur in the same documents. After
+semantically related or tend to co-occur in the same documents. After
 fitting a topic model, each document in the training set, or any \textit{new}
 document that contains at least some of the words in the model's vocabulary,
 may be represented as a $k$-dimensional vector describing how much the document
@@ -879,7 +879,7 @@ of all videos for closed captioning. However, such transcripts would not be
 readily available in all contexts to which our framework could potentially be
 applied. Khan Academy videos are hosted on the YouTube platform, which
 additionally provides automated captions. We opted to use these automated
-transcripts (which, in prior work, we have found are sufficiently near-human
+transcripts (which, in prior work, we have found are of sufficiently near-human
 quality yield reliable data in behavioral studies; \citealp{ZimaEtal18}) when
 developing our framework in order to make it more directly extensible and
 adaptable by others in the future.
@@ -899,12 +899,12 @@ sliding window covered the first two lines; and so on. This insured that each
 line of the transcript appeared in the same number ($w$) of sliding windows.
 After performing various standard text preprocessing (e.g., normalizing case,
 lemmatizing, removing punctuation and stop-words), we treated the text from
-each sliding window as a single ``document,'' and we combined these documents
+each sliding window as a single ``document,'' and combined these documents
 across the two videos' windows to create a single training corpus for the topic
 model. The top words from each of the 15 discovered topics may be found in
 Table~\topics.
 
-After fitting a topic model to each videos' transcripts, we could use the
+After fitting a topic model to the two videos' transcripts, we could use the
 trained model to transform arbitrary (potentially new) documents into
 $k$-dimensional topic vectors. A convenient property of these topic vectors is
 that documents that reflect similar blends of topics (i.e., documents that
@@ -940,8 +940,8 @@ where
 \end{equation}
 and where $\mathrm{mincorr}$ and $\mathrm{maxcorr}$ are the minimum and maximum
 correlations between any lecture timepoint and question, taken over all
-timepoints and questions across both lectures and all five question used to
-estimate the knowledge trace. We also define $f(s, \Omega)$ as the
+timepoints in the given lecture, and all five questions \textbf{about} that lecture appearing on the given quiz. 
+We also define $f(s, \Omega)$ as the
 $s$\textsuperscript{th} topic vector from the set of topic vectors $\Omega$.
 Here $t$ indexes the set of lecture topic vectors, $L$, and $i$ and $j$ index
 the topic vectors of questions used to estimate the knowledge trace, $Q$. Note
@@ -976,7 +976,7 @@ space would be computationally intractable. However, sampling a 2D grid is
 trivial.
 
 At a high level, the UMAP algorithm obtains low-dimensional embeddings by
-minimizing the cross entropy between the pairwise (clustered) distances between
+minimizing the cross-entropy between the pairwise (clustered) distances between
 the observations in their original (e.g., 100-dimensional) space and the
 pairwise (clustered) distances in the low-dimensional embedding space (in our
 approach, the embedding space is 2D). In our implementation, pairwise distances
@@ -1045,7 +1045,7 @@ https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
 \section*{Acknowledgements}
 
 We acknowledge useful discussions, assistance in setting up an earlier
-(unpublished) version of this study, and assistance with some of the data
+(unpublished) version of this study, and assistance with data
 collection efforts from Will Baxley, Max Bluestone, Daniel Carstensen, Kunal
 Jha, Caroline Lee, Lucy Owen, Xinming Xu, and Kirsten Ziman. Our work was
 supported in part by NSF CAREER Award Number 2145172 to JRM. The content is
