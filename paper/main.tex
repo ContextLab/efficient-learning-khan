@@ -832,19 +832,21 @@ and test our computational framework for estimating knowledge and learning.
 \subsection*{Analysis}
 
 \subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
+
 We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
-each moment of the two lectures and each question in our pool in a common representational space.
-Briefly, our approach uses a topic model (Latent Dirichlet Allocation;~\citealp{BleiEtal03}), trained on a set
-of documents, to discover a set of $k$ ``topics'' or ``themes.'' Formally, each
-topic is defined as a set of weights over each word in the model's vocabulary
-(i.e., the union of all unique words, across all documents, excluding ``stop
-words.''). Conceptually, each topic is intended to give larger weights to words
-that are conceptually related or that tend to co-occur in the same documents.
-After fitting a topic model, each document in the training set, or any
-\textit{new} document that contains at least some of the words in the model's
-vocabulary, may be represented as a $k$-dimensional vector describing how much
-the document (most probably) reflects each topic. (Unless, otherwise noted, we
-used $k = 15$ topics.)
+each moment of the two lectures and each question in our pool in a common
+representational space. Briefly, our approach uses a topic model (Latent
+Dirichlet Allocation;~\citealp{BleiEtal03}), trained on a set of documents, to
+discover a set of $k$ ``topics'' or ``themes.'' Formally, each topic is defined
+as a set of weights over each word in the model's vocabulary (i.e., the union
+of all unique words, across all documents, excluding ``stop words.'').
+Conceptually, each topic is intended to give larger weights to words that are
+conceptually related or that tend to co-occur in the same documents. After
+fitting a topic model, each document in the training set, or any \textit{new}
+document that contains at least some of the words in the model's vocabulary,
+may be represented as a $k$-dimensional vector describing how much the document
+(most probably) reflects each topic. (Unless, otherwise noted, we used $k = 15$
+topics.)
 
 As illustrated in Figure~\ref{fig:sliding-windows}A, we start by building up a
 corpus of documents using overlapping sliding windows that span each video's
@@ -946,12 +948,37 @@ and~\individualLearningMapsB), we used Uniform Manifold Approximation and
 Projection (UMAP; \citealp{McInEtal18a}) to construct a 2D projection of the
 text embedding space. Sampling the original 100-dimensional space at high
 resolution to obtain an adequate set of topic vectors spanning the embedding
-space would be computationally intractable. However, sampling a 2D grid is much
-more feasible. We defined a rectangle enclosing the 2D projections of the
-lectures' and quizzes' embeddings, and we sampled points from a regular $100
-\times 100$ grid of coordinates that evenly tiled the enclosing rectangle. We
+space would be computationally intractable. However, sampling a 2D grid is
+trivial.
+
+At a high level, the UMAP algorithm obtains low-dimensional embeddings by
+minimizing the cross entropy between the pairwise (clustered) distances between
+the observations in their original (e.g., 100-dimensional) space and the
+pairwise (clustered) distances in the low-dimensional embedding space (in our
+approach, the embedding space is 2D). In our implementation, pairwise distances
+in the original high-dimensional space were defined as 1 minus the correlation
+between the pair of coordinates, and pairwise distances in the low-dimensional
+embedding space were defiend as the Euclidean distance between the pair of
+coordinates.
+
+Although UMAP is not fully invertible, due to its clustering step, it is
+possible to approximately invert the embedded low-dimensional points. In our
+application, we sought to embed topic vectors, whose elements are always
+non-negative. Because the inversion step is inexact, sometimes it results in
+negative-valued vectors (even if the original observations were all
+non-negative), which are incompatable with the topic modeling framework. To
+protect against this issue, we log-transformed the topic vectors prior to
+embedding them in the 2D space. When we inverted the embedded vectors (e.g., to
+estimate topic vectors or word clouds, as in Fig.~\ref{fig:knowledge-maps}C),
+we passed to inverted (log-transformed) values through the exponential function
+to obtain a vector of non-negative values.
+
+After embedding both lectures' topic trajectories and the topic vectors of
+every question, we defined a rectangle enclosing the 2D projections of the
+lectures' and quizzes' embeddings. We then sampled points from a regular $100
+\times 100$ grid of coordinates that evenly tiled this enclosing rectangle. We
 sought to estimate participants' knowledge (and learning, i.e., changes in
-knowledge) at each of the resulting 10,000 coordinates.
+knowledge) at each of the resulting 10K coordinates.
 
 To generate our estimates, we placed a set of 39 radial basis functions (RBFs)
 throughout the embedding space, centered on the 2D projections for each
