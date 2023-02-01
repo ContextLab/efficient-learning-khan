@@ -9,6 +9,7 @@ from .constants import PARTICIPANTS_DIR, RAW_DIR
 
 
 class Participant:
+    """Class to manage data for individual participants"""
     def __init__(self, subid, data=None, raw_data=None, date_collected=None):
         self.subID = subid
         self.data = data
@@ -77,7 +78,8 @@ class Participant:
                 qid = q_info.index[0]
                 lec = q_info.loc[qid, 'video']
                 # get answer
-                ans_text = unescape(answer_block[f'Q{q_num}']).replace(chr(8217), "'")
+                ans_text = unescape(answer_block[f'Q{q_num}'])
+                ans_text = ans_text.replace(chr(8217), "'")
                 # error on failure to match question or unexpected letter
                 try:
                     ans_let = q_info.squeeze()[q_info.squeeze() == ans_text].index[0]
@@ -90,7 +92,11 @@ class Participant:
                 # set accuracy for response
                 acc = 1 if ans_let == 'A' else 0
                 data.append([qid, acc, ans_let, set_num, lec])
-        return pd.DataFrame(data, columns=['qID', 'accuracy', 'response', 'quiz', 'lecture'])
+        return pd.DataFrame(data, columns=['qID',
+                                           'accuracy',
+                                           'response',
+                                           'quiz',
+                                           'lecture'])
 
     def _repr_html_(self):
         # for displaying in Jupyter (IPython) notebooks
@@ -140,8 +146,9 @@ class Participant:
             return self.knowledge_maps[kmap_key]
         except KeyError as e:
             raise KeyError(
-                f'No knowledge map stored for {self} under "{kmap_key}". Stored '
-                f"knowledge maps are: {', '.join(self.knowledge_maps.keys())}"
+                f'No knowledge map stored for {self} under "{kmap_key}". '
+                "Stored knowledge maps are: "
+                f"{', '.join(self.knowledge_maps.keys())}"
             ) from e
 
     def get_trace(self, trace_key):

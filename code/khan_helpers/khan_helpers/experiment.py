@@ -16,8 +16,20 @@ from .functions import _ts_to_sec
 
 
 class LazyLoader:
-    # Descriptor class that handles deferred loading and caching of data
+    """
+    Descriptor class that handles deferred loading and caching of data
+    """
     def __init__(self, loader, *loader_args, **loader_kwargs):
+        """
+        Parameters
+        ----------
+        loader : str
+            The name of the instance method with which to load the data.
+        *loader_args : tuple, optional
+            Positional arguments to pass to `loader`.
+        **loader_kwargs : dict, optional
+            Keyword arguments to pass to `loader`.
+        """
         self.loader = loader
         self.loader_args = loader_args
         self.loader_kwargs = loader_kwargs
@@ -31,6 +43,10 @@ class LazyLoader:
 
 
 class Experiment:
+    """
+    Class used to simplify accessing and managing data from the
+    experiment and analyses.
+    """
     participants = LazyLoader('_load_participants')
     avg_participant = LazyLoader('_load_avg_participant')
 
@@ -75,11 +91,16 @@ class Experiment:
         elif lecture in ('bos', 2):
             return self.bos_traj
         else:
-            raise ValueError('`lecture` should be either 1, "forces", 2, or "bos"')
+            raise ValueError(
+                '`lecture` should be either 1, "forces", 2, or "bos"'
+            )
 
     def get_question_vecs(self, qids=None, lectures=None):
         # get question topic vectors by question ID(s) or lecture(s)
-        if (qids is lectures is None) or (qids is not None and lectures is not None):
+        if (
+                (qids is lectures is None) or
+                (qids is not None and lectures is not None)
+        ):
             raise ValueError("must pass either `qids` or `lecture` (not both)")
         if lectures is not None:
             qids = []
@@ -153,7 +174,13 @@ class Experiment:
         path = RAW_DIR.joinpath('questions.tsv')
         return pd.read_csv(path,
                            sep='\t',
-                           names=['index', 'lecture', 'question', 'A', 'B', 'C', 'D'],
+                           names=['index',
+                                  'lecture',
+                                  'question',
+                                  'A',
+                                  'B',
+                                  'C',
+                                  'D'],
                            index_col='index')
 
     def _load_windows(self, lecture):
@@ -180,7 +207,8 @@ class Experiment:
         return np.load(EMBS_DIR.joinpath(f'{filename_map[file_key]}.npy'))
 
     def _load_fit_model(self, model):
-        return np.load(MODELS_DIR.joinpath(f'fit_{model}.npy'), allow_pickle=True).item()
+        return np.load(MODELS_DIR.joinpath(f'fit_{model}.npy'),
+                       allow_pickle=True).item()
 
     def _load_wordle_mask(self):
         return np.array(open_image(DATA_DIR.joinpath('wordle-mask.jpg')))

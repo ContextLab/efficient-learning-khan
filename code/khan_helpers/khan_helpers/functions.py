@@ -1,3 +1,4 @@
+import logging
 import math
 import re
 import warnings
@@ -25,7 +26,21 @@ from .constants import FONTS_DIR, LECTURE_WSIZE, STOP_WORDS
 
 
 def _ts_to_sec(ts):
-    # converts timestamp of elapsed time from "MM:SS" format to scalar
+    """
+    Converts a timestamp denoting elapsed time from "MM:SS[.ss]" format
+    to a scalar
+
+    Parameters
+    ----------
+    ts : str
+        A timestamp consisting of minutes and seconds, separated by a
+        colon, where seconds may be a whole number or a decimal.
+
+    Returns
+    -------
+    float
+        The total number of seconds represented by the timestamp.
+    """
     mins, secs = ts.split(':')
     return timedelta(minutes=int(mins), seconds=float(secs)).total_seconds()
 
@@ -149,27 +164,48 @@ def corr_mean(rs, axis=None, fix_inf=False, **kwargs):
     Parameters
     ----------
     rs : array_like
-        Array of *r*-values.  May be any type accepted by `numpy.nanmean`
+        Array of *r*-values.  May be any type accepted by
+        `numpy.nanmean()`.
     axis : None or int or tuple of ints, optional
-        Axis or axes along which the means are computed. If None
+        Axis or axes along which the means are computed. If `None`
         (default), the mean of the flattened array is computed.
-    kwargs : various types, optional
+    fix_inf : bool, optional
+        See `z2r()` docstring for details. Default: False.
+    **kwargs : various types, optional
         Additional keyword arguments passed to `numpy.nanmean` (see
         https://numpy.org/doc/stable/reference/generated/numpy.nanmean.html
         for details).
 
     Returns
     -------
-    cm : float or numpy.ndarray
-        The average correlation coefficient
+    float or numpy.ndarray
+        The mean correlation coefficient
 
     """
-    return z2r(np.nanmean(r2z(np.asanyarray(rs), fix_inf=fix_inf), axis=axis, **kwargs))
+    zs = r2z(np.asanyarray(rs), fix_inf=fix_inf)
+    zmean = np.nanmean(zs, axis=axis, **kwargs)
+    return z2r(zmean)
 
 
 @numba.njit
 def correlation_exp(x, y):
-    # TODO: add docstring
+    """
+    Computes the correlation distance between two n-dimensional
+    vectors, exponentiating each element first. Returns the result and
+    the gradient of the distance function with respect to `x`.
+
+    Parameters
+    ----------
+    x, y : numpy.ndarray
+        The two vectors to compare. Must have the same shape.
+
+    Returns
+    -------
+    dist : float
+        Correlation distance between the two vectors.
+    grad : numpy.ndarray
+        Gradient of the distance with respect to `x`.
+    """
     x = math.e ** x
     y = math.e ** y
     mu_x = 0.0
@@ -203,6 +239,33 @@ def correlation_exp(x, y):
         grad = ((x - mu_x) / norm_x - (y - mu_y) / dot_product) * dist
 
     return dist, grad
+
+
+@contextmanager
+def disable_logging(module, level='CRITICAL'):
+    """
+    Temporarily disables logging from `module` for messages less severe
+    than `level`.
+
+    Parameters
+    ----------
+    module : str
+        The qualified name of the module for which to disable logging.
+    level : str, optional
+        The threshold of messages below which to disable logging
+        (default: 'CRITICAL'). Note that messages *of* the specified
+        level will still be logged.
+    """
+    if module not in logging.root.manager.loggerDict:
+        raise ValueError(f"no logger exists for module '{module}'")
+
+    logger = logging.getLogger(module)
+    old_level = logger.level
+    logger.setLevel(level.upper())
+    try:
+        yield
+    finally:
+        logger.setLevel(old_level)
 
 
 def multicol_display(*outputs,
@@ -251,12 +314,6 @@ def multicol_display(*outputs,
     cell_css : dict, optional
         Additional CSS properties to be applied to each table *cell*
         ('<td>') element.
-
-    Returns
-    -------
-    None
-        The HTML table is displayed inline in the notebook.
-
     """
     def _fmt_python_types(obj):
         # formats some common Python objects for display
@@ -342,7 +399,8 @@ def multicol_display(*outputs,
     cap = html_caption.format(content=caption) if caption is not None else ''
     headers = [html_header.format(content=h) for h in col_headers]
     cells = [html_cell.format(content=out) for out in outs_fmt]
-    rows = [html_row.format(content="".join(cells[i:i+ncols])) for i in range(0, len(cells), ncols)]
+    rows = [html_row.format(content="".join(cells[i:i+ncols]))
+            for i in range(0, len(cells), ncols)]
     # render notebook display cell
     display(HTML(html_table.format(caption=cap,
                                    header="".join(headers),
@@ -351,6 +409,7 @@ def multicol_display(*outputs,
 
 @contextmanager
 def filter_nan_warnings():
+    """Temporarily filter warnings about NaN values in arrays."""
     message = 'Mean of empty slice|All-NaN slice encountered'
     with warnings.catch_warnings():
         warnings.filterwarnings('ignore',
@@ -359,27 +418,100 @@ def filter_nan_warnings():
         yield
 
 
-def interp_lecture(lec_traj, timestamps):
+def format_stats(stat, p, stat_name, df=None, n_decimals=3, p_min=0.001):
     """
-    Interpolates a lecture's topic trajectory to a resolution of 1
-    vector per second.
+    General function to format the test statistic and p-value from a
+    statistical test for display in a `matplotlib.pyplot` plot.
 
     Parameters
     ----------
-    lec_traj : numpy.ndarray
-        A (timepoints, topics) array with a topic vector for each
+    stat, p : float
+        The test statistic and associated p-value.
+    stat_name : str
+        The string used to describe the test statistic in the plot
+        (e.g., 't', 'r', etc.).
+    df : int, optional
+        The degrees of freedom associated with the test statistic. If
+        not None (default), this is displayed in parentheses immediately
+        after the test statistic (e.g., "t(10) = ...").
+    n_decimals : int, optional
+        The number of decimals (default: 3) to display for the test
+        statistic and p-value (if greater than `p_min`).
+    p_min : float, optional
+        The smallest p-value (default: 0.001) to display. Lower p-values
+        are displayed as "p < `p_min`".
+
+    Returns
+    -------
+    str
+        The formatted output to display in the plot.
+    """
+    stat_fmt = f'$\\mathit{{{stat_name}}}\mathbf{{'
+    if df is not None:
+        stat_fmt = f'{stat_fmt}({df})'
+
+    stat_fmt = f'{stat_fmt} = {stat:.{n_decimals}f}}}$\n$\\mathit{{p}}\mathbf{{'
+    if p < p_min:
+        p_fmt = ' < 0.001'
+    else:
+        p_fmt = f' = {p:.{n_decimals}f}'
+
+    return f'{stat_fmt}{p_fmt}}}$'
+
+
+def get_top_words(cv, lda, n_words=10):
+    """
+    Returns the top-weighted `n_words` words from each topic learned by
+    a fit Latent Dirichlet Allocation model.
+
+    Parameters
+    ----------
+    cv : sklearn.feature_extraction.text.CountVectorizer
+        Fit Count Vectorizer model used to tokenize the corpus.
+    lda : sklearn.decomposition.LatentDirichletAllocation
+        Fit Latent Dirichlet Allocation model.
+    n_words : int, optional
+        Number of top-weighted words to return for each topic (default:
+        10).
+
+    Returns
+    -------
+    topic_words : {int: list of str}
+        Dictionary of top-weighted words for each topic. Keys are topic
+        indices; values are lists of `n_words` top words, in order.
+    """
+    topic_words = {}
+    vocab = cv.get_feature_names_out()
+    for topic, component in enumerate(lda.components_):
+        word_ix = np.argsort(component)[::-1][:n_words]
+        topic_words[topic] = [vocab[i] for i in word_ix]
+    return topic_words
+
+
+def interp_lecture(lec_traj, timestamps):
+    """
+    Interpolate an irregular timeseries of feature vectors to a
+    resolution of 1 sample per second.
+
+    Parameters
+    ----------
+    lec_traj : array_like
+        A (timepoints, features) array with a feature vector for each
         sliding window.
     timestamps : array_like
         A 1-D array of timestamps for each sliding window.
 
     Returns
     -------
-    traj_interp : numpy.ndarray
-        A (timepoints, topics) array with a topic vector for each second.
-
+    numpy.ndarray
+        A (timepoints, features) array with a feature vector for each
+        second.
     """
     new_tpts = np.arange(timestamps[-1])
-    interp_func = interp1d(timestamps, lec_traj, axis=0, fill_value='extrapolate')
+    interp_func = interp1d(timestamps,
+                           lec_traj,
+                           axis=0,
+                           fill_value='extrapolate')
     return interp_func(new_tpts)
 
 
@@ -397,7 +529,7 @@ def parse_windows(transcript, wsize=LECTURE_WSIZE):
     wsize : int, optional
         The number of text lines comprising each sliding window (with
         tapering window sizes at the beginning and end).  Defaults to
-        the window size chosen by the parameter optimization.
+        `khan_helpers.constants.LECTURE_WSIZE`.
 
     Returns
     -------
@@ -418,12 +550,9 @@ def parse_windows(transcript, wsize=LECTURE_WSIZE):
     for ix in range(1, wsize):
         start, end = 0, ix
         windows.append(' '.join(text_lines[start:end]))
-        # each window assigned to midpoint between onset of first line and ONSET of last line
+        # each window assigned to midpoint between timestamp of first
+        # line and last lines
         timestamps.append((ts_lines[start] + ts_lines[end - 1]) / 2)
-
-        # TODO: remove if unused. Keeping for memory for now
-        # each window assigned to midpoint between onset of first line and OFFSET of last line
-        # timestamps.append((ts_lines[start] + ts_lines[end]) / 2)
 
     for ix in range(len(ts_lines)):
         start = ix
@@ -434,10 +563,61 @@ def parse_windows(transcript, wsize=LECTURE_WSIZE):
     return windows, timestamps
 
 
+def pearsonr_ci(x, y, ci=95, n_boots=10000, random_state=0):
+    """
+    Calculates the upper and lower bounds of the bootstrap-estimated
+    confidence interval given by `ci` for the Pearson correlation
+    coefficient.
+
+    Parameters
+    ----------
+    x, y : array_like
+        The two arrays of data to correlate.
+    ci : float, optional
+        The confidence interval to calculate, as a percentage (default:
+        95).
+    n_boots : int, optional
+        The number of bootstrap samples to draw (default: 10,000).
+    random_state : int or array_like, optional
+        The random seed to use for reproducibility (default: 0). Must be
+        convertible to 32-bit unsigned integer(s).
+
+    Returns
+    -------
+    ci_low, ci_high : tuple of float
+        The lower and upper bounds of the confidence interval.
+    """
+    x = np.asarray(x)
+    y = np.asarray(y)
+    np.random.seed(random_state)
+
+    # (n_boots, n_observations) paired arrays
+    rand_ixs = np.random.randint(0, x.shape[0], size=(n_boots, x.shape[0]))
+    x_boots = x[rand_ixs]
+    y_boots = y[rand_ixs]
+
+    # differences from mean
+    x_mdiffs = x_boots - x_boots.mean(axis=1)[:, None]
+    y_mdiffs = y_boots - y_boots.mean(axis=1)[:, None]
+
+    # sums of squares
+    x_ss = np.einsum('ij, ij -> i', x_mdiffs, x_mdiffs)
+    y_ss = np.einsum('ij, ij -> i', y_mdiffs, y_mdiffs)
+
+    # pearson correlations
+    r_boots = np.einsum('ij, ij -> i', x_mdiffs, y_mdiffs) / np.sqrt(
+        x_ss * y_ss)
+
+    # upper and lower bounds for confidence interval
+    ci_low = np.percentile(r_boots, (100 - ci) / 2)
+    ci_high = np.percentile(r_boots, (ci + 100) / 2)
+    return ci_low, ci_high
+
+
 def preprocess_text(textlist, correction_counter=None):
     """
     Handles text preprocessing of lecture transcripts and quiz questions
-    & answers.  Performs case and whitespace normalization, punctuation
+    & answers. Performs case and whitespace normalization, punctuation
     and non-alphabetic character removal, stop word removal,
     POS tagging, and lemmatization.
 
@@ -453,20 +633,20 @@ def preprocess_text(textlist, correction_counter=None):
     textlist : sequence of str
         List of text samples (lecture transcript lines, quiz questions,
         or quiz answers) to be processed.
-    correction_counter : collections.defaultdict, optional
-        A 'collections.defaultdict' instance with 'default_factory=int'.
-        Records detected "misses" by the 'WordNetLemmatizer' (usually
+    correction_counter : `collections.defaultdict`, optional
+        A `collections.defaultdict` instance with `default_factory=int`.
+        Records detected "misses" by the `WordNetLemmatizer` (usually
         caused by the POS tagger mis-labeling a word) corrected by
-        parsing the word's synset directly (via the 'synset_match'
+        parsing the word's synset directly (via the `synset_match`
         function). If provided, keys of (word, lemma) will be added or
         incremented for each correction. Useful for spot-checking
         corrections to ensure only proper substitutions were made.
 
     Returns
     -------
-    processed_textlist : list of str
-        The original 'textlist' with preprocessing steps applied to each
-        element.
+    list of str
+        The original `textlist` with preprocessing steps applied to each
+        item.
 
     """
     if correction_counter is not None:
@@ -560,16 +740,27 @@ def r2z(r, fix_inf=False):
     ----------
     r : scalar or numpy.ndarray
         Correlation value(s)
+    fix_inf : bool, optional
+        If `True`, replace  (+/-) `numpy.inf` values in the result with
+        (+/-) 18.714973875118524. See Notes for more details.
 
     Returns
     -------
     zs : scalar or numpy.ndarray
         *z*-transformed correlation value(s)
 
+    Notes
+    -----
+    Because the natural logarithm is undefined at 0, the Fisher
+    *z*-transform returns (+/-) infinity for correlations of (+/-) 1.0.
+    If `fix_inf` is passed, the function will replace infinite
+    values in output the result of `r2z(1 - 1e-16)` (or
+    `r2z(-1 + 1e-16)`), the closest possible 64-bit float to (+/1) 1.0.
     """
     zs = 0.5 * (np.log(1 + r) - np.log(1 - r))
     if fix_inf:
-        # replace with r2z(1-1e-16) <-- closest possible float64 value to 1
+        # replace with r2z(1-1e-16) <-- closest possible float64 value
+        # to 1
         zs[zs == np.inf] = 18.714973875118524
         zs[zs == -np.inf] = -18.714973875118524
     return zs
@@ -585,21 +776,23 @@ def rbf_sum(obs_coords, pred_coords, width, metric='euclidean'):
     Parameters
     ----------
     obs_coords : numpy.ndarray
-        An (x, z) array of coordinates for *x* nodes in *z* dimensions.
+        An (x, z) array of coordinates for `x` nodes in `z` dimensions.
     pred_coords : numpy.ndarray
-        A (y, z) array of coordinates for *y* points in *z* dimensions
-        at which to evaluate the RBFs.
+        A (y, z) array of `y` coordinates in `z` dimensions at which to
+        evaluate the sum of RBFs.
     width : scalar
         The Width of the Gaussian kernel.
     metric : str or callable, optional
-        The metric used for measuring distance between two points.  May
-        be any metric accepted by 'scipy.spatial.distance.cdist'.
+        The metric used to compute the pairwise distance between
+        coordinates (default: `'euclidean'`, Euclidean distance). May be
+        any named metric accepted by `scipy.spatial.distance.cdist` or a
+        callable that takes two `array_like` arguments.
 
     Returns
     -------
-    rbf_sums : numpy.ndarray
-        A (y,) array of summed RBFs evaluated at each
-
+    numpy.ndarray
+        A 1-d array of summed RBFs evaluated at each coordinate given by
+        `pred_coords`.
     """
     dmat = cdist(obs_coords, pred_coords, metric=metric)
     return np.exp(-dmat ** 2 / width).sum(axis=0)
@@ -608,21 +801,22 @@ def rbf_sum(obs_coords, pred_coords, width, metric='euclidean'):
 def reconstruct_trace(lecture, questions, accuracy):
     """
     Reconstructs a participant's knowledge trace based on a lecture's
-    trajectory, a set of questions' topic vectors, and binary accuracy
-    scores.
+    trajectory (or any other set of coordinates), a set of questions'
+    topic vectors, and binary accuracy scores for those questions.
 
     Parameters
     ----------
     lecture: numpy.ndarray
-        Topic trajectory for the lecture for which to construct the
-        knowledge trace.
+        `(n_coordinates, n_features)` matrix of coordinates for which to
+        estimate knowledge.
     questions: numpy.ndarray
-        Topic vectors fpr the quiz questions used to construct the
-        knowledge trace.
-    accuracy: array-like
-        binary array with shape `len(questions)` denoting whether each
-        question was answered correctly (True/1) or incorrectly
-        (False/0).
+        `(n_observations, n_features)` matrix of coordinates for the
+        quiz questions used to estimate knowledge for each of the
+        `n_coordinates` locations.
+    accuracy: array_like
+        `(n_observations,)` binary array denoting whether each question
+        was answered correctly (`True`|`1`) or incorrectly
+        (`False`/`0`).
     """
     assert len(questions) == len(accuracy)
     acc = np.array(accuracy, dtype=bool)
@@ -641,11 +835,21 @@ def reconstruct_trace(lecture, questions, accuracy):
 
 
 def set_figure_style():
+    """
+    Sets some helpful `matplotlib`  options for figures generated for
+    the paper. This gets called automatically whenever `khan_helpers` is
+    imported, but occasionally needs to be called again manually when
+    some other function has overwritten the relevant
+    `matplotlib.rcParams` (e.g., inside `seaborn.axes_style` context
+    managers).
+    """
     # embed text in PDFs for illustrator
     plt.rcParams['pdf.fonttype'] = 42
 
     # use Myriad Pro font, if available
     if FONTS_DIR.is_dir() and next(FONTS_DIR.iterdir(), None) is not None:
+        # check whether the font has already been loaded by
+        # `matplotlib`'s font manager
         myriad_pro_fonts = [f for f in font_manager.fontManager.ttflist
                             if f.name == 'Myriad Pro']
         if len(myriad_pro_fonts) == 0:
@@ -659,12 +863,13 @@ def set_figure_style():
 
 def show_source(obj):
     """
-    Displays the source code for an object defined outside the current notebook.
+    Displays the source code for an object defined outside the current
+    notebook.
 
     Parameters
     ----------
     obj : Object
-        The object to display.  If 'obj' is a module, class, method,
+        The object to display.  If `obj` is a module, class, method,
         function, traceback, frame, or other code object, its source
         code will be displayed inline with syntax highlighting.
         Otherwise, a string representation of the object will be
@@ -672,9 +877,9 @@ def show_source(obj):
 
     Returns
     -------
-    None
-        The source code or object is displayed inline in the notebook.
-
+    IPython.display.HTML or Object
+        If `obj` is a code object, an `IPython.display.HTML` object.
+        Otherwise, the original `obj`.
     """
     try:
         src = getsource(obj)
@@ -702,18 +907,17 @@ def synset_match(word, min_similarity=0.6):
     Parameters
     ----------
     word : str
-        The word to be lemmatized.
+        The word to lemmatize.
     min_similarity : float, optional
         The minimum similarity to the provided word for a possible lemma
         to be considered correct (default: 0.6, inherited from default
-        "cutoff" for `difflib.get_close_matches()`).
+        "`cutoff`" value for `difflib.get_close_matches()`).
 
     Returns
     -------
-    lemma : str
-        If a lemma for the provided word was identified, it is returned.
-        Otherwise, the original word is returned.
-
+    str
+        The lemma for the given `word`, if one was identified.
+        Otherwise, the original `word`.
     """
     possible_matches = []
     for synset in wordnet.synsets(word):
@@ -723,13 +927,22 @@ def synset_match(word, min_similarity=0.6):
                 possible_matches.append(pert.name())
 
     possible_matches = list(set(possible_matches))
-    possible_matches = [m.lower() for m in possible_matches if len(m) <= len(word)]
+    possible_matches = [m.lower() for m in possible_matches
+                        if len(m) <= len(word)]
     # sort by similarity to word
-    close_matches = get_close_matches(word, possible_matches, n=2, cutoff=min_similarity)
+    close_matches = get_close_matches(word,
+                                      possible_matches,
+                                      n=2,
+                                      cutoff=min_similarity)
     if len(close_matches) == 0:
         return word
-    # if original word was in synset lemmas and the second closest possibility is shorter, use that
-    elif (close_matches[0] == word) and (len(close_matches) > 1) and (len(close_matches[1]) < len(word)):
+    # if original word was in synset lemmas and the second closest
+    # possibility is shorter, use that
+    elif (
+            (close_matches[0] == word) and
+            (len(close_matches) > 1) and
+            (len(close_matches[1]) < len(word))
+    ):
         return close_matches[1]
     else:
         return close_matches[0]
@@ -741,13 +954,12 @@ def z2r(z):
 
     Parameters
     ----------
-    z : scalar or numpy.ndarray
+    z : array_like
         *z*-transformed correlation value(s).
 
     Returns
     -------
-    r : scalar or numpy.ndarray
+    r : array_like
         Correlation value(s).
-
     """
     return (np.exp(2 * z) - 1) / (np.exp(2 * z) + 1)
