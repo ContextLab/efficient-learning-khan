@@ -385,7 +385,7 @@ automatically identify the ``matching'' moment(s) in the lecture. When we
 correlated each question's topic vector with the topic vectors from each second
 of the lectures, we found some evidence that each question is temporally
 specific (Fig.~\ref{fig:question-correlations}). In particular, most questions'
-topic vectors were maximally correlated with a well defined (and relatively
+topic vectors were maximally correlated with a well-defined (and relatively
 narrow) range of timepoints from their corresponding lectures, and the
 correlations fell off sharply outside of that range. We also qualitatively examined the
 best-matching intervals for each question by comparing the text
@@ -662,22 +662,22 @@ lecture.
 
 \section*{Discussion}
 
-We developed a computational framework that uses short multiple choice quizzes
-to provide nuanced insights into what learners know and how their knowledge
+We developed a computational framework that uses short multiple-choice quizzes
+to gain nuanced insights into what learners know and how their knowledge
 changes with training. First, we show that our approach can automatically match
-up the conceptual content of individual questions with the corresponding
+the conceptual knowledge probed by individual quiz questions to the corresponding
 moments in lecture videos when those concepts were presented
 (Fig.~\ref{fig:question-correlations}). Next, we demonstrate how we can
-estimate moment-by-moment ``knowledge traces'' that reflect how much knowledge
-participants have about each video's content before and after watching each
-lecture video (Fig.~\ref{fig:knowledge-timeseries}). We also show that these
-knowledge estimates can generalize to held-out questions
+estimate moment-by-moment ``knowledge traces'' that reflect the degree of knowledge
+participants have about each video's time-varying content, and capture temporally 
+specific increases in knowledge after viewing each lecture (Fig.~\ref{fig:knowledge-timeseries}).
+ We also show that these knowledge estimates can generalize to held-out questions
 (Fig.~\ref{fig:predictions}). Finally, we use our framework to construct visual
 maps that provide snapshot estimates of how much participants know about any
 concept within the scope of our text embedding model, and how much their
 knowledge changes with training (Fig.~\ref{fig:knowledge-maps}).
 
-Over the past several years, the global pandemic has forced many educators to
+Over the past several years, the global pandemic has forced numerous educators to
 teach remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21, Whal20}. This change
 in world circumstances is happening alongside (and perhaps accelerating)
 geometric growth in the availability of high quality online courses on
@@ -685,13 +685,13 @@ platforms such as Khan Academy~\citep{Khan04}, Coursera~\citep{Youn12},
 EdX~\citep{Kolo13}, and others~\citep{RhoaEtal13}. Continued expansion of the
 global internet backbone and improvements in computing hardware have also
 facilitated improvements in video streaming, enabling videos to be easily
-downloaded and shared by large segments of the world's population. This
+shared and viewed by large segments of the world's population. This
 exciting time for online course instruction provides an opportunity to
 re-evaluate how we, as a global community, educate ourselves and each other.
 For example, we can ask: what makes an effective course or training program?
-Which aspects of teaching might be optimized or automated? How and why do
+Which aspects of teaching might be optimized and/or augmented by automated tools? How and why do
 learning needs and goals vary across people? How might we lower barriers to
-achieving a high quality education?
+achieving a high-quality education?
 
 Alongside these questions, there is a growing desire to extend existing
 theories beyond the domain of lab testing rooms and into real
@@ -704,8 +704,8 @@ towards solving these challenges will be to build explicit models of real-world
 scenarios and how people behave in them (e.g., models of how people learn
 conceptual content from real-world courses, as in our current study). A second
 key step will be to understand which sorts of signals derived from behaviors
-and/or other measurements~\citep[e.g., neurophysiological data; ][]{NguyEtal22,
-MeshEtal20, PoulEtal17, BeviEtal19, DikkEtal17} might help to inform these
+and/or other measurements (e.g., neurophysiological data;~\citealp{NguyEtal22,
+MeshEtal20, PoulEtal17, BeviEtal19, DikkEtal17}) might help to inform these
 models. A third major step will be to develop and employ reliable ways of
 evaluating the complex models and data that are a hallmark of naturalistic
 paradigms.
@@ -720,19 +720,19 @@ knowledge and learning maps shown in Fig.~\ref{fig:knowledge-maps}), that
 attempt to characterize how well-aligned different people's knowledge bases or
 backgrounds are. In turn, this might be used to model how knowledge (or other
 forms of communicable information) flows not just between teachers and
-students, but between friends having a conversation, individuals out on a first
+students, but between friends having a conversation, individuals on a first
 date, participants at a business meeting, doctors and patients, experts and
 non-experts, political allies or adversaries, and more. For example, the extent
 to which two people's knowledge maps ``match'' or ``align'' in a given region
-of text embedding space might serve as a predictor of how effectively the
-people will communicate about the corresponding conceptual content.
+of text embedding space might serve as a predictor of how effectively they 
+will be able to communicate about the corresponding conceptual content.
 
 Ultimately, our work suggests a rich new line of questions about the geometric
 ``form'' of knowledge, how knowledge changes over time, and how we might map
 out the full space of what an individual knows. Our finding that detailed
 estimates about knowledge may be obtained from short quizzes shows one way that
-traditional approaches to evaluation in education might be extended. We hope
-that these advances might help pave the way for new ways of teaching or
+traditional approaches to evaluation in education may be extended. We hope
+that these advances might help pave the way for new approaches to teaching or
 delivering educational content that are tailored to individual students'
 learning needs and goals.
 
