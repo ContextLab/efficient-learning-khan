@@ -16,10 +16,11 @@
 \newcommand{\argmax}{\mathop{\mathrm{argmax}}\limits}
 \newcommand{\argmin}{\mathop{\mathrm{argmin}}\limits}
 
-\newcommand{\knowledgeMaps}{5}
+\newcommand{\topics}{3}
+\newcommand{\knowledgeMaps}{7}
 
-\title{\textit{Supplementary materials for}: Text embedding models yield high
-resolution insights into conceptual knowledge from short multiple choice
+\title{\textit{Supplementary materials for}: Text embedding models yield 
+high-resolution insights into conceptual knowledge from short multiple-choice
 quizzes}
 
 \author{Paxton C. Fitzpatrick\textsuperscript{1},
@@ -44,8 +45,6 @@ Jeremy.R.Manning@Dartmouth.edu}}
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\bibnumfmt}[1]{[S#1]}
 \renewcommand{\citenumfont}[1]{S#1}
-
-\newcommand{\topics}{3}
 
 % \newcommand{\demo}{1}
 
@@ -140,9 +139,9 @@ Jeremy.R.Manning@Dartmouth.edu}}
 \end{tabular}
 \end{tiny}
 
-\caption{\textbf{Topics.} The table displays the 10 top-weighted word from
-    each of the 15 topics identified from sliding windows of two course video
-    transcripts (see \textit{Constructing text embeddings of multiple videos
+\caption{\textbf{Topics.} The table displays the 10 top-weighted words (columns) from
+    each of the 15 topics (rows) identified from sliding windows of the two course video
+    transcripts (see \textit{Constructing text embeddings of multiple lectures
     and questions}).}
     \label{tab:topics}
 \end{table}
@@ -153,15 +152,15 @@ Jeremy.R.Manning@Dartmouth.edu}}
     \includegraphics[width=\textwidth]{figs/topic-weights}
 
 \caption{\textbf{Topic weights. A. Average topic weights for each lecture and
-question type}. The bar plots display each topic's average weight across
+question set}. The bar plots display each topic's average weight across
 lecture timepoints (top row) and questions (bottom row); colors denote topics.
 The top-weighted words from the highest-weighted topic from each lecture are
 displayed in the upper right (orange: topic 2; yellow-green: topic 4). The
 top-weighted words from the full set of topics may be found in
 Table~\ref{tab:topics}. \textbf{B. Relationships between average topic
 weights.} Pairwise correlations between the distributions of average topic
-weights for each lecture and question category. Each row and column corresponds
-to a bar plot in Panel A. Also see Figure~\topics A in the main text.}
+weights for each lecture and question set. Each row and column corresponds
+to a bar plot in Panel A. Also see Figure~\topics~in the main text.}
 
     \label{fig:topics}
 \end{figure}
@@ -173,9 +172,9 @@ to a bar plot in Panel A. Also see Figure~\topics A in the main text.}
     \includegraphics[height=0.9\textheight]{figs/individual-knowledge-maps-quiz1}
     
     \caption{\textbf{Individual participants' knowledge maps estimated from
-    Quiz 1 responses.} Each panel is in the same format as the knowledge maps
+    Quiz 1 responses.} Each panel is in the same format as the knowledge map
     displayed in the left panel of Figure~\knowledgeMaps A in the main text,
-    but here the maps have been computed separately for each participant.}
+    but here the maps are shown separately for each participant.}
     
     \label{fig:knowledge-maps-q1}
 \end{figure}
@@ -185,9 +184,9 @@ to a bar plot in Panel A. Also see Figure~\topics A in the main text.}
     \includegraphics[height=0.9\textheight]{figs/individual-knowledge-maps-quiz2}
     
     \caption{\textbf{Individual participants' knowledge maps estimated from
-    Quiz 2 responses.} Each panel is in the same format as the knowledge maps
+    Quiz 2 responses.} Each panel is in the same format as the knowledge map
     displayed in the middle panel of Figure~\knowledgeMaps A in the main text,
-    but here the maps have been computed separately for each participant.}
+    but here the maps are shown separately for each participant.}
     
     \label{fig:knowledge-maps-q2}
 \end{figure}
@@ -197,9 +196,9 @@ to a bar plot in Panel A. Also see Figure~\topics A in the main text.}
     \includegraphics[height=0.9\textheight]{figs/individual-knowledge-maps-quiz3}
     
     \caption{\textbf{Individual participants' knowledge maps estimated from
-    Quiz 3 responses.} Each panel is in the same format as the knowledge maps
+    Quiz 3 responses.} Each panel is in the same format as the knowledge map
     displayed in the right panel of Figure~\knowledgeMaps A in the main text,
-    but here the maps have been computed separately for each participant.}
+    but here the maps are shown separately for each participant.}
     
     \label{fig:knowledge-maps-q3}
 \end{figure}
@@ -211,7 +210,7 @@ to a bar plot in Panel A. Also see Figure~\topics A in the main text.}
     \caption{\textbf{Individual participants' learning maps estimated from
     Quiz 1 and 2 responses.} Each panel is in the same format as the learning map
     displayed in the left panel of Figure~\knowledgeMaps B in the main text,
-    but here the maps have been computed separately for each participant.}
+    but here the maps are shown separately for each participant.}
     
     \label{fig:learning-maps-q1_2}
 \end{figure}

@@ -13,7 +13,8 @@ TRAJS_DIR = DATA_DIR.joinpath('trajectories')
 
 FIG_DIR = Path('/mnt/paper/figs/source/')
 
-# number of timestamped lines in lecture transcript sliding windows
+# (maximum) number of timestamped lines in lecture transcript sliding
+# windows
 LECTURE_WSIZE = 30
 
 # standard English stop words + some corpus-specific words
