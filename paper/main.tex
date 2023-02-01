@@ -85,9 +85,9 @@ most effective strategy for that individual student.
 
 A common approach to assessing students' learning is to compile a set of quiz
 questions, tally up the proportion of correctly answered questions, and provide
-the student with feedback in the form of a letter grade. Although a numerical
-or letter grades give \textit{some} indication about whether the student has
-mastered the to-be-learned material, any single measure of performance on a
+the student with feedback in the form of a letter grade. Although numerical or
+letter grades give \textit{some} indication about whether the student has
+mastered the to-be-learned material, any univariate measure of performance on a
 complex task is at risk of conflating underlying factors, losing relevant
 information, and so on. For example, consider the relative utility of the
 imaginary map described above that characterizes in detail a student's
@@ -237,7 +237,7 @@ their respective content areas. Second, we wanted both lectures to have some
 related content, so that we could test our approach's ability to distinguish
 similar conceptual content. To this end, we chose two videos from the same (per
 instructor annotations) Khan Academy course domain, ``Cosmology and
-Astronomy.'' Third, we sought to minimize dependencies and specific overalp
+Astronomy.'' Third, we sought to minimize dependencies and specific overlap
 between the videos. For example, we did not want participants' abilities to
 understand one video to (directly) influence their abilities to understand the
 other. To satisfy this last criterion, we chose videos from two different
@@ -295,7 +295,7 @@ of text snippets (across all of these windows) as documents to fit our model
 Transforming the text from every sliding window with our model yielded a
 number-of-windows by number-of-topics (15) topic-proportions matrix that
 described the unique mixture of broad themes from both lectures reflected in
-each window's content. Each window's ``topic vector'' (i.e., column of the
+each window's text. Each window's ``topic vector'' (i.e., column of the
 topic-proportions matrix) is a coordinate in a 15-dimensional space whose axes
 are topics discovered by the model. Within this space, each lecture's sequence
 of topic vectors (i.e., corresponding to its transcript's overlapping text
@@ -304,7 +304,7 @@ its conceptual content unfolds over time (Fig.~\ref{fig:sliding-windows}B). We
 resampled these trajectories to a resolution of one topic vector for each
 second of video (i.e., 1~Hz).
 
-We hypothesized that a topic model trained on transcripts of the two lectures,
+We hypothesized that a topic model trained on transcripts of the two lectures
 should also capture the conceptual knowledge probed by each quiz question. If
 indeed the topic model could capture information about the deeper conceptual
 content of the lectures (i.e., beyond surface-level details such as particular
@@ -354,7 +354,7 @@ throughout a lecture. That topic might be characteristic of some aspect or
 property of the lecture \textit{overall} (conceptual or otherwise), but unless
 the topic's weights changed in meaningful ways over time, the topic would be a
 poor indicator of any \textit{specific} conceptual content in the lecture. We
-therefore also compared the variance in topic weights (across time or
+therefore also compared the variances in topic weights (across time or
 questions) between the lectures and questions. The variability in topic
 expression (over time and across questions) was similar for the lecture 1 video
 and questions ($r(13) = 0.824,~p<0.001, CI = [0.696, 0.973]$) and the lecture 2
@@ -362,7 +362,7 @@ video and questions ($r(13) = 0.801,~p<0.001,~95\%~\mathrm{CI} = [0.539,
 0.958]$). However, as reported in Figure~\ref{fig:topics}B, the variability in
 topic expressions across \textit{different} videos and lecture-specific
 questions (i.e., lecture 1 video versus lecture 2 questions; lecture 2 video
-versus lecture 1 questions) were \textit{negatively} correlated, and neither
+versus lecture 1 questions) were negatively correlated, and neither
 video's topic variability was reliably correlated with the topic variability
 across general physics knowledge questions. Taken together, the analyses
 reported in Figures~\ref{fig:topics} and~\topicWeights~indicate that a topic
@@ -374,9 +374,9 @@ coarse scale, at a finer scale each moment of a lecture typically covers a
 narrower range of content. We wondered whether a text embedding model trained
 on the lectures' transcripts might capture some of this finer scale content.
 For example, if a particular question asks about the content from one small
-part of a lecture, we wondered whether our text embedding model could be used
-to automatically identify the ``matching'' moment(s) in the lecture. When we
-correlated each question's topic vector with the topic vectors for each second
+part of a lecture, we wondered whether the text embeddings could be used to
+automatically identify the ``matching'' moment(s) in the lecture. When we
+correlated each question's topic vector with the topic vectors from each second
 of the lectures, we found some evidence that each question is temporally
 specific (Fig.~\ref{fig:question-correlations}). In particular, most questions'
 topic vectors were maximally correlated with a well-defined (and relatively
@@ -594,9 +594,9 @@ and also projected each question into a shared text embedding space.
 
 We projected the resulting 100-dimensional topic vectors (for each second of
 video and for each question) into a shared 2-dimensional space (see
-\nameref{subsec:knowledge-maps}). Next, we sampled
-points evenly from a $100 \times 100$ grid of coordinates that evenly tiled a
-rectangle enclosing the 2D projections of the videos and questions. We used
+\nameref{subsec:knowledge-maps}). Next, we sampled points from a $100 \times
+100$ grid of coordinates that evenly tiled a rectangle enclosing the 2D
+projections of the videos and questions. We used
 Equation~\ref{eqn:rbf-knowledge} to estimate participants' knowledge at each of
 these 10,000 sampled locations, and we averaged these estimates across
 participants to obtain an estimated average \textit{knowledge map}
@@ -658,16 +658,16 @@ We developed a computational framework that uses short multiple choice quizzes
 to provide nuanced insights into what learners know and how their knowledge
 changes with training. First, we show that our approach can automatically match
 up the conceptual content of individual questions with the corresponding
-moments in lecture videos where those concepts were presented
+moments in lecture videos when those concepts were presented
 (Fig.~\ref{fig:question-correlations}). Next, we demonstrate how we can
 estimate moment-by-moment ``knowledge traces'' that reflect how much knowledge
-participants have before and after watching each lecture video
-(Fig.~\ref{fig:knowledge-timeseries}). We also show that these knowledge
-estimates can generalize to held-out questions (Fig.~\ref{fig:predictions}).
-Finally, we use our framework to construct visual maps that provide snapshot
-estimates of how much participants know about any concept within the scope of
-our text embedding model, and how much their knowledge changes with training
-(Fig.~\ref{fig:knowledge-maps}).
+participants have about each video's content before and after watching each
+lecture video (Fig.~\ref{fig:knowledge-timeseries}). We also show that these
+knowledge estimates can generalize to held-out questions
+(Fig.~\ref{fig:predictions}). Finally, we use our framework to construct visual
+maps that provide snapshot estimates of how much participants know about any
+concept within the scope of our text embedding model, and how much their
+knowledge changes with training (Fig.~\ref{fig:knowledge-maps}).
 
 Over the past several years, the global pandemic has forced many educators to
 teach remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21, Whal20}. This change
@@ -681,9 +681,9 @@ downloaded and shared by large segments of the world's population. This
 exciting time for online course instruction provides an opportunity to
 re-evaluate how we, as a global community, educate ourselves and each other.
 For example, we can ask: what makes an effective course or training program?
-Which aspects of teaching might be optimized or automated? How can we provide
-How and why do learning needs and goals vary across people? How might we lower
-barriers to achieving a high quality education?
+Which aspects of teaching might be optimized or automated? How and why do
+learning needs and goals vary across people? How might we lower barriers to
+achieving a high quality education?
 
 Alongside these questions, there is a growing desire to extend existing
 theories beyond the domain of lab testing rooms and into real
@@ -710,19 +710,19 @@ effectively interact and communicate~\citep{ShaoEtal18, StepBaer06, Ratk18}.
 One could imagine future extensions of our work (e.g., analogous to the
 knowledge and learning maps shown in Fig.~\ref{fig:knowledge-maps}), that
 attempt to characterize how well-aligned different people's knowledge bases or
-backgrounds are. In turn, this might be used to model how knowledge flow not
-just between teachers and students, but between friends having a conversation,
-individuals out on a first date, participants at a business meeting, doctors
-and patients, experts and non-experts, political allies and adversaries, and
-more. For example, the extent to which two people's knowledge maps ``match'' in
-a given region of text embedding space might serve as a predictor of how
-effectively the people will communicate about the corresponding conceptual
-content.
+backgrounds are. In turn, this might be used to model how knowledge (or other
+forms of communicable information) flows not just between teachers and
+students, but between friends having a conversation, individuals out on a first
+date, participants at a business meeting, doctors and patients, experts and
+non-experts, political allies or adversaries, and more. For example, the extent
+to which two people's knowledge maps ``match'' or ``align'' in a given region
+of text embedding space might serve as a predictor of how effectively the
+people will communicate about the corresponding conceptual content.
 
-Ultimately, our work suggests a rich new line of questions about the ``form''
-of knowledge, how knowledge changes over time, and how we might map out the
-full space of what an individual knows. Our finding that detailed estimates
-about knowledge may be obtained from short quizzes shows one way that
+Ultimately, our work suggests a rich new line of questions about the geometric
+``form'' of knowledge, how knowledge changes over time, and how we might map
+out the full space of what an individual knows. Our finding that detailed
+estimates about knowledge may be obtained from short quizzes shows one way that
 traditional approaches to evaluation in education might be extended. We hope
 that these advances might help pave the way for new ways of teaching or
 delivering educational content that are tailored to individual students'
@@ -833,15 +833,17 @@ questions and answer choices may be found in Table~\questions.
 
 Over the course of the experiment, participants completed three 13-question
 multiple-choice quizzes: the first before viewing lecture 1, the second between
-lectures 1 and 2, and the third after viewing lecture 2 (Fig.~\ref{fig:experiment}).
-The questions appearing on each quiz, for each participant, were randomly
-chosen from the full set of 39, with the constraints that (a) each quiz contain 5
-questions about lecture 1, 5 questions about lecture 2, and 3 questions about general physics knowledge, and
-(b) each question appear exactly once for each participant. The order of questions on each quiz,
-and the order of answer options for each question, were also randomized. Our
-experimental protocol was approved by the Committee for the Protection of
-Human Subjects at Dartmouth College.  We used the experiment to develop
-and test our computational framework for estimating knowledge and learning.
+lectures 1 and 2, and the third after viewing lecture 2
+(Fig.~\ref{fig:experiment}). The questions appearing on each quiz, for each
+participant, were randomly chosen from the full set of 39, with the constraints
+that (a) each quiz contain 5 questions about lecture 1, 5 questions about
+lecture 2, and 3 questions about general physics knowledge, and (b) each
+question appear exactly once for each participant. The orders of questions on
+each quiz, and the orders of answer options for each question, were also
+randomized. Our experimental protocol was approved by the Committee for the
+Protection of Human Subjects at Dartmouth College. We used the experiment to
+develop and test our computational framework for estimating knowledge and
+learning.
 
 \subsection*{Analysis}
 
@@ -855,7 +857,7 @@ discover a set of $k$ ``topics'' or ``themes.'' Formally, each topic is defined
 as a set of weights over each word in the model's vocabulary (i.e., the union
 of all unique words, across all documents, excluding ``stop words.'').
 Conceptually, each topic is intended to give larger weights to words that are
-conceptually related or that tend to co-occur in the same documents. After
+semantically related or that tend to co-occur in the same documents. After
 fitting a topic model, each document in the training set, or any \textit{new}
 document that contains at least some of the words in the model's vocabulary,
 may be represented as a $k$-dimensional vector describing how much the document
@@ -864,15 +866,15 @@ topics.)
 
 As illustrated in Figure~\ref{fig:sliding-windows}A, we start by building up a
 corpus of documents using overlapping sliding windows that span each video's
-transcript. Khan Academy provides professionally created, manual 
-transcriptions of all videos for closed captioning. However, such transcripts 
-would not be readily available in all contexts to which our framework could 
-potentially be applied. Khan Academy videos are hosted on the YouTube 
-platform, which additionally provides automated captions. We opted to use 
-these automated transcripts (which, in prior work, we have found are 
-sufficiently near-human quality yield reliable data in behavioral studies; 
-\citealp{ZimaEtal18}) when developing our framework in order to make it 
-more easily extensible and adaptable by others in the future.
+transcript. Khan Academy provides professionally created, manual transcriptions
+of all videos for closed captioning. However, such transcripts would not be
+readily available in all contexts to which our framework could potentially be
+applied. Khan Academy videos are hosted on the YouTube platform, which
+additionally provides automated captions. We opted to use these automated
+transcripts (which, in prior work, we have found are sufficiently near-human
+quality yield reliable data in behavioral studies; \citealp{ZimaEtal18}) when
+developing our framework in order to make it more directly extensible and
+adaptable by others in the future.
 
 We fetched these automated transcripts using the
 \texttt{youtube-transcript-api} Python package~\citep{Depo19}. The transcripts
@@ -975,24 +977,25 @@ between the pair of coordinates, and pairwise distances in the low-dimensional
 embedding space were defiend as the Euclidean distance between the pair of
 coordinates.
 
-Although UMAP is not fully invertible, due to its clustering step, it is
-possible to approximately invert the embedded low-dimensional points. In our
-application, we sought to embed topic vectors, whose elements are always
-non-negative. Because the inversion step is inexact, sometimes it results in
-negative-valued vectors (even if the original observations were all
-non-negative), which are incompatable with the topic modeling framework. To
-protect against this issue, we log-transformed the topic vectors prior to
-embedding them in the 2D space. When we inverted the embedded vectors (e.g., to
-estimate topic vectors or word clouds, as in Fig.~\ref{fig:knowledge-maps}C),
-we passed to inverted (log-transformed) values through the exponential function
-to obtain a vector of non-negative values.
+In our application, all of the coordinates we embedded were topic vectors,
+whose elements are always non-negative. Although UMAP is an invertible
+transformation at the embedding locations of the original data, other locations
+in the embedding space will not necessarily follow the same implicit ``rules''
+as the original high-dimensional data. For example, inverting an arbitrary
+coordinate in the embedding space might result in negative-valued vectors,
+which are incompatable with the topic modeling framework. To protect against
+this issue, we log-transformed the topic vectors prior to embedding them in the
+2D space. When we inverted the embedded vectors (e.g., to estimate topic
+vectors or word clouds, as in Fig.~\ref{fig:knowledge-maps}C), we passed the
+inverted (log-transformed) values through the exponential function to obtain a
+vector of non-negative values.
 
 After embedding both lectures' topic trajectories and the topic vectors of
 every question, we defined a rectangle enclosing the 2D projections of the
 lectures' and quizzes' embeddings. We then sampled points from a regular $100
 \times 100$ grid of coordinates that evenly tiled this enclosing rectangle. We
 sought to estimate participants' knowledge (and learning, i.e., changes in
-knowledge) at each of the resulting 10K coordinates.
+knowledge) at each of the resulting 10,000 coordinates.
 
 To generate our estimates, we placed a set of 39 radial basis functions (RBFs)
 throughout the embedding space, centered on the 2D projections for each
