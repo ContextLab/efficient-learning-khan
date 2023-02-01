@@ -652,38 +652,20 @@ lecture.
 
 \section*{Discussion}
 
-Teaching, like effective writing and speaking, is fundamentally about
-empathy~\citep{AldrEtal22, StojEtal12, MeyeEtal19}. Great teachers consider
-students' interests~\citep{SwarEtal12, Clar10}, backgrounds~\citep{MuijReyn10,
-Rose76, denBEtal10}, and working memory capacities~\citep{Allo12}, and flexibly
-optimize their teaching strategies within those constraints~\citep{GoodEtal07,
-AndeEtal21, John02}. In the classroom, empathizing with students also means
-maintaining open lines of communication~\citep{WulfWulf10} by fostering an
-environment in which all students feel comfortable speaking up if they have an
-exciting new idea, or if they are having trouble understanding
-something~\citep{TurnBrai15, GarrRasm14}. In-person instruction also often
-entails dynamic student-teacher and student-student interactions. These
-in-person interactions can provide the instructor with valuable information
-about students' understanding of the course material, beyond what they can
-glean solely from exams or assignments~\citep{Engl09, vandEtal10c, HallWals02}.
-In turn, this can allow the instructor to adapt their teaching approaches
-on-the-fly according to students' questions and behaviors. But what does great
-teaching look like in asynchronous online courses, when the instructor
-typically prepares course lectures and materials without knowing who will
-ultimately be learning from them? Can the empathetic side of teaching be
-automated and scaled?
-
-The notion of empathy also related to ``theory of mind'' of other
-individuals~\citep{GoldWinn12, KansEtal15, Melt11}. Considering others' unique
-perspectives, prior experiences, knowledge, goals, etc., can help us to more
-effectively interact and communicate~\citep{ShaoEtal18, StepBaer06, Ratk18}.
-The knowledge and learning maps we estimate in our study
-(Fig.~\ref{fig:knowledge-maps}) hint at one potential form that an automated
-``empathetic'' teacher might take. We imagine automated content delivery
-systems that adapt lessons on the fly according to continually updated
-estimates of what students know and how quickly they are learning different
-conceptual content~\citep[e.g., building on ideas such as][and
-others]{AndeSkwa86, Half88, Kuma05, WolzEtal88}.
+We developed a computational framework that uses short multiple choice quizzes
+to provide nuanced insights into what learners know and how their knowledge
+changes with training. First, we show that our approach can automatically match
+up the conceptual content of individual questions with the corresponding
+moments in lecture videos where those concepts were presented
+(Fig.~\ref{fig:question-correlations}). Next, we demonstrate how we can
+estimate moment-by-moment ``knowledge traces'' that reflect how much knowledge
+participants have before and after watching each lecture video
+(Fig.~\ref{fig:knowledge-timeseries}). We also show that these knowledge
+estimates can generalize to held-out questions (Fig.~\ref{fig:predictions}).
+Finally, we use our framework to construct visual maps that provide snapshot
+estimates of how much participants know about any concept within the scope of
+our text embedding model, and how much their knowledge changes with training
+(Fig.~\ref{fig:knowledge-maps}).
 
 Over the past several years, the global pandemic has forced many educators to
 teach remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21, Whal20}. This change
@@ -697,9 +679,9 @@ downloaded and shared by large segments of the world's population. This
 exciting time for online course instruction provides an opportunity to
 re-evaluate how we, as a global community, educate ourselves and each other.
 For example, we can ask: what makes an effective course or training program?
-Which aspects of teaching might be optimized or automated? How can we provide  How and why do
-learning needs and goals vary across people? How might we lower barriers to
-achieving a high quality education?
+Which aspects of teaching might be optimized or automated? How can we provide
+How and why do learning needs and goals vary across people? How might we lower
+barriers to achieving a high quality education?
 
 Alongside these questions, there is a growing desire to extend existing
 theories beyond the domain of lab testing rooms and into real
@@ -718,18 +700,31 @@ models. A third major step will be to develop and employ reliable ways of
 evaluating the complex models and data that are a hallmark of naturalistic
 paradigms.
 
-Ultimately, our work suggests a new line of questions regarding the future of
-education: which aspects of teaching can be optimized and/or automated? The
-social benefits of face-to-face instruction, such as social interactions,
-friendships, and emotional support, cannot (and perhaps should not) be fully
-replaced by an automated computer-based system. Nor can modern computer systems
-experience emotional empathy in the human sense of the word. On the other hand,
-perhaps it is possible to separate out the social aspects of classroom
-instruction from the purely learning-related aspects. Our study shows that text
-embedding models can uncover detailed insights into students' knowledge and how
-it changes over time during learning.  We hope that these advances might help
-pave the way for new ways of teaching or delivering educational content
-that are tailored to individual students' learning needs and goals.
+Beyond specifically predicting what people \textit{know}, the fundamental ideas
+we develop here also relate to the notion of ``theory of mind'' of other
+individuals~\citep{GoldWinn12, KansEtal15, Melt11}. Considering others' unique
+perspectives, prior experiences, knowledge, goals, etc., can help us to more
+effectively interact and communicate~\citep{ShaoEtal18, StepBaer06, Ratk18}.
+One could imagine future extensions of our work (e.g., analogous to the
+knowledge and learning maps shown in Fig.~\ref{fig:knowledge-maps}), that
+attempt to characterize how well-aligned different people's knowledge bases or
+backgrounds are. In turn, this might be used to model how knowledge flow not
+just between teachers and students, but between friends having a conversation,
+individuals out on a first date, participants at a business meeting, doctors
+and patients, experts and non-experts, political allies and adversaries, and
+more. For example, the extent to which two people's knowledge maps ``match'' in
+a given region of text embedding space might serve as a predictor of how
+effectively the people will communicate about the corresponding conceptual
+content.
+
+Ultimately, our work suggests a rich new line of questions about the ``form''
+of knowledge, how knowledge changes over time, and how we might map out the
+full space of what an individual knows. Our finding that detailed estimates
+about knowledge may be obtained from short quizzes shows one way that
+traditional approaches to evaluation in education might be extended. We hope
+that these advances might help pave the way for new ways of teaching or
+delivering educational content that are tailored to individual students'
+learning needs and goals.
 
 \section*{Materials and methods}
 
