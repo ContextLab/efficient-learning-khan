@@ -34,8 +34,8 @@
 \doublespacing
 \linenumbers
 
-\title{Text embedding models yield high resolution insights into conceptual
-knowledge from short multiple choice quizzes}
+\title{Text embedding models yield high-resolution insights into conceptual
+knowledge from short multiple-choice quizzes}
 
 \author{Paxton C. Fitzpatrick\textsuperscript{1},
 Andrew C. Heusser\textsuperscript{1, 2}, and Jeremy R.
@@ -52,14 +52,14 @@ language processing models, for tracking and characterizing the acquisition of
 conceptual knowledge. Our approach embeds each concept in a high dimensional
 representation space, where nearby coordinates reflect similar or related
 concepts. We test our approach using behavioral data from participants who
-answered small sets of multiple choice quiz questions interleaved between
+answered small sets of multiple-choice quiz questions interleaved between
 watching two course videos from the Khan Academy platform. We applied our
-framework to the videos' transcripts, and to text of the quiz questions, to
+framework to the videos' transcripts and the text of the quiz questions to
 quantify the content of each moment of video and each quiz question. We used
 these embeddings, along with participants' quiz responses, to track how the
 learners' knowledge changed after watching each video. Our findings show how a
-small set of quiz questions may be used to obtain rich and meaningful high
-resolution insights into what each learner knows, and how their knowledge
+small set of quiz questions may be used to obtain rich and meaningful, high-resolution
+insights into what each learner knows, and how their knowledge
 changes over time as they learn.
 
 \textbf{Keywords: education, learning, knowledge, concepts, natural language processing}
@@ -69,7 +69,7 @@ changes over time as they learn.
 
 \section*{Introduction}
 
-Suppose that a teacher had access to a complete tangible ``map'' of everything
+Suppose that a teacher had access to a complete, tangible ``map'' of everything
 a student knew. Defining what such a map might even look like, let alone how it
 might be constructed or filled in, is itself a non-trivial problem. But if a
 teacher \textit{were} to gain access to such a map, how might it change their
@@ -83,18 +83,18 @@ and new material. Observing how the student's knowledge changed over time, in
 response to their teaching, could also help to guide the teacher towards the
 most effective strategy for that individual student.
 
-A common approach to assessing students' learning is to compile a set of quiz
-questions, tally up the proportion of correctly answered questions, and provide
-the student with feedback in the form of a letter grade. Although numerical or
-letter grades give \textit{some} indication about whether the student has
+A common approach to assessing a student's knowledge is to present them with a set of quiz
+questions, calculate the proportion they answer correctly, and provide
+them with feedback in the form of a simple numeric or letter grade. While such a
+grade can provide \textit{some} indication of whether the student has
 mastered the to-be-learned material, any univariate measure of performance on a
-complex task is at risk of conflating underlying factors, losing relevant
-information, and so on. For example, consider the relative utility of the
-imaginary map described above that characterizes in detail a student's
-knowledge, versus a single annotation saying that the student answered 85\% of
+complex task sacrifices certain relevant information, risks conflating underlying
+factors, and so on. For example, consider the relative utility of the
+imaginary map described above that characterizes a student's knowledge
+in detail, versus a single annotation saying that the student answered 85\% of
 their quiz questions correctly, or that they received a `B'. Here, we show that
-the same quiz data required to compute proportion correct scores or letter
-grades can be used to instead obtain much more detailed insights into what the
+the same quiz data required to compute proportion-correct scores or letter
+grades can instead be used to obtain much more detailed insights into what the
 student knows at the time they took the quiz.
 
 Designing and building procedures and tools for mapping out knowledge touches
@@ -106,21 +106,22 @@ deeper and richer. Does conceptual understanding entail connecting newly
 acquired information to the scaffolding of one's existing knowledge or
 experience~\citep{BlayEtal06,CaraMaho03, ConsEtal16, DeacEtal04, SimoEtal04}?
 Or weaving a lecture's atomic elements (e.g., its component words) into a
-structured network that describes how those individual elements are related?
-Conceptual understanding could also involve building a mental model that
-transcends the meanings of those individual atomic elements by reflecting the
-deeper meaning underlying the gestalt whole~\citep{Kint70, Macl05, ScotEtal07}.
+structured network that describes how those individual elements are
+related~\citep{LeeChen22}? Conceptual understanding could also involve building
+a mental model that transcends the meanings of those individual atomic elements
+by reflecting the deeper meaning underlying the gestalt whole~\citep{Kint70,
+Macl05, ScotEtal07}.
 
 The difference between ``understanding'' and ``memorizing,'' as framed by
 researchers in education, cognitive psychology, and cognitive
-neuroscience~\citep[e.g.,][]{Kato40, Gall00, ScotEtal07, HallGree08, Macl05}
+neuroscience (e.g.,~\citealp{Kato40, Gall00, ScotEtal07, HallGree08, Macl05})
 has profound analogs in the fields of natural language processing and natural
 language understanding. For example, considering the raw contents of a document
 (e.g., its constituent symbols, letters, and words) might provide some
 information about what the document is about, just as memorizing a passage
 might provide some ability to answer simple questions about it. However, text
-embedding models~\citep[e.g.,][]{LandDuma97, DeerEtal90, BleiEtal03,
-BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20} also attempt to capture the
+embedding models (e.g.,~\citealp{LandDuma97, DeerEtal90, BleiEtal03,
+BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20}) also attempt to capture the
 deeper meaning \textit{underlying} those atomic elements. These models consider
 not only the co-occurrences of those elements within and across documents, but
 also patterns in how those elements appear across different scales (e.g.,
@@ -131,7 +132,7 @@ meaning of a document may be captured by a feature vector in a high-dimensional
 representation space, where nearby vectors reflect conceptually related
 documents. A model that succeeds at capturing an analog of ``understanding'' is
 able to assign nearby feature vectors to two conceptually related documents,
-\textit{even when the words contained in those documents have very little
+\textit{even when the specific words contained in those documents have very little
 overlap}.
 
 Given these insights, what form might the representation of the sum total of a
@@ -150,20 +151,20 @@ unlock any now-satisfied dependencies of those newly learned concepts so that
 they are ``tagged'' as available for future learning.
 % TODO: is the second half of this paragraph relevant to this paper??
 
-Here we develop a framework for modeling how knowledge is acquired during
-learning. The central idea is to use text embedding models to define the
-coordinate systems of two maps: (a) a \textit{knowledge map} that describes the
-extent to which each concept is currently known and (b) a \textit{learning map}
-that describes changes in knowledge over time. Each location on these maps
-represents a single concept, and the maps' geometries are defined such that
-related concepts are located nearby in space. We use this framework to analyze
-and interpret behavioral data collected from an experiment that had
-participants watch and answer multiple-choice questions about a series of
+Here we develop a framework for modeling how conceptual knowledge is acquired
+during learning. The central idea behind our framework is to use text embedding
+models to define the coordinate systems of two maps: (a) a \textit{knowledge
+map} that describes the extent to which each concept is currently known and (b)
+a \textit{learning map} that describes changes in knowledge over time. Each
+location on these maps represents a single concept, and the maps' geometries
+are defined such that related concepts are located nearby in space. We use this
+framework to analyze and interpret behavioral data collected from an experiment
+that had participants answer sets multiple-choice questions about a series of
 recorded course lectures.
 
 Our primary research goal is to advance our understanding of what it means to
 acquire deep, real-world conceptual knowledge. Traditional laboratory
-approaches to studying learning and memory (e.g., list learning studies) often
+approaches to studying learning and memory (e.g., list-learning studies) often
 draw little distinction between memorization and understanding. Instead, these
 studies typically focus on whether information is effectively encoded or
 retrieved, rather than whether the information is \textit{understood}.
@@ -174,17 +175,20 @@ random features in otherwise meaningless categorized stimuli. However the
 objective of real-world training, or learning from life experiences more
 generally, is often to develop new knowledge that may be applied in
 \textit{useful} ways in the future. In this sense, the gap between modern
-learning theories and modern pedagogical approaches and classroom learning
-strategies is enormous: most of our theories about \textit{how} people learn
-are inspired by experimental paradigms and models that have only peripheral
-relevance to the kinds of learning that students and teachers actually
-seek~\citep{Macl05, HallGree08}. To help bridge this gap, our study uses course
-materials from real online courses to inform, fit, and test models of
-real-world conceptual learning. We also provide a demonstration of how our
+learning theories and modern pedagogical approaches that inform classroom
+learning strategies is enormous: most of our theories about \textit{how} people
+learn are inspired by experimental paradigms and models that have only
+peripheral relevance to the kinds of learning that students and teachers
+actually seek~\citep{Macl05, HallGree08}. To help bridge this gap, our study
+uses course materials from real online courses to inform, fit, and test models
+of real-world conceptual learning. We also provide a demonstration of how our
 models can be used to construct ``maps'' of what students know, and how their
 knowledge changes with training. In addition to helping to visualize knowledge
 (and changes in knowledge), we hope that such maps might lead to real-world
-tools for improving how we educate.
+tools for improving how we educate. Taken together, our work shows that
+existing course materials and evaluative tools like short multiple-choice
+quizzes may be leveraged to gain highly detailed insights into what students
+know and how they learn.
 
 \section*{Results}
 
@@ -212,7 +216,7 @@ manually produced ratings or labels.
     \includegraphics[width=\textwidth]{figs/experiment}
 
     \caption{\textbf{Experimental paradigm.} Participants alternate between
-    answering 13-question multiple-choice quizzes and watching two Khan Academy
+    completing three 13-question multiple-choice quizzes and watching two Khan Academy
     lectures. Each quiz contains a mix of 5 questions about lecture 1, 5
     questions about lecture 2, and 3 questions about general physics knowledge. The
     specific questions reflected on each quiz, and the orders of each quiz's
