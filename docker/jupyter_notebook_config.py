@@ -15,4 +15,4 @@ c.NotebookApp.notebook_dir = getenv("NOTEBOOK_DIR")
 c.NotebookApp.open_browser = False
 c.NotebookApp.allow_root = True
 # https://github.com/jupyter/notebook/issues/3130
-c.NotebookApp.delete_to_trash = False
+c.FileContentsManager.delete_to_trash = False
