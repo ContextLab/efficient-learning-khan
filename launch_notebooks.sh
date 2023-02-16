@@ -382,6 +382,7 @@ get_nbserver_url() {
     local url_dir_info="${running_nbserver#Currently running servers:}"
     nbserver_url="${url_dir_info%% *}"
     nbserver_url="${nbserver_url//$'\n'}"
+    nbserver_url="${nbserver_url/0.0.0.0/127.0.0.1}"
 }
 
 
