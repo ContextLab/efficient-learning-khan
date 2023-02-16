@@ -39,6 +39,7 @@ RUN apt-get update --fix-missing \
     # install required packages
     && mamba install -Sy \
         ipython=8.0.1 \
+        ipywidgets=7.7.0 \
         jupyter_contrib_nbextensions=0.5.1 \
         matplotlib=3.5.1 \
         notebook=6.4.7 \
@@ -61,7 +62,11 @@ RUN apt-get update --fix-missing \
     && mkdir "$HOME/.jupyter" \
     && mv "/khan_helpers/jupyter_notebook_config.py" "$HOME/.jupyter/" \
     # download NLTK corpora & models
-    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet omw-1.4 \
+    && python -uBW ignore -m nltk.downloader \
+        stopwords \
+        averaged_perceptron_tagger \
+        wordnet \
+        omw-1.4 \
     # install khan_helpers package (NLTK data must be downloaded first)
     && pip install --disable-pip-version-check --no-cache-dir /khan_helpers \
     # various cleanup to reduce image size
