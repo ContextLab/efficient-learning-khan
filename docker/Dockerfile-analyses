@@ -15,7 +15,7 @@ ENV MAMBA_NO_BANNER=1 \
     NOTEBOOK_DIR="$notebook_dir" \
     PATH="/opt/conda/bin:$PATH"
 
-COPY code/khan_helpers docker/jupyter_notebook_config.py /khan_helpers/
+COPY code/khan_helpers docker/jupyter_notebook_config.py docker/analysis-environment.yml /khan_helpers/
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -36,22 +36,8 @@ RUN apt-get update --fix-missing \
         -o "$HOME/mambaforge.sh" \
     && /bin/bash "$HOME/mambaforge.sh" -bp /opt/conda \
     && rm "$HOME/mambaforge.sh" \
-    # install required packages
-    && mamba install -Sy \
-        ipython=8.0.1 \
-        ipywidgets=7.7.0 \
-        jupyter_contrib_nbextensions=0.5.1 \
-        matplotlib=3.5.1 \
-        notebook=6.4.7 \
-        nltk=3.6.7 \
-        numba=0.55.2 \
-        numpy=1.22.0 \
-        pandas=1.3.5 \
-        seaborn=0.11.2 \
-        scikit-learn=1.0.2 \
-        scipy=1.8.0 \
-        tqdm=4.62.3 \
-        umap-learn=0.5.2 \
+    # install required packages from environment file \
+    && mamba env update -f /khan_helpers/analysis-environment.yml --prune \
     # install additional requirements not available via conda
     # wordcloud must be built from source for ARM/Python>3.7
     && pip install --disable-pip-version-check --no-cache-dir \
