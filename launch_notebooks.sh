@@ -335,7 +335,7 @@ local_image_exists() {
 
 build_local_image() {
     fancy_echo "building image: $IMAGE_NAME"
-    docker build \
+    DOCKER_SCAN_SUGGEST=false docker build \
         --rm \
         --force-rm \
         --build-arg WORKDIR="/mnt/$NOTEBOOKS_DIR" \
