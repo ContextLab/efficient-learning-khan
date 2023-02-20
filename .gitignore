@@ -20,7 +20,7 @@ scratch/
 *.egg-info
 
 # raw participant data
-data/db/
+exp/efficient-learning-khan.db
 
 # license-restricted font files
 data/fonts/
