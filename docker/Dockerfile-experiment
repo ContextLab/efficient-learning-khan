@@ -1,37 +1,16 @@
 # Dockerfile for running eficient-Learning-Khan experiment
 # Use Dockerfile-analyses to build an environment for running the analysis code
-FROM debian:stretch
-MAINTAINER Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu>
+FROM python:3.6-stretch
 
-# install debian-related stuff
-RUN apt-get update
-RUN apt-get install -y eatmydata
-RUN eatmydata apt-get install -y \
-    python-dev \
-    default-libmysqlclient-dev \
-    python-pip \
-    procps \
-    git \
-    curl \
-    yasm
+LABEL maintainer="Paxton Fitzpatrick <Paxton.C.Fitzpatrick.GR@Dartmouth.edu>"
 
-RUN rm -rf /var/lib/apt/lists/*
+ENV PSITURK_GLOBAL_CONFIG_LOCATION="/exp"
 
-# install python packages
-RUN pip install --upgrade pip && pip install -r --no-cache-dir experiment-requirements.txt
+WORKDIR "/exp"
 
-# install vim
-RUN apt-get update
-RUN apt-get install -y vim
+RUN pip install --no-cache-dir \
+      psiturk==2.3.8 \
+      cryptography==36.0.2 \
+      python-Levenshtein==0.12.0
 
-# add experiment and data folders
-COPY exp /psiturk/exp
-
-# setup working directory
-WORKDIR /psiturk/exp
-
-# set up psiturk to use the .psiturkconfig in /psiturk
-ENV PSITURK_GLOBAL_CONFIG_LOCATION=/psiturk/
-
-# expose port to access psiturk from outside
-EXPOSE 22363
+CMD ["/bin/bash"]
