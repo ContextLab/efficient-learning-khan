@@ -9,7 +9,7 @@ ENV PSITURK_GLOBAL_CONFIG_LOCATION="/exp"
 WORKDIR "/exp"
 
 RUN pip install --no-cache-dir \
-      psiturk==2.3.8 \
+      psiturk==3.3.1 \
       cryptography==36.0.2 \
       python-Levenshtein==0.12.0
 
