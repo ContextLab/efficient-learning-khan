@@ -28,8 +28,8 @@ data/fonts/
 # psiTurk console command history
 exp/.psiturk_history
 
-# contains private keys for Google Cloud API
-exp/google-credentials
+# private keys for psiTurk & AWS
+exp/.psiturkconfig
 
 # latex extensions
 *.aux
