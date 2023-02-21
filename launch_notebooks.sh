@@ -16,8 +16,6 @@ declare -ir CONTAINER_PORT=8888                          # container port used t
 declare -ir LOCAL_PORT=8888                              # host port bound to container port and used to run notebooks in browser
 
 
-# TODO: add extra configurable options for notebook-related --build-args (port, IP, etc.) and help to show_help()
-# TODO: check uname -m to set value passed to --platform=linux/<XXX>64. Will need to convert x86_64 to amd64
 ########################################
 #         CLI PARSING FUNCTIONS        #
 ########################################
@@ -85,7 +83,7 @@ check_arg() {
 
 
 show_usage() {
-    echo "launch_notebooks.sh [-h] [-d] [-b] [-i NAME] [-c NAME]"
+    echo "./launch_notebooks.sh [-h] [-d] [-b] [-i NAME] [-c NAME]"
 }
 
 
@@ -120,6 +118,7 @@ show_help() {
 
     local -i description_newline_indent=$(( option_indent + max_option_len + description_offset ))
 
+    echo
     show_usage
     echo
     echo_block -c $max_cols "$long_description"
@@ -313,7 +312,7 @@ attempt_start_daemon() {
             exit 254
         else
             printf "."
-            sleep 1
+            sleep 2
         fi
     done
     # adds a newline after dynamic printf'd output

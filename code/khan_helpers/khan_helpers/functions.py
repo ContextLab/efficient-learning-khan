@@ -78,7 +78,7 @@ def bootstrap_ci_plot(
     ignore_nan : bool, optional
         If True (default: False), ignore NaNs in all calculations
         (handle them with numpy NaN-aware functions and suppress common
-        NaN-related warnigns).
+        NaN-related warnings).
     color : str or tuple of float, optional
         Any color specification accepted by Matplotlib. See
         https://matplotlib.org/3.5.1/tutorials/colors/colors.html for a
@@ -105,7 +105,7 @@ def bootstrap_ci_plot(
 
     Returns
     -------
-    returns : matplotlib.axes.Axes or list of objects
+    returns : matplotlib.axes.Axes or tuple of objects
         Return value depends on the value passed to `return_bounds`. If
         False (default), the Axes object alone is returned. If True, a
         3-tuple is returned, where the first item is the Axes object and
