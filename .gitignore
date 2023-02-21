@@ -20,7 +20,7 @@ scratch/
 *.egg-info
 
 # raw participant data
-data/db/
+exp/efficient-learning-khan.db
 
 # license-restricted font files
 data/fonts/
@@ -28,18 +28,18 @@ data/fonts/
 # psiTurk console command history
 exp/.psiturk_history
 
-# contains private keys for psiTurk & AWS
+# private keys for psiTurk & AWS
 exp/.psiturkconfig
 
-# contains private keys for Google Cloud API
-exp/google-credentials
+# logfile for psiTurk experiment server
+exp/server.log
 
 # latex extensions
-*.aux
-*.fdb_latexmk
-*.fls
-*.log
-*.out
-*.synctex.gz
-*.blg
-*.bbl
+paper/**/*.aux
+paper/**/*.fdb_latexmk
+paper/**/*.fls
+paper/**/*.log
+paper/**/*.out
+paper/**/*.synctex.gz
+paper/**/*.blg
+paper/**/*.bbl

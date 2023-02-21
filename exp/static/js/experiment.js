@@ -291,23 +291,23 @@ var runExperiment = function(options) {
     message: '<p>We’d like you to really focus on this HIT so that we can collect clean data. Please turn off any music (but keep your volume turned on), close any additional open tabs in your browser (or any other open programs), remove any distractions around you (e.g. phone), and make yourself comfortable. When you are ready, please press the following button to switch your browser to fullscreen mode. (Your browser will remain in fullscreen for the duration of the HIT.  If you need to exit the HIT early, you may press ESCAPE (esc) to exit fullscreen mode and return your browser back to normal.</p>',
     button_label: 'Enter fullscreen mode',
     fullscreen_mode: true
-   };
-   experimentTimeline.push(fscreen)
+  };
+  experimentTimeline.push(fscreen)
 
-   var soundcheck_movie = {
-      type: "instructions",
-      pages: ["<h2>Speaker adjustment</h2><p>Click the button to play the following sound clip:</p>" +
-      "<audio id='soundTest' src='static/files/furelise.mp3' preload='auto'></audio>" +
-      "<button style='background-color:white; outline:none' class='btn btn-large' onclick='document.getElementById(" + '"soundTest"' + ").play();'><i class='fa fa-play-circle-o fa-5x'></i></button>" +
-      "<p>Take this time to adjust your speaker or headphone volume to a comfortable level. Press the spacebar to continue to the next screen once you are ready.</p>"],
-      key_forward: 32
-    }
+  var soundcheck_movie = {
+    type: "instructions",
+    pages: ["<h2>Speaker adjustment</h2><p>Click the button to play the following sound clip:</p>" +
+            "<audio id='soundTest' src='static/files/furelise.mp3' preload='auto'></audio>" +
+            "<button style='background-color:white; outline:none' class='btn btn-large' onclick='document.getElementById(" + '"soundTest"' + ").play();'><i class='fa fa-play-circle-o fa-5x'></i></button>" +
+            "<p>Take this time to adjust your speaker or headphone volume to a comfortable level. Press the spacebar to continue to the next screen once you are ready.</p>"],
+    key_forward: 32
+  }
   experimentTimeline.push(soundcheck_movie);
 
   // opening instructions
   var open_instructions = {
-      type: "instructions",
-      pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY</p>" +
+    type: "instructions",
+    pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY</p>" +
             "<p>In this experiment, you will watch informational videos and answer questions about Cosmology and Astronomy.</p>" +
             "<p>In total, you will be asked <strong>three</strong> sets of <strong>thirteen</strong> questions and you will watch <strong>two</strong> videos.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
@@ -319,35 +319,33 @@ var runExperiment = function(options) {
             "<p>Then, try to use the knowledge you learned from the videos to answer the following questions.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
-            "<p><strong>When you're ready to begin the first set of questions, press the spacebar.</strong></p></div>"
-          ],
-      key_forward: 32
+            "<p><strong>When you're ready to begin the first set of questions, press the spacebar.</strong></p></div>"],
+    key_forward: 32
   };
   experimentTimeline.push(open_instructions);
 
   // test questions
   var test = {
-      type: 'survey-multi-choice',
-      questions: final_qsets[0],
-        on_finish: function() {
-            console.log('Saving recall data...')
-            psiTurk.recordTrialData(final_qsets[0])
-            psiTurk.saveData({
-                success: function() {
-                    console.log('Data saved!')
-                }
-            })
-      }
+    type: 'survey-multi-choice',
+    questions: final_qsets[0],
+    on_finish: function() {
+      console.log('Saving quiz data...')
+      psiTurk.recordTrialData(final_qsets[0])
+      psiTurk.saveData({
+        success: function() {
+          console.log('Data saved!')
+        }
+      })
+    }
   };
   experimentTimeline.push(test);
 
   // instructions for first video
   var video1_instructions = {
-      type: "instructions",
-      pages: ["<div class='instructions'><p>You will now watch the first video.</p>" +
-      "<p><strong>When you're ready to begin watching the first video, press the spacebar.</strong></p></div>"
-      ],
-      key_forward: 32
+    type: "instructions",
+    pages: ["<div class='instructions'><p>You will now watch the first video.</p>" +
+            "<p><strong>When you're ready to begin watching the first video, press the spacebar.</strong></p></div>"],
+    key_forward: 32
   };
   experimentTimeline.push(video1_instructions);
 
@@ -358,49 +356,39 @@ var runExperiment = function(options) {
     width: $(window).width(),
     sources: [vidstim1],
   };
-
-  var video_test = {
-    type: "url-video",
-    height: $(window).height(),
-    width: $(window).width(),
-    sources: [vidstim1],
-    };
-
   experimentTimeline.push(video);
 
   // test instructions
   var test2_instructions = {
-      type: "instructions",
-      pages: ["<div class='instructions'><p>Now you will answer some questions about Cosmology and Astronomy. Please, answer the questions to the best of your ability.</p>" +
-              "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
-            ],
-      key_forward: 32
+    type: "instructions",
+    pages: ["<div class='instructions'><p>Now you will answer some questions about Cosmology and Astronomy. Please, answer the questions to the best of your ability.</p>" +
+            "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"],
+    key_forward: 32
   };
   experimentTimeline.push(test2_instructions);
 
   // test questions
   var test2 = {
-      type: 'survey-multi-choice',
-      questions: final_qsets[1],
-        on_finish: function() {
-            console.log('Saving recall data...')
-            psiTurk.recordTrialData(final_qsets[1])
-            psiTurk.saveData({
-                success: function() {
-                    console.log('Data saved!')
-                }
-            })
-      }
+    type: 'survey-multi-choice',
+    questions: final_qsets[1],
+    on_finish: function() {
+      console.log('Saving quiz data...')
+      psiTurk.recordTrialData(final_qsets[1])
+      psiTurk.saveData({
+        success: function() {
+          console.log('Data saved!')
+        }
+      })
+    }
   };
   experimentTimeline.push(test2);
 
   // instructions for next video
   var video2_instructions = {
-      type: "instructions",
-      pages: ["<div class='instructions'><p>You will now watch the second video.</p>" +
-      "<p><strong>When you're ready to begin watching the second video, press the spacebar.</strong></p></div>"
-      ],
-      key_forward: 32
+    type: "instructions",
+    pages: ["<div class='instructions'><p>You will now watch the second video.</p>" +
+            "<p><strong>When you're ready to begin watching the second video, press the spacebar.</strong></p></div>"],
+    key_forward: 32
   };
   experimentTimeline.push(video2_instructions);
 
@@ -413,44 +401,42 @@ var runExperiment = function(options) {
   };
   experimentTimeline.push(video2);
 
-  // recall instructions
+  // test instructions
   var test3_instructions = {
-      type: "instructions",
-      pages: ["<div class='instructions'><p>Now you will answer some questions about Cosmology and Astronomy. Please, answer the questions to the best of your ability.</p>" +
-              "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"
-            ],
-      key_forward: 32
+    type: "instructions",
+    pages: ["<div class='instructions'><p>Now you will answer some questions about Cosmology and Astronomy. Please, answer the questions to the best of your ability.</p>" +
+            "<p><strong>When you're ready to begin answering the questions, press the spacebar.</strong></p></div>"],
+    key_forward: 32
   };
   experimentTimeline.push(test3_instructions);
 
-  // recall questions
+  // test questions
   var test3 = {
-      type: 'survey-multi-choice',
-      questions: final_qsets[2],
-        on_finish: function() {
-            psiTurk.recordTrialData(final_qsets[2])
-            console.log('Saving recall data...')
-            psiTurk.saveData({
-                success: function() {
-                    console.log('Data saved!')
-                }
-            })
-      }
+    type: 'survey-multi-choice',
+    questions: final_qsets[2],
+    on_finish: function() {
+      psiTurk.recordTrialData(final_qsets[2])
+      console.log('Saving quiz data...')
+      psiTurk.saveData({
+        success: function() {
+          console.log('Data saved!')
+        }
+      })
+    }
   };
   experimentTimeline.push(test3);
 
-
   // finished message
   var finished_message = {
-      type: "instructions",
-      pages: ["<h2>Debriefing</h2>" +
-      "<p>Thank you for contributing to research in The Contextual Dynamics Laboratory (http://www.context-lab.com/) at Dartmouth College!</p>" +
-      "<p>You will receive a base payment of $5/hour for your participation in the task in addition to a performance bonus upon submission of this HIT.</p>" +
-      "<p>Our lab is interested in developing technology to predicit future learning and test performance on information learned from short videos from past test performance. We will use your responses during this experiment to help develop models that will track participant learning while viewing short online videos and predict participant performance on future tests. We hope that this technology can help to improve learning from online courses.</p>" +
-      "<p>We've taken great care to design this task appropriately for Amazon Mechanical Turk and your enjoyment as a Worker, and securely store your data on our servers without any personally-identifiable information. If for any reason you would like to contact us to ask further questions or comment on this experiment, please call the research director for this study: Dr. Jeremy Manning, at (603) 646-2777 during normal business hours (9 — 5 PM, Monday — Friday), or send an email to contextualdynamics@gmail.com with the title 'AMT Experiment Inquiry'. If you have questions, concerns, complaints, or suggestions about human research at Dartmouth College, you may call the Office of the Committee for the Protection of Human Subjects at Dartmouth College (603) 646-6482 during normal business hours. Otherwise, thank you for your contributions to scientific research and enjoy your day! </p>",
-      "<p>Thank you! Please press escape to exit fullscreen mode.</p>"],
-      show_clickable_nav: true,
-      key_forward: 32
+    type: "instructions",
+    pages: ["<h2>Your <b>Debriefing</b> goes here</h2>" +
+            "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>" +
+            "<p>Amet venenatis urna cursus eget nunc scelerisque. In massa tempor nec feugiat nisl pretium fusce id.</p>" +
+            "<p>enenatis urna cursus eget nunc. Curabitur gravida arcu ac tortor dignissim. Volutpat sed cras ornare arcu dui vivamus. Viverra orci sagittis eu volutpat odio facilisis mauris. Convallis convallis tellus id interdum velit laoreet id donec ultrices. Mi eget mauris pharetra et ultrices neque ornare. Et ligula ullamcorper malesuada proin libero nunc consequat interdum varius. Sit amet tellus cras adipiscing enim eu turpis egestas pretium.</p>" +
+            "<p>Nunc consequat interdum varius sit. Viverra justo nec ultrices dui sapien eget mi. Ornare aenean euismod elementum nisi. Dignissim suspendisse in est ante in nibh mauris. Imperdiet nulla malesuada pellentesque elit eget gravida cum sociis. Eget magna fermentum iaculis eu non diam phasellus. At erat pellentesque adipiscing commodo. Nullam ac tortor vitae purus. Elementum facilisis leo vel fringilla est ullamcorper eget nulla. Lacus luctus accumsan tortor posuere. Ac orci phasellus egestas tellus. Mi proin sed libero enim sed faucibus turpis in. Cursus in hac habitasse platea dictumst. Purus gravida quis blandit turpis cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Praesent elementum facilisis leo vel fringilla est ullamcorper.</p>",
+            "<p>Thank you! Please press escape to exit fullscreen mode.</p>"],
+    show_clickable_nav: true,
+    key_forward: 32
   };
   experimentTimeline.push(finished_message);
 
@@ -459,44 +445,37 @@ var runExperiment = function(options) {
     timeline: experimentTimeline,
     show_progress_bar: false,
     on_data_update: function(data) {
-          psiTurk.recordTrialData(data)
-            },
-    on_finish: function() {
-        console.log('Saving data...')
-
-        //define functions to use below (modified from https://github.com/NYUCCL/psiTurk/blob/master/psiturk/example/static/js/task.js)
-        var error_message = "<h1>Oops!</h1><p>Something went wrong submitting your HIT. This might happen if you lose your internet connection. Press the button to resubmit.</p><button id='resubmit'>Resubmit</button>";
-
-        prompt_resubmit = function() {
-          document.body.innerHTML = error_message;
-          $("#resubmit").click(resubmit);
-        }
-
-        resubmit = function() {
-          document.body.innerHTML = "<h1>Trying to resubmit...</h1>";
-          reprompt = setTimeout(prompt_resubmit, 10000);
-          psiTurk.saveData({
-            success: function() {
-                clearInterval(reprompt);
-                psiTurk.computeBonus('compute_bonus', function(){
-                        psiTurk.completeHIT() // when finished saving, compute bonus, then quit
-                });
-            },
-            error: prompt_resubmit //if error saving data, try again
-          });
-        };
-
-          psiTurk.saveData({
-              success: function() {
-                  console.log('Data saved!')
-                  psiTurk.computeBonus('compute_bonus', function(){
-                    psiTurk.completeHIT()
-                  })
-              },
-              error: prompt_resubmit}) //if error saving data, try again
-      //}
+      psiTurk.recordTrialData(data)
     },
-});
+    on_finish: function() {
+      console.log('Saving data...')
+      var error_message = "<h1>Oops!</h1><p>Something went wrong submitting your HIT. This might happen if you lose your internet connection. Press the button to resubmit.</p><button id='resubmit'>Resubmit</button>";
 
+      prompt_resubmit = function() {
+        document.body.innerHTML = error_message;
+        $("#resubmit").click(resubmit);
+      }
 
+      resubmit = function() {
+        document.body.innerHTML = "<h1>Trying to resubmit...</h1>";
+        reprompt = setTimeout(prompt_resubmit, 10000);
+        psiTurk.saveData({
+          success: function() {
+            console.log('Data saved!');
+            clearInterval(reprompt);
+            psiTurk.completeHIT();
+          },
+          error: prompt_resubmit  //if error saving data, try again
+        });
+      };
+
+      psiTurk.saveData({
+        success: function() {
+          console.log('Data saved!');
+          psiTurk.completeHIT();
+        },
+        error: prompt_resubmit
+      });
+    },
+  });
 };

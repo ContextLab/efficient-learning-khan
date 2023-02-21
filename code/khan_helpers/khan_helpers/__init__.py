@@ -1,4 +1,3 @@
-# TODO: check for TODO notes in notebooks
 from pathlib import Path
 
 from IPython.display import display, Markdown
