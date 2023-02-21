@@ -17,7 +17,6 @@ analyses via [Docker](https://www.docker.com/).
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Repo Organization](#repo-organization)
 - [Installing Docker](#installing-docker)
 - [Running the Analyses](#running-the-analyses)
