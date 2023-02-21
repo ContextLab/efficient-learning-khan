@@ -31,12 +31,15 @@ exp/.psiturk_history
 # private keys for psiTurk & AWS
 exp/.psiturkconfig
 
+# logfile for psiTurk experiment server
+exp/server.log
+
 # latex extensions
-*.aux
-*.fdb_latexmk
-*.fls
-*.log
-*.out
-*.synctex.gz
-*.blg
-*.bbl
+paper/**/*.aux
+paper/**/*.fdb_latexmk
+paper/**/*.fls
+paper/**/*.log
+paper/**/*.out
+paper/**/*.synctex.gz
+paper/**/*.blg
+paper/**/*.bbl
