@@ -13,16 +13,16 @@
 \usepackage{xcolor}
 
 % supplemental tables
-\newcommand{\questions}{S1}
-\newcommand{\topics}{S2} 
+\newcommand{\questions}{1}
+\newcommand{\topics}{2} 
 
 % supplemental figures
-\newcommand{\topicWeights}{S1} 
-\newcommand{\individualKnowledgeMapsA}{S2}
-\newcommand{\individualKnowledgeMapsB}{S3}
-\newcommand{\individualKnowledgeMapsC}{S4}
-\newcommand{\individualLearningMapsA}{S5}
-\newcommand{\individualLearningMapsB}{S6}
+\newcommand{\topicWeights}{1} 
+\newcommand{\individualKnowledgeMapsA}{2}
+\newcommand{\individualKnowledgeMapsB}{3}
+\newcommand{\individualKnowledgeMapsC}{4}
+\newcommand{\individualLearningMapsA}{5}
+\newcommand{\individualLearningMapsB}{6}
 
 % simple command for inline comments
 \newcommand{\comment}[1]{}
@@ -198,16 +198,16 @@ given concept is predictive of knowledge about similar or related concepts.
 From a geometric perspective, this assumption implies that knowledge is
 fundamentally ``smooth.'' In other words, as one moves through a space
 representing an individual's knowledge (where similar concepts occupy nearby
-coordinates), their ``level of knowledge'' should change relatively gradually
-throughout that space. To begin to test this smoothness assumption, we sought
+coordinates), their ``level of knowledge'' should change relatively gradually. 
+To begin to test this smoothness assumption, we sought
 to track participants' knowledge and how it changed over time in response to
 training. Two overarching goals guide our approach. First, we want to gain
-detailed insights into what learners know, at different points in their
+detailed insights into what learners know at different points in their
 training. For example, rather than simply reporting on the proportions of
 questions participants answer correctly (i.e., their overall performance), we
 seek estimates of their knowledge about a variety of specific concepts.
 Second, we want our approach to be potentially scalable to large numbers of
-concepts, courses, and students. This requires that the conceptual content of
+diverse concepts, courses, and students. This requires that the conceptual content of
 interest be discovered \textit{automatically}, rather than relying on
 manually produced ratings or labels.
 
@@ -237,7 +237,7 @@ lectures to be accessible to a broad audience (i.e., with minimal prerequisite
 knowledge) so as to limit the impact of prior training on our participants'
 abilities to learn from the lectures. To this end, we selected two introductory
 videos that were intended to be viewed at the start of students' training in
-their respective content areas. Second, we wanted both lectures to have some
+their respective content areas. Second, we wanted the two lectures to have some
 related content, so that we could test our approach's ability to distinguish
 similar conceptual content. To this end, we chose two videos from the same (per
 instructor annotations) Khan Academy course domain, ``Cosmology and
@@ -251,7 +251,7 @@ lecture series (Lectures~1 and 2 were from the ``Scale of the Universe'' and
 We also wrote a set of multiple-choice quiz questions that we hoped would
 enable us to evaluate participants' knowledge about each individual lecture,
 along with related knowledge about physics not specifically presented in either
-video (see Tab.~\questions~for the full list of questions in our stimulus
+video (see Supplementary Tab.~\questions~for the full list of questions in our stimulus
 pool). Participants answered questions randomly drawn from each content area
 (Lecture~1, Lecture~2, and general physics knowledge) on each of the three
 quizzes. Quiz~1 was intended to assess participants' ``baseline'' knowledge
@@ -274,7 +274,7 @@ embedding space by joining the embedding coordinates of successive sliding
 windows parsed from its transcript. \textbf{C. Embedding multiple lectures and
 questions in a shared space.} We apply the same model (trained on the two
 lectures' windows) to both lectures, along with the text of each question in
-our pool (Tab.~\questions), to project them into a shared text embedding space.
+our pool (Supplementary Tab.~\questions), to project them into a shared text embedding space.
 This results in one trajectory per lecture and one coordinate for each
 question. Here, we have projected the 15-dimensional embeddings onto their first
 3 principal components for visualization.} 
@@ -318,7 +318,7 @@ correspondence could not solely arise from superficial text matching between
 lecture transcripts and questions, since the lectures and questions used
 different words. Simply comparing the average topic weights from each lecture
 and question set (averaging across time and questions, respectively) reveals a
-striking correspondence (Fig.~\topicWeights). Specifically, the average topic
+striking correspondence (Supplementary Fig.~\topicWeights). Specifically, the average topic
 weights from Lecture~1 are strongly correlated with the average topic weights
 from Lecture~1 questions ($r(13) = 0.809,~p < 0.001$, 95\% confidence interval
 (CI)~$= [0.633,~0.962]$), and the average topic weights from Lecture~2 are
@@ -330,7 +330,7 @@ their non-matching question sets (Lecture~1 video vs.~Lecture~2 questions: $r(13
 = -0.612,~p = 0.015$, 95\% CI~$= [-0.874,~-0.281]$), indicating that the topic model
 also exhibits some degree of specificity. The full set of pairwise comparisons
 between average topic weights for the lectures and question sets is reported in
-Figure~\topicWeights.
+Supplementary Figure~\topicWeights.
 
 \begin{figure}[tp]
     \centering
@@ -342,7 +342,7 @@ lecture timepoints (top row) and questions (bottom row); colors denote topics.
 The top-weighted words from the most ``expressive'' (i.e., variable across
 observations) topic from each lecture are displayed in the upper right (orange:
 topic 2; yellow-green: topic 4). The top-weighted words from the full set of
-topics may be found in Table~\topics. \textbf{B. Relationships between topic
+topics may be found in Supplementary Table~\topics. \textbf{B. Relationships between topic
 weight variability.} Pairwise correlations between the distributions of topic
 weight variance for each lecture and question set. Each row and column
 corresponds to a bar plot in Panel A.}
@@ -371,7 +371,7 @@ questions (i.e., Lecture~1 video vs.~Lecture~2 questions; Lecture~2 video
 vs.~Lecture~1 questions) were negatively correlated, and neither
 video's topic variability was reliably correlated with the topic variability
 across general physics knowledge questions. Taken together, the analyses
-reported in Figures~\ref{fig:topics} and~\topicWeights~indicate that a topic
+reported in Figure~\ref{fig:topics} and Supplementary Figure~\topicWeights~indicate that a topic
 model fit to the videos' transcripts can also reveal correspondences (at a
 coarse scale) between the lectures and questions.
 
@@ -580,7 +580,7 @@ and also projected each question into a shared text embedding space.
     lecture are indicated by dotted lines, and the coordinates of each question are indicated by
     dots. Each map reflects an average across all participants. For
     individual participants' maps, see
-    Figures~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,
+    Supplementary Figures~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,
     and~\individualKnowledgeMapsC. \textbf{B. Average ``learning maps''
     estimated between each successive pair of quizzes.} The learning maps follow
     the same general format as the knowledge maps in Panel A, but here the shading at each
@@ -588,7 +588,7 @@ and also projected each question into a shared text embedding space.
     the corresponding coordinates in the indicated \textit{pair} of knowledge
     maps---i.e., how much the estimated knowledge ``changed'' between the two
     quizzes. Each map reflects an average across all participants. For
-    individual participants' maps, see
+    individual participants' maps, see Supplementary
     Figures~\individualLearningMapsA~and~\individualLearningMapsB. \textbf{C.
     Word clouds for sampled points in topic space.} Each word cloud displays
     the relative weights of each word (via their relative sizes) reflected by the blend of topics
@@ -837,7 +837,7 @@ questions: 15 about the conceptual content of \textit{Four Fundamental Forces} (
 15 about the conceptual content of \textit{Birth of Stars} (i.e., Lecture~2), and 9
 questions that tested for general conceptual knowledge about basic physics
 (covering material that was not presented in either video). The full set of
-questions and answer choices may be found in Table~\questions.
+questions and answer choices may be found in Supplementary Table~\questions.
 
 Over the course of the experiment, participants completed three 13-question
 multiple-choice quizzes: the first before viewing Lecture~1, the second between
@@ -902,7 +902,7 @@ lemmatizing, removing punctuation and stop-words), we treated the text from
 each sliding window as a single ``document,'' and combined these documents
 across the two videos' windows to create a single training corpus for the topic
 model. The top words from each of the 15 discovered topics may be found in
-Table~\topics.
+Supplementary Table~\topics.
 
 After fitting a topic model to the two videos' transcripts, we could use the
 trained model to transform arbitrary (potentially new) documents into
@@ -916,7 +916,7 @@ to characterize the similarity in conceptual content between the documents.
 We transformed each sliding window's text into a topic vector, and then used
 linear interpolation (independently for each topic dimension) to resample the
 resulting timeseries to one vector per second. We also used the fitted model to
-obtain topic vectors for each question in our pool (Tab.~\questions). Taken
+obtain topic vectors for each question in our pool (Supplementary Tab.~\questions). Taken
 together, we obtained a \textit{trajectory} for each video, describing its path
 through topic space, and a single coordinate for each question
 (Fig.~\ref{fig:sliding-windows}C). Embedding both videos and all of the
@@ -967,7 +967,7 @@ model and participants' quiz performance on each question, we can estimate
 their knowledge about \textit{any} content expressible by the embedding
 model---not solely the content explicitly probed by the quiz questions or even
 appearing in the lectures. To visualize these estimates
-(Figs.~\ref{fig:knowledge-maps},~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
+(Fig.~\ref{fig:knowledge-maps}, Supplementary Figs.~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
 and~\individualLearningMapsB), we used Uniform Manifold Approximation and
 Projection (UMAP; \citealp{McInEtal18a}) to construct a 2D projection of the
 text embedding space. Sampling the original 100-dimensional space at high
