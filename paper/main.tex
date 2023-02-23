@@ -90,7 +90,7 @@ grade can provide \textit{some} indication of whether the student has
 mastered the to-be-learned material, any univariate measure of performance on a
 complex task sacrifices certain relevant information, risks conflating underlying
 factors, and so on. For example, consider the relative utility of the
-imaginary map described above that characterizes a student's knowledge
+theoretical map described above that characterizes a student's knowledge
 in detail, versus a single annotation saying that the student answered 85\% of
 their quiz questions correctly, or that they received a `B'. Here, we show that
 the same quiz data required to compute proportion-correct scores or letter
@@ -171,7 +171,7 @@ retrieved, rather than whether the information is \textit{understood}.
 Approaches to studying conceptual learning, such as category learning
 experiments, can begin to investigate the distinction between memorization and
 understanding, often by training participants to distinguish arbitrary or
-random features in otherwise meaningless categorized stimuli. However the
+random features in otherwise meaningless categorized stimuli~\citep{ReilEtal82, Este86a, Este86b, GlucEtal02, AshbMadd05, HulbNorm15}. However the
 objective of real-world training, or learning from life experiences more
 generally, is often to develop new knowledge that may be applied in
 \textit{useful} ways in the future. In this sense, the gap between modern
@@ -234,13 +234,13 @@ electromagnetism. The second, entitled \textit{Birth of Stars}, provided an
 overview of our current understanding of how stars form. We selected these
 particular lectures to satisfy three general criteria. First, we wanted both
 lectures to be accessible to a broad audience (i.e., with minimal prerequisite
-knowledge) so as to limit the impact of prior training on our participants'
+knowledge) so as to limit the impact of prior training on participants'
 abilities to learn from the lectures. To this end, we selected two introductory
 videos that were intended to be viewed at the start of students' training in
 their respective content areas. Second, we wanted the two lectures to have some
 related content, so that we could test our approach's ability to distinguish
-similar conceptual content. To this end, we chose two videos from the same (per
-instructor annotations) Khan Academy course domain, ``Cosmology and
+similar conceptual content. To this end, we chose two videos from the same
+Khan Academy course domain, ``Cosmology and
 Astronomy.'' Third, we sought to minimize dependencies and specific overlap
 between the videos. For example, we did not want participants' abilities to
 understand one video to (directly) influence their abilities to understand the
@@ -250,7 +250,7 @@ lecture series (Lectures~1 and 2 were from the ``Scale of the Universe'' and
 
 We also wrote a set of multiple-choice quiz questions that we hoped would
 enable us to evaluate participants' knowledge about each individual lecture,
-along with related knowledge about physics not specifically presented in either
+along with related knowledge about physics concepts not specifically presented in either
 video (see Supplementary Tab.~\questions~for the full list of questions in our stimulus
 pool). Participants answered questions randomly drawn from each content area
 (Lecture~1, Lecture~2, and general physics knowledge) on each of the three
@@ -260,26 +260,26 @@ Fundamental Forces} video (i.e., Lecture~1), and Quiz~3 assessed knowledge
 after watching the \textit{Birth of Stars} video (i.e., Lecture~2).
 
 \begin{figure}[tp]
-\centering
-\includegraphics[width=\textwidth]{figs/sliding_windows}
+    \centering
+    \includegraphics[width=\textwidth]{figs/sliding_windows}
 
-\caption{\textbf{Modeling course content.} \textbf{A. Building a document pool
-from sliding windows of text.} We decompose each lecture's transcript into a
-series of overlapping sliding windows. The full set of transcript snippets (across
-all windows) may be treated as a set of ``documents'' for training a text
-embedding model. \textbf{B. Constructing lecture content
-\textit{trajectories}.} After training our model on the sliding windows from
-both lectures, we transform each lecture into a ``trajectory'' through text
-embedding space by joining the embedding coordinates of successive sliding
-windows parsed from its transcript. \textbf{C. Embedding multiple lectures and
-questions in a shared space.} We apply the same model (trained on the two
-lectures' windows) to both lectures, along with the text of each question in
-our pool (Supplementary Tab.~\questions), to project them into a shared text embedding space.
-This results in one trajectory per lecture and one coordinate for each
-question. Here, we have projected the 15-dimensional embeddings onto their first
-3 principal components for visualization.} 
+    \caption{\textbf{Modeling course content.} \textbf{A. Building a document pool
+    from sliding windows of text.} We decompose each lecture's transcript into a
+    series of overlapping sliding windows. The full set of transcript snippets (across
+    all windows) may be treated as a set of ``documents'' for training a text
+    embedding model. \textbf{B. Constructing lecture content
+    \textit{trajectories}.} After training our model on the sliding windows from
+    both lectures, we transform each lecture into a ``trajectory'' through text
+    embedding space by joining the embedding coordinates of successive sliding
+    windows parsed from its transcript. \textbf{C. Embedding multiple lectures and
+    questions in a shared space.} We apply the same model (trained on the two
+    lectures' windows) to both lectures, along with the text of each question in
+    our pool (Supplementary Tab.~\questions), to project them into a shared text embedding space.
+    This results in one trajectory per lecture and one coordinate for each
+    question. Here, we have projected the 15-dimensional embeddings onto their first
+    3 principal components for visualization.} 
 
-\label{fig:sliding-windows}
+    \label{fig:sliding-windows}
 \end{figure}
 
 To study in detail how participants' conceptual knowledge changed over the
@@ -297,8 +297,8 @@ text of the lecture transcript from a particular time span. We treated the set
 of text snippets (across all of these windows) as documents to fit our model
 (Fig.~\ref{fig:sliding-windows}A; see \nameref{subsec:topic-modeling}).
 Transforming the text from every sliding window with our model yielded a
-number-of-windows by number-of-topics (15) topic-proportions matrix that
-described the unique mixture of broad themes from both lectures reflected in
+number-of-windows by number-of-topics (15) topic-proportions matrix
+describing the unique mixture of broad themes from both lectures reflected in
 each window's text. Each window's ``topic vector'' (i.e., column of the
 topic-proportions matrix) is analogous to a coordinate in a 15-dimensional space whose axes
 are topics discovered by the model. Within this space, each lecture's sequence
@@ -336,16 +336,16 @@ Supplementary Figure~\topicWeights.
     \centering
     \includegraphics[width=\textwidth]{figs/active-topics}
 
-\caption{\textbf{Lecture and question topic overlap.} \textbf{A. Topic weight
-variability}. The bar plots display the variance of each topic's weight across
-lecture timepoints (top row) and questions (bottom row); colors denote topics.
-The top-weighted words from the most ``expressive'' (i.e., variable across
-observations) topic from each lecture are displayed in the upper right (orange:
-topic 2; yellow-green: topic 4). The top-weighted words from the full set of
-topics may be found in Supplementary Table~\topics. \textbf{B. Relationships between topic
-weight variability.} Pairwise correlations between the distributions of topic
-weight variance for each lecture and question set. Each row and column
-corresponds to a bar plot in Panel A.}
+    \caption{\textbf{Lecture and question topic overlap.} \textbf{A. Topic weight
+    variability}. The bar plots display the variance of each topic's weight across
+    lecture timepoints (top row) and questions (bottom row); colors denote topics.
+    The top-weighted words from the most ``expressive'' (i.e., variable across
+    observations) topic from each lecture are displayed in the upper right (orange:
+    topic 2; yellow-green: topic 4). The top-weighted words from the full set of
+    topics may be found in Supplementary Table~\topics. \textbf{B. Relationships between topic
+    weight variability.} Pairwise correlations between the distributions of topic
+    weight variance for each lecture and question set. Each row and column
+    corresponds to a bar plot in Panel A.}
 
     \label{fig:topics}
 \end{figure}
@@ -365,8 +365,8 @@ questions) between the lectures and questions. The variability in topic
 expression (over time and across questions) was similar for the Lecture~1 video
 and questions ($r(13) = 0.824,~p<0.001$, 95\% CI~$= [0.696,~0.973]$) and the Lecture~2
 video and questions ($r(13) = 0.801,~p<0.001$, 95\% CI~$= [0.539,~0.958]$). 
-However, as reported in Figure~\ref{fig:topics}B, the variability in
-topic expressions across \textit{different} videos and lecture-specific
+Simultaneously, as reported in Figure~\ref{fig:topics}B, the variability in
+topic expression across \textit{different} videos and lecture-specific
 questions (i.e., Lecture~1 video vs.~Lecture~2 questions; Lecture~2 video
 vs.~Lecture~1 questions) were negatively correlated, and neither
 video's topic variability was reliably correlated with the topic variability
@@ -375,21 +375,23 @@ reported in Figure~\ref{fig:topics} and Supplementary Figure~\topicWeights~indic
 model fit to the videos' transcripts can also reveal correspondences (at a
 coarse scale) between the lectures and questions.
 
-Although a single lecture may be organized around a single broad theme at a
-coarse scale, at a finer scale each moment of a lecture typically covers a
-narrower range of content. We wondered whether a text embedding model trained
-on the lectures' transcripts might capture some of this finer scale content.
+While an individual lecture may be organized around a single broad theme at a
+coarse scale, at a finer scale, each moment of a lecture typically covers a
+narrower range of content. Given the correspondence we found between the variability
+in topic expression across moments of each lecture and questions from its
+corresponding set (Fig.~\ref{fig:topics}), we wondered whether the text embedding model
+might additionally capture these conceptual relationships at a finer scale.
 For example, if a particular question asks about the content from one small
 part of a lecture, we wondered whether the text embeddings could be used to
-automatically identify the ``matching'' moment(s) in the lecture. When we
-correlated each question's topic vector with the topic vectors from each second
-of the lectures, we found some evidence that each question is temporally
-specific (Fig.~\ref{fig:question-correlations}). In particular, most questions'
+automatically identify the ``matching'' moment(s) in the lecture. To explore this,
+we computed the correlation between each question's topic weights and the topic weights
+for each second of its corresponding lecture, and found that each question appeared to be
+temporally specific (Fig.~\ref{fig:question-correlations}). In particular, most questions'
 topic vectors were maximally correlated with a well-defined (and relatively
 narrow) range of timepoints from their corresponding lectures, and the
 correlations fell off sharply outside of that range. We also qualitatively examined the
-best-matching intervals for each question by comparing the text
-of the question to the text of the most-correlated parts of the lectures.
+best-matching intervals for each question by comparing the question's text
+to the text of the most-correlated parts of the lectures.
 Despite that the questions were excluded from the text embedding model's
 training set, in general we found (through manual inspection) a close
 correspondence between the conceptual content that each question probed and
@@ -397,19 +399,20 @@ the content covered by the best-matching moments of the lectures. Two
 representative examples are shown at the bottom of
 Figure~\ref{fig:question-correlations}.
 
-\begin{figure}[tp] \centering
-\includegraphics[width=\textwidth]{figs/lecture-question-similarity}
+\begin{figure}[t] 
+    \centering
+    \includegraphics[width=\textwidth]{figs/lecture-question-similarity}
 
-\caption{\textbf{Which parts of each lecture are captured by each question?}
-Each panel displays timeseries plots showing how each question's topic vector
-correlates with each video timepoint's topic vector (Panel \textbf{A.}:
-correlations for the \textit{Four Fundamental Forces} lecture and associated
-questions; Panel \textbf{B.}: correlations for the \textit{Birth of Stars}
-lecture and associated questions). The colors denote question identities. The
-diamonds in each panel denote the moment of peak correlation between the
-indicated question and the lecture trajectory. The associated questions' text
-and snippets of the lectures' transcripts from the surrounding 30 seconds, are
-displayed at the bottom of the figure.}
+    \caption{\textbf{Which parts of each lecture are captured by each question?}
+    Each panel displays timeseries plots showing how each question's topic vector
+    correlates with each video timepoint's topic vector (Panel \textbf{A.}:
+    correlations for the \textit{Four Fundamental Forces} lecture and associated
+    questions; Panel \textbf{B.}: correlations for the \textit{Birth of Stars}
+    lecture and associated questions). The colors denote question identities. The
+    diamonds in each panel denote the moment of peak correlation between the
+    indicated question and the lecture trajectory. The associated questions' text
+    and snippets of the lectures' transcripts from the surrounding 30 seconds, are
+    displayed at the bottom of the figure.}
 
     \label{fig:question-correlations}
 \end{figure}
@@ -425,8 +428,8 @@ mastered (or failed to master)? For example, a student who misses three
 questions that were all about the same concept (e.g., concept $A$) will have
 gotten the same \textit{proportion} of questions correct as another student who
 missed three questions about three \textit{different} concepts (e.g., $A$, $B$,
-and $C$). But if we wanted to fill in the ``gaps'' in the two students'
-understandings, we might do well to focus on concept $A$ for the first student,
+and $C$). But if we wanted to help these two students fill in the ``gaps'' in their
+understandings, we might do well to focus specifically on concept $A$ for the first student,
 but to also add in materials pertaining to concepts $B$ and $C$ for the second
 student. In other words, raw ``proportion-correct'' measures may capture
 \textit{how much} a student knows, but not \textit{what} they know. We wondered
@@ -439,15 +442,15 @@ responses to a small set of multiple-choice questions to estimate how much the
 participant ``knows'' about the concept reflected by any arbitrary coordinate,
 $x$, in text embedding space (e.g., the content reflected by any moment in a
 lecture they had watched; see \nameref{subsec:traces}). Essentially, the
-estimated knowledge at the coordinate is given by the weighted average
+estimated knowledge at coordinate $x$ is given by the weighted average
 proportion of quiz questions the participant answered correctly, where the
 weights reflect how much each question is ``about'' the content at $x$. When we
 apply this approach to estimate the participant's knowledge about the content
 presented in each moment of each lecture, we can obtain a detailed timecourse
 describing how much ``knowledge'' the participant has about any part of the
-lecture. As shown in Figure~\ref{fig:knowledge-timeseries}, we can also apply
-this approach separately for the questions from each quiz the participants took
-throughout the experiment. From just a few questions per quiz (see Sec.~\ref{subsec:traces}), we obtain a
+lecture. As shown in Figure~\ref{fig:knowledge-timeseries}A and C, we can apply
+this approach separately for the questions from each quiz participants took
+throughout the experiment. From just a few questions per quiz (see~\nameref{subsec:traces}), we obtain a
 high-resolution snapshot (at the time each quiz was taken) of what the
 participants knew about any moment's content, from either of the two lectures
 they watched (comprising a total of 1,100 samples across the two lectures).
@@ -460,7 +463,7 @@ they watched (comprising a total of 1,100 samples across the two lectures).
     \textbf{A. Moment-by-moment knowledge about the \textit{Four Fundamental
     Forces}}. Each trace displays the weighted proportion of correctly answered
     questions about the content reflected in each moment of the lecture (see
-    \nameref{subsec:traces}), using responses from one
+    \nameref{subsec:traces}), using responses from a single
     quiz (color). The traces are averaged across participants. \textbf{B.
     Average estimated knowledge about the \textbf{Four Fundamental Forces}.}
     Each bar displays the across-timepoint average knowledge, estimated using
@@ -477,16 +480,16 @@ they watched (comprising a total of 1,100 samples across the two lectures).
     \label{fig:knowledge-timeseries}
 \end{figure}
 
-Of course, even though the timecourses in
+While the timecourses in
 Figure~\ref{fig:knowledge-timeseries}A and C provide detailed
-\textit{estimates} about participants' knowlege, those estimates are only
+\textit{estimates} about participants' knowlege, these estimates are of course only
 \textit{useful} to the extent that they accurately reflect what participants
 actually know. As one sanity check, we anticipated that the knowledge estimates
-should show a content-specific ``boost'' in participants' knowledge after
+should reflect a content-specific ``boost'' in participants' knowledge after
 watching each lecture. In other words, if participants learn about each
 lecture's content when they watch each lecture, the knowledge estimates should
-reflect that. After watching the \textit{Four Fundamental Forces} lecture,
-participants should show more knowledge for the content of that lecture than
+capture that. After watching the \textit{Four Fundamental Forces} lecture,
+participants should exhibit more knowledge for the content of that lecture than
 they had before, and that knowledge should persist for the remainder of the
 experiment. Specifically, knowledge about that lecture's content should be
 relatively low when estimated using Quiz~1 responses, but should increase when
@@ -497,7 +500,7 @@ Quiz~1 ($t(49) = 8.764,~p < 0.001$) and on Quiz~3 versus Quiz~1 ($t(49) =
 10.519,~p < 0.001$). We found no reliable differences in estimated knowledge
 about that lecture's content on Quiz~2 versus 3 ($t(49) = 0.160,~p = 0.874$).
 Similarly, we hypothesized (and subsequently confirmed) that participants
-should show more estimated knowledge about the content of the \textit{Birth of
+should show greater estimated knowledge about the content of the \textit{Birth of
 Stars} lecture after (versus before) watching it
 (Fig.~\ref{fig:knowledge-timeseries}D). Specifically, since participants
 watched that lecture after taking Quiz~2 (but before Quiz~3), we hypothesized
@@ -508,18 +511,22 @@ lecture content on Quizzes~1 versus 2 ($t(49) = 1.013,~p = 0.316$), but the
 estimated knowledge was substantially higher on Quiz~3 versus 2 ($t(49) =
 10.561,~p < 0.001$) and Quiz~3 versus 1 ($t(49) = 8.969,~p < 0.001$).
 
-If we are able to accurately estimate a participant's knowledge about the
+Additionally, if we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, our estimates of their knowledge should carry some
-predictive information about whether the participant is likely to answer the
-question correctly or incorrectly. We developed a statistical approach to test this claim. 
-For each question in turn, for each
-participant, we used Equation~\ref{eqn:prop} to estimate (using all
-\textit{other} questions from the same quiz, from the same participant) the
-participant's knowledge at the held-out question's embedding coordinate. For
+predictive information about whether the participant is likely to answer that
+question correctly or incorrectly. To further validate our knowledge estimates, we developed a statistical approach to test this claim. 
+For each question in turn, we used equation~\ref{eqn:prop} to estimate each 
+participant's knowledge at the given question's embedding space coordinate, 
+using all \textit{other} questions that participant answered on the same quiz.
+%For each question in turn, for each
+%participant, we used Equation~\ref{eqn:prop} to estimate (using all
+%\textit{other} questions from the same quiz, from the same participant) the
+%participant's knowledge at the held-out question's embedding coordinate. 
+For
 each quiz, we grouped these estimates into two distributions: one for the
-estimated knowledge at the coordinates of each \textit{correctly} answered
-question, and another for the estimated knowledge at the coordinates of each
-\textit{incorrectly} answered question (Fig.~\ref{fig:predictions}). We then
+estimated knowledge at the coordinates of \textit{correctly} answered
+questions, and another for the estimated knowledge at the coordinates of
+\textit{incorrectly} answered questions (Fig.~\ref{fig:predictions}). We then
 used independent samples $t$-tests to compare the means of these distributions
 of estimated knowledge.
 
@@ -566,7 +573,7 @@ topics from 15 to 100 might help us to generalize the knowledge predictions.
 (Aside from increasing the number of topics from 15 to 100, all other
 procedures and model parameters were carried over from the preceding analyses.)
 As in our other analyses, we resampled each lecture's topic trajectory to 1~Hz
-and also projected each question into a shared text embedding space.
+and projected each question into a shared text embedding space.
 
 \begin{figure}[tp]
     \centering
