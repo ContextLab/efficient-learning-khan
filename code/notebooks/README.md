@@ -15,6 +15,7 @@ analyses are described or figures appear in the paper.
 
 ### `supp/`
 **code to reproduce tables and figures from the Supplementary Materials document**
-- `1_tables.ipynb` &ndash; code to generate Tables S1 & S2
-- `2_topic-weight-fig.ipynb` &ndash; code to generate Figure S1 and compute related stats
-- `3_individual-maps.ipynb` &ndash; code to generate Figures S2&ndash;S6
+- `1_tables.ipynb` &ndash; code to generate Supplementary Tables 1 & 2
+- `2_topic-word-distributions-fig.ipynb` &ndash; code to generate Supplementary Figure 1
+- `2_topic-weight-fig.ipynb` &ndash; code to generate Supplementary Figure 2 and compute related stats
+- `3_individual-maps.ipynb` &ndash; code to generate Supplementary Figures 2&ndash;6
