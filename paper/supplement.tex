@@ -16,8 +16,9 @@
 \newcommand{\argmax}{\mathop{\mathrm{argmax}}\limits}
 \newcommand{\argmin}{\mathop{\mathrm{argmin}}\limits}
 
-\newcommand{\topics}{3}
+\newcommand{\topicVariability}{3}
 \newcommand{\knowledgeMaps}{7}
+\newcommand{\topicModelMethods}{\textit{Constructing text embeddings of multiple lectures and questions}}
 
 \title{\textit{Supplementary materials for}: Text embedding models yield 
 high-resolution insights into conceptual knowledge from short multiple-choice
@@ -110,35 +111,37 @@ Jeremy.R.Manning@Dartmouth.edu}}
     \end{longtable}
 \end{tiny}
 
+
 \begin{table}[tp]
     \centering
-\begin{tiny}
-\begin{tabular}{r|l|l|l|l|l|l|l|l|l|l}
-    
-    \textbf{Topic} &       \textbf{1}  &        \textbf{2}  &               \textbf{3}  &           \textbf{4}  &       \textbf{5}  &        \textbf{6}  &             \textbf{7}  &           \textbf{8}  &        \textbf{9}  &               \textbf{10} \\\hline    
-    1     &     star &    helium &             main &         mass &   atomic &  sequence &            get &       energy &      fuse &         hydrogen \\\hline
-    2     &   charge &     force &             mass &      gravity &   strong &   attract &          large &     strength &  distance &  electromagnetic \\\hline
-    3     &     huge &     force &  electromagnetic &        macro &      way &     scale &  concentration &        apply &      kind &           charge \\\hline
-    4     &     atom &     dense &               go &     hydrogen &     slow &       get &           huge &     condense &      mass &            would \\\hline
-    5     &   fusion &       get &        threshold &         core &    occur &      mass &      something &        start &   several &          jupiter \\\hline
-    6     &   enough &  ignition &           proton &        force &      get &     close &        nucleus &      coulomb &    fusion &            would \\\hline
-    7     &   energy &  pressure &         ignition &         mass &   little &      keep &        provide &       fusion &       get &         hydrogen \\\hline
-    8     &   proton &      weak &          neutron &  interaction &      one &        go &        nucleon &       cesium &     extra &              get \\\hline
-    9     &      run &      kind &              say &           go &     want &     would &            get &         well &      give &         although \\\hline
-    10     &     huge &     cloud &            space &        float &  imagine &  hydrogen &           atom &          say &  distance &          combine \\\hline
-    11    &      one &  hydrogen &           helium &           go &   proton &   neutron &           keep &       atomic &    detail &             fuse \\\hline
-    12    &  gravity &     force &             weak &  interaction &    apply &  strength &       distance &          ten &  relative &             next \\\hline
-    13    &    force &        go &    electrostatic &         call &   charge &    magnet &           side &      coulomb &      know &        different \\\hline
-    14    &    force &      atom &          nucleus &     electron &     much &  hydrogen &            get &       around &   coulomb &           charge \\\hline
-    15    &    force &     scale &          gravity &        start &     weak &     orbit &           keep &  fundamental &    around &         surprise \\
-    
-\end{tabular}
-\end{tiny}
+    \begin{tiny}
+    \begin{tabular}{r|l|l|l|l|l|l|l|l|l|l}
 
-\caption{\textbf{Topics.} The table displays the 10 top-weighted words (columns) from
-    each of the 15 topics (rows) identified from sliding windows of the two course video
-    transcripts (see \textit{Constructing text embeddings of multiple lectures
-    and questions}).}
+    \textbf{Topic} & \textbf{1} & \textbf{2} &      \textbf{3} &  \textbf{4} & \textbf{5} & \textbf{6} &    \textbf{7} &  \textbf{8} & \textbf{9} &     \textbf{10} \\\hline
+                 1 &       star &     helium &            main &        mass &     atomic &   sequence &           get &      energy &       fuse &        hydrogen \\\hline
+                 2 &     charge &      force &            mass &     gravity &     strong &    attract &         large &    strength &   distance & electromagnetic \\\hline
+                 3 &       huge &      force & electromagnetic &       macro &        way &      scale & concentration &       apply &       kind &          charge \\\hline
+                 4 &       atom &      dense &              go &    hydrogen &       slow &        get &          huge &    condense &       mass &           would \\\hline
+                 5 &     fusion &        get &       threshold &        core &      occur &       mass &     something &       start &    several &         jupiter \\\hline
+                 6 &     enough &   ignition &          proton &       force &        get &      close &       nucleus &     coulomb &     fusion &           would \\\hline
+                 7 &     energy &   pressure &        ignition &        mass &     little &       keep &       provide &      fusion &        get &        hydrogen \\\hline
+                 8 &     proton &       weak &         neutron & interaction &        one &         go &       nucleon &      cesium &      extra &             get \\\hline
+                 9 &            &            &                 &             &            &            &               &             &            &                 \\\hline
+                10 &       huge &      cloud &           space &       float &    imagine &   hydrogen &          atom &             &            &                 \\\hline
+                11 &        one &   hydrogen &          helium &          go &     proton &    neutron &          keep &      atomic &     detail &            fuse \\\hline
+                12 &    gravity &      force &            weak & interaction &      apply &   strength &      distance &         ten &   relative &            next \\\hline
+                13 &      force &         go &   electrostatic &        call &     charge &     magnet &          side &     coulomb &       know &       different \\\hline
+                14 &      force &       atom &         nucleus &    electron &       much &   hydrogen &           get &      around &    coulomb &          charge \\\hline
+                15 &      force &      scale &         gravity &       start &       weak &      orbit &          keep & fundamental &     around &        surprise \\
+
+    \end{tabular}
+    \end{tiny}
+
+    \caption{\textbf{Topics.} We fit a topic model with (up to) $k = 15$ topics to sliding 
+    windows parsed from the two course video transcripts (see~\topicModelMethods),
+    and identified 14 topics with non-zero weights. The table displays the (up to) 10 
+    top-weighted words (columns) from each of the topics (rows) discovered by the 
+    model. The weights of these words are shown in Supplementary Figure~\ref{fig:topic-word-distributions}.}
     \label{tab:topics}
 \end{table}
 
@@ -152,8 +155,8 @@ Jeremy.R.Manning@Dartmouth.edu}}
     of weights over words in the topic model's vocabulary (i.e., the union of all unique 
     words from the two lectures' transcripts, excluding stop-words, after 
     preprocessing). Each plot above displays the weights for the (up to) 50 words 
-    weighted most heavily by an individual topic extracted from the lectures' contents (see 
-    \textit{Constructing text embeddings of multiple lectures and questions}).}
+    weighted most heavily by an individual topic extracted from the lectures' contents 
+    (see~\topicModelMethods).}
 
     \label{fig:topic-word-distributions}
 \end{figure}
@@ -172,7 +175,7 @@ top-weighted words from the full set of topics may be found in Supplementary
 Table~\ref{tab:topics}. \textbf{B. Relationships between average topic
 weights.} Pairwise correlations between the distributions of average topic
 weights for each lecture and question set. Each row and column corresponds
-to a bar plot in Panel A. Also see Figure~\topics~in the main text.}
+to a bar plot in Panel A. Also see Figure~\topicVariability~in the main text.}
 
     \label{fig:topics}
 \end{figure}
