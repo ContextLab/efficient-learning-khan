@@ -14,10 +14,10 @@
 
 % supplemental tables
 \newcommand{\questions}{1}
-\newcommand{\topics}{2} 
+\newcommand{\topics}{2}
 
 % supplemental figures
-\newcommand{\topicWeights}{1} 
+\newcommand{\topicWeights}{1}
 \newcommand{\individualKnowledgeMapsA}{2}
 \newcommand{\individualKnowledgeMapsB}{3}
 \newcommand{\individualKnowledgeMapsC}{4}
@@ -198,7 +198,7 @@ given concept is predictive of knowledge about similar or related concepts.
 From a geometric perspective, this assumption implies that knowledge is
 fundamentally ``smooth.'' In other words, as one moves through a space
 representing an individual's knowledge (where similar concepts occupy nearby
-coordinates), their ``level of knowledge'' should change relatively gradually. 
+coordinates), their ``level of knowledge'' should change relatively gradually.
 To begin to test this smoothness assumption, we sought
 to track participants' knowledge and how it changed over time in response to
 training. Two overarching goals guide our approach. First, we want to gain
@@ -277,7 +277,7 @@ after watching the \textit{Birth of Stars} video (i.e., Lecture~2).
     our pool (Supplementary Tab.~\questions), to project them into a shared text embedding space.
     This results in one trajectory per lecture and one coordinate for each
     question. Here, we have projected the 15-dimensional embeddings onto their first
-    3 principal components for visualization.} 
+    3 principal components for visualization.}
 
     \label{fig:sliding-windows}
 \end{figure}
@@ -324,9 +324,9 @@ from Lecture~1 questions ($r(13) = 0.809,~p < 0.001$, 95\% confidence interval
 (CI)~$= [0.633,~0.962]$), and the average topic weights from Lecture~2 are
 strongly correlated with the average topic weights from Lecture~2 questions
 ($r(13) = 0.728,~p = 0.002$, 95\% CI~$= [0.456,~0.920]$). At the same time, the
-average topic weights from the two lectures are \textit{negatively} correlated with 
-their non-matching question sets (Lecture~1 video vs.~Lecture~2 questions: $r(13) = 
--0.547,~p = 0.035$, 95\% CI~$= [-0.812, ~-0.231]$; Lecture~2 video vs.~Lecture~1 questions: $r(13) 
+average topic weights from the two lectures are \textit{negatively} correlated with
+their non-matching question sets (Lecture~1 video vs.~Lecture~2 questions: $r(13) =
+-0.547,~p = 0.035$, 95\% CI~$= [-0.812, ~-0.231]$; Lecture~2 video vs.~Lecture~1 questions: $r(13)
 = -0.612,~p = 0.015$, 95\% CI~$= [-0.874,~-0.281]$), indicating that the topic model
 also exhibits some degree of specificity. The full set of pairwise comparisons
 between average topic weights for the lectures and question sets is reported in
@@ -364,7 +364,7 @@ therefore also compared the variances in topic weights (across time or
 questions) between the lectures and questions. The variability in topic
 expression (over time and across questions) was similar for the Lecture~1 video
 and questions ($r(13) = 0.824,~p<0.001$, 95\% CI~$= [0.696,~0.973]$) and the Lecture~2
-video and questions ($r(13) = 0.801,~p<0.001$, 95\% CI~$= [0.539,~0.958]$). 
+video and questions ($r(13) = 0.801,~p<0.001$, 95\% CI~$= [0.539,~0.958]$).
 Simultaneously, as reported in Figure~\ref{fig:topics}B, the variability in
 topic expression across \textit{different} videos and lecture-specific
 questions (i.e., Lecture~1 video vs.~Lecture~2 questions; Lecture~2 video
@@ -399,7 +399,7 @@ the content covered by the best-matching moments of the lectures. Two
 representative examples are shown at the bottom of
 Figure~\ref{fig:question-correlations}.
 
-\begin{figure}[t] 
+\begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{figs/lecture-question-similarity}
 
@@ -514,14 +514,14 @@ estimated knowledge was substantially higher on Quiz~3 versus 2 ($t(49) =
 Additionally, if we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, our estimates of their knowledge should carry some
 predictive information about whether the participant is likely to answer that
-question correctly or incorrectly. To further validate our knowledge estimates, we developed a statistical approach to test this claim. 
-For each question in turn, we used equation~\ref{eqn:prop} to estimate each 
-participant's knowledge at the given question's embedding space coordinate, 
+question correctly or incorrectly. To further validate our knowledge estimates, we developed a statistical approach to test this claim.
+For each question in turn, we used equation~\ref{eqn:prop} to estimate each
+participant's knowledge at the given question's embedding space coordinate,
 using all \textit{other} questions that participant answered on the same quiz.
 %For each question in turn, for each
 %participant, we used Equation~\ref{eqn:prop} to estimate (using all
 %\textit{other} questions from the same quiz, from the same participant) the
-%participant's knowledge at the held-out question's embedding coordinate. 
+%participant's knowledge at the held-out question's embedding coordinate.
 For
 each quiz, we grouped these estimates into two distributions: one for the
 estimated knowledge at the coordinates of \textit{correctly} answered
@@ -559,7 +559,7 @@ watching the second video, estimated knowledge (from the third quiz;
 Fig.~\ref{fig:predictions}, right panel) for \textit{all} questions exhibited a
 positive shift. However, the increase in estimated knowledge for held-out
 correctly answered questions was larger than for held-out incorrectly answered
-questions (estimated knowledge for correctly versus incorrectly answered 
+questions (estimated knowledge for correctly versus incorrectly answered
 Quiz~3 questions: $t(628) = 2.045,~p = 0.041$).
 
 Knowledge estimates need not be limited to the content of the lectures. As
@@ -676,7 +676,7 @@ the conceptual knowledge probed by individual quiz questions to the correspondin
 moments in lecture videos when those concepts were presented
 (Fig.~\ref{fig:question-correlations}). Next, we demonstrate how we can
 estimate moment-by-moment ``knowledge traces'' that reflect the degree of knowledge
-participants have about each video's time-varying content, and capture temporally 
+participants have about each video's time-varying content, and capture temporally
 specific increases in knowledge after viewing each lecture (Fig.~\ref{fig:knowledge-timeseries}).
  We also show that these knowledge estimates can generalize to held-out questions
 (Fig.~\ref{fig:predictions}). Finally, we use our framework to construct visual
@@ -731,7 +731,7 @@ students, but between friends having a conversation, individuals on a first
 date, participants at a business meeting, doctors and patients, experts and
 non-experts, political allies or adversaries, and more. For example, the extent
 to which two people's knowledge maps ``match'' or ``align'' in a given region
-of text embedding space might serve as a predictor of how effectively they 
+of text embedding space might serve as a predictor of how effectively they
 will be able to communicate about the corresponding conceptual content.
 
 Ultimately, our work suggests a rich new line of questions about the geometric
@@ -784,7 +784,7 @@ No participants reported that their focus was currently impaired
 level of alertness, and we converted their responses to numerical
 scores as follows: ``very sluggish'' (-2), ``a little sluggish'' (-1),
 ``neutral'' (0), ``fairly alert'' (1), and ``very alert'' (2). Across
-all participants, a range of alertness levels were reported (range: 
+all participants, a range of alertness levels were reported (range:
 -2--1; mean: -0.10; standard deviation: 0.84).
 
 Participants reported their undergraduate major(s) as ``social sciences'' (28
@@ -876,8 +876,15 @@ semantically related or tend to co-occur in the same documents. After
 fitting a topic model, each document in the training set, or any \textit{new}
 document that contains at least some of the words in the model's vocabulary,
 may be represented as a $k$-dimensional vector describing how much the document
-(most probably) reflects each topic. (Unless, otherwise noted, we used $k = 15$
-topics.)
+(most probably) reflects each topic.
+To select an appropriate $k$ for our model, we identified the minimum number of
+topics that yielded at least one ``unused'' topic (i.e., in which all words in the vocabulary
+were assigned zero weight) after training. This indicated that the number of topics was
+sufficient to capture the set of latent themes present in the two lectures (from which we
+constructed our document corpus, as described below). We found this value to be $k = 15$
+topics. The distribution of weights over words in the vocabulary for each discovered topic is
+shown in Supplementary Figure~\topicWordWeights, and each topic's top-weighted
+words may be found in Supplementary Table~\topics.
 
 As illustrated in Figure~\ref{fig:sliding-windows}A, we start by building up a
 corpus of documents using overlapping sliding windows that span each video's
@@ -947,7 +954,7 @@ where
 \end{equation}
 and where $\mathrm{mincorr}$ and $\mathrm{maxcorr}$ are the minimum and maximum
 correlations between any lecture timepoint and question, taken over all
-timepoints in the given lecture, and all five questions \textit{about} that lecture appearing on the given quiz. 
+timepoints in the given lecture, and all five questions \textit{about} that lecture appearing on the given quiz.
 We also define $f(s, \Omega)$ as the
 $s$\textsuperscript{th} topic vector from the set of topic vectors $\Omega$.
 Here $t$ indexes the set of lecture topic vectors, $L$, and $i$ and $j$ index
