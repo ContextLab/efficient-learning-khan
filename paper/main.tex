@@ -568,10 +568,13 @@ estimating knowledge from a small number of quiz questions may be applied to
 \textit{any} content, given its text embedding coordinate. To visualize how
 knowledge ``spreads'' through text embedding space to content beyond the
 lectures participants watched, we first fit a new topic model to the lectures'
-sliding windows with $k = 100$ topics. We hoped that increasing the number of
-topics from 15 to 100 might help us to generalize the knowledge predictions.
-(Aside from increasing the number of topics from 15 to 100, all other
-procedures and model parameters were carried over from the preceding analyses.)
+sliding windows with (up to)~$k = 100$~topics.
+Conceptually, increasing the number of topics used by the model functions to
+increase the ``resolution'' of the embedding space, providing a greater ability to
+estimate knowledge for content that is highly similar to (but not precisely the same as)
+that contained in the lectures.
+Aside from increasing the number of topics from 15 to 100, all other
+procedures and model parameters were carried over from the preceding analyses.
 As in our other analyses, we resampled each lecture's topic trajectory to 1~Hz
 and projected each question into a shared text embedding space.
 
