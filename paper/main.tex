@@ -551,16 +551,27 @@ unstructured (Fig.~\ref{fig:predictions}, left panel). When we held out
 individual questions and estimated their knowledge at the held-out questions'
 embedding coordinates, we found no reliable differences in the estimates when
 the held-out question had been correctly versus incorrectly answered ($t(633) =
-0.577,~p = 0.564$). After watching the first video, estimated knowledge for
+0.577,~p = 0.564$). This reflects a floor effect: when knowledge is low
+everywhere, there is little signal to differentiate between what is known
+versus unknown. After watching the first lecture, estimated knowledge for
 held-out correctly answered questions (from the second quiz;
 Fig.~\ref{fig:predictions}, middle panel) exhibited a positive shift relative
-to held-out incorrectly answered questions ($t(633) = 3.961,~p < 0.001$). After
-watching the second video, estimated knowledge (from the third quiz;
-Fig.~\ref{fig:predictions}, right panel) for \textit{all} questions exhibited a
-positive shift. However, the increase in estimated knowledge for held-out
-correctly answered questions was larger than for held-out incorrectly answered
-questions (estimated knowledge for correctly versus incorrectly answered
-Quiz~3 questions: $t(628) = 2.045,~p = 0.041$).
+to held-out incorrectly answered questions ($t(633) = 3.961,~p < 0.001$). This
+second quiz provides the maximally sensitive test for our knowledge
+predictions, since (if knowledge is estimated accurately) participants' Quiz~2
+responses should demonstrate specific knowledge about Lecture~1 content, but
+knowledge about Lecture~2 and general physics concepts should be roughly
+unchanged from before they watched Lecture~1. After watching the second lecture,
+estimated knowledge (from the third quiz; Fig.~\ref{fig:predictions}, right
+panel) for \textit{all} questions exhibited a positive shift. However, the
+estimated knowledge for held-out correctly answered questions remained
+greater than that for held-out incorrectly answered questions ($t(628) = 2.045,~p
+= 0.041$). This third contrast reflects a ceiling effect: when knowledge is
+relatively high everywhere, the signal differentiating what is known versus
+unknown is relatively weak. Taken together, this set of analyses demonstrates
+that our knowledge prediction framework is most informative when participants
+exhibit variability in their knowledge of the content captured by the text
+embedding model.
 
 Knowledge estimates need not be limited to the content of the lectures. As
 illustrated in Figure~\ref{fig:knowledge-maps}, our general approach to
