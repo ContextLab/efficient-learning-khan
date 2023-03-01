@@ -766,7 +766,7 @@ learning needs and goals.
 \subsection*{Participants}
 
 We enrolled a total of 50 Dartmouth undergraduate students in our study.
-Participants received course credit for enrolling. We asked each participant to
+Participants received optional course credit for enrolling. We asked each participant to
 complete a demographic survey that included questions about their age, gender,
 native spoken language, ethnicity, race, hearing, color vision, sleep, coffee
 consumption, level of alertness, and several aspects of their educational
@@ -867,14 +867,14 @@ questions and answer choices may be found in Supplementary Table~\questions.
 Over the course of the experiment, participants completed three 13-question
 multiple-choice quizzes: the first before viewing Lecture~1, the second between
 Lectures~1 and 2, and the third after viewing Lecture~2
-(Fig.~\ref{fig:experiment}). The questions appearing on each quiz, for each
+(see Fig.~\ref{fig:experiment}). The questions appearing on each quiz, for each
 participant, were randomly chosen from the full set of 39, with the constraints
-that (a) each quiz contain 5 questions about Lecture~1, 5 questions about
+that (a) each quiz contain exactly 5 questions about Lecture~1, 5 questions about
 Lecture~2, and 3 questions about general physics knowledge, and (b) each
 question appear exactly once for each participant. The orders of questions on
 each quiz, and the orders of answer options for each question, were also
 randomized. Our experimental protocol was approved by the Committee for the
-Protection of Human Subjects at Dartmouth College. We used the experiment to
+Protection of Human Subjects at Dartmouth College. We used this experiment to
 develop and test our computational framework for estimating knowledge and
 learning.
 
@@ -886,8 +886,8 @@ We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
 each moment of the two lectures and each question in our pool in a common
 representational space. Briefly, our approach uses a topic model (Latent
 Dirichlet Allocation;~\citealp{BleiEtal03}), trained on a set of documents, to
-discover a set of $k$ ``topics'' or ``themes.'' Formally, each topic is defined
-as a set of weights over each word in the model's vocabulary (i.e., the union
+discover a set of (up to) $k$ ``topics'' or ``themes.'' Formally, each topic is defined
+as a distribution of weights over each word in the model's vocabulary (i.e., the union
 of all unique words, across all documents, excluding ``stop words.'').
 Conceptually, each topic is intended to give larger weights to words that are
 semantically related or tend to co-occur in the same documents. After
@@ -897,7 +897,7 @@ may be represented as a $k$-dimensional vector describing how much the document
 (most probably) reflects each topic.
 To select an appropriate $k$ for our model, we identified the minimum number of
 topics that yielded at least one ``unused'' topic (i.e., in which all words in the vocabulary
-were assigned zero weight) after training. This indicated that the number of topics was
+were assigned uniform weights) after training. This indicated that the number of topics was
 sufficient to capture the set of latent themes present in the two lectures (from which we
 constructed our document corpus, as described below). We found this value to be $k = 15$
 topics. The distribution of weights over words in the vocabulary for each discovered topic is
@@ -911,30 +911,37 @@ of all videos for closed captioning. However, such transcripts would not be
 readily available in all contexts to which our framework could potentially be
 applied. Khan Academy videos are hosted on the YouTube platform, which
 additionally provides automated captions. We opted to use these automated
-transcripts (which, in prior work, we have found are of sufficiently near-human
-quality yield reliable data in behavioral studies; \citealp{ZimaEtal18}) when
+transcripts (which, in prior work, we have found to be of sufficiently near-human
+quality to yield reliable data in behavioral studies;~\citealp{ZimaEtal18}) when
 developing our framework in order to make it more directly extensible and
 adaptable by others in the future.
 
 We fetched these automated transcripts using the
-\texttt{youtube-transcript-api} Python package~\citep{Depo19}. The transcripts
+\texttt{youtube-transcript-api} Python package~\citep{Depo18}. The transcripts
 consisted of one timestamped line of text for every few seconds (mean: 2.34~s;
 standard deviation: 0.83~s) of spoken content in the video (i.e., corresponding
 to each individual caption that would appear on-screen if viewing the lecture
 via YouTube, and when those lines would appear). We defined a sliding window
 length of (up to) $w = 30$ transcript lines, and assigned each window a
-timestamp corresponding to the midpoint between its first and last lines'
-timestamps. These sliding windows ramped up and down in length at the very
-beginning and end of the transcript, respectively. In other words, the first
-sliding window covered only the first line from the transcript; the second
-sliding window covered the first two lines; and so on. This insured that each
-line of the transcript appeared in the same number ($w$) of sliding windows.
+timestamp corresponding to the midpoint between the timestamps for its first and last lines.
+These sliding windows ramped up and down in length at the
+beginning and end of each transcript, respectively. In other words, each transcript's first
+sliding window covered only its first line, the second
+sliding window covered the first two lines, and so on. This ensured that each
+line from the transcripts appeared in the same number ($w$) of sliding windows.
+%and was equally represented in the topic model's training corpus.
 After performing various standard text preprocessing (e.g., normalizing case,
 lemmatizing, removing punctuation and stop-words), we treated the text from
 each sliding window as a single ``document,'' and combined these documents
-across the two videos' windows to create a single training corpus for the topic
-model. The top words from each of the 15 discovered topics may be found in
-Supplementary Table~\topics.
+across the two videos' windows to create a single training corpus for the topic model.
+%To select an appropriate number of topics for the model, we identified the
+%minimum $k$ that yielded at least one ``unused'' topic (i.e., in which all words
+%in the vocabulary were assigned zero weight) after training. This indicated that the
+%number of topics was sufficient to capture the set of latent themes present in the two
+%lectures. We found this value to be $k = 15$ topics.
+%Supplementary Figure~\topicWordWeights~displays the distribution of weights over words
+%in the vocabulary for each discovered topic, and each topic's top-weighted words may be found
+%in Supplementary Table~\topics.
 
 After fitting a topic model to the two videos' transcripts, we could use the
 trained model to transform arbitrary (potentially new) documents into
@@ -948,7 +955,7 @@ to characterize the similarity in conceptual content between the documents.
 We transformed each sliding window's text into a topic vector, and then used
 linear interpolation (independently for each topic dimension) to resample the
 resulting timeseries to one vector per second. We also used the fitted model to
-obtain topic vectors for each question in our pool (Supplementary Tab.~\questions). Taken
+obtain topic vectors for each question in our pool (see Supplementary Tab.~\questions). Taken
 together, we obtained a \textit{trajectory} for each video, describing its path
 through topic space, and a single coordinate for each question
 (Fig.~\ref{fig:sliding-windows}C). Embedding both videos and all of the
@@ -997,11 +1004,11 @@ contributes some non-zero amount to the knowledge estimate.
 An important feature of our approach is that, given a trained text embedding
 model and participants' quiz performance on each question, we can estimate
 their knowledge about \textit{any} content expressible by the embedding
-model---not solely the content explicitly probed by the quiz questions or even
+model---not solely the content explicitly probed by the quiz questions, or even
 appearing in the lectures. To visualize these estimates
 (Fig.~\ref{fig:knowledge-maps}, Supplementary Figs.~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
 and~\individualLearningMapsB), we used Uniform Manifold Approximation and
-Projection (UMAP; \citealp{McInEtal18a}) to construct a 2D projection of the
+Projection (UMAP; \citealp{McInEtal18a, McInEtal18b}) to construct a 2D projection of the
 text embedding space. Sampling the original 100-dimensional space at high
 resolution to obtain an adequate set of topic vectors spanning the embedding
 space would be computationally intractable. However, sampling a 2D grid is
@@ -1013,22 +1020,22 @@ the observations in their original (e.g., 100-dimensional) space and the
 pairwise (clustered) distances in the low-dimensional embedding space (in our
 approach, the embedding space is 2D). In our implementation, pairwise distances
 in the original high-dimensional space were defined as 1 minus the correlation
-between the pair of coordinates, and pairwise distances in the low-dimensional
-embedding space were defiend as the Euclidean distance between the pair of
+between each pair of coordinates, and pairwise distances in the low-dimensional
+embedding space were defined as the Euclidean distance between each pair of
 coordinates.
 
 In our application, all of the coordinates we embedded were topic vectors,
-whose elements are always non-negative. Although UMAP is an invertible
+whose elements are always non-negative and sum to one. Although UMAP is an invertible
 transformation at the embedding locations of the original data, other locations
 in the embedding space will not necessarily follow the same implicit ``rules''
 as the original high-dimensional data. For example, inverting an arbitrary
 coordinate in the embedding space might result in negative-valued vectors,
-which are incompatable with the topic modeling framework. To protect against
+which are incompatible with the topic modeling framework. To protect against
 this issue, we log-transformed the topic vectors prior to embedding them in the
 2D space. When we inverted the embedded vectors (e.g., to estimate topic
 vectors or word clouds, as in Fig.~\ref{fig:knowledge-maps}C), we passed the
 inverted (log-transformed) values through the exponential function to obtain a
-vector of non-negative values.
+vector of non-negative values, and normalized them to sum to one.
 
 After embedding both lectures' topic trajectories and the topic vectors of
 every question, we defined a rectangle enclosing the 2D projections of the
