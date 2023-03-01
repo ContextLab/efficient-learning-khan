@@ -59,8 +59,8 @@ framework to the videos' transcripts and the text of the quiz questions to
 quantify the content of each moment of video and each quiz question. We use
 these embeddings, along with participants' quiz responses, to track how the
 learners' knowledge changed after watching each video. Our findings show how a
-small set of quiz questions may be used to obtain rich and meaningful, high-resolution
-insights into what each learner knows, and how their knowledge
+small set of quiz questions may be used to obtain rich and meaningful
+high-resolution insights into what each learner knows, and how their knowledge
 changes over time as they learn.
 
 \textbf{Keywords: education, learning, knowledge, concepts, natural language processing}
@@ -252,7 +252,7 @@ lecture series (Lectures~1 and 2 were from the ``Scale of the Universe'' and
 We also wrote a set of multiple-choice quiz questions that we hoped would
 enable us to evaluate participants' knowledge about each individual lecture,
 along with related knowledge about physics concepts not specifically presented in either
-video (see Supplementary Tab.~\questions~for the full list of questions in our stimulus
+video (see Supp. Tab.~\questions~for the full list of questions in our stimulus
 pool). Participants answered questions randomly drawn from each content area
 (Lecture~1, Lecture~2, and general physics knowledge) on each of the three
 quizzes. Quiz~1 was intended to assess participants' ``baseline'' knowledge
@@ -275,7 +275,7 @@ after watching the \textit{Birth of Stars} video (i.e., Lecture~2).
     windows parsed from its transcript. \textbf{C. Embedding multiple lectures and
     questions in a shared space.} We apply the same model (trained on the two
     lectures' windows) to both lectures, along with the text of each question in
-    our pool (Supplementary Tab.~\questions), to project them into a shared text embedding space.
+    our pool (Supp. Tab.~\questions), to project them into a shared text embedding space.
     This results in one trajectory per lecture and one coordinate for each
     question. Here, we have projected the 15-dimensional embeddings onto their first
     3 principal components for visualization.}
@@ -319,7 +319,7 @@ correspondence could not solely arise from superficial text matching between
 lecture transcripts and questions, since the lectures and questions used
 different words. Simply comparing the average topic weights from each lecture
 and question set (averaging across time and questions, respectively) reveals a
-striking correspondence (Supplementary Fig.~\topicWeights). Specifically, the average topic
+striking correspondence (Supp. Fig.~\topicWeights). Specifically, the average topic
 weights from Lecture~1 are strongly correlated with the average topic weights
 from Lecture~1 questions ($r(13) = 0.809,~p < 0.001$, 95\% confidence interval
 (CI)~$= [0.633,~0.962]$), and the average topic weights from Lecture~2 are
@@ -516,7 +516,7 @@ If we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, our estimates of their knowledge should carry some
 predictive information about whether the participant is likely to answer that
 question correctly or incorrectly. We developed a statistical approach to test this claim.
-For each question in turn, we used equation~\ref{eqn:prop} to estimate each
+For each question in turn, we used Equation~\ref{eqn:prop} to estimate each
 participant's knowledge at the given question's embedding space coordinate,
 using all \textit{other} questions that participant answered on the same quiz.
 %For each question in turn, for each
@@ -955,7 +955,7 @@ to characterize the similarity in conceptual content between the documents.
 We transformed each sliding window's text into a topic vector, and then used
 linear interpolation (independently for each topic dimension) to resample the
 resulting timeseries to one vector per second. We also used the fitted model to
-obtain topic vectors for each question in our pool (see Supplementary Tab.~\questions). Taken
+obtain topic vectors for each question in our pool (see Supp. Tab.~\questions). Taken
 together, we obtained a \textit{trajectory} for each video, describing its path
 through topic space, and a single coordinate for each question
 (Fig.~\ref{fig:sliding-windows}C). Embedding both videos and all of the
@@ -997,7 +997,7 @@ timepoint $t$, where the weights are given by the normalized correlations
 between timepoint $t$'s topic vector and the topic vectors for each question.
 The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
 correlations) insures that every question
-contributes some non-zero amount to the knowledge estimate.
+contributes some non-negative amount to the knowledge estimate.
 
 \subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
 
@@ -1006,7 +1006,7 @@ model and participants' quiz performance on each question, we can estimate
 their knowledge about \textit{any} content expressible by the embedding
 model---not solely the content explicitly probed by the quiz questions, or even
 appearing in the lectures. To visualize these estimates
-(Fig.~\ref{fig:knowledge-maps}, Supplementary Figs.~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
+(Fig.~\ref{fig:knowledge-maps}, Supp. Figs.~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
 and~\individualLearningMapsB), we used Uniform Manifold Approximation and
 Projection (UMAP; \citealp{McInEtal18a, McInEtal18b}) to construct a 2D projection of the
 text embedding space. Sampling the original 100-dimensional space at high
