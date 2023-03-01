@@ -150,7 +150,6 @@ understanding what fish and water \textit{are}. Fourth, as we learn, our
 should both update our characterizations of ``what is known'' and also
 unlock any now-satisfied dependencies of those newly learned concepts so that
 they are ``tagged'' as available for future learning.
-% TODO: is the second half of this paragraph relevant to this paper??
 
 Here we develop a framework for modeling how conceptual knowledge is acquired
 during learning. The central idea behind our framework is to use text embedding
@@ -516,15 +515,10 @@ If we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, our estimates of their knowledge should carry some
 predictive information about whether the participant is likely to answer that
 question correctly or incorrectly. We developed a statistical approach to test this claim.
-For each question in turn, we used Equation~\ref{eqn:prop} to estimate each
+For each question, in turn, we used Equation~\ref{eqn:prop} to estimate each
 participant's knowledge at the given question's embedding space coordinate,
 using all \textit{other} questions that participant answered on the same quiz.
-%For each question in turn, for each
-%participant, we used Equation~\ref{eqn:prop} to estimate (using all
-%\textit{other} questions from the same quiz, from the same participant) the
-%participant's knowledge at the held-out question's embedding coordinate.
-For
-each quiz, we grouped these estimates into two distributions: one for the
+For each quiz, we grouped these estimates into two distributions: one for the
 estimated knowledge at the coordinates of \textit{correctly} answered
 questions, and another for the estimated knowledge at the coordinates of
 \textit{incorrectly} answered questions (Fig.~\ref{fig:predictions}). We then
@@ -929,19 +923,10 @@ beginning and end of each transcript, respectively. In other words, each transcr
 sliding window covered only its first line, the second
 sliding window covered the first two lines, and so on. This ensured that each
 line from the transcripts appeared in the same number ($w$) of sliding windows.
-%and was equally represented in the topic model's training corpus.
 After performing various standard text preprocessing (e.g., normalizing case,
 lemmatizing, removing punctuation and stop-words), we treated the text from
 each sliding window as a single ``document,'' and combined these documents
 across the two videos' windows to create a single training corpus for the topic model.
-%To select an appropriate number of topics for the model, we identified the
-%minimum $k$ that yielded at least one ``unused'' topic (i.e., in which all words
-%in the vocabulary were assigned zero weight) after training. This indicated that the
-%number of topics was sufficient to capture the set of latent themes present in the two
-%lectures. We found this value to be $k = 15$ topics.
-%Supplementary Figure~\topicWordWeights~displays the distribution of weights over words
-%in the vocabulary for each discovered topic, and each topic's top-weighted words may be found
-%in Supplementary Table~\topics.
 
 After fitting a topic model to the two videos' transcripts, we could use the
 trained model to transform arbitrary (potentially new) documents into
