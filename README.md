@@ -165,7 +165,7 @@ analysis environment following the steps below
    ```
 
 
-### Additional info
+### Additional information
 
 - You can launch an interactive `bash` shell inside the container to explore or 
   modify its contents with `docker exec -it Khan bash`. To exit the container, 
@@ -182,7 +182,9 @@ analysis environment following the steps below
   [extensions](https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/index.html) 
   for customizing the Jupyter Notebook interface. If you want to enable any of 
   them:
-  - Open the notebook app in a browser and click on the "**Nbextensions**" tab.
+  - Open the notebook application in a browser and click on the "**Nbextensions**" tab.  (To
+    launch the notebook application, start the notebook server as described above and visit
+    the server's address in your web browser.)
   - Uncheck the "_disable configuration for nbextensions without explicit 
     compatibility ..._" box (nearly all of them _are_ compatible, we're just 
     using a newer version of Jupyter notebooks).
@@ -266,7 +268,7 @@ analysis environment following the steps below
    ```
 
 
-## Useful docs
+## Useful additional documentation
 - [Docker](https://docs.docker.com/)
   - [`Dockerfile` reference](https://docs.docker.com/engine/reference/builder/)
   - [`docker build` command reference](https://docs.docker.com/engine/reference/commandline/build/)
