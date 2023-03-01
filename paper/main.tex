@@ -17,12 +17,13 @@
 \newcommand{\topics}{2}
 
 % supplemental figures
-\newcommand{\topicWeights}{1}
-\newcommand{\individualKnowledgeMapsA}{2}
-\newcommand{\individualKnowledgeMapsB}{3}
-\newcommand{\individualKnowledgeMapsC}{4}
-\newcommand{\individualLearningMapsA}{5}
-\newcommand{\individualLearningMapsB}{6}
+\newcommand{\topicWordWeights}{1}
+\newcommand{\topicWeights}{2}
+\newcommand{\individualKnowledgeMapsA}{3}
+\newcommand{\individualKnowledgeMapsB}{4}
+\newcommand{\individualKnowledgeMapsC}{5}
+\newcommand{\individualLearningMapsA}{6}
+\newcommand{\individualLearningMapsB}{7}
 
 % simple command for inline comments
 \newcommand{\comment}[1]{}
@@ -268,7 +269,7 @@ after watching the \textit{Birth of Stars} video (i.e., Lecture~2).
     series of overlapping sliding windows. The full set of transcript snippets (across
     all windows) may be treated as a set of ``documents'' for training a text
     embedding model. \textbf{B. Constructing lecture content
-    \textit{trajectories}.} After training our model on the sliding windows from
+    \textit{trajectories}.} After training the model on the sliding windows from
     both lectures, we transform each lecture into a ``trajectory'' through text
     embedding space by joining the embedding coordinates of successive sliding
     windows parsed from its transcript. \textbf{C. Embedding multiple lectures and
@@ -294,9 +295,9 @@ of ``topic proportions,'' describing the weighted blend of learned topics
 reflected in their texts. We parsed automatically generated transcripts of the
 two lectures into overlapping sliding windows, where each window contained the
 text of the lecture transcript from a particular time span. We treated the set
-of text snippets (across all of these windows) as documents to fit our model
-(Fig.~\ref{fig:sliding-windows}A; see \nameref{subsec:topic-modeling}).
-Transforming the text from every sliding window with our model yielded a
+of text snippets (across all of these windows) as documents to fit the model
+(Fig.~\ref{fig:sliding-windows}A; see~\nameref{subsec:topic-modeling}).
+Transforming the text from every sliding window with the model yielded a
 number-of-windows by number-of-topics (15) topic-proportions matrix
 describing the unique mixture of broad themes from both lectures reflected in
 each window's text. Each window's ``topic vector'' (i.e., column of the
@@ -511,10 +512,10 @@ lecture content on Quizzes~1 versus 2 ($t(49) = 1.013,~p = 0.316$), but the
 estimated knowledge was substantially higher on Quiz~3 versus 2 ($t(49) =
 10.561,~p < 0.001$) and Quiz~3 versus 1 ($t(49) = 8.969,~p < 0.001$).
 
-Additionally, if we are able to accurately estimate a participant's knowledge about the
+If we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, our estimates of their knowledge should carry some
 predictive information about whether the participant is likely to answer that
-question correctly or incorrectly. To further validate our knowledge estimates, we developed a statistical approach to test this claim.
+question correctly or incorrectly. We developed a statistical approach to test this claim.
 For each question in turn, we used equation~\ref{eqn:prop} to estimate each
 participant's knowledge at the given question's embedding space coordinate,
 using all \textit{other} questions that participant answered on the same quiz.
@@ -575,7 +576,7 @@ embedding model.
 
 Knowledge estimates need not be limited to the content of the lectures. As
 illustrated in Figure~\ref{fig:knowledge-maps}, our general approach to
-estimating knowledge from a small number of quiz questions may be applied to
+estimating knowledge from a small number of quiz questions may be extended to
 \textit{any} content, given its text embedding coordinate. To visualize how
 knowledge ``spreads'' through text embedding space to content beyond the
 lectures participants watched, we first fit a new topic model to the lectures'
@@ -583,7 +584,7 @@ sliding windows with (up to)~$k = 100$~topics.
 Conceptually, increasing the number of topics used by the model functions to
 increase the ``resolution'' of the embedding space, providing a greater ability to
 estimate knowledge for content that is highly similar to (but not precisely the same as)
-that contained in the lectures.
+that contained in the two lectures.
 Aside from increasing the number of topics from 15 to 100, all other
 procedures and model parameters were carried over from the preceding analyses.
 As in our other analyses, we resampled each lecture's topic trajectory to 1~Hz
@@ -597,32 +598,35 @@ and projected each question into a shared text embedding space.
     \textbf{A. Average ``knowledge maps'' estimated using each quiz.} Each map
     displays a 2D projection of the estimated knowledge about the content
     reflected by \textit{all} regions of topic space (see
-    \nameref{subsec:knowledge-maps}). The topic trajectories of each
-    lecture are indicated by dotted lines, and the coordinates of each question are indicated by
-    dots. Each map reflects an average across all participants. For
-    individual participants' maps, see
-    Supplementary Figures~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,
+    \nameref{subsec:knowledge-maps}). The topic trajectories of the two
+    lectures are indicated by dotted lines (blue: Lecture 1; green: Lecture 2),
+    and the coordinates of each question are indicated by dots (light blue:
+    Lecture 1-related; light green: Lecture 2-related; purple: general physics
+    knowledge). Each map reflects an average across all participants. For
+    individual participants' maps, see Supplementary
+    Figures~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,
     and~\individualKnowledgeMapsC. \textbf{B. Average ``learning maps''
     estimated between each successive pair of quizzes.} The learning maps follow
-    the same general format as the knowledge maps in Panel A, but here the shading at each
-    coordinate indicates the \textit{difference} between
-    the corresponding coordinates in the indicated \textit{pair} of knowledge
+    the same general format as the knowledge maps in Panel A, but here the
+    shading at each coordinate indicates the \textit{difference} between the
+    corresponding coordinates in the indicated \textit{pair} of knowledge
     maps---i.e., how much the estimated knowledge ``changed'' between the two
     quizzes. Each map reflects an average across all participants. For
     individual participants' maps, see Supplementary
     Figures~\individualLearningMapsA~and~\individualLearningMapsB. \textbf{C.
-    Word clouds for sampled points in topic space.} Each word cloud displays
-    the relative weights of each word (via their relative sizes) reflected by the blend of topics
-    represented at the locations of the stars on the maps. The words' colors
-    indicate how much each word is weighted, on average, across all timepoints'
-    topic vectors in the \textit{Four Fundamental Forces} (blue) and
-    \textit{Birth of Stars} (green) videos, respectively.}
+    Word clouds for sampled points in topic space.} Each word cloud displays the
+    weighted blend of words underlying the topic proportions represented at the
+    corresponding colored star's location on the maps. In each word cloud, the
+    words' relative sizes correspond to their relative weights at the starred
+    location, and their colors indicate their relative weights in the
+    \textit{Four Fundamental Forces} (blue) versus \textit{Birth of Stars}
+    (green) lectures, on average, across all timepoints' topic vectors.}
 
     \label{fig:knowledge-maps}
     \end{figure}
 
 We projected the resulting 100-dimensional topic vectors (for each second of
-video and for each question) onto a shared 2-dimensional plane (see
+video and each quiz question) onto a shared 2-dimensional plane (see
 \nameref{subsec:knowledge-maps}). Next, we sampled points from a $100 \times
 100$ grid of coordinates that evenly tiled a rectangle enclosing the 2D
 projections of the videos and questions. We used
@@ -631,8 +635,8 @@ these 10,000 sampled locations, and averaged these estimates across
 participants to obtain an estimated average \textit{knowledge map}
 (Fig.~\ref{fig:knowledge-maps}A). Intuitively, the knowledge map constructed
 from a given quiz's responses provides a visualization of how ``much''
-participants know about any content expressible by the fitted text embedding
-model.
+participants knew about any content expressible by the fitted text embedding
+model at the point in time when they completed that quiz.
 
 Several features of the resulting knowledge maps are worth noting. The average
 knowledge map estimated from Quiz~1 responses (Fig.~\ref{fig:knowledge-maps}A,
@@ -644,7 +648,7 @@ roughly the same range of coordinates traversed by the \textit{Four Fundamental
 Forces} lecture, indicated by the dotted blue line). In other words,
 participants' estimated increase in knowledge is localized to conceptual
 content that is nearby (i.e., related to) the content from the lecture they
-watched prior to taking Quiz~2. This localization is non-trivial: the knowledge
+watched prior to taking Quiz~2. This localization is non-trivial: these knowledge
 estimates are informed only by the embedded coordinates of the \textit{quiz
 questions}, not by the embeddings of either lecture
 (see Eqn.~\ref{eqn:rbf-knowledge}). Finally, the knowledge map estimated from Quiz
@@ -659,7 +663,7 @@ the knowledge maps estimated from responses to a successive pair of quizzes
 yields a \textit{learning map} that describes the \textit{change} in knowledge
 estimates from one quiz to the next. These learning maps highlight that the
 estimated knowledge increases we observed across maps were specific to the
-regions around the embeddings of each lecture in turn.
+regions around the embeddings of each lecture, in turn.
 
 Because the 2D projection we used to construct the knowledge and learning maps
 is invertible, we may gain additional insights into these maps' meaning
@@ -669,14 +673,14 @@ tool for an instructor looking to better understand which content areas a
 student (or a group of students) knows well (or poorly). As a demonstration, we
 show the top-weighted words from the blends of topics reconstructed from three
 example locations on the maps (Fig.~\ref{fig:knowledge-maps}C): one point near
-the \textit{Four Fundamental Forces} embedding (yellow); a second point near
+the \textit{Four Fundamental Forces} embedding (yellow), a second point near
 the \textit{Birth of Stars} embedding (orange), and a third point
 between the two lectures' embeddings (pink). As shown in the word clouds in the
-Panel, the top-weighted words at the example coordinate near the \textit{Four
-Fundamental Forces} embedding also tended to be weighted heavily by the topics
+panel, the top-weighted words at the example coordinate near the \textit{Four
+Fundamental Forces} embedding tended to be weighted more heavily by the topics
 expressed in that lecture. Similarly, the top-weighted words at the example
 coordinate near the \textit{Birth of Stars} embedding tended to be weighted
-most heavily by the topics expressed in \textit{that} lecture. And the
+more heavily by the topics expressed in \textit{that} lecture. And the
 top-weighted words at the example coordinate between the two lectures'
 embeddings show a roughly even mix of words most strongly associated with each
 lecture.
