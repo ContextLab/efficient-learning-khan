@@ -1,0 +1,121 @@
+0
+"{prompt: 'Why is the gravitational attraction between you and your computer too small for you to notice?',
+ options: [ 'Neither you nor your computer has enough mass to cause a noticeable gravitational attraction',
+'You and your computer are too close for the gravitational attraction to be significant',
+'Humans are too small to detect the force of gravity'], required: true}"
+"{prompt: 'Which of the following is an example of the Weak Interaction?',
+ options: [ 'A neutron in a radioactive Cesium atom is converted into a proton, leading to the release of a few particles',
+'Light from the sun collides with a satellite orbiting Earth and exerts a small push on the satellite',
+'Two protons bound together in a Helium nucleus resist separation despite a repulsive electromagnetic force acting on them'], required: true}"
+"{prompt: 'Roughly how many times stronger is the Weak Interaction than gravity?',
+ options: [ '10,000,000,000,0 00,000',
+'10',
+'1,000,000'], required: true}"
+"{prompt: 'Why don’t you and your computer experience any attraction or repulsion due to the Weak Interaction?',
+ options: [ 'The weak interaction only acts over extremely small distances',
+'The weak interaction between you and your computer is counteracted by the other forces',
+'You and your computer have no net charge'], required: true}"
+"{prompt: 'Which of the following is a difference between gravity and the electromagnetic force?',
+ options: [ 'Gravity is only ever attractive while the electromagnetic force can both attract and repel',
+'Gravity is a much more powerful force than electromagnetis m',
+'Gravity can only act over large distances while the electromagnetic force can act over large and small distances'], required: true}"
+"{prompt: 'Electricity and magnetism can be shown to be two cases of the same force if we:',
+ options: [ 'View them in different frames of reference',
+'Switch which charges we call positive and which charges we call negative',
+'Consider both the effects over small distances and the effects over large distances'], required: true}"
+"{prompt: 'Which of the following are the primary two fundamental forces acting in opposition between the positively-charged protons in an atom’s nucleus?',
+ options: [ 'The Strong Force and the Electromagnetic Force',
+'Gravity and the Weak Interaction',
+'Gravity and the Electromagnetic Force'], required: true}"
+"{prompt: 'Why does the universe have a very uneven distribution of mass but a relatively equal distribution of charge?',
+ options: [ 'Positive and negative charges cancel out and become a neutral charge when they combine while masses only grow larger as they combine',
+'Masses tend to repel while charges tend to attract',
+'Masses tend to attract while charges tend to repel'], required: true}"
+"{prompt: 'In your body, there are a tremendous amount of negatively-charged electrons. Your computer also contains a huge number of negatively-charged electrons. We know that like charges repel, but you and your computer are not repelled apart. Which of the following explains why?',
+ options: [ 'The electrons’ negative charges are balanced by the positive charges of an equal number of protons',
+'An attractive gravitational force balances out this repulsion',
+'The Electromagnetic force only acts over very small distances'], required: true}"
+"{prompt: 'Which of the following is a similarity between the Weak Interaction and the Strong Force?',
+ options: [ 'Both act only over very small distances',
+'Both are stronger than the Electromagnetic force',
+'Both are weaker than Gravity'], required: true}"
+"{prompt: 'Which force is stronger than the Electromagnetic Force?',
+ options: [ 'Strong Force',
+'Gravity',
+'Weak Interaction'], required: true}"
+"{prompt: 'Roughly how many times stronger is the Strong Force than gravity?',
+ options: [ '10ˆ38',
+'100',
+'10ˆ18'], required: true}"
+"{prompt: 'Which of the following would have to be true for the Weak Interaction to cause repulsion or attraction between two objects?',
+ options: [ 'The objects would have to be extremely close to each other',
+'The objects would have to have the same mass',
+'The objects would have to be extremely far away from each other'], required: true}"
+"{prompt: 'Which force keeps us from jumping off of Earth?',
+ options: [ 'Gravity',
+'Strong Force',
+'Weak Interaction'], required: true}"
+"{prompt: 'What does the Coulomb Force refer to?',
+ options: [ 'The repulsion of objects with similar charge and the attraction of objects with different charge',
+'The repulsion of objects with similar mass and the attraction of objects with different mass',
+'The repulsion of objects with similar temperature and the attraction of objects with different temperature'], required: true}"
+"{prompt: 'Which fundamental force is responsible for holding the nucleus of an atom together?',
+ options: [ 'Strong Force',
+'Gravity',
+'Electromagnetic force'], required: true}"
+"{prompt: 'How does the electromagnetic force differ from the strong and weak nuclear forces?',
+ options: [ 'Electromagnetic force is a long-range force, while strong and weak nuclear forces are short-range forces.',
+'The electromagnetic force is much weaker than the strong and weak nuclear forces.',
+'The electromagnetic force only affects particles that have an electric charge, while the strong and weak nuclear forces can affect any particle.'], required: true}"
+"{prompt: 'Which of the following particles is not affected by the electromagnetic force?',
+ options: [ 'Neutron',
+'Proton',
+'Electron'], required: true}"
+"{prompt: 'Which of the following forces is most influential at the largest scales of the universe?',
+ options: [ 'Gravitational force',
+'Electromagnetic force',
+'Strong force'], required: true}"
+"{prompt: 'Which of the following is true about gravity?',
+ options: [ 'It is the weakest fundamental force.',
+'It is the strongest fundamental force.',
+'It is only noticeable on the molecular scale.'], required: true}"
+"{prompt: 'Which of the following is an example of beta minus decay?',
+ options: [ 'A neutron turns into a proton.',
+'A proton turns into a neutron.',
+'An electron turns into a proton.'], required: true}"
+"{prompt: 'How does the strength of the electromagnetic force compare to the strength of the weak force?',
+ options: [ 'It is 10^12 times stronger',
+'It is about the same',
+'It is 10 times weaker'], required: true}"
+"{prompt: 'Why do two protons in a nucleus not repel each other due to the Coulomb force?',
+ options: [ 'Because there is a stronger force than the Coulomb force that keeps them together',
+'Because they have opposite charges',
+'Because there are electrons around the nucleus that attract them'], required: true}"
+"{prompt: 'Your friend suggests that the electromagnetic force keeps Saturn in orbit around the sun. Why is she incorrect?',
+ options: [ 'The gravitational force keeps saturn in orbit around the sun',
+'The weak interactions keeps saturn in orbit around the sun',
+'The strong force keeps saturn in orbit around the sun'], required: true}"
+"{prompt: 'For what reason might your chemistry course not discuss gravity on the subatomic level?',
+ options: [ 'The other forces completely dominate interactions on subatomic levels',
+'Gravity does not exist at a subatomic level',
+'Your professor mistakenly neglected this significant topic'], required: true}"
+"{prompt: 'The term “nucleons” does not include:',
+ options: [ 'Electrons',
+'Protons',
+'Neutrons'], required: true}"
+"{prompt: 'Why doesn’t the weak interaction operate between the planets in our solar system?',
+ options: [ 'Because it only applies to very small distances',
+'Because it is the weakest fundamental force',
+'Because objects with large mass are immune to the weak interaction'], required: true}"
+"{prompt: 'What is the significance of concentration of mass in regards to the fundamental forces?',
+ options: [ 'It allows gravitational force to operate over macro scales',
+'It allows electromagnetic force to operate over macro scales',
+'It allows gravitational force to operate over micro scales'], required: true}"
+"{prompt: 'Without the strong force, what would hypothetically happen to the subatomic particles in the nucleus of an atom?',
+ options: [ 'Like charges would repel each other due to the Coulomb force',
+'Like charges would continue to be situated right next to each other due to the Coulomb force',
+'Like charges would continue to be situated right next to each other due to the gravitational force'], required: true}"
+"{prompt: 'What do the gravitational force and electromagnetic force have in common?',
+ options: [ 'They are both weaker than the strong force',
+'They both operate over very large distances',
+'They are both stronger than the weak interaction'], required: true}"

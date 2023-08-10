@@ -1,0 +1,121 @@
+0
+"{prompt: 'Which of the following describes the effect of gravity on a cloud of atoms',
+ options: [ 'The atoms move to the center of the mass of the atoms',
+'The atoms move away from the center of the mass of the atoms',
+'The atoms spin around the center of the mass of the atoms'], required: true}"
+"{prompt: 'Which of the following occurs as a cloud of atoms gets more dense?',
+ options: [ 'Temperature increases',
+'Temperature decreases',
+'Mass increases'], required: true}"
+"{prompt: 'Which temperature does a cloud of hydrogen atoms approach as it gets denser in the process of becoming a star',
+ options: [ '10 million Kelvin',
+'0 Kelvin',
+'10,000 Kelvin'], required: true}"
+"{prompt: 'Which of the following can overcome the Coulomb Force?',
+ options: [ 'High temperature and high pressure',
+'Low temperature and high pressure',
+'High temperature and low pressure'], required: true}"
+"{prompt: 'Which of the following prevents a star from collapsing as a result of gravity?',
+ options: [ 'Energy released from the fusion of the hydrogen atoms provides outward pressure',
+'The fusion of hydrogen atoms decreases the temperature of the star',
+'The gravitational pull of other stars nearby'], required: true}"
+"{prompt: 'How are supermassive stars different from other stars?',
+ options: [ 'Fusion occurs very fast',
+'Fusion occurs very slow',
+'Fusion occurs in the reverse order'], required: true}"
+"{prompt: 'Which of the following is the FIRST product of two hydrogen atoms fusing together?',
+ options: [ 'Deuterium',
+'Oxygen',
+'Helium'], required: true}"
+"{prompt: 'Once hydrogen atoms get close enough together, which of the following keeps them together?',
+ options: [ 'The Strong Force',
+'The Electromagnetic Force',
+'Gravity'], required: true}"
+"{prompt: 'When two nuclei fuse together, how does the mass of the combined nucleus compare to the mass of each of the original nucleus?',
+ options: [ 'The mass of the combined nucleus is smaller',
+'The mass of the combined nucleus is larger',
+'The mass of the combined nucleus is the same'], required: true}"
+"{prompt: 'If we say that our Sun is a main sequence star, what does that tell us about the Sun?',
+ options: [ 'Hydrogen atoms in the Sun are fusing together and becoming Helium',
+'The Sun is a supermassive star',
+'The Sun does not experience the force of Gravity but does experience the Coulomb Force'], required: true}"
+"{prompt: 'Which force would cause a massive cloud of hydrogen atoms to move together?',
+ options: [ 'Gravity',
+'Strong Force',
+'Weak Interaction'], required: true}"
+"{prompt: 'Which of the following occurs as density increases?',
+ options: [ 'Temperature increases',
+'Volume increases',
+'Mass increases'], required: true}"
+"{prompt: 'Which of the following is a product of Hydrogen fusion?',
+ options: [ 'Helium',
+'Oxygen',
+'Cesium'], required: true}"
+"{prompt: 'Which of the following terms accurately describes the Sun?',
+ options: [ 'Main sequence star',
+'Supermassive star',
+'Alternative sequence star'], required: true}"
+"{prompt: 'Which of the following terms best describes a fusion reaction?',
+ options: [ 'Ignition',
+'Combustion',
+'Decomposition'], required: true}"
+"{prompt: 'What happens to the Coulomb force when the two nucleuses get close enough to each other?',
+ options: [ 'It becomes weaker',
+'It becomes stronger',
+'It disappears'], required: true}"
+"{prompt: 'What happens when two hydrogen nuclei fuse together?',
+ options: [ 'They degrade into neutrons',
+'They degrade into electrons',
+'They degrade into protons'], required: true}"
+"{prompt: 'What is the resulting energy of the fusion reaction?',
+ options: [ 'Positive energy',
+'Negative energy',
+'No energy'], required: true}"
+"{prompt: 'What does the energy from the fusion reaction provide for the star?',
+ options: [ 'Outward pressure',
+'Inward pressure',
+'No pressure'], required: true}"
+"{prompt: 'What, most specifically, defines fusion ignition?',
+ options: [ 'The fusion of two hydrogen nuclei to form helium',
+'The combustion of hydrogen and oxygen',
+'The release of energy from the Sun'], required: true}"
+"{prompt: 'What is deuterium?',
+ options: [ 'A form of heavy hydrogen with one neutron and one proton',
+'Another name for helium',
+'A molecule made up of two hydrogen atoms'], required: true}"
+"{prompt: 'What happens to the cloud as it gets denser and denser?',
+ options: [ 'The hydrogen atoms start to interact with each other',
+'The hydrogen atoms begin to repel each other',
+'The helium atoms start to interact with each other.'], required: true}"
+"{prompt: 'Why is the energy released during fusion greater than the mass difference between the reactants and products?',
+ options: [ 'Because of the conversion of mass to energy',
+'Because of the conversion of protons to neutrons',
+'Because of the conversion of neutrons to protons'], required: true}"
+"{prompt: 'If a cloud of hydrogen atoms were to expand, which of the following would occur?',
+ options: [ 'None of the above',
+'Interactions between atoms would increase',
+'Density of the atoms would increase'], required: true}"
+"{prompt: 'What is required to draw together the positive nuclei of 2 atoms?',
+ options: [ 'Huge pressures',
+'Low temperatures',
+'The Coulomb Force'], required: true}"
+"{prompt: 'What provides the pressure for fusion ignition once the star is created?',
+ options: [ 'External molecules trying to get in',
+'Increasing volume of the nucleus',
+'Decreasing temperature of the hydrogen molecules'], required: true}"
+"{prompt: 'Why is deuterium nicknamed “heavy hydrogen”',
+ options: [ 'It has had an additional neutron',
+'It has an additional electron',
+'It has an additional proton'], required: true}"
+"{prompt: 'Which of the following lists the reactions in star formation in the correct order?',
+ options: [ 'Hydrogen to deuterium to helium',
+'Hydrogen to helium to deuterium',
+'Helium to deuterium to hydrogen'], required: true}"
+"{prompt: 'Which of the following has the most protons',
+ options: [ 'Helium',
+'Hydrogen',
+'Deuterium'], required: true}"
+"{prompt: 'Why does the formation of Helium-4 release energy?',
+ options: [ 'Mass is reduced',
+'Mass is increased',
+'Velocity is reduced'], required: true}"

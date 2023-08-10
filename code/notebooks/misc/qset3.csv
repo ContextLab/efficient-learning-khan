@@ -1,0 +1,121 @@
+0
+"{prompt: 'Which of the following lists of particles is ordered from smallest to largest?',
+ options: [ 'Electron, proton, nucleus, atom',
+'Atom, electron, proton, nucleus',
+'Atom, electron, proton, nucleus'], required: true}"
+"{prompt: 'Which of the following defines what element an atom is?',
+ options: [ 'Its number of protons',
+'Its number of neutrons',
+'Its number of electrons'], required: true}"
+"{prompt: 'Suppose that in some atom, a proton is converted into a neutron. What changes as a result of this conversion?',
+ options: [ 'The atom's element',
+'The atom's mass (in atomic mass units)',
+'The atom's velocity'], required: true}"
+"{prompt: 'Which of the following lists is ordered from smallest to largest?',
+ options: [ 'Star, solar system, galaxy, universe',
+'Galaxy, solar system, Milky Way, universe',
+'Planet, galaxy, star, solar system'], required: true}"
+"{prompt: 'Which of the following are located in the nucleus of an atom?',
+ options: [ 'Protons and neutrons',
+'Only protons',
+'Only electrons'], required: true}"
+"{prompt: 'Which of the following has the least mass?',
+ options: [ 'An electron',
+'A proton',
+'A neutron'], required: true}"
+"{prompt: 'What percent of an atom’s space does its nucleus occupy?',
+ options: [ 'Less than 1%',
+'10%',
+'50%'], required: true}"
+"{prompt: 'In the famous equation attributed to Albert Einstein, E=mcˆ2, what does the letter ”m” represent?',
+ options: [ 'Mass',
+'Momentum',
+'Moment of inertia'], required: true}"
+"{prompt: 'If I were to heat up an inflated balloon, which of the the following would occur?',
+ options: [ 'The balloon would expand',
+'The balloon would shrink',
+'None of these answers are correct'], required: true}"
+"{prompt: 'Which of the following is a difference between an electrostatic field and a magnetic field',
+ options: [ 'An electrostatic field can have monopoles',
+'A magnetic field can have monopoles',
+'An electrostatic field cannot have dipoles'], required: true}"
+"{prompt: 'What is one way in which light waves are different from sound waves?',
+ options: [ 'Light waves do not require a medium to travel through',
+'Sound waves do not require a medium to travel through',
+'Light waves require a medium to travel through'], required: true}"
+"{prompt: 'Which of the following is a correct statement about light waves:',
+ options: [ 'Higher frequency correlates to higher energy',
+'Shorter wavelength correlates to lower frequency',
+'Lower frequency correlates to higher energy'], required: true}"
+"{prompt: 'Order the following electromagnetic wavelengths from longest to shortest: radio waves, visible light, x-rays',
+ options: [ 'Radio waves, visible light, x-rays',
+'Radio waves, x-rays, visible light',
+'X-rays, radio waves, visible light'], required: true}"
+"{prompt: 'Which of the following is a scalar quantity?',
+ options: [ 'Energy',
+'Velocity',
+'Acceleration'], required: true}"
+"{prompt: 'Which of the following is a vector quantity?',
+ options: [ 'Displacement',
+'Speed',
+'Mass'], required: true}"
+"{prompt: 'Which of the following is an example of a simple machine?',
+ options: [ 'All of the above',
+'Lever',
+'Wheelbarrow'], required: true}"
+"{prompt: 'Which type of energy is stored in an object due to its position or height?',
+ options: [ 'Gravitational potential energy',
+'Kinetic energy',
+'Thermal energy'], required: true}"
+"{prompt: 'What is the term used to describe an atom that has gained or lost electrons?',
+ options: [ 'Ion',
+'Isotope',
+'Nucleus'], required: true}"
+"{prompt: 'What is the term used to describe the emission of particles or radiation from an unstable nucleus?',
+ options: [ 'Decay',
+'Radioactivity',
+'Fission'], required: true}"
+"{prompt: 'Which of the following is a unit of force?',
+ options: [ 'Newton',
+'Joule',
+'Watt'], required: true}"
+"{prompt: 'How does the mass of an object affect its acceleration when a constant force is applied to it?',
+ options: [ 'The mass and acceleration are inversely proportional',
+'The mass and acceleration are directly proportional',
+'The mass has no effect on acceleration'], required: true}"
+"{prompt: 'What is the process by which a solid turns directly into a gas without passing through the liquid state?',
+ options: [ 'Sublimation',
+'Melting',
+'Evaporation'], required: true}"
+"{prompt: 'Which type of energy is associated with the motion of atoms and molecules?',
+ options: [ 'Thermal energy',
+'Kinetic Energy',
+'Potential Energy'], required: true}"
+"{prompt: 'Which type of circuit has more than one pathway for electric current to flow?',
+ options: [ 'Parallel circuit',
+'Series circuit',
+'Closed circuit'], required: true}"
+"{prompt: 'The north pole of the magnetized needle within a compass points toward which of Earth’s poles:',
+ options: [ 'Magnetic north pole',
+'Magnetic south pole',
+'Geographic north pole'], required: true}"
+"{prompt: 'Which of the following is true of the speed of light?',
+ options: [ 'It is the fastest speed in physics',
+'It is slower than the speed of sound',
+'It is unknown'], required: true}"
+"{prompt: 'Order the following colors from shortest to longest wavelength: blue, red, yellow',
+ options: [ 'Blue, yellow, red',
+'Red, yellow, blue',
+'Yellow, blue, red'], required: true}"
+"{prompt: 'Which of the following is a measure of the amount of matter in an object?',
+ options: [ 'Mass',
+'Weight',
+'Density'], required: true}"
+"{prompt: 'In which direction does a positively charged object move when placed in an electric field?',
+ options: [ 'Towards the field',
+'Away from the field',
+'In a circular motion around the field'], required: true}"
+"{prompt: 'How does the resistance of a wire change as its diameter increases?',
+ options: [ 'It decreases',
+'It increases',
+'It remains constant'], required: true}"
