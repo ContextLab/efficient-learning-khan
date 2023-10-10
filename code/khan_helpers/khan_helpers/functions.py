@@ -806,14 +806,14 @@ def reconstruct_trace(lecture, questions, accuracy):
 
     Parameters
     ----------
-    lecture: numpy.ndarray
+    lecture : numpy.ndarray
         `(n_coordinates, n_features)` matrix of coordinates for which to
         estimate knowledge.
-    questions: numpy.ndarray
+    questions : numpy.ndarray
         `(n_observations, n_features)` matrix of coordinates for the
         quiz questions used to estimate knowledge for each of the
         `n_coordinates` locations.
-    accuracy: array_like
+    accuracy : array_like
         `(n_observations,)` binary array denoting whether each question
         was answered correctly (`True`|`1`) or incorrectly
         (`False`/`0`).
@@ -963,3 +963,5 @@ def z2r(z):
         Correlation value(s).
     """
     return (np.exp(2 * z) - 1) / (np.exp(2 * z) + 1)
+
+
