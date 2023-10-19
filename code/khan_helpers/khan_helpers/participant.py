@@ -137,10 +137,16 @@ class Participant:
     def get_kmap(self, kmap_key):
         """
         dict.get()-like access to self.knowledge_maps
-        :param trace_key: str
-                The key for the trace to be returned
-        :return: trace: np.ndarray
-                The trace stored under the given `trace_key`
+
+        Parameters
+        ----------
+        kmap_key : str
+            The key for the knowledge map to be returned
+
+        Returns
+        -------
+        kmap : numpy.ndarray
+            The knowledge map stored under the given `kmap_key`
         """
         try:
             return self.knowledge_maps[kmap_key]
@@ -154,10 +160,16 @@ class Participant:
     def get_trace(self, trace_key):
         """
         dict.get()-like access to self.traces
-        :param trace_key: str
-                The key for the trace to be returned
-        :return: trace: np.ndarray
-                The trace stored under the given `trace_key`
+
+        Parameters
+        ----------
+        trace_key : str
+            The key for the trace to be returned
+
+        Returns
+        -------
+        trace : numpy.ndarray
+            The trace stored under the given `trace_key`
         """
         try:
             return self.traces[trace_key]
