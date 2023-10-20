@@ -170,7 +170,7 @@ def corr_mean(rs, axis=None, fix_inf=False, **kwargs):
         Axis or axes along which the means are computed. If `None`
         (default), the mean of the flattened array is computed.
     fix_inf : bool, optional
-        See `z2r()` docstring for details. Default: False.
+        See `r2z()` docstring for details. Default: False.
     **kwargs : various types, optional
         Additional keyword arguments passed to `numpy.nanmean` (see
         https://numpy.org/doc/stable/reference/generated/numpy.nanmean.html
@@ -622,7 +622,7 @@ def preprocess_text(textlist, correction_counter=None):
     POS tagging, and lemmatization.
 
     Occasionally, the Treebank POS tagger mis-tags a word, which causes
-    WordNet's "Morphy" to apply the morphologocal transformations and
+    WordNet's "Morphy" to apply the morphological transformations and
     detachment rules for the wrong syntactic category, and fail to
     lemmatize the word.  The function attempts to handle these
     instances and can optionally record corrections made this way for
@@ -683,7 +683,7 @@ def preprocess_text(textlist, correction_counter=None):
     # to original chunk
     chunk_delimiter = 'chunkdelimiter'
     processed_chunks = [[] for _ in textlist]
-    # clean spacing, normalize case, strip puncutation
+    # clean spacing, normalize case, strip punctuation
     # (temporarily leave punctuation useful for POS tagging)
     full_text = f' {chunk_delimiter} '.join(textlist).lower()
     punc_stripped = re.sub("[^a-zA-Z\s']+", '', full_text.replace('-', ' '))
@@ -783,7 +783,7 @@ def rbf_sum(obs_coords, pred_coords, width, metric='euclidean'):
     width : scalar
         The Width of the Gaussian kernel.
     metric : str or callable, optional
-        The metric used to compute the pairwise distance between
+        The metric used to compute the pairwise distances between
         coordinates (default: `'euclidean'`, Euclidean distance). May be
         any named metric accepted by `scipy.spatial.distance.cdist` or a
         callable that takes two `array_like` arguments.
@@ -806,14 +806,14 @@ def reconstruct_trace(lecture, questions, accuracy):
 
     Parameters
     ----------
-    lecture: numpy.ndarray
+    lecture : numpy.ndarray
         `(n_coordinates, n_features)` matrix of coordinates for which to
         estimate knowledge.
-    questions: numpy.ndarray
+    questions : numpy.ndarray
         `(n_observations, n_features)` matrix of coordinates for the
         quiz questions used to estimate knowledge for each of the
         `n_coordinates` locations.
-    accuracy: array_like
+    accuracy : array_like
         `(n_observations,)` binary array denoting whether each question
         was answered correctly (`True`|`1`) or incorrectly
         (`False`/`0`).
@@ -963,3 +963,5 @@ def z2r(z):
         Correlation value(s).
     """
     return (np.exp(2 * z) - 1) / (np.exp(2 * z) + 1)
+
+
