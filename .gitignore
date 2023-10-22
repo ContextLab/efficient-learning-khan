@@ -43,3 +43,4 @@ paper/**/*.out
 paper/**/*.synctex.gz
 paper/**/*.blg
 paper/**/*.bbl
+texput.log

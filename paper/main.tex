@@ -114,40 +114,40 @@ by reflecting the deeper meaning underlying the gestalt whole~\citep{Kint70,
 Macl05, ScotEtal07}.
 
 The difference between ``understanding'' and ``memorizing,'' as framed by
-researchers in education, cognitive psychology, and cognitive
-neuroscience (e.g.,~\citealp{Kato40, Gall00, ScotEtal07, HallGree08, Macl05}),
-has profound analogs in the fields of natural language processing and natural
-language understanding. For example, considering the raw contents of a document
-(e.g., its constituent symbols, letters, and words) might provide some
-clues as to what the document is about, just as memorizing a passage
-might provide some ability to answer simple questions about it. However, text
-embedding models (e.g.,~\citealp{LandDuma97, DeerEtal90, BleiEtal03,
-BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20}) also attempt to capture the
-deeper meaning \textit{underlying} those atomic elements. These models consider
-not only the co-occurrences of those elements within and across documents, but
-also patterns in how those elements appear across different scales (e.g.,
-sentences, paragraphs, chapters, etc.), the temporal and grammatical properties
-of the elements, and other high-level characteristics of how they are
-used~\citep{Mann20, Mann21a}. According to these models, the deep conceptual
-meaning of a document may be captured by a feature vector in a high-dimensional
-representation space, wherein nearby vectors reflect conceptually related
-documents. A model that succeeds at capturing an analogue of ``understanding'' is
-able to assign nearby feature vectors to two conceptually related documents,
-\textit{even when the specific words contained in those documents have very little
-overlap}.
+researchers in education, cognitive psychology, and cognitive neuroscience
+(e.g.,~\citealp{Kato40, Gall00, ScotEtal07, HallGree08, Macl05}), has profound
+analogs in the fields of natural language processing and natural language
+understanding. For example, considering the raw contents of a document (e.g.,
+its constituent symbols, letters, and words) might provide some clues as to
+what the document is about, just as memorizing a passage might provide some
+ability to answer simple questions about it. However, text embedding models
+(e.g.,~\citealp{LandDuma97, DeerEtal90, BleiEtal03, BleiLaff06, MikoEtal13a,
+CerEtal18, BrowEtal20}) also attempt to capture the deeper meaning
+\textit{underlying} those atomic elements. These models consider not only the
+co-occurrences of those elements within and across documents, but (in many
+cases) also patterns in how those elements appear across different scales
+(e.g., sentences, paragraphs, chapters, etc.), the temporal and grammatical
+properties of the elements, and other high-level characteristics of how they
+are used~\citep{Mann20, Mann21a}. According to these models, the deep
+conceptual meaning of a document may be captured by a feature vector in a
+high-dimensional representation space, wherein nearby vectors reflect
+conceptually related documents. A model that succeeds at capturing an analogue
+of ``understanding'' is able to assign nearby feature vectors to two
+conceptually related documents, \textit{even when the specific words contained
+in those documents have very little overlap}.
 
 Given these insights, what form might a representation of the sum total of a
-person's knowledge take? First, we might require a means of systematically
-describing or representing the nearly infinite set of possible things a person
-could know. Second, we might want to account for potential associations between
-different concepts. For example, the concepts of ``fish'' and ``water'' might
-be associated in the sense that fish live in water. Third, knowledge may have a
-critical dependency structure, such that knowing about a particular concept
-might require first knowing about a set of other concepts. For example,
-understanding the concept of a fish swimming in water first requires
-understanding what fish and water \textit{are}. Fourth, as we learn, our
-``current state of knowledge'' should change accordingly. Learning new concepts
-should both update our characterizations of ``what is known'' and also
+person's knowledge take (speculatively)? First, we might require a means of
+systematically describing or representing the nearly infinite set of possible
+things a person could know. Second, we might want to account for potential
+associations between different concepts. For example, the concepts of ``fish''
+and ``water'' might be associated in the sense that fish live in water. Third,
+knowledge may have a critical dependency structure, such that knowing about a
+particular concept might require first knowing about a set of other concepts.
+For example, understanding the concept of a fish swimming in water first
+requires understanding what fish and water \textit{are}. Fourth, as we learn,
+our ``current state of knowledge'' should change accordingly. Learning new
+concepts should both update our characterizations of ``what is known'' and also
 unlock any now-satisfied dependencies of those newly learned concepts so that
 they are ``tagged'' as available for future learning.
 
@@ -351,6 +351,14 @@ Figure~\topicWeights.
 
     \label{fig:topics}
 \end{figure}
+
+It is important to clarify that although we use topic model-derived embeddings
+to \textit{characterize} the conceptual content of the lectures and questions,
+we do not claim that the topic model itself \textit{understands} the conceptual
+content of the lectures or questions. Rather, we view the topic model as a tool
+for capturing the \textit{structure} of the conceptual content of the lectures
+and questions in a way that enables us to capture, quantify, and track and
+predict participants' knowledge.
 
 Another, more sensitive, way of summarizing the conceptual content of the
 lectures and questions is to look at \textit{variability} in how topics are
@@ -709,6 +717,24 @@ estimates of how much participants know about any concept within the scope of
 our text embedding model, and how much their knowledge of those concepts
 changes with training (Fig.~\ref{fig:knowledge-maps}).
 
+We view our work as making several contributions to the study of how people
+acquire conceptual knowledge. First, from a methodological standpoint, our
+modeling framework provides a systematic means of mapping out and
+characterizing knowledge in maps that have infinite (arbitrarily many) numbers
+of coordinates, and of ``filling out'' those maps using relatively small
+numbers of multiple choice quiz questions. Our experimental finding that we can
+use these maps to predict responses to held-out questions
+(Fig.~\ref{fig:predictions}) also has important psychological implications. One
+such psychological implication is that concepts that are assigned to nearby
+coordinates by the text embedding model also appear to be ``known to a similar
+extent'' (as reflected by participants' responses to held-out questions). This
+suggests that participants also \textit{conceptualize} similarly the content
+reflected by nearby embedding coordinates. A second psychological implication
+is that something about how participants' knowledge ``spreads'' across concepts
+is being captured by the knowledge maps we are inferring from their quiz
+responses (e.g., Fig.~\ref{fig:smoothness}). In other words, our study shows
+that knowledge about a given concept implies knowledge about related concepts.
+
 Over the past several years, the global pandemic has forced many educators to
 suddenly adapt to teaching remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21,
 Whal20}. This change in world circumstances is happening alongside (and perhaps
@@ -866,8 +892,11 @@ questions: 15 about the conceptual content of \textit{Four Fundamental Forces}
 (i.e., Lecture~1), 15 about the conceptual content of \textit{Birth of Stars}
 (i.e., Lecture~2), and 9 questions that tested for general conceptual knowledge
 about basic physics (covering material that was not presented in either video).
-The full set of questions and answer choices may be found in Supplementary
-Table~\questions.
+We note that estimating the specific ``amount'' of conceptual understanding
+that each question ``requires'' to answer is somewhat subjective, and might
+even come down to the ``strategy'' a given participant uses to answer the
+question at that particular moment. The full set of questions and answer
+choices may be found in Supplementary Table~\questions.
 
 Over the course of the experiment, participants completed three 13-question
 multiple-choice quizzes: the first before viewing Lecture~1, the second between
