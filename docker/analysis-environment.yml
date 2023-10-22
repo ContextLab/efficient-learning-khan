@@ -26,7 +26,6 @@ dependencies:
   - colorama=0.4.4
   - conda=4.11.0
   - conda-package-handling=1.7.3
-  - configparser=5.1.0
   - cryptography=36.0.0
   - cycler=0.11.0
   - dataclasses=0.8
