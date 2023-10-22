@@ -57,6 +57,8 @@ RUN apt-get update --fix-missing \
     && pip install --disable-pip-version-check --no-cache-dir /khan_helpers \
     # various cleanup to reduce image size
     && rm -rf /khan_helpers \
+    # install pydata-wrangler (must be done after installing khan_helpers)
+    && pip install --disable-pip-version-check --no-cache-dir pydata-wrangler[hf]==0.2.2 \
     && mamba clean -afy \
     && apt-get purge -y --auto-remove  \
         ca-certificates \
