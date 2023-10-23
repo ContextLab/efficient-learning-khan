@@ -1005,25 +1005,25 @@ have are we aware of how or why viewing order might influence our main
 findings, we acknowledge that we did not control for potential order effects in
 our study.
 
-We then hand-created 39 multiple-choice
-questions: 15 about the conceptual content of \textit{Four Fundamental Forces}
-(i.e., Lecture~1), 15 about the conceptual content of \textit{Birth of Stars}
-(i.e., Lecture~2), and 9 questions that tested for general conceptual knowledge
-about basic physics (covering material that was not presented in either video).
-One of our group's undergraduate research assistants worked alongside a
-rotating Masters student to develop this set of questions (these researchers
-are acknowledged in our paper for their contribution, although they did not
-meet the criteria for authorship discussed with all team members at the start
-of the project, as determined by J.R.M.) The senior author (J.R.M.) tasked the
-pair of researchers with coming up with ``15 conceptual questions about each
-lecture, along with 9 additional questions about general physics knowledge.'' To
-help broaden the set of lecture-specific questions, the researchers were
-further instructed to work through each lecture in small segments, identify
-what each segment was ``about'' conceptually, and then write a question about
-that concept. The general physics questions were drawn from the researchers'
-coursework along with internet searches and brainstorming with the project team
-and other members of J.R.M.'s lab. The final set of questions (and response
-options) was reviewed and approved by J.R.M.
+We then hand-created 39 multiple-choice questions: 15 about the conceptual
+content of \textit{Four Fundamental Forces} (i.e., Lecture~1), 15 about the
+conceptual content of \textit{Birth of Stars} (i.e., Lecture~2), and 9
+questions that tested for general conceptual knowledge about basic physics
+(covering material that was not presented in either video). One of our group's
+undergraduate research assistants worked alongside a rotating Masters student
+to develop this set of questions (these researchers are acknowledged in our
+paper for their contribution, although they did not meet the criteria for
+authorship discussed with all team members at the start of the project, as
+determined by J.R.M.) The senior author (J.R.M.) tasked the pair of researchers
+with coming up with ``15 conceptual questions about each lecture, along with 9
+additional questions about general physics knowledge.'' To help broaden the set
+of lecture-specific questions, the researchers were further instructed to work
+through each lecture in small segments, identify what each segment was
+``about'' conceptually, and then write a question about that concept. The
+general physics questions were drawn from the researchers' coursework along
+with internet searches and brainstorming with the project team and other
+members of J.R.M.'s lab. The final set of questions (and response options) was
+reviewed and approved by J.R.M.
 
 We note that estimating the specific ``amount'' of conceptual understanding
 that each question ``requires'' to answer is somewhat subjective, and might
@@ -1057,7 +1057,7 @@ discover a set of (up to) $k$ ``topics'' or ``themes.'' Formally, each topic is
 defined as a distribution of weights over each word in the model's vocabulary
 (i.e., the union of all unique words, across all documents, excluding ``stop
 words.''). Conceptually, each topic is intended to give larger weights to words
-that are semantically related or tend to co-occur in the same documents. After
+that are semantically related, as implied by their co-occurring in the same documents. After
 fitting a topic model, each document in the training set, or any \textit{new}
 document that contains at least some of the words in the model's vocabulary,
 may be represented as a $k$-dimensional vector describing how much the document
@@ -1089,23 +1089,23 @@ We fetched these automated transcripts using the
 consisted of one timestamped line of text for every few seconds (mean: 2.34~s;
 standard deviation: 0.83~s) of spoken content in the video (i.e., corresponding
 to each individual caption that would appear on-screen if viewing the lecture
-via YouTube, and when those lines would appear). After scraping the
-transcripts, we carried out several standard preprocessing steps. First, we
-removed all punctuation, replaced numbers with their word equivalents (e.g.,
-``1'' with ``one''), and converted all text to lowercase. Next, we removed all
-stop words, as defined by the Natural Language Toolkit~\citep[NLTK;
-]{BirdEtal09} English stop word list, augmented with the following additional
-words that we hand-identified as frequently occuring and non-diagnostic:
-``actual,'' ``actually,'' ``also,'' ``bit,'' ``could,'' ``e,'' ``even,''
-``first,'' ``follow,'' ``following,'' ``four,'' ``let,'' ``like,'' ``mc,''
-``really,'', ``saw,'' ``see,'' ``seen,'' ``thing,'' and ``two.'' We defined a
-sliding window length of (up to) $w = 30$ transcript lines, and assigned each
-window a timestamp corresponding to the midpoint between the timestamps for its
-first and last lines. This $w$ parameter was chosen to match the same number of
-words per sliding window (rounded to the nearest whole word, and after
-preprocessing) as the sliding windows we defined in our prior
-work~\citep{HeusEtal21}. The sliding windows contained an average of 73.8 words
-and lasted for an average of 62.22 seconds.
+via YouTube, and when those lines would appear). We defined a sliding window
+length of (up to) $w = 30$ transcript lines, and assigned each window a
+timestamp corresponding to the midpoint between the timestamps for its first
+and last lines. This $w$ parameter was chosen to match the same number of words
+per sliding window (rounded to the nearest whole word, and after preprocessing)
+as the sliding windows we defined in our prior work~\citep{HeusEtal21}. The
+sliding windows contained an average of 73.8 words and lasted for an average of
+62.22 seconds. After splitting the transcripts into sliding windows, we carried
+out several standard preprocessing steps. First, we removed all punctuation,
+replaced numbers with their word equivalents (e.g., ``1'' with ``one''), and
+converted all text to lowercase. Next, we removed all stop words, as defined by
+the Natural Language Toolkit~\citep[NLTK; ]{BirdEtal09} English stop word list,
+augmented with additional words following~\citep{BoydMimn14}: ``actual,''
+``actually,'' ``also,'' ``bit,'' ``could,'' ``e,'' ``even,'' ``first,''
+``follow,'' ``following,'' ``four,'' ``let,'' ``like,'' ``mc,'' ``really,'',
+``saw,'' ``see,'' ``seen,'' ``thing,'' and ``two.''
+
 
 These sliding windows ramped up and down in length at the beginning and end of
 each transcript, respectively. In other words, each transcript's first sliding
