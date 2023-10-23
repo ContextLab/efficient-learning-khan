@@ -4,7 +4,7 @@ analyses are described or figures appear in the paper.
 
 ### `main/`
 **code to reproduce analyses and figures from the main text**
-- `1_model-course-content.ipynb` &ndash; code to fit the topic model, transform lectures & quizzes, and generate Figure 2C
+- `1_model-course-content.ipynb` &ndash; code to fit the topic model, transform lectures & quiz questions, and generate Figure 2C
 - `2_topic-variability-fig.ipynb` &ndash; code to generate Figure 3 and compute related stats
 - `3_lecture-question-timeseries-fig.ipynb` &ndash; code to generate Figure 4
 - `4_reconstructing-knowledge.ipynb` &ndash; code to estimate dynamic knowledge traces, generate Figure 5, and compute related stats
@@ -16,7 +16,9 @@ analyses are described or figures appear in the paper.
 
 ### `supp/`
 **code to reproduce tables and figures from the Supplementary Materials document**
-- `1_tables.ipynb` &ndash; code to generate Supplementary Tables 1 & 2
+- `1_tables.ipynb` &ndash; code to generate Supplementary Tables 1, 2, and 3, and compute the correlation timeseries peaks shown in Supplementary Figures 3 & 4
 - `2_topic-word-distributions-fig.ipynb` &ndash; code to generate Supplementary Figure 1
-- `2_topic-weight-fig.ipynb` &ndash; code to generate Supplementary Figure 2 and compute related stats
-- `3_individual-maps.ipynb` &ndash; code to generate Supplementary Figures 2&ndash;6
+- `3_topic-weight-fig.ipynb` &ndash; code to generate Supplementary Figure 2 and compute related stats
+- `4_lecture-question-correlation-peaks.ipynb` &ndash; code to generate Supplementary Figures 3 & 4
+- `5_model-comparison-BERT.ipynb` &ndash; code to generate Supplementary Figure 5
+- `6_individual-maps.ipynb` &ndash; code to generate Supplementary Figures 2&ndash;6
