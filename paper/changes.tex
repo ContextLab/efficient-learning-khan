@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Tue Oct 24 01:22:09 2023
-%DIF ADD main.tex   Tue Oct 24 14:56:36 2023
+%DIF ADD main.tex   Tue Oct 24 18:58:36 2023
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[font=small,labelfont=bf]{caption}
@@ -25,7 +25,7 @@
 % supplemental figures
 \newcommand{\topicWordWeights}{1}
 \newcommand{\topicWeights}{2}
-%DIF 22-26c23-32
+%DIF 22-26c23-34
 %DIF < \newcommand{\individualKnowledgeMapsA}{3}
 %DIF < \newcommand{\individualKnowledgeMapsB}{4}
 %DIF < \newcommand{\individualKnowledgeMapsC}{5}
@@ -41,6 +41,8 @@
 \newcommand{\individualKnowledgeMapsC}{9} %DIF > 
 \newcommand{\individualLearningMapsA}{10} %DIF > 
 \newcommand{\individualLearningMapsB}{11} %DIF > 
+ %DIF > 
+\newcommand{\U}{{\fontfamily{serif}\selectfont\ensuremath{\mathrm{U}}}} %DIF > 
  %DIF > 
 %DIF -------
 
@@ -243,7 +245,7 @@ models\DIFdelbegin \DIFdel{(e.g.,~\mbox{%DIFAUXCMD
 \citealp{LandDuma97, DeerEtal90, BleiEtal03,
 BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20}}\hskip0pt%DIFAUXCMD
 ) }\DIFdelend \DIFaddbegin \DIFadd{~\mbox{%DIFAUXCMD
-\citep[e.g., ][]{LandDuma97, DeerEtal90, BleiEtal03,
+\citep[e.g.,][]{LandDuma97, DeerEtal90, BleiEtal03,
   BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20, ViswEtal17} }\hskip0pt%DIFAUXCMD
 }\DIFaddend also
 attempt to capture the deeper meaning \textit{underlying} those atomic
@@ -252,14 +254,21 @@ elements within and across documents, but \DIFaddbegin \DIFadd{(in many cases) }
 patterns in how those elements appear across different scales (e.g.,
 sentences, paragraphs, chapters, etc.), the temporal and grammatical
 properties of the elements, and other high-level characteristics of
-how they are used~\citep{Mann20, Mann21a}. According to these models,
+how they are used~\citep{Mann20, Mann21a}.
+\DIFaddbegin \DIFadd{To be clear, this is not to say that text embedding models themselves
+are capable of ``understanding'' deep conceptual meaning in any
+traditional sense. But rather, their ability to capture the underlying
+}\textit{\DIFadd{structure}} \DIFadd{of text documents beyond their surface-level contents
+provides a computational framework through which those document's
+deeper conceptual meaning may be quantified, explored, and understood.
+}\DIFaddend According to these models,
 the deep conceptual meaning of a document may be captured by a feature
 vector in a high-dimensional representation space, wherein nearby
 vectors reflect conceptually related documents. A model that succeeds
 at capturing an analogue of ``understanding'' is able to assign nearby
 feature vectors to two conceptually related documents, \textit{even
-  when the specific words contained in those documents \DIFdelbegin \DIFdel{have very little
-}\DIFdelend \DIFaddbegin \DIFadd{do not fully
+  when the specific words contained in those documents have \DIFdelbegin \DIFdel{very little
+}\DIFdelend \DIFaddbegin \DIFadd{limited
   }\DIFaddend overlap}. \DIFaddbegin \DIFadd{In this way, ``concepts'' are defined implicitly by the
 model's geometry~\mbox{%DIFAUXCMD
 \citep[e.g., how the embedding coordinate of a given
@@ -269,8 +278,8 @@ embeddings; ][]{PianHill22}}\hskip0pt%DIFAUXCMD
 }\DIFaddend 
 
 Given these insights, what form might a representation of the sum total of a
-person's knowledge take \DIFaddbegin \DIFadd{(speculatively)}\DIFaddend ? First, we might require a means of
-systematically describing or representing the nearly infinite set of possible
+person's knowledge take? First, we might require a means of
+systematically describing or representing \DIFaddbegin \DIFadd{(at least some subset of) }\DIFaddend the nearly infinite set of possible
 things a person could know. Second, we might want to account for potential
 associations between different concepts. For example, the concepts of ``fish''
 and ``water'' might be associated in the sense that fish live in water. Third,
@@ -484,16 +493,7 @@ reported in Supplementary Figure~\topicWeights.
     \label{fig:topics}
 \end{figure}
 
-\DIFaddbegin \DIFadd{It is important to clarify that although we use topic model-derived embeddings
-to }\textit{\DIFadd{characterize}} \DIFadd{the conceptual content of the lectures and questions,
-we do not claim that the topic model itself }\textit{\DIFadd{understands}} \DIFadd{the conceptual
-content of the lectures or questions. Rather, we view the topic model as a tool
-for capturing the }\textit{\DIFadd{structure}} \DIFadd{of the conceptual content of the lectures
-and questions in a way that enables us to capture, quantify, and track and
-predict participants' knowledge.
-}
-
-\DIFaddend Another, more sensitive, way of summarizing the conceptual content of the
+Another, more sensitive, way of summarizing the conceptual content of the
 lectures and questions is to look at \textit{variability} in how topics are
 weighted over time and across different questions (Fig.~\ref{fig:topics}).
 Intuitively, the variability in the expression of a given topic relates to how
@@ -550,7 +550,7 @@ Figure~\ref{fig:question-correlations}.
     \includegraphics[width=\textwidth]{figs/lecture-question-similarity}
 
     \caption{\textbf{Which parts of each lecture are captured by each
-    question?} Each panel displays timeseries plots showing how each question's
+    question?} Each panel displays \DIFdelbeginFL \DIFdelFL{timeseries }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{time series }\DIFaddendFL plots showing how each question's
     topic vector correlates with each video timepoint's topic vector (Panel
     \textbf{A.}: correlations for the \textit{Four Fundamental Forces} lecture
     and associated questions; Panel \textbf{B.}: correlations for the
@@ -659,7 +659,7 @@ for the remainder of the experiment. Specifically, knowledge about that
 lecture's content should be relatively low when estimated using Quiz~1
 responses, but should increase when estimated using Quiz~2 or 3 responses
 (Fig.~\ref{fig:knowledge-timeseries}B). Indeed, we found that participants'
-estimated knowledge about the content of the \textit{Four Fundamental Forces}
+estimated knowledge about the content of \DIFdelbegin \DIFdel{the }\DIFdelend \textit{Four Fundamental Forces}
 was substantially higher on Quiz~2 versus Quiz~1 ($t(49) = 8.764,~p < 0.001$)
 and on Quiz~3 versus Quiz~1 ($t(49) = 10.519,~p < 0.001$). We found no reliable
 differences in estimated knowledge about that lecture's content on Quiz~2
@@ -681,14 +681,14 @@ content tested by a given question, our estimates of their knowledge should
 carry some predictive information about whether the participant is likely to
 answer that question correctly or incorrectly. We developed a statistical
 approach to test this claim. For each question, in turn, we used
-Equation~\ref{eqn:prop} to estimate each participant's knowledge at the given
+Equation~\ref{eqn:prop} to \DIFdelbegin \DIFdel{estimate }\DIFdelend \DIFaddbegin \DIFadd{predict }\DIFaddend each participant's knowledge at the given
 question's embedding space coordinate, using all \textit{other} questions that
 participant answered on the same quiz. For each quiz, we grouped these
-estimates into two distributions: one for the estimated knowledge at the
+\DIFdelbegin \DIFdel{estimates }\DIFdelend \DIFaddbegin \DIFadd{predicted knowledge values }\DIFaddend into two distributions: one for the \DIFdelbegin \DIFdel{estimated }\DIFdelend \DIFaddbegin \DIFadd{predicted }\DIFaddend knowledge at the
 coordinates of \textit{correctly} answered questions, and another for the
-estimated knowledge at the coordinates of \textit{incorrectly} answered
-questions (Fig.~\ref{fig:predictions}). We then used \DIFdelbegin \DIFdel{independent samples $t$}\DIFdelend \DIFaddbegin \DIFadd{Mann-Whitney $U$}\DIFaddend -tests to
-compare the means of these distributions of estimated knowledge.
+\DIFdelbegin \DIFdel{estimated }\DIFdelend \DIFaddbegin \DIFadd{predicted }\DIFaddend knowledge at the coordinates of \textit{incorrectly} answered
+questions (Fig.~\ref{fig:predictions}). We then used \DIFdelbegin \DIFdel{independent samples $t$}\DIFdelend \DIFaddbegin \DIFadd{Mann-Whitney $\U$}\DIFaddend -tests to
+compare the means of these distributions of \DIFdelbegin \DIFdel{estimated }\DIFdelend \DIFaddbegin \DIFadd{predicted }\DIFaddend knowledge.
 
 \begin{figure}[tp]
     \centering
@@ -697,19 +697,22 @@ compare the means of these distributions of estimated knowledge.
 \DIFdelendFL \DIFaddbeginFL \includegraphics[width=0.7\textwidth]{figs/predict-knowledge-questions}
 \DIFaddendFL 
 
-    \caption{\textbf{Estimating knowledge at the embedding coordinates of
-    held-out questions.} Separately for each quiz (panel), we plot the
+    \caption{\DIFdelbeginFL \textbf{\DIFdelFL{Estimating knowledge at the embedding coordinates of
+    held-out questions.}} %DIFAUXCMD
+\DIFdelendFL \DIFaddbeginFL \textbf{\DIFaddFL{Predicting knowledge at the embedding coordinates of
+    held-out questions.}} \DIFaddendFL Separately for each quiz (panel), we plot the
     distributions of predicted knowledge at the embedding coordinates of each
     held-out correctly (blue) or incorrectly (red) answered question. The
-    \DIFdelbeginFL \DIFdelFL{$t$}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Mann-Whitney $U$}\DIFaddendFL -tests reported in each panel are between the distributions
-    of estimated knowledge at the coordinates of correctly versus incorrectly
+    \DIFdelbeginFL \DIFdelFL{$t$}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Mann-Whitney $\U$}\DIFaddendFL -tests reported in each panel are between the distributions
+    of \DIFdelbeginFL \DIFdelFL{estimated
+    }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{predicted }\DIFaddendFL knowledge at the coordinates of correctly \DIFdelbeginFL \DIFdelFL{versus }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{and }\DIFaddendFL incorrectly
     answered held-out questions. \DIFaddbeginFL \DIFaddFL{In the top row (``All questions''), we used
     all quiz questions (from each quiz, for each participant) except one to
-    estimate knowledge at the held-out question's embedding coordinate. In the
+    predict knowledge at the held-out question's embedding coordinate. In the
     middle rows (``Across-lecture''), we used all questions about one lecture
-    to estimate knowledge at the embedding coordinate of a held-out question
+    to predict knowledge at the embedding coordinate of a held-out question
     about the }\textit{\DIFaddFL{other}} \DIFaddFL{lecture. In the bottom row (``Within-lecture''),
-    we used all but one question about one lecture to estimate knowledge at the
+    we used all but one question about one lecture to predict knowledge at the
     embedding coordinate of a held-out question about the }\textit{\DIFaddFL{same}}
     \DIFaddFL{lecture. We repeated each of these analyses using all possible held-out
     questions for each quiz and participant.}\DIFaddendFL }
@@ -717,101 +720,128 @@ compare the means of these distributions of estimated knowledge.
     \label{fig:predictions}
 \end{figure}
 
-For the initial quizzes participants took (prior to watching either lecture),
-participants' estimated knowledge tended to be low overall, and relatively
+\DIFaddbegin \DIFadd{We carried out these analyses in three different ways. First, we used all (but one) of
+the questions from a given quiz (and participant) to predict knowledge at the
+embedding coordinate of a held-out question (``All questions'' in
+Fig.~\ref{fig:predictions}). This test was intended to serve as an overall
+baseline for the predictive power of our approach. Second, we used questions
+about one lecture to predict knowledge at the embedding coordinate of a held-out
+question about the }\textit{\DIFadd{other}} \DIFadd{lecture, from the same quiz and participant
+(``Across-lecture'' in Fig.~\ref{fig:predictions}). This test was intended to
+test the }\textit{\DIFadd{generalizability}} \DIFadd{of our approach by asking whether our
+knowledge predictions held across the content areas of the two lectures. Third,
+we used questions about one lecture to predict knowledge at the embedding
+coordinate of a held-out question about the }\textit{\DIFadd{same}} \DIFadd{lecture, from the same
+quiz and participant (``Within-lecture'' in Fig.~\ref{fig:predictions}). This
+test was intended to test the }\textit{\DIFadd{specificity}} \DIFadd{of our approach by asking
+whether our knowledge predictions could distinguish between questions about
+different content covered by the same lecture. We repeated each of these
+analyses using all possible held-out questions for each quiz and participant.
+}
+
+\DIFaddend For the initial quizzes participants took (prior to watching either lecture),
+\DIFdelbegin \DIFdel{participants' estimated }\DIFdelend \DIFaddbegin \DIFadd{predicted }\DIFaddend knowledge tended to be low overall, and relatively
 unstructured (Fig.~\ref{fig:predictions}, left \DIFdelbegin \DIFdel{panel}\DIFdelend \DIFaddbegin \DIFadd{column}\DIFaddend ). When we held out
-individual questions and estimated their knowledge at the held-out questions'
-embedding coordinates, we found no reliable differences in the estimates when
+individual questions and \DIFdelbegin \DIFdel{estimated }\DIFdelend \DIFaddbegin \DIFadd{predicted }\DIFaddend their knowledge at the held-out questions'
+embedding coordinates, we found no reliable differences in the \DIFdelbegin \DIFdel{estimates }\DIFdelend \DIFaddbegin \DIFadd{predictions }\DIFaddend when
 the held-out question had been correctly versus incorrectly answered\DIFdelbegin \DIFdel{($t(633) =
 0.577,~p = 0.564$). This }\DIFdelend \DIFaddbegin \DIFadd{. This
 ``null'' effect persisted when we used }\textit{\DIFadd{all}} \DIFadd{of the Quiz 1 questions
-from a given participant to predict a held-out question (``All questions''; $U
-= 50587, p = 0.723$), when we used questions from one lecture to predict
+from a given participant to predict a held-out question (``All questions''; $\U
+= 50587,~p = 0.723$), when we used questions from one lecture to predict
 knowledge at the embedding coordinate of a held-out question about the
 }\textit{\DIFadd{other}} \DIFadd{lecture (``Across-lecture''; predicting knowledge for held-out
 }\textit{\DIFadd{Four Fundamental Forces Questions}} \DIFadd{using }\textit{\DIFadd{Birth of Stars}}
-\DIFadd{questions: $U = 8244, p = 0.184$; predicting knowledge for held-out
-}\textit{\DIFadd{Birth of Stars}} \DIFadd{questions: $U = 8202.5, p = 0.161$), and when we used
+\DIFadd{questions: $\U = 8244,~p = 0.184$; predicting knowledge for held-out
+}\textit{\DIFadd{Birth of Stars}} \DIFadd{questions: $\U = 8202.5,~p = 0.161$), and when we used
 questions from one lecture to predict knowledge at the embedding coordinate of
 a held-out question about the }\textit{\DIFadd{same}} \DIFadd{lecture (``Within-lecture'';
-}\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{: $U = 7681.5, p = 0.746$; }\textit{\DIFadd{Birth of
-Stars}}\DIFadd{: $U = 8125, p = 0.204$). We believe that this }\DIFaddend reflects a floor effect:
+}\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{: $\U = 7681.5,~p = 0.746$; }\textit{\DIFadd{Birth of
+Stars}}\DIFadd{: $\U = 8125,~p = 0.204$). We believe that this }\DIFaddend reflects a floor effect:
 when knowledge is low everywhere, there is little signal to differentiate
-between what is known versus unknown. 
-\DIFdelbegin \DIFdel{After watching the first lecture}\DIFdelend \DIFaddbegin 
+between what is known versus unknown.
+\DIFdelbegin \DIFdel{After watching the first lecture, estimated }\DIFdelend \DIFaddbegin 
 
-\DIFadd{After watching }\textit{\DIFadd{Four Fundamental Forces}}\DIFaddend , estimated knowledge for
-held-out correctly answered questions (from the second quiz;
-Fig.~\ref{fig:predictions}, middle \DIFdelbegin \DIFdel{panel}\DIFdelend \DIFaddbegin \DIFadd{column}\DIFaddend ) exhibited a positive shift relative
-to held-out incorrectly answered questions\DIFaddbegin \DIFadd{. This held when we included all
-questions in the analysis ($U = 58332, p < 0.001$), when we predicted knowledge
-across-lectures }\DIFaddend (\DIFdelbegin \DIFdel{$t(633) = 3.961,~p < 0.001$). This second quiz provides the maximally sensitive test for our knowledge
-predictions, since (if knowledge is estimated accurately)participants' Quiz~2
-responses should demonstrate specific knowledge about Lecture~1 content }\DIFdelend \DIFaddbegin \textit{\DIFadd{Four Fundamental Forces}}\DIFadd{: $U = 6749.5, p = 0.014$;
-}\textit{\DIFadd{Birth of Stars}}\DIFadd{: $U = 8480, p = 0.016$), and when we predicted
-knowledge at the embedding coordinates of held-out }\textit{\DIFadd{Four Fundamental
-Forces}} \DIFadd{questions using other }\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{questions from
-the same quiz and participant ($U = 7224, p < 0.001$). This difference did
-}\textit{\DIFadd{not}} \DIFadd{hold for within-lecture predictions of }\textit{\DIFadd{Birth of Stars}}
-\DIFadd{knowledge ($U = 7419, p = 0.739$). Again, we suggest that this might reflect a
-floor effect whereby knowledge about the content of the }\textit{\DIFadd{Birth of Stars}}
-\DIFadd{material is relatively low everywhere in that region of text embedding space.
-}
-
-\DIFadd{Finally, after watching }\textit{\DIFadd{Birth of Stars}}\DIFaddend , \DIFdelbegin \DIFdel{but
+\DIFadd{After watching }\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{, predicted }\DIFaddend knowledge for
+held-out \DIFdelbegin \DIFdel{correctly answered questions }\DIFdelend \DIFaddbegin \DIFadd{questions that were answered correctly }\DIFaddend (from the second quiz;
+Fig.~\ref{fig:predictions}, middle \DIFdelbegin \DIFdel{panel}\DIFdelend \DIFaddbegin \DIFadd{column}\DIFaddend ) exhibited a \DIFaddbegin \DIFadd{significant }\DIFaddend positive
+shift relative to held-out \DIFdelbegin \DIFdel{incorrectly answered questions }\DIFdelend \DIFaddbegin \DIFadd{questions that were answered incorrectly. This held
+when we included all questions in the analysis ($\U = 58332,~p < 0.001$), when
+we predicted knowledge across-lectures }\DIFaddend (\DIFdelbegin \DIFdel{$t(633) = 3.961,~p < 0.001$). This
+second quiz provides the maximally sensitive test for our knowledge predictions , since (if knowledge is estimated accurately)participants' Quiz~2
+responses should demonstrate specific knowledge
+about Lecture~1 content , but
 knowledge about Lecture~2 and general physics concepts should be roughly
-unchanged from before they watched Lecture~1. After watching the second lecture,
-}\DIFdelend estimated knowledge \DIFaddbegin \DIFadd{for
-held-out correctly answered questions }\DIFaddend (from the third quiz;
-Fig.~\ref{fig:predictions}, right \DIFdelbegin \DIFdel{panel) for }\textit{\DIFdel{all}} %DIFAUXCMD
-\DIFdel{questions exhibited a positive shift. However, the
-estimated knowledge for }\DIFdelend \DIFaddbegin \DIFadd{column) was higher for }\DIFaddend held-out \DIFdelbegin \DIFdel{correctly answered questions remained
-greater than that }\DIFdelend \DIFaddbegin \DIFadd{correctly
-answered questions than for held-out incorrectly answered questions. This held
-when we included all questions in the analysis ($U = 38279, p = 0.022$), when
-we carried out across-lecture predictions (}\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{: $U
-= 6684.5, p = 0.032$; }\textit{\DIFadd{Birth of Stars}}\DIFadd{: $U = 6414.5, p = 0.002$), and
-and when we carried out within-lecture predictions of held-out }\textit{\DIFadd{Birth of
-Stars}} \DIFadd{questions using other }\textit{\DIFadd{Birth of Stars}} \DIFadd{questions from the same
-quiz and participant ($U = 6126, p = 0.006$). However, we found the
-}\textit{\DIFadd{opposite}} \DIFadd{effect when we carried out within-lecture predictions of
-held-out }\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{questions using other }\textit{\DIFadd{Four
-Fundamental Forces}} \DIFadd{questions from the same quiz and participant ($U = 6734, p
-= 0.027$). Specifically, held-out correctly answered Quiz 3 questions about
-}\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{had reliably }\textit{\DIFadd{lower}} \DIFadd{estimated
-knowledge than held-out incorrectly answered questions. Speculatively, we
-suggest that this may reflect participants forgetting some of the }\textit{\DIFadd{Four
-Fundamental Forces}} \DIFadd{content. If this forgetting happens in a relatively
-``random'' way (with respect to spatial distance within the text embedding
-space), then it could explain why some held-out questions about }\textit{\DIFadd{Four
-Fundamental Forces}} \DIFadd{were answered incorrectly, even if questions at nearby
-coordinates (i.e., about similar content) were answered correctly. This might
-lead our approach to over-estimate knowledge }\DIFaddend for held-out \DIFdelbegin \DIFdel{incorrectly }\DIFdelend \DIFaddbegin \DIFadd{questions about
-``forgotten'' knowledge that participants answered incorrectly.
+unchanged from before they watched Lecture~1. After watching the second lecture, estimated knowledge }\DIFdelend \DIFaddbegin \textit{\DIFadd{Four Fundamental Forces}}\DIFadd{: $\U =
+6749.5,~p = 0.014$; }\textit{\DIFadd{Birth of Stars}}\DIFadd{: $\U = 8480,~p = 0.016$), and when
+we predicted knowledge at the embedding coordinates of held-out }\textit{\DIFadd{Four
+Fundamental Forces}} \DIFadd{questions using other }\textit{\DIFadd{Four Fundamental Forces}}
+\DIFadd{questions from the same quiz and participant ($\U = 7224,~p < 0.001$). This
+difference did }\textit{\DIFadd{not}} \DIFadd{hold for within-lecture knowledge predictions at
+knowledge at embedding space coordinates of }\textit{\DIFadd{Birth of Stars}} \DIFadd{questions
+($\U = 7419,~p = 0.739$). Again, we suggest that this might reflect a floor
+effect whereby, at that point in the participants' training, their knowledge
+about the content of the }\textit{\DIFadd{Birth of Stars}} \DIFadd{material is relatively low
+everywhere in that region of text embedding space.
 }
 
-\DIFadd{That the knowledge estimates derived from the text embedding space reliably
+\DIFadd{Finally, after watching }\textit{\DIFadd{Birth of Stars}}\DIFadd{, predicted knowledge for
+held-out correctly answered questions }\DIFaddend (from the third quiz;
+Fig.~\ref{fig:predictions}, right \DIFdelbegin \DIFdel{panel) }\DIFdelend \DIFaddbegin \DIFadd{column) was higher than for held-out
+incorrectly answered questions. This held when we included all questions in the
+analysis ($\U = 38279,~p = 0.022$), when we carried out across-lecture
+predictions (}\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{: $\U = 6684.5,~p = 0.032$;
+}\textit{\DIFadd{Birth of Stars}}\DIFadd{: $\U = 6414.5,~p = 0.002$), and and when we carried out
+within-lecture knowledge predictions for held-out }\textit{\DIFadd{Birth of Stars}}
+\DIFadd{questions using other }\textit{\DIFadd{Birth of Stars}} \DIFadd{questions from the same quiz and
+participant ($\U = 6126,~p = 0.006$). However, we found the }\textit{\DIFadd{opposite}}
+\DIFadd{effect when we carried out within-lecture knowledge predictions }\DIFaddend for \DIFdelbegin \textit{\DIFdel{all}} %DIFAUXCMD
+\DIFdel{questionsexhibited a positive shift. However, the
+estimated knowledge for }\DIFdelend held-out
+\DIFaddbegin \textit{\DIFadd{Four Fundamental Forces}} \DIFadd{questions using other }\textit{\DIFadd{Four Fundamental
+Forces}} \DIFadd{questions from the same quiz and participant ($\U = 6734,~p = 0.027$).
+Specifically, on Quiz 3, our knowledge predictions for held-out }\DIFaddend correctly
+answered questions \DIFdelbegin \DIFdel{remained
+greater than that }\DIFdelend \DIFaddbegin \DIFadd{about }\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{were reliably
+}\textit{\DIFadd{lower}} \DIFadd{than those for their incorrectly answered counterparts.
+Speculatively, we suggest that this may reflect participants forgetting some of
+the }\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{content. If this forgetting happens in a
+relatively ``random'' way (with respect to spatial distance within the text
+embedding space), then it could explain why some held-out questions about
+}\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{were answered incorrectly, even if questions
+at nearby coordinates (i.e., about similar content) were answered correctly.
+This might lead our approach to over-estimate knowledge }\DIFaddend for held-out \DIFdelbegin \DIFdel{incorrectly }\DIFdelend \DIFaddbegin \DIFadd{questions
+about ``forgotten'' knowledge that participants answered incorrectly. Taken
+together, the results in Figure~\ref{fig:predictions} indicate that our
+approach can reliably predict acquired knowledge (especially about recently
+learned content), and that the knowledge predictions are generalizable across
+the content areas spanned by the two lectures, while also specific enough to
+distinguish between questions about more subtly different content within the
+same lecture.
+}
+
+\DIFadd{That the knowledge predictions derived from the text embedding space reliably
 distinguish between held-out correctly versus incorrectly }\DIFaddend answered questions
 (\DIFdelbegin \DIFdel{$t(628) = 2.045,~p
-= 0.041$) }\DIFdelend \DIFaddbegin \DIFadd{Fig.~\ref{fig:predictions}) suggests that the text embedding space bears at
-least some relationship to participants' knowledge. But what does that
-relationship look like as we move through the embedding space? For example,
-suppose we know that a participant answers a question (at embedding coordinate
-$X$) correctly. As we move away from $X$ in the embedding space, how does quiz
-performance ``fall off'' with distance? Or, suppose the participant instead
-answered that same question }\textit{\DIFadd{in}}\DIFadd{correctly. Again, as we move away from
-$X$ in the embedding space, how do the chances that the participant does
-}\textit{\DIFadd{not}} \DIFadd{know about the content change with distance? We reasoned that,
-assuming our space is capturing something about how participants actually
-organize their knowledge, conceptual knowledge right around $X$ should be
-similar to the participant's knowledge of the content at $X$. And at another
-extreme, at some distance (after moving sufficiently far away from $X$), our
-guesses about what participants know (based on their response to the question
-at location $X$) should be no better than guessing based on their overall
-proportion of correctly answered questions—i.e., if $Y$ is very far away from
-$X$, all we can do with the participant's response to $X$ is guess that ``their
-performance on quiz questions about $Y$ is about equal to their average
-performance on quiz questions about any material.''
+= 0.041$) }\DIFdelend \DIFaddbegin \DIFadd{Fig.~\ref{fig:predictions}) suggests that spatial relationships in the text
+embedding space can help explain what participants know. But how far does this
+explanatory power extend? For example, suppose we know that a participant
+answers a question (at embedding coordinate $x$) correctly. As we move away
+from $x$ in the embedding space, how does their knowledge ``fall off'' with
+distance? Or, suppose the participant instead answered that same question
+}\textit{\DIFadd{in}}\DIFadd{correctly. Again, as we move away from $x$ in the embedding space,
+how do the chances that the participant does }\textit{\DIFadd{not}} \DIFadd{know about the
+content change with distance? We reasoned that, assuming our space is capturing
+something about how participants actually organize their knowledge, conceptual
+knowledge right around $x$ should be similar to the participant's knowledge of
+the content at $x$. And at another extreme, at some distance (after moving
+sufficiently far away from $x$), our guesses about what participants know
+(based on their response to the question at location $x$) should be no better
+than guessing based on their overall proportion of correctly answered
+questions—i.e., if $y$ is very far away from $x$, all we can do with the
+participant's response to $x$ is guess that ``their performance on quiz
+questions about $y$ will be about equal to their average performance on quiz
+questions about any material.''
 }
 
 \begin{figure}[t]
@@ -852,7 +882,8 @@ the questions our participants answered (and as characterized using our topic
 model), the rate at which knowledge changes with distance is relatively
 constant, even as participants' overall level of knowledge varies across
 quizzes or regions of the embedding space}\DIFaddend .
-\DIFdelbegin \DIFdel{This third contrast reflects a ceiling effect: when knowledge is relatively high everywhere, the signal differentiating what is known versus
+\DIFdelbegin \DIFdel{This third contrast reflects a ceiling effect: when knowledge is
+relatively high everywhere, the signal differentiating what is known versus
 unknown is relatively weak.Taken together, this set of analyses demonstrates
 that our knowledge prediction framework is most informative when participantsexhibit variability in their knowledge of the content captured by the text
 embedding model.
@@ -913,8 +944,9 @@ into a shared text embedding space.
     the weighted blend of words underlying the topic proportions represented at
     the corresponding colored star's location on the maps. In each word cloud,
     the words' relative sizes correspond to their relative weights at the
-    starred location, and their colors indicate their relative weights in the
-    \textit{Four Fundamental Forces} (blue) versus \textit{Birth of Stars}
+    starred location, and their colors indicate their relative weights in
+    \DIFdelbeginFL \DIFdelFL{the
+    }\DIFdelendFL \textit{Four Fundamental Forces} (blue) versus \textit{Birth of Stars}
     (green) lectures, on average, across all timepoints' topic vectors.}
 
     \label{fig:knowledge-maps}
@@ -1060,12 +1092,12 @@ dots) appear closer to the }\textit{\DIFadd{Birth of Stars}} \DIFadd{lecture tra
 line). The BERT embeddings of the lectures and questions do not show this
 property (Supp.~Fig.~\ldaVsBERT). We also examined per-question ``content
 matches'' between individual questions and individual moments of each lecture
-(Figs.~\ref{fig:question-correlations},~\ldaVsBERT). The timeseries plot of
+(Figs.~\ref{fig:question-correlations},~\ldaVsBERT). The time series plot of
 individual questions' correlations are different from each other when computed
 using LDA (e.g., the traces can be clearly visually separated), whereas the
 correlations computed from BERT embeddings of different questions all look very
 similar. This tells us that LDA is capturing some differences in content
-between the questions, whereas BERT is not. The timeseries plots of individual
+between the questions, whereas BERT is not. The time series plots of individual
 questions' correlations have clear ``peaks'' when computed using LDA, but not
 when computed using BERT. This tells us that LDA is capturing a ``match''
 between the content of each question and a relatively well-defined time window
@@ -1138,7 +1170,7 @@ each question and each sliding window of text from the corresponding lecture.
 As shown in Supplementary Figure~\jaccard, this simple word-matching approach
 does not appear to capture the same level of specificity as the LDA-based
 approach. Whereas the LDA-based approach often yields a clear peak in the
-timeseries of correlations between each question and the corresponding lecture,
+time series of correlations between each question and the corresponding lecture,
 the Jaccard similarity-based approach does not. Furthermore, these LDA-based
 matches appear to capture conceptual overlaps between the questions and
 lectures (Supp.~Tab.~\matchTab), whereas simple word matching does not. For
@@ -1372,14 +1404,22 @@ that (a) each quiz \DIFdelbegin \DIFdel{contain }\DIFdelend \DIFaddbegin \DIFadd
 about Lecture~2, and 3 questions about general physics knowledge, and (b) each
 question appear exactly once for each participant. The orders of questions on
 each quiz, and the orders of answer options for each question, were also
-randomized. Our experimental protocol was approved by the Committee for the
-Protection of Human Subjects at Dartmouth College. We used this experiment to
-develop and test our computational framework for estimating knowledge and
-learning.
+randomized. \DIFdelbegin \DIFdel{Our }\DIFdelend \DIFaddbegin \DIFadd{We obtained informed consent from all participants, and our
+}\DIFaddend experimental protocol was approved by the Committee for the Protection of Human
+Subjects at Dartmouth College. We used this experiment to develop and test our
+computational framework for estimating knowledge and learning.
 
 \subsection*{Analysis}
 
-\subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
+\DIFaddbegin \subsubsection*{\DIFadd{Statistics}}
+
+\DIFadd{All of the statistical tests performed in our study were two-sided. The 95\%
+confidence intervals we reported for each correlation were estimated by
+generating 10,000 bootstrap distributions of correlation coefficients by
+sampling (with replacement) from the observed data.
+}
+
+\DIFaddend \subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
 
 We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
 each moment of the two lectures and each question in our pool in a common
@@ -1394,18 +1434,18 @@ discover a set of (up to) $k$ ``topics'' or ``themes.'' Formally, each topic is
 defined as a distribution of weights over \DIFdelbegin \DIFdel{each word }\DIFdelend \DIFaddbegin \DIFadd{words }\DIFaddend in the model's vocabulary
 (i.e., the union of all unique words, across all documents, excluding ``stop
 words.''). Conceptually, each topic is intended to give larger weights to words
-that are semantically related\DIFdelbegin \DIFdel{or tend to co-occur }\DIFdelend \DIFaddbegin \DIFadd{, as implied by their co-occurring }\DIFaddend in the same
-documents. After fitting a topic model, each document in the training set, or
-any \textit{new} document that contains at least some of the words in the
-model's vocabulary, may be represented as a $k$-dimensional vector describing
-how much the document (most probably) reflects each topic. To select an
-appropriate $k$ for our model, \DIFaddbegin \DIFadd{as a starting point, }\DIFaddend we identified the minimum
-number of topics that yielded at least one ``unused'' topic (i.e., in which all
-words in the vocabulary were assigned uniform weights) after training. This
-indicated that the number of topics was sufficient to capture the set of latent
-themes present in the two lectures (from which we constructed our document
-corpus, as described below). We found this value to be $k = 15$ topics. \DIFaddbegin \DIFadd{We
-found that with a limited number of additional adjustments
+that are semantically related \DIFdelbegin \DIFdel{or tend }\DIFdelend \DIFaddbegin \DIFadd{(as inferred from their tendency }\DIFaddend to co-occur in
+the same \DIFdelbegin \DIFdel{documents}\DIFdelend \DIFaddbegin \DIFadd{document)}\DIFaddend . After fitting a topic model, each document in the training
+set, or any \textit{new} document that contains at least some of the words in
+the model's vocabulary, may be represented as a $k$-dimensional vector
+describing how much the document (most probably) reflects each topic. To select
+an appropriate $k$ for our model, \DIFaddbegin \DIFadd{as a starting point, }\DIFaddend we identified the
+minimum number of topics that yielded at least one ``unused'' topic (i.e., in
+which all words in the vocabulary were assigned uniform weights) after
+training. This indicated that the number of topics was sufficient to capture
+the set of latent themes present in the two lectures (from which we constructed
+our document corpus, as described below). We found this value to be $k = 15$
+topics. \DIFaddbegin \DIFadd{We found that with a limited number of additional adjustments
 following~\mbox{%DIFAUXCMD
 \citep{BoydMimn14}}\hskip0pt%DIFAUXCMD
 , such as removing corpus-specific stop-words, the
@@ -1482,7 +1522,7 @@ similarity in conceptual content between the documents.
 
 We transformed each sliding window's text into a topic vector, and then used
 linear interpolation (independently for each topic dimension) to resample the
-resulting timeseries to one vector per second. We also used the fitted model to
+resulting \DIFdelbegin \DIFdel{timeseries }\DIFdelend \DIFaddbegin \DIFadd{time series }\DIFaddend to one vector per second. We also used the fitted model to
 obtain topic vectors for each question in our pool (see Supp.\DIFaddbegin \DIFadd{~}\DIFaddend Tab.~\questions).
 Taken together, we obtained a \textit{trajectory} for each video, describing
 its path through topic space, and a single coordinate for each question
@@ -1653,11 +1693,16 @@ PCF, ACH, and JRM. Visualization: PCF and JRM. Supervision: JRM. Project
 administration: PCF. Funding acquisition: JRM.
 
 
-\section*{Data and code availability}
+\section*{Data \DIFdelbegin \DIFdel{and code }\DIFdelend availability}
 
-All of the data analyzed in this manuscript, along with all of the code for
-running our experiment and carrying out the analyses may be found at
+All of the data analyzed in this manuscript \DIFdelbegin \DIFdel{, along with all }\DIFdelend \DIFaddbegin \DIFadd{may be found at
 https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
+}
+
+\section*{\DIFadd{Code availability}}
+
+\DIFadd{All }\DIFaddend of the code for running our experiment and carrying out the analyses may be
+found at https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
 
 \section*{Acknowledgements}
 

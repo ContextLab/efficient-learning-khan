@@ -618,68 +618,73 @@ between what is known versus unknown.
 
 After watching \textit{Four Fundamental Forces}, predicted knowledge for
 held-out questions that were answered correctly (from the second quiz;
-Fig.~\ref{fig:predictions}, middle column) exhibited a significantly shift relative
-to held-out questions that were answered incorrectly. This held when we included all
-questions in the analysis ($\U = 58332,~p < 0.001$), when we predicted knowledge
-across-lectures (\textit{Four Fundamental Forces}: $\U = 6749.5,~p = 0.014$;
-\textit{Birth of Stars}: $\U = 8480,~p = 0.016$), and when we predicted
-knowledge at the embedding coordinates of held-out \textit{Four Fundamental
-Forces} questions using other \textit{Four Fundamental Forces} questions from
-the same quiz and participant ($\U = 7224,~p < 0.001$). This difference did
-\textit{not} hold for within-lecture knowledge predictions at 
-knowledge at embedding space coordinates of \textit{Birth of Stars} questions ($\U = 7419,~p = 0.739$). Again, we suggest that this might reflect a
-floor effect whereby knowledge about the content of the \textit{Birth of Stars}
-material is relatively low everywhere in that region of text embedding space.
+Fig.~\ref{fig:predictions}, middle column) exhibited a significant positive
+shift relative to held-out questions that were answered incorrectly. This held
+when we included all questions in the analysis ($\U = 58332,~p < 0.001$), when
+we predicted knowledge across-lectures (\textit{Four Fundamental Forces}: $\U =
+6749.5,~p = 0.014$; \textit{Birth of Stars}: $\U = 8480,~p = 0.016$), and when
+we predicted knowledge at the embedding coordinates of held-out \textit{Four
+Fundamental Forces} questions using other \textit{Four Fundamental Forces}
+questions from the same quiz and participant ($\U = 7224,~p < 0.001$). This
+difference did \textit{not} hold for within-lecture knowledge predictions at
+knowledge at embedding space coordinates of \textit{Birth of Stars} questions
+($\U = 7419,~p = 0.739$). Again, we suggest that this might reflect a floor
+effect whereby, at that point in the participants' training, their knowledge
+about the content of the \textit{Birth of Stars} material is relatively low
+everywhere in that region of text embedding space.
 
 Finally, after watching \textit{Birth of Stars}, predicted knowledge for
 held-out correctly answered questions (from the third quiz;
-Fig.~\ref{fig:predictions}, right column) was higher than for held-out incorrectly answered questions. This held
-when we included all questions in the analysis ($\U = 38279,~p = 0.022$), when
-we carried out across-lecture predictions (\textit{Four Fundamental Forces}: $\U
-= 6684.5,~p = 0.032$; \textit{Birth of Stars}: $\U = 6414.5,~p = 0.002$), and
-and when we carried out within-lecture knowledge predictions for held-out \textit{Birth of
-Stars} questions using other \textit{Birth of Stars} questions from the same
-quiz and participant ($\U = 6126,~p = 0.006$). However, we found the
-\textit{opposite} effect when we carried out within-lecture knowledge predictions for
-held-out \textit{Four Fundamental Forces} questions using other \textit{Four
-Fundamental Forces} questions from the same quiz and participant ($\U = 6734,~p
-= 0.027$). Specifically, on Quiz 3, our knowledge predictions for held-out correctly answered questions about
-\textit{Four Fundamental Forces} were reliably \textit{lower} than those for their incorrectly answered counterparts. Speculatively, we
-suggest that this may reflect participants forgetting some of the \textit{Four
-Fundamental Forces} content. If this forgetting happens in a relatively
-``random'' way (with respect to spatial distance within the text embedding
-space), then it could explain why some held-out questions about \textit{Four
-Fundamental Forces} were answered incorrectly, even if questions at nearby
-coordinates (i.e., about similar content) were answered correctly. This might
-lead our approach to over-estimate knowledge for held-out questions about
-``forgotten'' knowledge that participants answered incorrectly.  Taken together,
-the results in Figure~\ref{fig:predictions} indicate that our approach can
-reliably predict acquired knowledge (especially about recently learned content),
-and that the knowledge predictions are generalizable across the content areas
-spanned by the two lectures, while also specific enough to distinguish between
-questions about more subtly different content within the same lecture.
+Fig.~\ref{fig:predictions}, right column) was higher than for held-out
+incorrectly answered questions. This held when we included all questions in the
+analysis ($\U = 38279,~p = 0.022$), when we carried out across-lecture
+predictions (\textit{Four Fundamental Forces}: $\U = 6684.5,~p = 0.032$;
+\textit{Birth of Stars}: $\U = 6414.5,~p = 0.002$), and and when we carried out
+within-lecture knowledge predictions for held-out \textit{Birth of Stars}
+questions using other \textit{Birth of Stars} questions from the same quiz and
+participant ($\U = 6126,~p = 0.006$). However, we found the \textit{opposite}
+effect when we carried out within-lecture knowledge predictions for held-out
+\textit{Four Fundamental Forces} questions using other \textit{Four Fundamental
+Forces} questions from the same quiz and participant ($\U = 6734,~p = 0.027$).
+Specifically, on Quiz 3, our knowledge predictions for held-out correctly
+answered questions about \textit{Four Fundamental Forces} were reliably
+\textit{lower} than those for their incorrectly answered counterparts.
+Speculatively, we suggest that this may reflect participants forgetting some of
+the \textit{Four Fundamental Forces} content. If this forgetting happens in a
+relatively ``random'' way (with respect to spatial distance within the text
+embedding space), then it could explain why some held-out questions about
+\textit{Four Fundamental Forces} were answered incorrectly, even if questions
+at nearby coordinates (i.e., about similar content) were answered correctly.
+This might lead our approach to over-estimate knowledge for held-out questions
+about ``forgotten'' knowledge that participants answered incorrectly. Taken
+together, the results in Figure~\ref{fig:predictions} indicate that our
+approach can reliably predict acquired knowledge (especially about recently
+learned content), and that the knowledge predictions are generalizable across
+the content areas spanned by the two lectures, while also specific enough to
+distinguish between questions about more subtly different content within the
+same lecture.
 
 That the knowledge predictions derived from the text embedding space reliably
 distinguish between held-out correctly versus incorrectly answered questions
-(Fig.~\ref{fig:predictions}) suggests that the text embedding space bears at
-least some relationship to participants' knowledge. But what does that
-relationship look like as we move through the embedding space? For example,
-suppose we know that a participant answers a question (at embedding coordinate
-$X$) correctly. As we move away from $X$ in the embedding space, how does quiz
-performance ``fall off'' with distance? Or, suppose the participant instead
-answered that same question \textit{in}correctly. Again, as we move away from
-$X$ in the embedding space, how do the chances that the participant does
-\textit{not} know about the content change with distance? We reasoned that,
-assuming our space is capturing something about how participants actually
-organize their knowledge, conceptual knowledge right around $X$ should be
-similar to the participant's knowledge of the content at $X$. And at another
-extreme, at some distance (after moving sufficiently far away from $X$), our
-guesses about what participants know (based on their response to the question
-at location $X$) should be no better than guessing based on their overall
-proportion of correctly answered questions—i.e., if $Y$ is very far away from
-$X$, all we can do with the participant's response to $X$ is guess that ``their
-performance on quiz questions about $Y$ is about equal to their average
-performance on quiz questions about any material.''
+(Fig.~\ref{fig:predictions}) suggests that spatial relationships in the text
+embedding space can help explain what participants know. But how far does this
+explanatory power extend? For example, suppose we know that a participant
+answers a question (at embedding coordinate $x$) correctly. As we move away
+from $x$ in the embedding space, how does their knowledge ``fall off'' with
+distance? Or, suppose the participant instead answered that same question
+\textit{in}correctly. Again, as we move away from $x$ in the embedding space,
+how do the chances that the participant does \textit{not} know about the
+content change with distance? We reasoned that, assuming our space is capturing
+something about how participants actually organize their knowledge, conceptual
+knowledge right around $x$ should be similar to the participant's knowledge of
+the content at $x$. And at another extreme, at some distance (after moving
+sufficiently far away from $x$), our guesses about what participants know
+(based on their response to the question at location $x$) should be no better
+than guessing based on their overall proportion of correctly answered
+questions—i.e., if $y$ is very far away from $x$, all we can do with the
+participant's response to $x$ is guess that ``their performance on quiz
+questions about $y$ will be about equal to their average performance on quiz
+questions about any material.''
 
 \begin{figure}[t]
     \centering
