@@ -136,7 +136,14 @@ elements within and across documents, but (in many cases) also
 patterns in how those elements appear across different scales (e.g.,
 sentences, paragraphs, chapters, etc.), the temporal and grammatical
 properties of the elements, and other high-level characteristics of
-how they are used~\citep{Mann20, Mann21a}. According to these models,
+how they are used~\citep{Mann20, Mann21a}. 
+To be clear, this is not to say that text embedding models themselves 
+are capable of ``understanding'' deep conceptual meaning in any 
+traditional sense. But rather, their ability to capture the underlying 
+\textit{structure} of text documents beyond their surface-level contents 
+provides a computational framework through which those document's 
+deeper conceptual meaning may be quantified, explored, and understood.
+According to these models,
 the deep conceptual meaning of a document may be captured by a feature
 vector in a high-dimensional representation space, wherein nearby
 vectors reflect conceptually related documents. A model that succeeds
@@ -363,14 +370,6 @@ reported in Supplementary Figure~\topicWeights.
 
     \label{fig:topics}
 \end{figure}
-
-It is important to clarify that although we use topic model-derived embeddings
-to \textit{characterize} the conceptual content of the lectures and questions,
-we do not claim that the topic model itself \textit{understands} the conceptual
-content of the lectures or questions. Rather, we view the topic model as a tool
-for capturing the \textit{structure} of the conceptual content of the lectures
-and questions in a way that enables us to capture, quantify, and track and
-predict participants' knowledge.
 
 Another, more sensitive, way of summarizing the conceptual content of the
 lectures and questions is to look at \textit{variability} in how topics are
