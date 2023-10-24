@@ -128,7 +128,7 @@ considering the raw contents of a document (e.g., its constituent
 symbols, letters, and words) might provide some clues as to what the
 document is about, just as memorizing a passage might provide some
 ability to answer simple questions about it. However, text embedding
-models~\citep[e.g., ][]{LandDuma97, DeerEtal90, BleiEtal03,
+models~\citep[e.g.,][]{LandDuma97, DeerEtal90, BleiEtal03,
   BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20, ViswEtal17} also
 attempt to capture the deeper meaning \textit{underlying} those atomic
 elements. These models consider not only the co-occurrences of those
@@ -142,15 +142,15 @@ vector in a high-dimensional representation space, wherein nearby
 vectors reflect conceptually related documents. A model that succeeds
 at capturing an analogue of ``understanding'' is able to assign nearby
 feature vectors to two conceptually related documents, \textit{even
-  when the specific words contained in those documents do not fully
+  when the specific words contained in those documents have limited
   overlap}. In this way, ``concepts'' are defined implicitly by the
 model's geometry~\citep[e.g., how the embedding coordinate of a given
 word or document relates to the coordinates of other text
 embeddings; ][]{PianHill22}.
 
 Given these insights, what form might a representation of the sum total of a
-person's knowledge take (speculatively)? First, we might require a means of
-systematically describing or representing the nearly infinite set of possible
+person's knowledge take? First, we might require a means of
+systematically describing or representing (at least some subset of) the nearly infinite set of possible
 things a person could know. Second, we might want to account for potential
 associations between different concepts. For example, the concepts of ``fish''
 and ``water'' might be associated in the sense that fish live in water. Third,
@@ -428,7 +428,7 @@ Figure~\ref{fig:question-correlations}.
     \includegraphics[width=\textwidth]{figs/lecture-question-similarity}
 
     \caption{\textbf{Which parts of each lecture are captured by each
-    question?} Each panel displays timeseries plots showing how each question's
+    question?} Each panel displays time series plots showing how each question's
     topic vector correlates with each video timepoint's topic vector (Panel
     \textbf{A.}: correlations for the \textit{Four Fundamental Forces} lecture
     and associated questions; Panel \textbf{B.}: correlations for the
@@ -886,12 +886,12 @@ dots) appear closer to the \textit{Birth of Stars} lecture trajectory (green
 line). The BERT embeddings of the lectures and questions do not show this
 property (Supp.~Fig.~\ldaVsBERT). We also examined per-question ``content
 matches'' between individual questions and individual moments of each lecture
-(Figs.~\ref{fig:question-correlations},~\ldaVsBERT). The timeseries plot of
+(Figs.~\ref{fig:question-correlations},~\ldaVsBERT). The time series plot of
 individual questions' correlations are different from each other when computed
 using LDA (e.g., the traces can be clearly visually separated), whereas the
 correlations computed from BERT embeddings of different questions all look very
 similar. This tells us that LDA is capturing some differences in content
-between the questions, whereas BERT is not. The timeseries plots of individual
+between the questions, whereas BERT is not. The time series plots of individual
 questions' correlations have clear ``peaks'' when computed using LDA, but not
 when computed using BERT. This tells us that LDA is capturing a ``match''
 between the content of each question and a relatively well-defined time window
@@ -956,7 +956,7 @@ each question and each sliding window of text from the corresponding lecture.
 As shown in Supplementary Figure~\jaccard, this simple word-matching approach
 does not appear to capture the same level of specificity as the LDA-based
 approach. Whereas the LDA-based approach often yields a clear peak in the
-timeseries of correlations between each question and the corresponding lecture,
+time series of correlations between each question and the corresponding lecture,
 the Jaccard similarity-based approach does not. Furthermore, these LDA-based
 matches appear to capture conceptual overlaps between the questions and
 lectures (Supp.~Tab.~\matchTab), whereas simple word matching does not. For
@@ -1271,7 +1271,7 @@ similarity in conceptual content between the documents.
 
 We transformed each sliding window's text into a topic vector, and then used
 linear interpolation (independently for each topic dimension) to resample the
-resulting timeseries to one vector per second. We also used the fitted model to
+resulting time series to one vector per second. We also used the fitted model to
 obtain topic vectors for each question in our pool (see Supp.~Tab.~\questions).
 Taken together, we obtained a \textit{trajectory} for each video, describing
 its path through topic space, and a single coordinate for each question
