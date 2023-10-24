@@ -108,13 +108,13 @@ can lead to the superficial \textit{appearance} of understanding the underlying
 content, but achieving true conceptual understanding seems to require something
 deeper and richer. Does conceptual understanding entail connecting newly
 acquired information to the scaffolding of one's existing knowledge or
-experience~\citep{BlayEtal06,CaraMaho03, ConsEtal16, DeacEtal04, SimoEtal04}?
-Or weaving a lecture's atomic elements (e.g., its component words) into a
-structured network that describes how those individual elements are
-related~\citep{LeeChen22}? Conceptual understanding could also involve building
-a mental model that transcends the meanings of those individual atomic elements
-by reflecting the deeper meaning underlying the gestalt whole~\citep{Kint70,
-Macl05, ScotEtal07}.
+experience~\citep{BlayEtal06,CaraMaho03, ConsEtal16, DeacEtal04, SimoEtal04,
+HuebWill18}? Or weaving a lecture's atomic elements (e.g., its component words)
+into a structured network that describes how those individual elements are
+related~\citep{LeeChen22, vanPEtal21}? Conceptual understanding could also
+involve building a mental model that transcends the meanings of those
+individual atomic elements by reflecting the deeper meaning underlying the
+gestalt whole~\citep{Kint70, Macl05, ScotEtal07, TulcEtal23}.
 
 The difference between ``understanding'' and ``memorizing,'' as framed by
 researchers in education, cognitive psychology, and cognitive neuroscience
@@ -125,7 +125,7 @@ its constituent symbols, letters, and words) might provide some clues as to
 what the document is about, just as memorizing a passage might provide some
 ability to answer simple questions about it. However, text embedding models
 (e.g.,~\citealp{LandDuma97, DeerEtal90, BleiEtal03, BleiLaff06, MikoEtal13a,
-CerEtal18, BrowEtal20}) also attempt to capture the deeper meaning
+CerEtal18, BrowEtal20, ViswEtal17}) also attempt to capture the deeper meaning
 \textit{underlying} those atomic elements. These models consider not only the
 co-occurrences of those elements within and across documents, but (in many
 cases) also patterns in how those elements appear across different scales
@@ -137,7 +137,10 @@ high-dimensional representation space, wherein nearby vectors reflect
 conceptually related documents. A model that succeeds at capturing an analogue
 of ``understanding'' is able to assign nearby feature vectors to two
 conceptually related documents, \textit{even when the specific words contained
-in those documents have very little overlap}.
+in those documents have very little overlap}. In this way, ``concepts'' are
+defined implicitly by the model's geometry~\citep[e.g., how the embedding coordinate
+of a given word or document relates to the coordinates of other text
+embeddings;][]{PianHill22}.
 
 Given these insights, what form might a representation of the sum total of a
 person's knowledge take (speculatively)? First, we might require a means of
@@ -475,22 +478,23 @@ content, from either of the two lectures they watched (comprising a total of
     \centering
     \includegraphics[width=0.7\textwidth]{figs/content-mastery}
 
-    \caption{\textbf{Estimating moment-by-moment knowledge acquisition.}
-    \textbf{A. Moment-by-moment knowledge about the \textit{Four Fundamental
-    Forces}}. Each trace displays the weighted proportion of correctly answered
-    questions about the content reflected in each moment of the lecture (see
-    \nameref{subsec:traces}), using responses from a single quiz (color). The
-    traces are averaged across participants. \textbf{B. Average estimated
-    knowledge about the \textbf{Four Fundamental Forces}.} Each bar displays
-    the across-timepoint average knowledge, estimated using the responses to
-    one quiz's questions. \textbf{C. Moment-by-moment knowledge about the
-    \textit{Birth of Stars}}. The panel is in the same format as Panel A, but
-    here the knowledge estimates are for the moment-by-moment content of the
-    \textit{Birth of Stars} lecture. \textbf{D. Average estimated knowledge
-    about the \textit{Birth of Stars}.} The panel is in the same format as
-    Panel B, but here the knowledge estimates are for the content of the
-    \textit{Birth of Stars} lecture. All panels: error ribbons and error bars
-    denote 95\% confidence intervals, estimated across participants.}
+    \caption{\textbf{Estimating knowledge about the content presented at each
+    moment of each lecture.} \textbf{A. Knowledge about the time-varying
+    content of \textit{Four Fundamental Forces}}. Each trace displays the
+    weighted proportion of correctly answered questions about the content
+    reflected in each moment of the lecture (see \nameref{subsec:traces}),
+    using responses from a single quiz (color). The traces are averaged across
+    participants. \textbf{B. Average estimated knowledge about \textbf{Four
+    Fundamental Forces}.} Each bar displays the across-timepoint average
+    knowledge, estimated using the responses to one quiz's questions.
+    \textbf{C. Knowledge about the time-varying content of \textit{Birth of
+    Stars}}. The panel is in the same format as Panel A, but here the knowledge
+    estimates are for the moment-by-moment content of the \textit{Birth of
+    Stars} lecture. \textbf{D. Average estimated knowledge about \textit{Birth
+    of Stars}.} The panel is in the same format as Panel B, but here the
+    knowledge estimates are for the content of the \textit{Birth of Stars}
+    lecture. All panels: error ribbons and error bars denote 95\% confidence
+    intervals, estimated across participants.}
 
     \label{fig:knowledge-timeseries}
 \end{figure}
@@ -537,8 +541,8 @@ participant answered on the same quiz. For each quiz, we grouped these
 estimates into two distributions: one for the estimated knowledge at the
 coordinates of \textit{correctly} answered questions, and another for the
 estimated knowledge at the coordinates of \textit{incorrectly} answered
-questions (Fig.~\ref{fig:predictions}). We then used independent samples
-$t$-tests to compare the means of these distributions of estimated knowledge.
+questions (Fig.~\ref{fig:predictions}). We then used Mann-Whitney $U$-tests to
+compare the means of these distributions of estimated knowledge.
 
 \begin{figure}[tp]
     \centering
@@ -548,49 +552,143 @@ $t$-tests to compare the means of these distributions of estimated knowledge.
     held-out questions.} Separately for each quiz (panel), we plot the
     distributions of predicted knowledge at the embedding coordinates of each
     held-out correctly (blue) or incorrectly (red) answered question. The
-    $t$-tests reported in each panel are between the distributions of estimated
-    knowledge at the coordinates of correctly versus incorrectly answered
-    held-out questions.}
+    Mann-Whitney $U$-tests reported in each panel are between the distributions
+    of estimated knowledge at the coordinates of correctly versus incorrectly
+    answered held-out questions. In the top row (``All questions''), we used
+    all quiz questions (from each quiz, for each participant) except one to
+    estimate knowledge at the held-out question's embedding coordinate. In the
+    middle rows (``Across-lecture''), we used all questions about one lecture
+    to estimate knowledge at the embedding coordinate of a held-out question
+    about the \textit{other} lecture. In the bottom row (``Within-lecture''),
+    we used all but one question about one lecture to estimate knowledge at the
+    embedding coordinate of a held-out question about the \textit{same}
+    lecture. We repeated each of these analyses using all possible held-out
+    questions for each quiz and participant.}
 
     \label{fig:predictions}
 \end{figure}
 
 For the initial quizzes participants took (prior to watching either lecture),
 participants' estimated knowledge tended to be low overall, and relatively
-unstructured (Fig.~\ref{fig:predictions}, left panel). When we held out
+unstructured (Fig.~\ref{fig:predictions}, left column). When we held out
 individual questions and estimated their knowledge at the held-out questions'
 embedding coordinates, we found no reliable differences in the estimates when
-the held-out question had been correctly versus incorrectly answered ($t(633) =
-0.577,~p = 0.564$). This reflects a floor effect: when knowledge is low
-everywhere, there is little signal to differentiate between what is known
-versus unknown. After watching the first lecture, estimated knowledge for
+the held-out question had been correctly versus incorrectly answered. This
+``null'' effect persisted when we used \textit{all} of the Quiz 1 questions
+from a given participant to predict a held-out question (``All questions''; $U
+= 50587, p = 0.723$), when we used questions from one lecture to predict
+knowledge at the embedding coordinate of a held-out question about the
+\textit{other} lecture (``Across-lecture''; predicting knowledge for held-out
+\textit{Four Fundamental Forces Questions} using \textit{Birth of Stars}
+questions: $U = 8244, p = 0.184$; predicting knowledge for held-out
+\textit{Birth of Stars} questions: $U = 8202.5, p = 0.161$), and when we used
+questions from one lecture to predict knowledge at the embedding coordinate of
+a held-out question about the \textit{same} lecture (``Within-lecture'';
+\textit{Four Fundamental Forces}: $U = 7681.5, p = 0.746$; \textit{Birth of
+Stars}: $U = 8125, p = 0.204$). We believe that this reflects a floor effect:
+when knowledge is low everywhere, there is little signal to differentiate
+between what is known versus unknown. 
+
+After watching \textit{Four Fundamental Forces}, estimated knowledge for
 held-out correctly answered questions (from the second quiz;
-Fig.~\ref{fig:predictions}, middle panel) exhibited a positive shift relative
-to held-out incorrectly answered questions ($t(633) = 3.961,~p < 0.001$). This
-second quiz provides the maximally sensitive test for our knowledge
-predictions, since (if knowledge is estimated accurately) participants' Quiz~2
-responses should demonstrate specific knowledge about Lecture~1 content, but
-knowledge about Lecture~2 and general physics concepts should be roughly
-unchanged from before they watched Lecture~1. After watching the second
-lecture, estimated knowledge (from the third quiz; Fig.~\ref{fig:predictions},
-right panel) for \textit{all} questions exhibited a positive shift. However,
-the estimated knowledge for held-out correctly answered questions remained
-greater than that for held-out incorrectly answered questions ($t(628) =
-2.045,~p = 0.041$). This third contrast reflects a ceiling effect: when
-knowledge is relatively high everywhere, the signal differentiating what is
-known versus unknown is relatively weak. Taken together, this set of analyses
-demonstrates that our knowledge prediction framework is most informative when
-participants exhibit variability in their knowledge of the content captured by
-the text embedding model.
+Fig.~\ref{fig:predictions}, middle column) exhibited a positive shift relative
+to held-out incorrectly answered questions. This held when we included all
+questions in the analysis ($U = 58332, p < 0.001$), when we predicted knowledge
+across-lectures (\textit{Four Fundamental Forces}: $U = 6749.5, p = 0.014$;
+\textit{Birth of Stars}: $U = 8480, p = 0.016$), and when we predicted
+knowledge at the embedding coordinates of held-out \textit{Four Fundamental
+Forces} questions using other \textit{Four Fundamental Forces} questions from
+the same quiz and participant ($U = 7224, p < 0.001$). This difference did
+\textit{not} hold for within-lecture predictions of \textit{Birth of Stars}
+knowledge ($U = 7419, p = 0.739$). Again, we suggest that this might reflect a
+floor effect whereby knowledge about the content of the \textit{Birth of Stars}
+material is relatively low everywhere in that region of text embedding space.
+
+Finally, after watching \textit{Birth of Stars}, estimated knowledge for
+held-out correctly answered questions (from the third quiz;
+Fig.~\ref{fig:predictions}, right column) was higher for held-out correctly
+answered questions than for held-out incorrectly answered questions. This held
+when we included all questions in the analysis ($U = 38279, p = 0.022$), when
+we carried out across-lecture predictions (\textit{Four Fundamental Forces}: $U
+= 6684.5, p = 0.032$; \textit{Birth of Stars}: $U = 6414.5, p = 0.002$), and
+and when we carried out within-lecture predictions of held-out \textit{Birth of
+Stars} questions using other \textit{Birth of Stars} questions from the same
+quiz and participant ($U = 6126, p = 0.006$). However, we found the
+\textit{opposite} effect when we carried out within-lecture predictions of
+held-out \textit{Four Fundamental Forces} questions using other \textit{Four
+Fundamental Forces} questions from the same quiz and participant ($U = 6734, p
+= 0.027$). Specifically, held-out correctly answered Quiz 3 questions about
+\textit{Four Fundamental Forces} had reliably \textit{lower} estimated
+knowledge than held-out incorrectly answered questions. Speculatively, we
+suggest that this may reflect participants forgetting some of the \textit{Four
+Fundamental Forces} content. If this forgetting happens in a relatively
+``random'' way (with respect to spatial distance within the text embedding
+space), then it could explain why some held-out questions about \textit{Four
+Fundamental Forces} were answered incorrectly, even if questions at nearby
+coordinates (i.e., about similar content) were answered correctly. This might
+lead our approach to over-estimate knowledge for held-out questions about
+``forgotten'' knowledge that particpants answered incorrectly.
+
+That the knowledge estimates derived from the text embedding space reliably
+distinguish between held-out correctly versus incorrectly answered questions
+(Fig.~\ref{fig:predictions}) suggests that the text embedding space bears at
+least some relationship to participants' knowledge. But what does that
+relationship look like as we move through the embedding space? For example,
+suppose we know that a participant answers a question (at embedding coordinate
+$X$) correctly. As we move away from $X$ in the embedding space, how does quiz
+performance ``fall off'' with distance? Or, suppose the participant instead
+answered that same question \textit{in}correctly. Again, as we move away from
+$X$ in the embedding space, how does our confidence that the participant does
+\textit{not} know about the content change with distance? We reasoned that,
+assuming our space is capturing something about how participants actually
+organize their knowledge, conceptual knowledge right around $X$ should be similar
+to the participant's knowledge of the content at $X$. And at another extreme, at
+some distance (after moving sufficiently far away from $X$), our guesses about
+what participants know (based on their response to the question at location $X$)
+should be no better than guessing based on their overall proportion of
+correctly answered questions—i.e., if $Y$ is very far away from $X$, all we can do
+with the participant's response to $X$ is guess that ``their performance on quiz
+questions about $Y$ is about equal to their average performance on quiz questions
+about any material.''
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\textwidth]{figs/knowledge-smoothness}
+    \includegraphics[width=0.8\textwidth]{figs/knowledge-smoothness}
 
-    \caption{\textbf{Caption title.} Caption content.}
+    \caption{\textbf{Quiz performance falls off gradually in text embedding
+    space.} \textbf{A. Performance versus distance.} For each participant, for
+    each correctly answered question (blue) or incorrectly answered question
+    (red), we computed the proportion of correctly answered questions within a
+    given distance of that question's embedding coordinate. We repeated this
+    analysis for all questions and participants, and separately for each quiz
+    (column). The black lines denote the average proportion correct across
+    \textit{all} questions included in the analysis at the given distance.
+    \textbf{B. Maximum distance for which performance is reliably different
+    from the average.} We used a bootstrap procedure
+    (see~\nameref{subsec:smoothness}) to estimate the point at which the blue
+    and red lines in Panel A reliably diverged from the black line. We repeated
+    this analysis separately for correctly and incorrectly answered questions
+    from each quiz. \textbf{All panels.} Error ribbons denote
+    bootstrap-estimated 95\% confidence intervals.}
 
     \label{fig:smoothness}
 \end{figure}
+
+With these ideas in mind, we asked: conditioned on answering a question
+correctly, what proportion of all questions (within some radius, $r$, of that
+question's embedding coordinate) were answered correctly? We plotted this
+proportion as a function of $r$. Similarly, we could ask, conditioned on
+answering a question incorrectly, how the proportion of correct responses
+changed with $r$. As shown in Figure~\ref{fig:smoothness}, we found that quiz
+performance falls off smoothly with distance, and the ``rate'' of the falloff
+does not appear to change across the different quizzes, as measured by the
+distance at which performance becomes statistically indistinguishable from a
+simple proportion correct score (see~\nameref{subsec:smoothness}). This
+suggests that, at least within the region of text embedding space covered by
+the questions our participants answered (and as characterized using our topic
+model), the rate at which knowledge changes with distance is relatively
+constant, even as participants' overall level of knowledge varies across
+quizzes or regions of the embedding space.
 
 Knowledge estimates need not be limited to the content of the lectures. As
 illustrated in Figure~\ref{fig:knowledge-maps}, our general approach to
@@ -822,6 +920,22 @@ suggest that bridging the tradeoff between high resolution within each content
 area versus the ability to generalize to many different content areas will be
 an important challenge for future work in this domain.
 
+Another application for large language models that does \textit{not} require
+explicitly modeling the content of individual lectures or questions is to
+leverage the models' ability to generate text. For example, generative text
+models like ChatGPT~\citep{ChatGPT} and LLaMa~\citep{TouvEtal23} are already
+being used to build a new generation of interactive tutoring
+systems~\citep[e.g.,][]{MannEtal23b}.  Unlike the approach we have taken here,
+these systems do not explicitly model what learners know, or how their knowledge 
+changes over time with training.  One could imagine building a hybrid system
+that combines the best of both worlds: a large language model that can
+\textit{generate} text, combined with a smaller model that can \textit{infer}
+what learners know and how their knowledge changes over time.  Such a hybrid
+system could potentially be used to build a new generation of interactive
+tutoring systems that are able to adapt to learners' needs in real time, and
+that are able to provide more nuanced feedback about what learners know and
+what they do not know.
+
 At the opposite end of the spectrum from large language models, one could also
 imagine \textit{simplifying} some aspects of our LDA-based approach by
 computing simple word overlap metrics. For example, the Jaccard similarity
@@ -845,6 +959,23 @@ The LDA-based matches identify lecture timepoints where the releveant
 ``dense,'' etc., are mentioned \textit{together}). The Jaccard similarity-based
 matches, on the other hand, are strong when \textit{any} of these words are
 mentioned, even if they do not occur together.
+
+We view our approach as occupying a sort of ``sweet spot,'' between much larger
+language models and simple word matching-based approaches, that enables us to
+capture the relevant conceptual content of course materials at an appropriate
+semantic scale. Our approach enables us to accurately and consistently identify
+each question's content in a way that also matches up with what is presented in
+the lectures. In turn, this enables us to construct accurate predictions about
+participants' knowledge of the conceptual content tested by held-out questions
+(Fig.~\ref{fig:predictions}).
+
+One limitation of our approach is that topic models contain no explicit
+internal representations of more complex aspects of ``knowledge,'' like
+knowledge graphs, dependencies or associations between concepts, causality, and
+so on. These representations might (in principle) be added as extensions to our
+approach to more accurately and precisely capture, characterize, and track
+learners' knowledge. However, modeling these aspects of knowledge will likely
+require substantial additional research effort.
 
 Over the past several years, the global pandemic has forced many educators to
 suddenly adapt to teaching remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21,
@@ -1023,7 +1154,8 @@ through each lecture in small segments, identify what each segment was
 general physics questions were drawn from the researchers' coursework along
 with internet searches and brainstorming with the project team and other
 members of J.R.M.'s lab. The final set of questions (and response options) was
-reviewed and approved by J.R.M.
+reviewed and approved by J.R.M. before we collected or analyzed the text or
+experimental data.
 
 We note that estimating the specific ``amount'' of conceptual understanding
 that each question ``requires'' to answer is somewhat subjective, and might
@@ -1093,29 +1225,28 @@ via YouTube, and when those lines would appear). We defined a sliding window
 length of (up to) $w = 30$ transcript lines, and assigned each window a
 timestamp corresponding to the midpoint between the timestamps for its first
 and last lines. This $w$ parameter was chosen to match the same number of words
-per sliding window (rounded to the nearest whole word, and after preprocessing)
-as the sliding windows we defined in our prior work~\citep{HeusEtal21}. The
-sliding windows contained an average of 73.8 words and lasted for an average of
-62.22 seconds. After splitting the transcripts into sliding windows, we carried
-out several standard preprocessing steps. First, we removed all punctuation,
-replaced numbers with their word equivalents (e.g., ``1'' with ``one''), and
-converted all text to lowercase. Next, we removed all stop words, as defined by
-the Natural Language Toolkit~\citep[NLTK; ]{BirdEtal09} English stop word list,
-augmented with additional words following~\citep{BoydMimn14}: ``actual,''
-``actually,'' ``also,'' ``bit,'' ``could,'' ``e,'' ``even,'' ``first,''
-``follow,'' ``following,'' ``four,'' ``let,'' ``like,'' ``mc,'' ``really,'',
-``saw,'' ``see,'' ``seen,'' ``thing,'' and ``two.''
+per sliding window (rounded to the nearest whole word, and before
+preprocessing) as the sliding windows we defined in our prior
+work~\citep{HeusEtal21} (i.e., 185 words per sliding window).
 
 
 These sliding windows ramped up and down in length at the beginning and end of
 each transcript, respectively. In other words, each transcript's first sliding
 window covered only its first line, the second sliding window covered the first
 two lines, and so on. This ensured that each line from the transcripts appeared
-in the same number ($w$) of sliding windows. After performing various standard
-text preprocessing (e.g., normalizing case, lemmatizing, removing punctuation
-and stop-words), we treated the text from each sliding window as a single
-``document,'' and combined these documents across the two videos' windows to
-create a single training corpus for the topic model.
+in the same number ($w$) of sliding windows. We next performed a series of
+standard text preprocessing steps: normalizing case, lemmatizing, removing
+punctuation and removing stop-words. We constructed our corpus of stop words by
+augmenting the Natural Language Toolkit~\citep[NLTK; ]{BirdEtal09} English stop
+word list with the following additional words, selected using the stop word
+approach suggested by~\citep{BoydMimn14}: ``actual,'' ``actually,'' ``also,''
+``bit,'' ``could,'' ``e,'' ``even,'' ``first,'' ``follow,'' ``following,''
+``four,'' ``let,'' ``like,'' ``mc,'' ``really,'', ``saw,'' ``see,'' ``seen,''
+``thing,'' and ``two.'' This yielded sliding windows with an average of 73.8
+remaining words, and lasting for an average of 62.22~seconds. We treated the
+text from each sliding window as a single ``document,'' and combined these
+documents across the two videos' windows to create a single training corpus for
+the topic model.
 
 After fitting a topic model to the two videos' transcripts, we could use the
 trained model to transform arbitrary (potentially new) documents into
@@ -1173,6 +1304,48 @@ between timepoint $t$'s topic vector and the topic vectors for each question.
 The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
 correlations) ensures that every question contributes some non-negative amount
 to the knowledge estimate.
+
+\subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
+
+In the analysis reported in Figure~\ref{fig:smoothness}A, we show how
+participants' quiz performance changes as a function of distance to a given
+correctly or incorrectly answered reference question. We used a bootstrap-based
+approach to estimate the maximum distances over which these proportions
+of correctly answered questions could be reliably distinguished from participants'
+overall average proportion of correctly answered questions.
+
+In our bootstrap procedure, we ran 10,000 iterations to estimate the
+relationship between participants' performance and the distance to a given
+reference question. For each of these iterations, for every individual quiz
+($q$), we first determined the across-participants average ``simple''
+proportion correct and its 95\% confidence interval. This interval was
+established by repeatedly (1,000 times) subsampling participants with
+replacement, computing the mean ``simple'' proportion correct for each
+subsample, and then deriving the 2.5\textsuperscript{th} and
+97.5\textsuperscript{th} percentiles from the distribution of these subsample
+means. We used this interval as our benchmark for determining whether the
+proportion of correctly answered questions for a given subset of questions was
+reliably different (at the $p < 0.05$ significance level) from the average
+proportion correct across all questions.
+
+Next, for each participant, we examined all 15 questions they answered on quiz
+$q$. We treated each question as the ``reference question'' in turn. Around
+this reference, we constructed a series of 15-dimensional spheres (starting
+with a radius of 0), where each successive circle had a radius of 0.01
+(correlation distance) greater than its predecessor. Within each of these
+spheres, we calculated the proportion of questions answered correctly by the
+participant. The per-radius proportion correct values were then averaged across
+both categories of ``reference questions'': those answered correctly and those
+answered incorrectly. This yielded two distinct proportion-correct values for
+each binned distance (radius) for a specific participant and quiz. From these,
+we established the average proportion correct within each radius for both
+categories of reference questions. Finally, we identified the minimum binned
+distance from the correctly answered reference questions for which the average
+proportion correct intersected the 95\% confidence interval of the simple
+average proportion correct computed earlier. (A parallel analysis was conducted
+for the incorrectly answered reference questions.) We display the resulting
+distance estimates, for each quiz and reference question status, in
+Figure~\ref{fig:smoothness}B.
 
 \subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
 
