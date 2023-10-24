@@ -1180,12 +1180,19 @@ that (a) each quiz contained exactly 5 questions about Lecture~1, 5 questions
 about Lecture~2, and 3 questions about general physics knowledge, and (b) each
 question appear exactly once for each participant. The orders of questions on
 each quiz, and the orders of answer options for each question, were also
-randomized. Our experimental protocol was approved by the Committee for the
-Protection of Human Subjects at Dartmouth College. We used this experiment to
-develop and test our computational framework for estimating knowledge and
-learning.
+randomized. We obtained informed consent from all participants, and our
+experimental protocol was approved by the Committee for the Protection of Human
+Subjects at Dartmouth College. We used this experiment to develop and test our
+computational framework for estimating knowledge and learning.
 
 \subsection*{Analysis}
+
+\subsubsection*{Statistics} 
+
+All of the statistical tests performed in our study were two-sided. The 95\%
+confidence intervals we reported for each correlation were estimated by
+generating 10,000 bootstrap distributions of correlation coefficients by
+sampling (with replacement) from the observed data.
 
 \subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
 
@@ -1197,18 +1204,18 @@ discover a set of (up to) $k$ ``topics'' or ``themes.'' Formally, each topic is
 defined as a distribution of weights over words in the model's vocabulary
 (i.e., the union of all unique words, across all documents, excluding ``stop
 words.''). Conceptually, each topic is intended to give larger weights to words
-that are semantically related, as implied by their co-occurring in the same
-documents. After fitting a topic model, each document in the training set, or
-any \textit{new} document that contains at least some of the words in the
-model's vocabulary, may be represented as a $k$-dimensional vector describing
-how much the document (most probably) reflects each topic. To select an
-appropriate $k$ for our model, as a starting point, we identified the minimum
-number of topics that yielded at least one ``unused'' topic (i.e., in which all
-words in the vocabulary were assigned uniform weights) after training. This
-indicated that the number of topics was sufficient to capture the set of latent
-themes present in the two lectures (from which we constructed our document
-corpus, as described below). We found this value to be $k = 15$ topics. We
-found that with a limited number of additional adjustments
+that are semantically related (as inferred from their tendency to co-occur in
+the same document). After fitting a topic model, each document in the training
+set, or any \textit{new} document that contains at least some of the words in
+the model's vocabulary, may be represented as a $k$-dimensional vector
+describing how much the document (most probably) reflects each topic. To select
+an appropriate $k$ for our model, as a starting point, we identified the
+minimum number of topics that yielded at least one ``unused'' topic (i.e., in
+which all words in the vocabulary were assigned uniform weights) after
+training. This indicated that the number of topics was sufficient to capture
+the set of latent themes present in the two lectures (from which we constructed
+our document corpus, as described below). We found this value to be $k = 15$
+topics. We found that with a limited number of additional adjustments
 following~\citep{BoydMimn14}, such as removing corpus-specific stop-words, the
 model yielded (subjectively) sensible and coherent topics. The distribution of
 weights over words in the vocabulary for each discovered topic is shown in
