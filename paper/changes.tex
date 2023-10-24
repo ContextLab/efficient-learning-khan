@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Tue Oct 24 01:22:09 2023
-%DIF ADD main.tex   Tue Oct 24 01:19:23 2023
+%DIF ADD main.tex   Tue Oct 24 14:56:36 2023
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[font=small,labelfont=bf]{caption}
@@ -25,14 +25,23 @@
 % supplemental figures
 \newcommand{\topicWordWeights}{1}
 \newcommand{\topicWeights}{2}
-\newcommand{\individualKnowledgeMapsA}{3}
-\newcommand{\individualKnowledgeMapsB}{4}
-\newcommand{\individualKnowledgeMapsC}{5}
-\newcommand{\individualLearningMapsA}{6}
-\newcommand{\individualLearningMapsB}{7}
-%DIF 27a28-29
-\newcommand{\ldaVsBERT}{8} %DIF > 
-\newcommand{\jaccard}{9}   % word match figure %DIF > 
+%DIF 22-26c23-32
+%DIF < \newcommand{\individualKnowledgeMapsA}{3}
+%DIF < \newcommand{\individualKnowledgeMapsB}{4}
+%DIF < \newcommand{\individualKnowledgeMapsC}{5}
+%DIF < \newcommand{\individualLearningMapsA}{6}
+%DIF < \newcommand{\individualLearningMapsB}{7}
+%DIF -------
+\newcommand{\forcesCorrs}{3} %DIF > 
+\newcommand{\bosCorrs}{4} %DIF > 
+\newcommand{\jaccard}{5} %DIF > 
+\newcommand{\ldaVsBERT}{6} %DIF > 
+\newcommand{\individualKnowledgeMapsA}{7} %DIF > 
+\newcommand{\individualKnowledgeMapsB}{8} %DIF > 
+\newcommand{\individualKnowledgeMapsC}{9} %DIF > 
+\newcommand{\individualLearningMapsA}{10} %DIF > 
+\newcommand{\individualLearningMapsB}{11} %DIF > 
+ %DIF > 
 %DIF -------
 
 % simple command for inline comments
@@ -217,37 +226,45 @@ Macl05, ScotEtal07}}\hskip0pt%DIFAUXCMD
 \citep{Kint70, Macl05, ScotEtal07, TulcEtal23}}\hskip0pt%DIFAUXCMD
 }\DIFaddend .
 
-The difference between ``understanding'' and ``memorizing,'' as framed by
-researchers in education, cognitive psychology, and cognitive neuroscience
-(e.g.,~\citealp{Kato40, Gall00, ScotEtal07, HallGree08, Macl05}), has profound
-analogs in the fields of natural language processing and natural language
-understanding. For example, considering the raw contents of a document (e.g.,
-its constituent symbols, letters, and words) might provide some clues as to
-what the document is about, just as memorizing a passage might provide some
-ability to answer simple questions about it. However, text embedding models
-(e.g.,~\DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+The difference between ``understanding'' and ``memorizing,'' as framed
+by researchers in education, cognitive psychology, and cognitive
+neuroscience\DIFdelbegin \DIFdel{(e.g.,~\mbox{%DIFAUXCMD
+\citealp{Kato40, Gall00, ScotEtal07, HallGree08, Macl05}}\hskip0pt%DIFAUXCMD
+)}\DIFdelend \DIFaddbegin \DIFadd{~\mbox{%DIFAUXCMD
+\citep[e.g.,][]{Kato40, Gall00, ScotEtal07, HallGree08,
+  Macl05}}\hskip0pt%DIFAUXCMD
+}\DIFaddend , has profound analogs in the fields of natural language
+processing and natural language understanding. For example,
+considering the raw contents of a document (e.g., its constituent
+symbols, letters, and words) might provide some clues as to what the
+document is about, just as memorizing a passage might provide some
+ability to answer simple questions about it. However, text embedding
+models\DIFdelbegin \DIFdel{(e.g.,~\mbox{%DIFAUXCMD
 \citealp{LandDuma97, DeerEtal90, BleiEtal03,
 BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20}}\hskip0pt%DIFAUXCMD
-}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
-\citealp{LandDuma97, DeerEtal90, BleiEtal03, BleiLaff06, MikoEtal13a,
-CerEtal18, BrowEtal20, ViswEtal17}}\hskip0pt%DIFAUXCMD
-}\DIFaddend ) also attempt to capture the deeper meaning
-\textit{underlying} those atomic elements. These models consider not only the
-co-occurrences of those elements within and across documents, but \DIFaddbegin \DIFadd{(in many
-cases) }\DIFaddend also patterns in how those elements appear across different scales
-(e.g., sentences, paragraphs, chapters, etc.), the temporal and grammatical
-properties of the elements, and other high-level characteristics of how they
-are used~\citep{Mann20, Mann21a}. According to these models, the deep
-conceptual meaning of a document may be captured by a feature vector in a
-high-dimensional representation space, wherein nearby vectors reflect
-conceptually related documents. A model that succeeds at capturing an analogue
-of ``understanding'' is able to assign nearby feature vectors to two
-conceptually related documents, \textit{even when the specific words contained
-in those documents have very little overlap}. \DIFaddbegin \DIFadd{In this way, ``concepts'' are
-defined implicitly by the model's geometry~\mbox{%DIFAUXCMD
-\citep[e.g., how the embedding coordinate
-of a given word or document relates to the coordinates of other text
-embeddings;][]{PianHill22}}\hskip0pt%DIFAUXCMD
+) }\DIFdelend \DIFaddbegin \DIFadd{~\mbox{%DIFAUXCMD
+\citep[e.g., ][]{LandDuma97, DeerEtal90, BleiEtal03,
+  BleiLaff06, MikoEtal13a, CerEtal18, BrowEtal20, ViswEtal17} }\hskip0pt%DIFAUXCMD
+}\DIFaddend also
+attempt to capture the deeper meaning \textit{underlying} those atomic
+elements. These models consider not only the co-occurrences of those
+elements within and across documents, but \DIFaddbegin \DIFadd{(in many cases) }\DIFaddend also
+patterns in how those elements appear across different scales (e.g.,
+sentences, paragraphs, chapters, etc.), the temporal and grammatical
+properties of the elements, and other high-level characteristics of
+how they are used~\citep{Mann20, Mann21a}. According to these models,
+the deep conceptual meaning of a document may be captured by a feature
+vector in a high-dimensional representation space, wherein nearby
+vectors reflect conceptually related documents. A model that succeeds
+at capturing an analogue of ``understanding'' is able to assign nearby
+feature vectors to two conceptually related documents, \textit{even
+  when the specific words contained in those documents \DIFdelbegin \DIFdel{have very little
+}\DIFdelend \DIFaddbegin \DIFadd{do not fully
+  }\DIFaddend overlap}. \DIFaddbegin \DIFadd{In this way, ``concepts'' are defined implicitly by the
+model's geometry~\mbox{%DIFAUXCMD
+\citep[e.g., how the embedding coordinate of a given
+word or document relates to the coordinates of other text
+embeddings; ][]{PianHill22}}\hskip0pt%DIFAUXCMD
 .
 }\DIFaddend 
 
@@ -366,7 +383,7 @@ Galaxies'' series, respectively).
 We also wrote a set of multiple-choice quiz questions that we hoped would
 enable us to evaluate participants' knowledge about each individual lecture,
 along with related knowledge about physics concepts not specifically presented
-in either video (see Supp. Tab.~\questions~for the full list of questions in
+in either video (see Supp.\DIFaddbegin \DIFadd{~}\DIFaddend Tab.~\questions~for the full list of questions in
 our stimulus pool). Participants answered questions randomly drawn from each
 content area (Lecture~1, Lecture~2, and general physics knowledge) on each of
 the three quizzes. Quiz~1 was intended to assess participants' ``baseline''
@@ -389,7 +406,7 @@ knowledge after watching the \textit{Birth of Stars} video (i.e., Lecture~2).
     sliding windows parsed from its transcript. \textbf{C. Embedding multiple
     lectures and questions in a shared space.} We apply the same model (trained
     on the two lectures' windows) to both lectures, along with the text of each
-    question in our pool (Supp. Tab.~\questions), to project them into a shared
+    question in our pool (Supp.\DIFaddbeginFL \DIFaddFL{~}\DIFaddendFL Tab.~\questions), to project them into a shared
     text embedding space. This results in one trajectory per lecture and one
     coordinate for each question. Here, we have projected the 15-dimensional
     embeddings onto their first 3 principal components for visualization.}
@@ -430,23 +447,23 @@ content of the lectures (i.e., beyond surface-level details such as particular
 word choices), then we should be able to recover a correspondence between each
 lecture and questions \textit{about} each lecture. Importantly, such a
 correspondence could not solely arise from superficial text matching between
-lecture transcripts and questions, since the lectures and questions used
-different words. Simply comparing the average topic weights from each lecture
-and question set (averaging across time and questions, respectively) reveals a
-striking correspondence (Supp. Fig.~\topicWeights). Specifically, the average
-topic weights from Lecture~1 are strongly correlated with the average topic
-weights from Lecture~1 questions ($r(13) = 0.809,~p < 0.001$, 95\% confidence
-interval (CI)~$= [0.633,~0.962]$), and the average topic weights from Lecture~2
-are strongly correlated with the average topic weights from Lecture~2 questions
-($r(13) = 0.728,~p = 0.002$, 95\% CI~$= [0.456,~0.920]$). At the same time, the
-average topic weights from the two lectures are \textit{negatively} correlated
-with their non-matching question sets (Lecture~1 video vs.~Lecture~2 questions:
-$r(13) = -0.547,~p = 0.035$, 95\% CI~$= [-0.812, ~-0.231]$; Lecture~2 video
-vs.~Lecture~1 questions: $r(13) = -0.612,~p = 0.015$, 95\% CI~$=
-[-0.874,~-0.281]$), indicating that the topic model also exhibits some degree
-of specificity. The full set of pairwise comparisons between average topic
-weights for the lectures and question sets is reported in Supplementary
-Figure~\topicWeights.
+lecture transcripts and questions, since the lectures and questions \DIFaddbegin \DIFadd{often }\DIFaddend used
+different words \DIFdelbegin \DIFdel{. }\DIFdelend \DIFaddbegin \DIFadd{(Supp.~Fig.~\jaccard) and phrasings. }\DIFaddend Simply comparing the
+average topic weights from each lecture and question set (averaging across time
+and questions, respectively) reveals a striking correspondence (Supp.
+Fig.~\topicWeights). Specifically, the average topic weights from Lecture~1 are
+strongly correlated with the average topic weights from Lecture~1 questions
+($r(13) = 0.809,~p < 0.001$, 95\% confidence interval (CI)~$= [0.633,~0.962]$),
+and the average topic weights from Lecture~2 are strongly correlated with the
+average topic weights from Lecture~2 questions ($r(13) = 0.728,~p = 0.002$,
+95\% CI~$= [0.456,~0.920]$). At the same time, the average topic weights from
+the two lectures are \textit{negatively} correlated with their non-matching
+question sets (Lecture~1 video vs.~Lecture~2 questions: $r(13) = -0.547,~p =
+0.035$, 95\% CI~$= [-0.812, ~-0.231]$; Lecture~2 video vs.~Lecture~1 questions:
+$r(13) = -0.612,~p = 0.015$, 95\% CI~$= [-0.874,~-0.281]$), indicating that the
+topic model also exhibits some degree of specificity. The full set of pairwise
+comparisons between average topic weights for the lectures and question sets is
+reported in Supplementary Figure~\topicWeights.
 
 \begin{figure}[tp]
     \centering
@@ -517,14 +534,16 @@ that each question appeared to be temporally specific
 (Fig.~\ref{fig:question-correlations}). In particular, most questions' topic
 vectors were maximally correlated with a well-defined (and relatively narrow)
 range of timepoints from their corresponding lectures, and the correlations
-fell off sharply outside of that range. We also qualitatively examined the
-best-matching intervals for each question by comparing the question's text to
-the text of the most-correlated parts of the lectures. Despite that the
-questions were excluded from the text embedding model's training set, in
-general we found (through manual inspection) a close correspondence between the
-conceptual content that each question probed and the content covered by the
-best-matching moments of the lectures. Two representative examples are shown at
-the bottom of Figure~\ref{fig:question-correlations}.
+fell off sharply outside of that range \DIFdelbegin \DIFdel{. }\DIFdelend \DIFaddbegin \DIFadd{(Supp.~Figs.~\forcesCorrs,~\bosCorrs).
+}\DIFaddend We also qualitatively examined the best-matching intervals for each question by
+comparing the question's text to the text of the most-correlated parts of the
+lectures \DIFdelbegin \DIFdel{.
+}\DIFdelend \DIFaddbegin \DIFadd{(Supp.~Tab.~\matchTab). }\DIFaddend Despite that the questions were excluded from
+the text embedding model's training set, in general we found (through manual
+inspection) a close correspondence between the conceptual content that each
+question probed and the content covered by the best-matching moments of the
+lectures. Two representative examples are shown at the bottom of
+Figure~\ref{fig:question-correlations}.
 
 \begin{figure}[t]
     \centering
@@ -574,15 +593,17 @@ estimated knowledge at coordinate $x$ is given by the weighted average
 proportion of quiz questions the participant answered correctly, where the
 weights reflect how much each question is ``about'' the content at $x$. When we
 apply this approach to estimate the participant's knowledge about the content
-presented in each moment of each lecture, we can obtain a detailed timecourse
-describing how much ``knowledge'' the participant has about any part of the
-lecture. As shown in Figure~\ref{fig:knowledge-timeseries}A and C, we can apply
-this approach separately for the questions from each quiz participants took
-throughout the experiment. From just a few questions per quiz
-(see~\nameref{subsec:traces}), we obtain a high-resolution snapshot (at the
-time each quiz was taken) of what the participants knew about any moment's
-content, from either of the two lectures they watched (comprising a total of
-1,100 samples across the two lectures).
+presented in each moment of each lecture, we can obtain a detailed \DIFdelbegin \DIFdel{timecourse
+}\DIFdelend \DIFaddbegin \DIFadd{time course
+}\DIFaddend describing how much ``knowledge'' the participant has about \DIFaddbegin \DIFadd{the content
+presented at }\DIFaddend any part of the lecture. As shown in
+Figure~\ref{fig:knowledge-timeseries}A and C, we can apply this approach
+separately for the questions from each quiz participants took throughout the
+experiment. From just a few questions per quiz (see~\nameref{subsec:traces}),
+we obtain a high-resolution snapshot (at the time each quiz was taken) of what
+the participants knew about any moment's content, from either of the two
+lectures they watched (comprising a total of 1,100 samples across the two
+lectures).
 
 \begin{figure}[tp]
     \centering
@@ -624,7 +645,7 @@ content, from either of the two lectures they watched (comprising a total of
     \label{fig:knowledge-timeseries}
 \end{figure}
 
-While the timecourses in Figure~\ref{fig:knowledge-timeseries}A and C provide
+While the \DIFdelbegin \DIFdel{timecourses }\DIFdelend \DIFaddbegin \DIFadd{time courses }\DIFaddend in Figure~\ref{fig:knowledge-timeseries}A and C provide
 detailed \textit{estimates} about participants' knowlege, these estimates are
 of course only \textit{useful} to the extent that they accurately reflect what
 participants actually know. As one sanity check, we anticipated that the
@@ -766,7 +787,7 @@ space), then it could explain why some held-out questions about }\textit{\DIFadd
 Fundamental Forces}} \DIFadd{were answered incorrectly, even if questions at nearby
 coordinates (i.e., about similar content) were answered correctly. This might
 lead our approach to over-estimate knowledge }\DIFaddend for held-out \DIFdelbegin \DIFdel{incorrectly }\DIFdelend \DIFaddbegin \DIFadd{questions about
-``forgotten'' knowledge that particpants answered incorrectly.
+``forgotten'' knowledge that participants answered incorrectly.
 }
 
 \DIFadd{That the knowledge estimates derived from the text embedding space reliably
@@ -779,18 +800,18 @@ suppose we know that a participant answers a question (at embedding coordinate
 $X$) correctly. As we move away from $X$ in the embedding space, how does quiz
 performance ``fall off'' with distance? Or, suppose the participant instead
 answered that same question }\textit{\DIFadd{in}}\DIFadd{correctly. Again, as we move away from
-$X$ in the embedding space, how does our confidence that the participant does
+$X$ in the embedding space, how do the chances that the participant does
 }\textit{\DIFadd{not}} \DIFadd{know about the content change with distance? We reasoned that,
 assuming our space is capturing something about how participants actually
-organize their knowledge, conceptual knowledge right around $X$ should be similar
-to the participant's knowledge of the content at $X$. And at another extreme, at
-some distance (after moving sufficiently far away from $X$), our guesses about
-what participants know (based on their response to the question at location $X$)
-should be no better than guessing based on their overall proportion of
-correctly answered questions—i.e., if $Y$ is very far away from $X$, all we can do
-with the participant's response to $X$ is guess that ``their performance on quiz
-questions about $Y$ is about equal to their average performance on quiz questions
-about any material.''
+organize their knowledge, conceptual knowledge right around $X$ should be
+similar to the participant's knowledge of the content at $X$. And at another
+extreme, at some distance (after moving sufficiently far away from $X$), our
+guesses about what participants know (based on their response to the question
+at location $X$) should be no better than guessing based on their overall
+proportion of correctly answered questions—i.e., if $Y$ is very far away from
+$X$, all we can do with the participant's response to $X$ is guess that ``their
+performance on quiz questions about $Y$ is about equal to their average
+performance on quiz questions about any material.''
 }
 
 \begin{figure}[t]
@@ -848,8 +869,8 @@ number of topics used by the model functions to increase the ``resolution'' of
 the embedding space, providing a greater ability to estimate knowledge for
 content that is highly similar to (but not precisely the same as) that
 contained in the two lectures. \DIFaddbegin \DIFadd{This change in the number of topics overcame an
-undesireable behavior in the UMAP embedding procedure~\mbox{%DIFAUXCMD
-\citep{McInEtal18}}\hskip0pt%DIFAUXCMD
+undesirable behavior in the UMAP embedding procedure~\mbox{%DIFAUXCMD
+\citep{McInEtal18a}}\hskip0pt%DIFAUXCMD
 ,
 whereby embedding coordinates for the 15-topic model tended to be ``clumped''
 into separated clusters, rather than forming a smooth trajectory through the 2D
@@ -940,7 +961,8 @@ estimated knowledge increases we observed across maps were specific to the
 regions around the embeddings of each lecture, in turn.
 
 Because the 2D projection we used to construct the knowledge and learning maps
-is invertible, we may gain additional insights into these maps' meaning by
+is invertible, we may gain additional insights into these maps' \DIFdelbegin \DIFdel{meaning
+}\DIFdelend \DIFaddbegin \DIFadd{meanings }\DIFaddend by
 reconstructing the original high-dimensional topic vector for any location on
 the map we are interested in. For example, this could serve as a useful tool
 for an instructor looking to better understand which content areas a student
@@ -976,68 +998,68 @@ estimates of how much participants know about any concept within the scope of
 our text embedding model, and how much their knowledge of those concepts
 changes with training (Fig.~\ref{fig:knowledge-maps}).
 
-\DIFaddbegin \DIFadd{We view our work as making several contributions to the study of how people
+\DIFdelbegin \DIFdel{Over the }\DIFdelend \DIFaddbegin \DIFadd{We view our work as making several contributions to the study of how people
 acquire conceptual knowledge. First, from a methodological standpoint, our
 modeling framework provides a systematic means of mapping out and
 characterizing knowledge in maps that have infinite (arbitrarily many) numbers
 of coordinates, and of ``filling out'' those maps using relatively small
 numbers of multiple choice quiz questions. Our experimental finding that we can
-use these maps to predict responses to held-out questions
-(Fig.~\ref{fig:predictions}) also has important psychological implications. One
-such psychological implication is that concepts that are assigned to nearby
-coordinates by the text embedding model also appear to be ``known to a similar
-extent'' (as reflected by participants' responses to held-out questions). This
-suggests that participants also }\textit{\DIFadd{conceptualize}} \DIFadd{similarly the content
-reflected by nearby embedding coordinates. A second psychological implication
-is that something about how participants' knowledge ``spreads'' across concepts
-is being captured by the knowledge maps we are inferring from their quiz
-responses (e.g., Figs.~\ref{fig:smoothness},~\ref{fig:knowledge-maps}). In
-other words, our study shows that knowledge about a given concept implies
-knowledge about related concepts.
+use these maps to predict responses to held-out questions has several
+psychological implications as well. For example, concepts that are assigned to
+nearby coordinates by the text embedding model also appear to be ``known to a
+similar extent'' (as reflected by participants' responses to held-out
+questions; Fig.~\ref{fig:predictions}). This suggests that participants also
+}\textit{\DIFadd{conceptualize}} \DIFadd{similarly the content reflected by nearby embedding
+coordinates. The ``spatial smoothness'' of participants' knowledge (as
+estimated using quiz performance) is being captured by the knowledge maps we
+are inferring from their quiz responses (e.g.,
+Figs.~\ref{fig:smoothness},~\ref{fig:knowledge-maps}). In other words, our
+study shows that knowledge about a given concept implies knowledge about
+related concepts, and we also show how estimated knowledge falls off with
+distance in text embedding space.
 }
 
 \DIFadd{In our study, we characterize the ``coordinates'' of participants' knowledge
 using a relatively simple ``bag of words'' text embedding model~\mbox{%DIFAUXCMD
 \citep[LDA;
-]{BleiEtal03}}\hskip0pt%DIFAUXCMD
+][]{BleiEtal03}}\hskip0pt%DIFAUXCMD
 . More sophisticated text embedding models, such as
 transformer-based models~\mbox{%DIFAUXCMD
 \citep{ViswEtal17, DevlEtal18, ChatGPT, TouvEtal23}
 }\hskip0pt%DIFAUXCMD
 can learn complex grammatical and semantic relationships between words,
-higher-order syntactic structures, sylistic features, and more. We considered
-using transformer-based models in our study, but we were surprised to find that
-the text embeddings derived from these models were surprisingly uninformative
-with respect to differentiating or otherwise characterizing the conceptual
-content of the lectures and questions we used. We suspect that this reflects a
-broader challenge in constructing models that are high-resolution within a
-given domain (e.g., the domain of physics lectures and questions) }\textit{\DIFadd{and}}
-\DIFadd{sufficiently broad so as to enable them to cover a wide range of domains. For
-example, we found that the embeddings derived even from much larger and more
-modern models like BERT~\mbox{%DIFAUXCMD
+higher-order syntactic structures, stylistic features, and more. We considered
+using transformer-based models in our study, but we found that the text
+embeddings derived from these models were surprisingly uninformative with
+respect to differentiating or otherwise characterizing the conceptual content
+of the lectures and questions we used. We suspect that this reflects a broader
+challenge in constructing models that are high-resolution within a given domain
+(e.g., the domain of physics lectures and questions) }\textit{\DIFadd{and}} \DIFadd{sufficiently
+broad so as to enable them to cover a wide range of domains. For example, we
+found that the embeddings derived even from much larger and more modern models
+like BERT~\mbox{%DIFAUXCMD
 \citep{DevlEtal18}}\hskip0pt%DIFAUXCMD
 , GPT~\mbox{%DIFAUXCMD
 \citep{ViswEtal17}}\hskip0pt%DIFAUXCMD
-,
-LLaMa~\mbox{%DIFAUXCMD
+, LLaMa~\mbox{%DIFAUXCMD
 \citep{TouvEtal23}}\hskip0pt%DIFAUXCMD
-, and others that are trained on enormous text corpora,
-end up yielding poor resolution within the content space spanned by indiviudal
-course videos (Supp. Fig.~\ldaVsBERT). Whereas the LDA embeddings of the
-lectures and questions are ``near'' each other (i.e., the convex hull enclosing
-the two lectures' trajectories is highly overlapping with the convex hull
-enclosing the questions' embeddings), the BERT embeddings of the lectures and
-questions are instead largely distinct (top row of Supp. Fig.~\ldaVsBERT). The
-LDA embeddings of the questions for each lecture and the corresponding
-lecture's trajectory are also similar. For example, as shown in
-Fig.~\ref{fig:sliding-windows}C, the LDA embeddings for }\textit{\DIFadd{Four
-Fundamental Forces}} \DIFadd{questions (blue dots) appear closer to the }\textit{\DIFadd{Four
-Fundamental Forces}} \DIFadd{lecture trajectory (blue line), whereas the LDA embeddings
-for }\textit{\DIFadd{Birth of Stars}} \DIFadd{questions (green dots) appear closer to the
-}\textit{\DIFadd{Birth of Stars}} \DIFadd{lecture trajectory (green line). The BERT embeddings of
-the lectures and questions do not show this property (Supp. Fig.~\ldaVsBERT).
-We also examined per-question ``content matches'' between individual questions
-and individual moments of each lecture
+,
+and others that are trained on enormous text corpora, end up yielding poor
+resolution within the content space spanned by individual course videos
+(Supp.~Fig.~\ldaVsBERT). Whereas the LDA embeddings of the lectures and
+questions are ``near'' each other (i.e., the convex hull enclosing the two
+lectures' trajectories is highly overlapping with the convex hull enclosing the
+questions' embeddings), the BERT embeddings of the lectures and questions are
+instead largely distinct (top row of Supp.~Fig.~\ldaVsBERT). The LDA embeddings
+of the questions for each lecture and the corresponding lecture's trajectory
+are also similar. For example, as shown in Fig.~\ref{fig:sliding-windows}C, the
+LDA embeddings for }\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{questions (blue dots)
+appear closer to the }\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{lecture trajectory (blue
+line), whereas the LDA embeddings for }\textit{\DIFadd{Birth of Stars}} \DIFadd{questions (green
+dots) appear closer to the }\textit{\DIFadd{Birth of Stars}} \DIFadd{lecture trajectory (green
+line). The BERT embeddings of the lectures and questions do not show this
+property (Supp.~Fig.~\ldaVsBERT). We also examined per-question ``content
+matches'' between individual questions and individual moments of each lecture
 (Figs.~\ref{fig:question-correlations},~\ldaVsBERT). The timeseries plot of
 individual questions' correlations are different from each other when computed
 using LDA (e.g., the traces can be clearly visually separated), whereas the
@@ -1059,7 +1081,7 @@ correlated with the embeddings of the }\textit{\DIFadd{Four Fundamental Forces}}
 but not with the embeddings of }\textit{\DIFadd{Birth of Stars}}\DIFadd{, questions about
 }\textit{\DIFadd{Birth of Stars}}\DIFadd{, or general physics knowledge questions. We see a
 similar pattern with the LDA embeddings of the }\textit{\DIFadd{Birth of Stars}}
-\DIFadd{questions (Fig.~\ref{fig:topics}, Supp. Fig.~\topicWeights). In contrast, the
+\DIFadd{questions (Fig.~\ref{fig:topics}, Supp.~Fig.~\topicWeights). In contrast, the
 BERT embeddings are all highly correlated with each other (Supp.
 Fig.~\ldaVsBERT). Taken together, these comparisons illustrate how LDA (trained
 on the specific content in question) provides both coverage of the requisite
@@ -1092,16 +1114,16 @@ are already
 being used to build a new generation of interactive tutoring
 systems~\mbox{%DIFAUXCMD
 \citep[e.g.,][]{MannEtal23b}}\hskip0pt%DIFAUXCMD
-.  Unlike the approach we have taken here,
-these systems do not explicitly model what learners know, or how their knowledge 
-changes over time with training.  One could imagine building a hybrid system
-that combines the best of both worlds: a large language model that can
-}\textit{\DIFadd{generate}} \DIFadd{text, combined with a smaller model that can }\textit{\DIFadd{infer}}
-\DIFadd{what learners know and how their knowledge changes over time.  Such a hybrid
-system could potentially be used to build a new generation of interactive
-tutoring systems that are able to adapt to learners' needs in real time, and
-that are able to provide more nuanced feedback about what learners know and
-what they do not know.
+. Unlike the approach we have taken here,
+these generative text model-based systems do not explicitly model what learners
+know, or how their knowledge changes over time with training. One could imagine
+building a hybrid system that combines the best of both worlds: a large
+language model that can }\textit{\DIFadd{generate}} \DIFadd{text, combined with a smaller model
+that can }\textit{\DIFadd{infer}} \DIFadd{what learners know and how their knowledge changes over
+time. Such a hybrid system could potentially be used to build the next
+generation of interactive tutoring systems that are able to adapt to learners'
+needs in real time, and that are able to provide more nuanced feedback about
+what learners know and what they do not know.
 }
 
 \DIFadd{At the opposite end of the spectrum from large language models, one could also
@@ -1115,18 +1137,18 @@ in Figure~\ref{fig:question-correlations} with the Jaccard similarities between
 each question and each sliding window of text from the corresponding lecture.
 As shown in Supplementary Figure~\jaccard, this simple word-matching approach
 does not appear to capture the same level of specificity as the LDA-based
-approach. For example, whereas the LDA-based approach often yields a clear peak
-in the timeseries of correlations between each question and the corresponding
-lecture, the Jaccard similarity-based approach does not. Furthermore, these
-LDA-based matches appear to capture conceptual overlaps between the questions
-and lectures (Supp. Tab.~\matchTab), whereas simple word matching does not. For
-example, one of the example questions examined in Supplementary Figure~\jaccard
-asks ``Which of the following occurs as a cloud of atoms gets more dense?''.
-The LDA-based matches identify lecture timepoints where the releveant
-}\textit{\DIFadd{topics}} \DIFadd{are discussed (e.g., when words like ``cloud,'' ``atom,''
-``dense,'' etc., are mentioned }\textit{\DIFadd{together}}\DIFadd{). The Jaccard similarity-based
-matches, on the other hand, are strong when }\textit{\DIFadd{any}} \DIFadd{of these words are
-mentioned, even if they do not occur together.
+approach. Whereas the LDA-based approach often yields a clear peak in the
+timeseries of correlations between each question and the corresponding lecture,
+the Jaccard similarity-based approach does not. Furthermore, these LDA-based
+matches appear to capture conceptual overlaps between the questions and
+lectures (Supp.~Tab.~\matchTab), whereas simple word matching does not. For
+example, one of the example questions examined in Supplementary
+Figure~\jaccard~asks ``Which of the following occurs as a cloud of atoms gets
+more dense?''. The LDA-based matches identify lecture timepoints where the
+relevant }\textit{\DIFadd{topics}} \DIFadd{are discussed (e.g., when words like ``cloud,''
+``atom,'' ``dense,'' etc., are mentioned }\textit{\DIFadd{together}}\DIFadd{). The Jaccard
+similarity-based matches, on the other hand, are strong when }\textit{\DIFadd{any}} \DIFadd{of
+these words are mentioned, even if they do not occur together.
 }
 
 \DIFadd{We view our approach as occupying a sort of ``sweet spot,'' between much larger
@@ -1148,7 +1170,7 @@ learners' knowledge. However, modeling these aspects of knowledge will likely
 require substantial additional research effort.
 }
 
-\DIFaddend Over the past several years, the global pandemic has forced many educators to
+\DIFadd{Within the }\DIFaddend past several years, the global pandemic \DIFdelbegin \DIFdel{has }\DIFdelend forced many educators to
 suddenly adapt to teaching remotely~\citep{MoseEtal21, ShimLee20, KawaEtal21,
 Whal20}. This change in world circumstances is happening alongside (and perhaps
 accelerating) geometric growth in the availability of high-quality online
@@ -1176,8 +1198,13 @@ towards solving these challenges will be to build explicit models of real-world
 scenarios and how people behave in them (e.g., models of how people learn
 conceptual content from real-world courses, as in our current study). A second
 key step will be to understand which sorts of signals derived from behaviors
-and/or other measurements (e.g., neurophysiological data;~\citealp{NguyEtal22,
-MeshEtal20, PoulEtal17, BeviEtal19, DikkEtal17}) might help to inform these
+and/or other measurements\DIFdelbegin \DIFdel{(e.g., neurophysiological data;~\mbox{%DIFAUXCMD
+\citealp{NguyEtal22,
+MeshEtal20, PoulEtal17, BeviEtal19, DikkEtal17}}\hskip0pt%DIFAUXCMD
+) }\DIFdelend \DIFaddbegin \DIFadd{~\mbox{%DIFAUXCMD
+\citep[e.g., neurophysiological data; ][]{NguyEtal22,
+MeshEtal20, PoulEtal17, BeviEtal19, DikkEtal17} }\hskip0pt%DIFAUXCMD
+}\DIFaddend might help to inform these
 models. A third major step will be to develop and employ reliable ways of
 evaluating the complex models and data that are a hallmark of naturalistic
 paradigms.
@@ -1341,7 +1368,7 @@ multiple-choice quizzes: the first before viewing Lecture~1, the second between
 Lectures~1 and 2, and the third after viewing Lecture~2 (see
 Fig.~\ref{fig:experiment}). The questions appearing on each quiz, for each
 participant, were randomly chosen from the full set of 39, with the constraints
-that (a) each quiz contain exactly 5 questions about Lecture~1, 5 questions
+that (a) each quiz \DIFdelbegin \DIFdel{contain }\DIFdelend \DIFaddbegin \DIFadd{contained }\DIFaddend exactly 5 questions about Lecture~1, 5 questions
 about Lecture~2, and 3 questions about general physics knowledge, and (b) each
 question appear exactly once for each participant. The orders of questions on
 each quiz, and the orders of answer options for each question, were also
@@ -1356,26 +1383,36 @@ learning.
 
 We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
 each moment of the two lectures and each question in our pool in a common
-representational space. Briefly, our approach uses a topic model (Latent
-Dirichlet Allocation;~\citealp{BleiEtal03}), trained on a set of documents, to
+representational space. Briefly, our approach uses a topic model\DIFdelbegin \DIFdel{(Latent
+Dirichlet Allocation;~\mbox{%DIFAUXCMD
+\citealp{BleiEtal03}}\hskip0pt%DIFAUXCMD
+), }\DIFdelend \DIFaddbegin \DIFadd{~\mbox{%DIFAUXCMD
+\citep[Latent
+Dirichlet Allocation; ][]{BleiEtal03} }\hskip0pt%DIFAUXCMD
+}\DIFaddend trained on a set of documents, to
 discover a set of (up to) $k$ ``topics'' or ``themes.'' Formally, each topic is
-defined as a distribution of weights over each word in the model's vocabulary
+defined as a distribution of weights over \DIFdelbegin \DIFdel{each word }\DIFdelend \DIFaddbegin \DIFadd{words }\DIFaddend in the model's vocabulary
 (i.e., the union of all unique words, across all documents, excluding ``stop
 words.''). Conceptually, each topic is intended to give larger weights to words
-that are semantically related\DIFdelbegin \DIFdel{or tend to co-occur }\DIFdelend \DIFaddbegin \DIFadd{, as implied by their co-occurring }\DIFaddend in the same documents. After
-fitting a topic model, each document in the training set, or any \textit{new}
-document that contains at least some of the words in the model's vocabulary,
-may be represented as a $k$-dimensional vector describing how much the document
-(most probably) reflects each topic. To select an appropriate $k$ for our
-model, we identified the minimum number of topics that yielded at least one
-``unused'' topic (i.e., in which all words in the vocabulary were assigned
-uniform weights) after training. This indicated that the number of topics was
-sufficient to capture the set of latent themes present in the two lectures
-(from which we constructed our document corpus, as described below). We found
-this value to be $k = 15$ topics. The distribution of weights over words in the
-vocabulary for each discovered topic is shown in Supplementary
-Figure~\topicWordWeights, and each topic's top-weighted words may be found in
-Supplementary Table~\topics.
+that are semantically related\DIFdelbegin \DIFdel{or tend to co-occur }\DIFdelend \DIFaddbegin \DIFadd{, as implied by their co-occurring }\DIFaddend in the same
+documents. After fitting a topic model, each document in the training set, or
+any \textit{new} document that contains at least some of the words in the
+model's vocabulary, may be represented as a $k$-dimensional vector describing
+how much the document (most probably) reflects each topic. To select an
+appropriate $k$ for our model, \DIFaddbegin \DIFadd{as a starting point, }\DIFaddend we identified the minimum
+number of topics that yielded at least one ``unused'' topic (i.e., in which all
+words in the vocabulary were assigned uniform weights) after training. This
+indicated that the number of topics was sufficient to capture the set of latent
+themes present in the two lectures (from which we constructed our document
+corpus, as described below). We found this value to be $k = 15$ topics. \DIFaddbegin \DIFadd{We
+found that with a limited number of additional adjustments
+following~\mbox{%DIFAUXCMD
+\citep{BoydMimn14}}\hskip0pt%DIFAUXCMD
+, such as removing corpus-specific stop-words, the
+model yielded (subjectively) sensible and coherent topics. }\DIFaddend The distribution of
+weights over words in the vocabulary for each discovered topic is shown in
+Supplementary Figure~\topicWordWeights, and each topic's top-weighted words may
+be found in Supplementary Table~\topics.
 
 As illustrated in Figure~\ref{fig:sliding-windows}A, we start by building up a
 corpus of documents using overlapping sliding windows that span each video's
@@ -1384,9 +1421,14 @@ of all videos for closed captioning. However, such transcripts would not be
 readily available in all contexts to which our framework could potentially be
 applied. Khan Academy videos are hosted on the YouTube platform, which
 additionally provides automated captions. We opted to use these automated
-transcripts (which, in prior work, we have found to be of sufficiently
+transcripts\DIFdelbegin \DIFdel{(which, in prior work, we have found to be of sufficiently near-human
+quality to yield reliable data in behavioral studies;~\mbox{%DIFAUXCMD
+\citealp{ZimaEtal18}}\hskip0pt%DIFAUXCMD
+) }\DIFdelend \DIFaddbegin \DIFadd{~\mbox{%DIFAUXCMD
+\citep[which, in prior work, we have found to be of sufficiently
 near-human quality to yield reliable data in behavioral
-studies;~\citealp{ZimaEtal18}) when developing our framework in order to make
+studies; ][]{ZimaEtal18} }\hskip0pt%DIFAUXCMD
+}\DIFaddend when developing our framework in order to make
 it more directly extensible and adaptable by others in the future.
 
 We fetched these automated transcripts using the
@@ -1414,19 +1456,19 @@ in the same number ($w$) of sliding windows. \DIFdelbegin \DIFdel{After performi
 }\DIFaddend standard text preprocessing \DIFdelbegin \DIFdel{(e.g., }\DIFdelend \DIFaddbegin \DIFadd{steps: }\DIFaddend normalizing case, lemmatizing, removing
 punctuation and \DIFaddbegin \DIFadd{removing }\DIFaddend stop-words\DIFdelbegin \DIFdel{), we }\DIFdelend \DIFaddbegin \DIFadd{. We constructed our corpus of stop words by
 augmenting the Natural Language Toolkit~\mbox{%DIFAUXCMD
-\citep[NLTK; ]{BirdEtal09} }\hskip0pt%DIFAUXCMD
-English stop
-word list with the following additional words, selected using the stop word
-approach suggested by~\mbox{%DIFAUXCMD
+\citep[NLTK; ][]{BirdEtal09} }\hskip0pt%DIFAUXCMD
+English
+stop word list with the following additional words, selected using the approach
+suggested by~\mbox{%DIFAUXCMD
 \citep{BoydMimn14}}\hskip0pt%DIFAUXCMD
-: ``actual,'' ``actually,'' ``also,''
-``bit,'' ``could,'' ``e,'' ``even,'' ``first,'' ``follow,'' ``following,''
-``four,'' ``let,'' ``like,'' ``mc,'' ``really,'', ``saw,'' ``see,'' ``seen,''
-``thing,'' and ``two.'' This yielded sliding windows with an average of 73.8
-remaining words, and lasting for an average of 62.22~seconds. We }\DIFaddend treated the
-text from each sliding window as a single ``document,'' and combined these
-documents across the two videos' windows to create a single training corpus for
-the topic model.
+: ``actual,'' ``actually,'' ``also,'' ``bit,''
+``could,'' ``e,'' ``even,'' ``first,'' ``follow,'' ``following,'' ``four,''
+``let,'' ``like,'' ``mc,'' ``really,'', ``saw,'' ``see,'' ``seen,'' ``thing,''
+and ``two.'' This yielded sliding windows with an average of 73.8 remaining
+words, and lasting for an average of 62.22~seconds. We }\DIFaddend treated the text from
+each sliding window as a single ``document,'' and combined these documents
+across the two videos' windows to create a single training corpus for the topic
+model.
 
 After fitting a topic model to the two videos' transcripts, we could use the
 trained model to transform arbitrary (potentially new) documents into
@@ -1441,7 +1483,7 @@ similarity in conceptual content between the documents.
 We transformed each sliding window's text into a topic vector, and then used
 linear interpolation (independently for each topic dimension) to resample the
 resulting timeseries to one vector per second. We also used the fitted model to
-obtain topic vectors for each question in our pool (see Supp. Tab.~\questions).
+obtain topic vectors for each question in our pool (see Supp.\DIFaddbegin \DIFadd{~}\DIFaddend Tab.~\questions).
 Taken together, we obtained a \textit{trajectory} for each video, describing
 its path through topic space, and a single coordinate for each question
 (Fig.~\ref{fig:sliding-windows}C). Embedding both videos and all of the
@@ -1483,10 +1525,9 @@ timepoint $t$, where the weights are given by the normalized correlations
 between timepoint $t$'s topic vector and the topic vectors for each question.
 The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
 correlations) \DIFdelbegin \DIFdel{insures }\DIFdelend \DIFaddbegin \DIFadd{ensures }\DIFaddend that every question contributes some non-negative amount
-to the knowledge estimate\DIFaddbegin \DIFadd{.
-}
+to the knowledge estimate.
 
-\subsubsection*{\DIFadd{Estimating the ``smoothness'' of knowledge}}\label{subsec:smoothness}
+\DIFaddbegin \subsubsection*{\DIFadd{Estimating the ``smoothness'' of knowledge}}\label{subsec:smoothness}
 
 \DIFadd{In the analysis reported in Figure~\ref{fig:smoothness}A, we show how
 participants' quiz performance changes as a function of distance to a given
@@ -1514,23 +1555,23 @@ proportion correct across all questions.
 \DIFadd{Next, for each participant, we examined all 15 questions they answered on quiz
 $q$. We treated each question as the ``reference question'' in turn. Around
 this reference, we constructed a series of 15-dimensional spheres (starting
-with a radius of 0), where each successive circle had a radius of 0.01
+with a radius of 0), where each successive sphere had a radius of 0.01
 (correlation distance) greater than its predecessor. Within each of these
 spheres, we calculated the proportion of questions answered correctly by the
-participant. The per-radius proportion correct values were then averaged across
-both categories of ``reference questions'': those answered correctly and those
-answered incorrectly. This yielded two distinct proportion-correct values for
-each binned distance (radius) for a specific participant and quiz. From these,
-we established the average proportion correct within each radius for both
+participant. This yielded two distinct sets of proportion-correct values for
+each binned distance (radius) for a specific participant and quiz: one set of
+values where the reference questions had been answered correctly, and another
+set where the reference questions had been answered incorrectly. From these, we
+established the average proportion correct within each radius for both
 categories of reference questions. Finally, we identified the minimum binned
 distance from the correctly answered reference questions for which the average
 proportion correct intersected the 95\% confidence interval of the simple
-average proportion correct computed earlier. (A parallel analysis was conducted
-for the incorrectly answered reference questions.) We display the resulting
-distance estimates, for each quiz and reference question status, in
-Figure~\ref{fig:smoothness}B}\DIFaddend .
+average proportion correct computed earlier. We display the resulting distance
+estimates, for each quiz and reference question status, in
+Figure~\ref{fig:smoothness}B.
+}
 
-\subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
+\DIFaddend \subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
 
 An important feature of our approach is that, given a trained text embedding
 model and participants' quiz performance on each question, we can estimate
@@ -1540,7 +1581,11 @@ appearing in the lectures. To visualize these estimates
 (Fig.~\ref{fig:knowledge-maps}, Supp.
 Figs.~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
 and~\individualLearningMapsB), we used Uniform Manifold Approximation and
-Projection (UMAP; \citealp{McInEtal18a, McInEtal18b}) to construct a 2D
+Projection\DIFdelbegin \DIFdel{(UMAP; \mbox{%DIFAUXCMD
+\citealp{McInEtal18a, McInEtal18b}}\hskip0pt%DIFAUXCMD
+) }\DIFdelend \DIFaddbegin \DIFadd{~\mbox{%DIFAUXCMD
+\citep[UMAP; ][]{McInEtal18a, McInEtal18b} }\hskip0pt%DIFAUXCMD
+}\DIFaddend to construct a 2D
 projection of the text embedding space. Sampling the original 100-dimensional
 space at high resolution to obtain an adequate set of topic vectors spanning
 the embedding space would be computationally intractable. However, sampling a
@@ -1620,7 +1665,7 @@ We acknowledge useful discussions, assistance in setting up an earlier
 (unpublished) version of this study, and assistance with data collection
 efforts from Will Baxley, Max Bluestone, Daniel Carstensen, Kunal Jha, Caroline
 Lee, Lucy Owen, Xinming Xu, and Kirsten Ziman. Our work was supported in part
-by NSF CAREER Award Number 2145172 to JRM. The content is solely the
+by NSF CAREER Award Number 2145172 to \DIFdelbegin \DIFdel{JRM}\DIFdelend \DIFaddbegin \DIFadd{J.R.M}\DIFaddend . The content is solely the
 responsibility of the authors and does not necessarily represent the official
 views of our supporting organizations. The funders had no role in study design,
 data collection and analysis, decision to publish, or preparation of the
