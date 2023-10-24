@@ -30,6 +30,8 @@
 \newcommand{\individualLearningMapsA}{10}
 \newcommand{\individualLearningMapsB}{11}
 
+\newcommand{\U}{{\fontfamily{serif}\selectfont\ensuremath{\mathrm{U}}}}
+
 
 % simple command for inline comments
 \newcommand{\comment}[1]{}
@@ -548,7 +550,7 @@ participant answered on the same quiz. For each quiz, we grouped these
 estimates into two distributions: one for the estimated knowledge at the
 coordinates of \textit{correctly} answered questions, and another for the
 estimated knowledge at the coordinates of \textit{incorrectly} answered
-questions (Fig.~\ref{fig:predictions}). We then used Mann-Whitney $U$-tests to
+questions (Fig.~\ref{fig:predictions}). We then used Mann-Whitney $\U$-tests to
 compare the means of these distributions of estimated knowledge.
 
 \begin{figure}[tp]
@@ -559,7 +561,7 @@ compare the means of these distributions of estimated knowledge.
     held-out questions.} Separately for each quiz (panel), we plot the
     distributions of predicted knowledge at the embedding coordinates of each
     held-out correctly (blue) or incorrectly (red) answered question. The
-    Mann-Whitney $U$-tests reported in each panel are between the distributions
+    Mann-Whitney $\U$-tests reported in each panel are between the distributions
     of estimated knowledge at the coordinates of correctly versus incorrectly
     answered held-out questions. In the top row (``All questions''), we used
     all quiz questions (from each quiz, for each participant) except one to
@@ -582,17 +584,17 @@ individual questions and estimated their knowledge at the held-out questions'
 embedding coordinates, we found no reliable differences in the estimates when
 the held-out question had been correctly versus incorrectly answered. This
 ``null'' effect persisted when we used \textit{all} of the Quiz 1 questions
-from a given participant to predict a held-out question (``All questions''; $U
+from a given participant to predict a held-out question (``All questions''; $\U
 = 50587, p = 0.723$), when we used questions from one lecture to predict
 knowledge at the embedding coordinate of a held-out question about the
 \textit{other} lecture (``Across-lecture''; predicting knowledge for held-out
 \textit{Four Fundamental Forces Questions} using \textit{Birth of Stars}
-questions: $U = 8244, p = 0.184$; predicting knowledge for held-out
-\textit{Birth of Stars} questions: $U = 8202.5, p = 0.161$), and when we used
+questions: $\U = 8244, p = 0.184$; predicting knowledge for held-out
+\textit{Birth of Stars} questions: $\U = 8202.5, p = 0.161$), and when we used
 questions from one lecture to predict knowledge at the embedding coordinate of
 a held-out question about the \textit{same} lecture (``Within-lecture'';
-\textit{Four Fundamental Forces}: $U = 7681.5, p = 0.746$; \textit{Birth of
-Stars}: $U = 8125, p = 0.204$). We believe that this reflects a floor effect:
+\textit{Four Fundamental Forces}: $\U = 7681.5, p = 0.746$; \textit{Birth of
+Stars}: $\U = 8125, p = 0.204$). We believe that this reflects a floor effect:
 when knowledge is low everywhere, there is little signal to differentiate
 between what is known versus unknown. 
 
@@ -600,14 +602,14 @@ After watching \textit{Four Fundamental Forces}, estimated knowledge for
 held-out correctly answered questions (from the second quiz;
 Fig.~\ref{fig:predictions}, middle column) exhibited a positive shift relative
 to held-out incorrectly answered questions. This held when we included all
-questions in the analysis ($U = 58332, p < 0.001$), when we predicted knowledge
-across-lectures (\textit{Four Fundamental Forces}: $U = 6749.5, p = 0.014$;
-\textit{Birth of Stars}: $U = 8480, p = 0.016$), and when we predicted
+questions in the analysis ($\U = 58332, p < 0.001$), when we predicted knowledge
+across-lectures (\textit{Four Fundamental Forces}: $\U = 6749.5, p = 0.014$;
+\textit{Birth of Stars}: $\U = 8480, p = 0.016$), and when we predicted
 knowledge at the embedding coordinates of held-out \textit{Four Fundamental
 Forces} questions using other \textit{Four Fundamental Forces} questions from
-the same quiz and participant ($U = 7224, p < 0.001$). This difference did
+the same quiz and participant ($\U = 7224, p < 0.001$). This difference did
 \textit{not} hold for within-lecture predictions of \textit{Birth of Stars}
-knowledge ($U = 7419, p = 0.739$). Again, we suggest that this might reflect a
+knowledge ($\U = 7419, p = 0.739$). Again, we suggest that this might reflect a
 floor effect whereby knowledge about the content of the \textit{Birth of Stars}
 material is relatively low everywhere in that region of text embedding space.
 
@@ -615,15 +617,15 @@ Finally, after watching \textit{Birth of Stars}, estimated knowledge for
 held-out correctly answered questions (from the third quiz;
 Fig.~\ref{fig:predictions}, right column) was higher for held-out correctly
 answered questions than for held-out incorrectly answered questions. This held
-when we included all questions in the analysis ($U = 38279, p = 0.022$), when
-we carried out across-lecture predictions (\textit{Four Fundamental Forces}: $U
-= 6684.5, p = 0.032$; \textit{Birth of Stars}: $U = 6414.5, p = 0.002$), and
+when we included all questions in the analysis ($\U = 38279, p = 0.022$), when
+we carried out across-lecture predictions (\textit{Four Fundamental Forces}: $\U
+= 6684.5, p = 0.032$; \textit{Birth of Stars}: $\U = 6414.5, p = 0.002$), and
 and when we carried out within-lecture predictions of held-out \textit{Birth of
 Stars} questions using other \textit{Birth of Stars} questions from the same
-quiz and participant ($U = 6126, p = 0.006$). However, we found the
+quiz and participant ($\U = 6126, p = 0.006$). However, we found the
 \textit{opposite} effect when we carried out within-lecture predictions of
 held-out \textit{Four Fundamental Forces} questions using other \textit{Four
-Fundamental Forces} questions from the same quiz and participant ($U = 6734, p
+Fundamental Forces} questions from the same quiz and participant ($\U = 6734, p
 = 0.027$). Specifically, held-out correctly answered Quiz 3 questions about
 \textit{Four Fundamental Forces} had reliably \textit{lower} estimated
 knowledge than held-out incorrectly answered questions. Speculatively, we
@@ -1179,12 +1181,19 @@ that (a) each quiz contained exactly 5 questions about Lecture~1, 5 questions
 about Lecture~2, and 3 questions about general physics knowledge, and (b) each
 question appear exactly once for each participant. The orders of questions on
 each quiz, and the orders of answer options for each question, were also
-randomized. Our experimental protocol was approved by the Committee for the
-Protection of Human Subjects at Dartmouth College. We used this experiment to
-develop and test our computational framework for estimating knowledge and
-learning.
+randomized. We obtained informed consent from all participants, and our
+experimental protocol was approved by the Committee for the Protection of Human
+Subjects at Dartmouth College. We used this experiment to develop and test our
+computational framework for estimating knowledge and learning.
 
 \subsection*{Analysis}
+
+\subsubsection*{Statistics} 
+
+All of the statistical tests performed in our study were two-sided. The 95\%
+confidence intervals we reported for each correlation were estimated by
+generating 10,000 bootstrap distributions of correlation coefficients by
+sampling (with replacement) from the observed data.
 
 \subsubsection*{Constructing text embeddings of multiple lectures and questions}\label{subsec:topic-modeling}
 
@@ -1196,18 +1205,18 @@ discover a set of (up to) $k$ ``topics'' or ``themes.'' Formally, each topic is
 defined as a distribution of weights over words in the model's vocabulary
 (i.e., the union of all unique words, across all documents, excluding ``stop
 words.''). Conceptually, each topic is intended to give larger weights to words
-that are semantically related, as implied by their co-occurring in the same
-documents. After fitting a topic model, each document in the training set, or
-any \textit{new} document that contains at least some of the words in the
-model's vocabulary, may be represented as a $k$-dimensional vector describing
-how much the document (most probably) reflects each topic. To select an
-appropriate $k$ for our model, as a starting point, we identified the minimum
-number of topics that yielded at least one ``unused'' topic (i.e., in which all
-words in the vocabulary were assigned uniform weights) after training. This
-indicated that the number of topics was sufficient to capture the set of latent
-themes present in the two lectures (from which we constructed our document
-corpus, as described below). We found this value to be $k = 15$ topics. We
-found that with a limited number of additional adjustments
+that are semantically related (as inferred from their tendency to co-occur in
+the same document). After fitting a topic model, each document in the training
+set, or any \textit{new} document that contains at least some of the words in
+the model's vocabulary, may be represented as a $k$-dimensional vector
+describing how much the document (most probably) reflects each topic. To select
+an appropriate $k$ for our model, as a starting point, we identified the
+minimum number of topics that yielded at least one ``unused'' topic (i.e., in
+which all words in the vocabulary were assigned uniform weights) after
+training. This indicated that the number of topics was sufficient to capture
+the set of latent themes present in the two lectures (from which we constructed
+our document corpus, as described below). We found this value to be $k = 15$
+topics. We found that with a limited number of additional adjustments
 following~\citep{BoydMimn14}, such as removing corpus-specific stop-words, the
 model yielded (subjectively) sensible and coherent topics. The distribution of
 weights over words in the vocabulary for each discovered topic is shown in
@@ -1434,11 +1443,15 @@ PCF, ACH, and JRM. Visualization: PCF and JRM. Supervision: JRM. Project
 administration: PCF. Funding acquisition: JRM.
 
 
-\section*{Data and code availability}
+\section*{Data availability}
 
-All of the data analyzed in this manuscript, along with all of the code for
-running our experiment and carrying out the analyses may be found at
+All of the data analyzed in this manuscript may be found at
 https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
+
+\section*{Code availability}
+
+All of the code for running our experiment and carrying out the analyses may be
+found at https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
 
 \section*{Acknowledgements}
 
