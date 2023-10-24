@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Tue Oct 24 01:22:09 2023
-%DIF ADD main.tex   Tue Oct 24 14:50:17 2023
+%DIF ADD main.tex   Tue Oct 24 14:56:36 2023
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[font=small,labelfont=bf]{caption}
@@ -1399,13 +1399,18 @@ documents. After fitting a topic model, each document in the training set, or
 any \textit{new} document that contains at least some of the words in the
 model's vocabulary, may be represented as a $k$-dimensional vector describing
 how much the document (most probably) reflects each topic. To select an
-appropriate $k$ for our model, we identified the minimum number of topics that
-yielded at least one ``unused'' topic (i.e., in which all words in the
-vocabulary were assigned uniform weights) after training. This indicated that
-the number of topics was sufficient to capture the set of latent themes present
-in the two lectures (from which we constructed our document corpus, as
-described below). We found this value to be $k = 15$ topics. The distribution
-of weights over words in the vocabulary for each discovered topic is shown in
+appropriate $k$ for our model, \DIFaddbegin \DIFadd{as a starting point, }\DIFaddend we identified the minimum
+number of topics that yielded at least one ``unused'' topic (i.e., in which all
+words in the vocabulary were assigned uniform weights) after training. This
+indicated that the number of topics was sufficient to capture the set of latent
+themes present in the two lectures (from which we constructed our document
+corpus, as described below). We found this value to be $k = 15$ topics. \DIFaddbegin \DIFadd{We
+found that with a limited number of additional adjustments
+following~\mbox{%DIFAUXCMD
+\citep{BoydMimn14}}\hskip0pt%DIFAUXCMD
+, such as removing corpus-specific stop-words, the
+model yielded (subjectively) sensible and coherent topics. }\DIFaddend The distribution of
+weights over words in the vocabulary for each discovered topic is shown in
 Supplementary Figure~\topicWordWeights, and each topic's top-weighted words may
 be found in Supplementary Table~\topics.
 
