@@ -577,6 +577,24 @@ compare the means of these distributions of estimated knowledge.
     \label{fig:predictions}
 \end{figure}
 
+We carried out these analyses in three different ways. First, we used all of
+the questions from a given quiz (and participant) to predict knowledge at the
+embedding coordinate of a held-out question (``All questions'' in
+Fig.~\ref{fig:predictions}). This test was intended to serve as an overall
+baseline for the predictive power of our approach. Second, we used questions
+from one lecture to predict knowledge at the embedding coordinate of a held-out
+question about the \textit{other} lecture from the same quiz and participant
+(``Across-lecture'' in Fig.~\ref{fig:predictions}). This test was intended to
+test the \textit{generalizability} of our approach by asking whether our
+knowledge predictions held across the content areas of the two lectures. Third,
+we used questions from one lecture to predict knowledge at the embedding
+coordinate of a held-out question about the \textit{same} lecture from the same
+quiz and participant (``Within-lecture'' in Fig.~\ref{fig:predictions}). This
+test was intended to test the \textit{specificity} of our approach by asking
+whether our knowledge predictions could distinguish between questions about
+different content covered by the same lecture. We repeated each of these
+analyses using all possible held-out questions for each quiz and participant.
+
 For the initial quizzes participants took (prior to watching either lecture),
 participants' estimated knowledge tended to be low overall, and relatively
 unstructured (Fig.~\ref{fig:predictions}, left column). When we held out
@@ -636,7 +654,12 @@ space), then it could explain why some held-out questions about \textit{Four
 Fundamental Forces} were answered incorrectly, even if questions at nearby
 coordinates (i.e., about similar content) were answered correctly. This might
 lead our approach to over-estimate knowledge for held-out questions about
-``forgotten'' knowledge that participants answered incorrectly.
+``forgotten'' knowledge that participants answered incorrectly.  Taken together,
+the results in Figure~\ref{fig:predictions} indicate that our approach can
+reliably predict acquired knowledge (especially about recently learned content),
+and that the knowledge predictions are generalizable across the content areas
+spanned by the two lectures and also specific enough to distinguish between
+questions about different content within the same lecture.
 
 That the knowledge estimates derived from the text embedding space reliably
 distinguish between held-out correctly versus incorrectly answered questions
