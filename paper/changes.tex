@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Tue Oct 24 01:22:09 2023
-%DIF ADD main.tex   Tue Oct 24 23:27:16 2023
+%DIF ADD main.tex   Wed Oct 25 00:20:34 2023
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[font=small,labelfont=bf]{caption}
@@ -1163,7 +1163,7 @@ imagine }\textit{\DIFadd{simplifying}} \DIFadd{some aspects of our LDA-based app
 computing simple word overlap metrics. For example, the Jaccard similarity
 between text $A$ and $B$ is computed as the number of unique words in the
 intersection of words from $A$ and $B$ divided by the number of unique words in
-the union of words from $A$ and $B$. In a supplemental analysis (Supp.
+the union of words from $A$ and $B$. In a supplementary analysis (Supp.
 Fig.~\jaccard), we compared the LDA-based question-lecture matches we reported
 in Figure~\ref{fig:question-correlations} with the Jaccard similarities between
 each question and each sliding window of text from the corresponding lecture.
@@ -1558,46 +1558,31 @@ to the knowledge estimate.
 
 \DIFaddbegin \subsubsection*{\DIFadd{Estimating the ``smoothness'' of knowledge}}\label{subsec:smoothness}
 
-\DIFadd{In the analysis reported in Figure~\ref{fig:smoothness}A, we show how
-participants' quiz performance changes as a function of distance to a given
-correctly or incorrectly answered reference question. We used a bootstrap-based
-approach to estimate the maximum distances over which these proportions
-of correctly answered questions could be reliably distinguished from participants'
-overall average proportion of correctly answered questions.
+\DIFadd{In the analysis reported in Figure~\ref{fig:smoothness}A, we show how participants' ability to correctly answer quiz questions changes as a function of distance from a given correctly or incorrectly answered reference question. 
+We used a bootstrap-based approach to estimate the maximum distances over which these proportions of correctly answered questions could be reliably distinguished from participants' overall average proportion of correctly answered questions.
 }
 
-\DIFadd{In our bootstrap procedure, we ran 10,000 iterations to estimate the
-relationship between participants' performance and the distance to a given
-reference question. For each of these iterations, for every individual quiz
-($q$), we first determined the across-participants average ``simple''
-proportion correct and its 95\% confidence interval. This interval was
-established by repeatedly (1,000 times) subsampling participants with
-replacement, computing the mean ``simple'' proportion correct for each
-subsample, and then deriving the 2.5\textsuperscript{th} and
-97.5\textsuperscript{th} percentiles from the distribution of these subsample
-means. We used this interval as our benchmark for determining whether the
-proportion of correctly answered questions for a given subset of questions was
-reliably different (at the $p < 0.05$ significance level) from the average
-proportion correct across all questions.
+\DIFadd{For each of 10,000 iterations, we drew a random subsample (with replacement) of 50 participants from our dataset full dataset.
+Within each iteration, we first computed the 95\% confidence interval (CI) of the across-subsample-participants mean proportion correct on each of the three quizzes, separately. 
+To compute this interval for each quiz, we repeatedly (1,000 times) subsampled participants (with replacement, from the outer subsample for the current iteration) and computed the mean proportion correct each of these inner subsamples. 
+We then identified the 2.5\textsuperscript{th} and 97.5\textsuperscript{th} percentiles of the resulting distributions of 1,000 means. 
+These three intervals (one for each quiz) served as our thresholds for confidence that the proportion correct within a given distance from a reference question was reliably different (at the $p < 0.05$ significance level) from the average proportion correct across all questions on the given quiz.
 }
 
-\DIFadd{Next, for each participant, we examined all 15 questions they answered on quiz
-$q$. We treated each question as the ``reference question'' in turn. Around
-this reference, we constructed a series of 15-dimensional spheres (starting
-with a radius of 0), where each successive sphere had a radius of 0.01
-(correlation distance) greater than its predecessor. Within each of these
-spheres, we calculated the proportion of questions answered correctly by the
-participant. This yielded two distinct sets of proportion-correct values for
-each binned distance (radius) for a specific participant and quiz: one set of
-values where the reference questions had been answered correctly, and another
-set where the reference questions had been answered incorrectly. From these, we
-established the average proportion correct within each radius for both
-categories of reference questions. Finally, we identified the minimum binned
-distance from the correctly answered reference questions for which the average
-proportion correct intersected the 95\% confidence interval of the simple
-average proportion correct computed earlier. We display the resulting distance
-estimates, for each quiz and reference question status, in
-Figure~\ref{fig:smoothness}B.
+\DIFadd{Next, for each participant in the current subsample, and for each of the three quizzes they completed (separately), we iteratively treated each of the 15 questions appearing on the given quiz as the ``reference'' question. 
+We constructed a series of concentric 15-dimensional ``spheres'' centered on the reference question's embedding space coordinate, where each successive sphere's radius increased by 0.01 (correlation distance) between 0 and 2, inclusive (i.e., tiling the range of possible correlation distances with 201 spheres in total). 
+We then computed the proportion of questions enclosed within each sphere that the participant answered correctly, and averaged these per-radius proportion correct scores across reference questions that were answered correctly, and those that were answered incorrectly.
+This resulted in two number-of-spheres sequences of proportion-correct scores for each subsample participant and quiz: one derived from correctly answered reference questions, and one derived from incorrectly answered reference questions.
+}
+
+\DIFadd{We computed the across-subsample-participants mean proportion correct for each radius value (i.e., sphere) and ``correctness'' of reference question. 
+This yielded two sequences of proportion-correct scores for each quiz, analogous to the blue and red lines displayed in Figure~\ref{fig:smoothness}A, but for the present subsample. 
+For each quiz, we then found the minimum distance from the reference question (i.e., sphere radius) at which each of these two sequences of per-radius proportion correct scores intersected the 95\% confidence interval for the overall proportion correct (i.e., analogous to the black error bands in Fig.~\ref{fig:smoothness}A).
+}
+
+\DIFadd{This resulted in two ``intersection'' distances for each quiz (for correctly answered and incorrectly answered reference questions). 
+Repeating this full process for each of the 10,000 bootstrap iterations output two distributions of intersection distances for each of the three quizzes. 
+The means and 95\% confidence intervals for these distributions are plotted in Figure~\ref{fig:smoothness}B.
 }
 
 \DIFaddend \subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
