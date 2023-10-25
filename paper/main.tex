@@ -558,21 +558,24 @@ compare the means of these distributions of predicted knowledge.
     \includegraphics[width=0.7\textwidth]{figs/predict-knowledge-questions}
 
     \caption{\textbf{Predicting knowledge at the embedding coordinates of
-    held-out questions.} Separately for each quiz (panel), we plot the
+    held-out questions.} Separately for each quiz (column), we plot the
     distributions of predicted knowledge at the embedding coordinates of each
     held-out correctly (blue) or incorrectly (red) answered question. The
-    Mann-Whitney $\U$-tests reported in each panel are between the distributions
-    of predicted knowledge at the coordinates of correctly and incorrectly
-    answered held-out questions. In the top row (``All questions''), we used
-    all quiz questions (from each quiz, for each participant) except one to
-    predict knowledge at the held-out question's embedding coordinate. In the
-    middle rows (``Across-lecture''), we used all questions about one lecture
-    to predict knowledge at the embedding coordinate of a held-out question
-    about the \textit{other} lecture. In the bottom row (``Within-lecture''),
-    we used all but one question about one lecture to predict knowledge at the
-    embedding coordinate of a held-out question about the \textit{same}
-    lecture. We repeated each of these analyses using all possible held-out
-    questions for each quiz and participant.}
+    Mann-Whitney $\U$-tests reported in each panel are between the
+    distributions of predicted knowledge at the coordinates of correctly and
+    incorrectly answered held-out questions. In the top row (``All
+    questions''), we used all quiz questions (from each quiz, for each
+    participant) except one to predict knowledge at the held-out question's
+    embedding coordinate. In the middle rows (``Across-lecture''), we used all
+    questions about one lecture to predict knowledge at the embedding
+    coordinate of a held-out question about the \textit{other} lecture. In the
+    bottom row (``Within-lecture''), we used all but one question about one
+    lecture to predict knowledge at the embedding coordinate of a held-out
+    question about the \textit{same} lecture. We repeated each of these
+    analyses using all possible held-out questions for each quiz and
+    participant. The arrows at the tops of each panel indicate whether the
+    average predicted knowledge was higher for held-out correctly answered
+    (left) or incorrectly answered (right) questions.}
 
     \label{fig:predictions}
 \end{figure}
@@ -694,20 +697,21 @@ space distance.
     \centering
     \includegraphics[width=0.8\textwidth]{figs/knowledge-smoothness}
 
-    \caption{\textbf{Quiz performance falls off gradually in text embedding
-    space.} \textbf{A. Performance versus distance.} For each participant, for
-    each correctly answered question (blue) or incorrectly answered question
-    (red), we computed the proportion of correctly answered questions within a
-    given distance of that question's embedding coordinate. We repeated this
-    analysis for all questions and participants, and separately for each quiz
-    (column). The black lines denote the average proportion correct across
-    \textit{all} questions included in the analysis at the given distance.
-    \textbf{B. Maximum distance for which performance is reliably different
-    from the average.} We used a bootstrap procedure
-    (see~\nameref{subsec:smoothness}) to estimate the point at which the blue
-    and red lines in Panel A reliably diverged from the black line. We repeated
-    this analysis separately for correctly and incorrectly answered questions
-    from each quiz. \textbf{All panels.} Error ribbons denote
+    \caption{\textbf{Knowledge falls off gradually in text embedding space.}
+    \textbf{A. Performance versus distance.} For each participant, for each
+    correctly answered question (blue) or incorrectly answered question (red),
+    we computed the proportion of correctly answered questions within a given
+    distance of that question's embedding coordinate. We used these proportions
+    as a proxy for participants' knowledge about the content within that region
+    of the embedding space. We repeated this analysis for all questions and
+    participants, and separately for each quiz (column). The black lines denote
+    the average proportion correct across \textit{all} questions included in
+    the analysis at the given distance. \textbf{B. Maximum distance for which
+    performance is reliably different from the average.} We used a bootstrap
+    procedure (see~\nameref{subsec:smoothness}) to estimate the point at which
+    the blue and red lines in Panel A reliably diverged from the black line. We
+    repeated this analysis separately for correctly and incorrectly answered
+    questions from each quiz. \textbf{All panels.} Error ribbons denote
     bootstrap-estimated 95\% confidence intervals.}
 
     \label{fig:smoothness}
@@ -955,7 +959,7 @@ an important challenge for future work in this domain.
 
 Another application for large language models that does \textit{not} require
 explicitly modeling the content of individual lectures or questions is to
-leverage the models' ability to generate text. For example, generative text
+leverage the models' abilities to generate text. For example, generative text
 models like ChatGPT~\citep{ChatGPT} and LLaMa~\citep{TouvEtal23} are already
 being used to build a new generation of interactive tutoring
 systems~\citep[e.g.,][]{MannEtal23b}. Unlike the approach we have taken here,
@@ -987,7 +991,7 @@ matches appear to capture conceptual overlaps between the questions and
 lectures (Supp.~Tab.~\matchTab), whereas simple word matching does not. For
 example, one of the example questions examined in Supplementary
 Figure~\jaccard~asks ``Which of the following occurs as a cloud of atoms gets
-more dense?''. The LDA-based matches identify lecture timepoints where the
+more dense?'' The LDA-based matches identify lecture timepoints where the
 relevant \textit{topics} are discussed (e.g., when words like ``cloud,''
 ``atom,'' ``dense,'' etc., are mentioned \textit{together}). The Jaccard
 similarity-based matches, on the other hand, are strong when \textit{any} of
@@ -1024,7 +1028,7 @@ provides an opportunity to re-evaluate how we, as a global community, educate
 ourselves and each other. For example, we can ask: what defines an effective
 course or training program? Which aspects of teaching might be optimized and/or
 augmented by automated tools? How and why do learning needs and goals vary
-across people? How might we lower barriers of access to a high-quality
+across people? How might we lower barriers to receiving a high-quality
 education?
 
 Alongside these questions, there is a growing desire to extend existing
@@ -1230,7 +1234,7 @@ training. This indicated that the number of topics was sufficient to capture
 the set of latent themes present in the two lectures (from which we constructed
 our document corpus, as described below). We found this value to be $k = 15$
 topics. We found that with a limited number of additional adjustments
-following~\citep{BoydMimn14}, such as removing corpus-specific stop-words, the
+following~\citep{BoydEtal14}, such as removing corpus-specific stop-words, the
 model yielded (subjectively) sensible and coherent topics. The distribution of
 weights over words in the vocabulary for each discovered topic is shown in
 Supplementary Figure~\topicWordWeights, and each topic's top-weighted words may
@@ -1261,7 +1265,6 @@ per sliding window (rounded to the nearest whole word, and before
 preprocessing) as the sliding windows we defined in our prior
 work~\citep{HeusEtal21} (i.e., 185 words per sliding window).
 
-
 These sliding windows ramped up and down in length at the beginning and end of
 each transcript, respectively. In other words, each transcript's first sliding
 window covered only its first line, the second sliding window covered the first
@@ -1271,7 +1274,7 @@ standard text preprocessing steps: normalizing case, lemmatizing, removing
 punctuation and removing stop-words. We constructed our corpus of stop words by
 augmenting the Natural Language Toolkit~\citep[NLTK; ][]{BirdEtal09} English
 stop word list with the following additional words, selected using one of the
-approaches suggested by~\citep{BoydMimn14}: ``actual,'' ``actually,'' ``also,''
+approaches suggested by~\citep{BoydEtal14}: ``actual,'' ``actually,'' ``also,''
 ``bit,'' ``could,'' ``e,'' ``even,'' ``first,'' ``follow,'' ``following,''
 ``four,'' ``let,'' ``like,'' ``mc,'' ``really,'', ``saw,'' ``see,'' ``seen,''
 ``thing,'' and ``two.'' This yielded sliding windows with an average of 73.8
@@ -1392,7 +1395,7 @@ Projection~\citep[UMAP; ][]{McInEtal18a, McInEtal18b} to construct a 2D
 projection of the text embedding space. Whereas our main analyses used a
 15-topic embedding space, we used a 100-topic embedding space for these
 visualizations. This change in the number of topics overcame an undesirable
-behavior in the UMAP embedding procedure~\citep{McInEtal18a}, whereby embedding
+behavior in the UMAP embedding procedure, whereby embedding
 coordinates for the 15-topic model tended to be ``clumped'' into separated
 clusters, rather than forming a smooth trajectory through the 2D space. When we
 increased the number of topics to 100, the embedding coordinates in the 2D
@@ -1457,11 +1460,11 @@ in knowledge across two maps.
 
 \section*{Author contributions}
 
-Conceptualization: PCF, ACH, and JRM. Methodology: PCF, ACH, and JRM. Software:
-PCF. Validation: PCF. Formal analysis: PCF. Resources: PCF, ACH, and JRM. Data
-curation: PCF. Writing (original draft): JRM. Writing (review and editing):
-PCF, ACH, and JRM. Visualization: PCF and JRM. Supervision: JRM. Project
-administration: PCF. Funding acquisition: JRM.
+Conceptualization: P.C.F., A.C.H., and J.R.M. Methodology: P.C.F., A.C.H., and
+J.R.M. Software: P.C.F. Validation: P.C.F. Formal analysis: P.C.F. Resources: P.C.F.,
+A.C.H., and J.R.M. Data curation: P.C.F. Writing (original draft): J.R.M. Writing
+(review and editing): P.C.F., A.C.H., and J.R.M. Visualization: P.C.F. and J.R.M.
+Supervision: J.R.M. Project administration: P.C.F. Funding acquisition: J.R.M.
 
 
 \section*{Data availability}
