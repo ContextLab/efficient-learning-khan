@@ -739,20 +739,14 @@ sliding windows with (up to)~$k = 100$~topics. Conceptually, increasing the
 number of topics used by the model functions to increase the ``resolution'' of
 the embedding space, providing a greater ability to estimate knowledge for
 content that is highly similar to (but not precisely the same as) that
-contained in the two lectures. This change in the number of topics overcame an
-undesirable behavior in the UMAP embedding procedure~\citep{McInEtal18a},
-whereby embedding coordinates for the 15-topic model tended to be ``clumped''
-into separated clusters, rather than forming a smooth trajectory through the 2D
-space. When we increased the number of topics to 100, the embedding coordinates
-in the 2D space formed a smooth trajectory through the space, with
-substantially less clumping (Fig.~\ref{fig:knowledge-maps}). We note that we
-used these 2D maps solely for visualization; all relevant comparisons, distance
-computations, and statistical tests we report above were carried out in the
-original 15-dimensional space, using the 15-topic model. Aside from increasing
-the number of topics from 15 to 100, all other procedures and model parameters
-were carried over from the preceding analyses. As in our other analyses, we
-resampled each lecture's topic trajectory to 1~Hz and projected each question
-into a shared text embedding space.
+contained in the two lectures. We note that we used these 2D maps solely for
+visualization; all relevant comparisons, distance computations, and statistical
+tests we report above were carried out in the original 15-dimensional space,
+using the 15-topic model. Aside from increasing the number of topics from 15 to
+100, all other procedures and model parameters were carried over from the
+preceding analyses. As in our other analyses, we resampled each lecture's topic
+trajectory to 1~Hz and projected each question into a shared text embedding
+space.
 
 \begin{figure}[tp]
     \centering
@@ -1170,31 +1164,21 @@ nuclear force, and the strong nuclear force; duration: 10 minutes and 29
 seconds) and \textit{Birth of Stars} (an introduction to how stars are formed;
 duration: 7 minutes and 57 seconds). All participants viewed the videos in the
 same order (i.e., \textit{Four Fundamental Forces} followed by \textit{Birth of
-Stars}). While we are not aware of any specific confounds of viewing order, nor
-have are we aware of how or why viewing order might influence our main
-findings, we acknowledge that we did not control for potential order effects in
-our study.
+Stars}).
 
 We then hand-created 39 multiple-choice questions: 15 about the conceptual
 content of \textit{Four Fundamental Forces} (i.e., Lecture~1), 15 about the
 conceptual content of \textit{Birth of Stars} (i.e., Lecture~2), and 9
 questions that tested for general conceptual knowledge about basic physics
-(covering material that was not presented in either video). One of our group's
-undergraduate research assistants worked alongside a rotating Masters student
-to develop this set of questions (these researchers are acknowledged in our
-paper for their contribution, although they did not meet the criteria for
-authorship discussed with all team members at the start of the project, as
-determined by J.R.M.) The senior author (J.R.M.) tasked the pair of researchers
-with coming up with ``15 conceptual questions about each lecture, along with 9
-additional questions about general physics knowledge.'' To help broaden the set
-of lecture-specific questions, the researchers were further instructed to work
-through each lecture in small segments, identify what each segment was
-``about'' conceptually, and then write a question about that concept. The
-general physics questions were drawn from the researchers' coursework along
-with internet searches and brainstorming with the project team and other
-members of J.R.M.'s lab. The final set of questions (and response options) was
-reviewed and approved by J.R.M. before we collected or analyzed the text or
-experimental data.
+(covering material that was not presented in either video). To help broaden the
+set of lecture-specific questions, our team worked through each lecture in
+small segments to identify what each segment was ``about'' conceptually, and
+then write a question about that concept. The general physics questions were
+drawn our team's prior coursework and areas of interest, along with internet
+searches and brainstorming with the project team and other members of J.R.M.'s
+lab. The final set of questions (and response options) was reviewed and
+approved by J.R.M. before we collected or analyzed the text or experimental
+data.
 
 We note that estimating the specific ``amount'' of conceptual understanding
 that each question ``requires'' to answer is somewhat subjective, and might
@@ -1406,10 +1390,18 @@ appearing in the lectures. To visualize these estimates
 Figs.~\individualKnowledgeMapsA,~\individualKnowledgeMapsB,~\individualKnowledgeMapsC,~\individualLearningMapsA,
 and~\individualLearningMapsB), we used Uniform Manifold Approximation and
 Projection~\citep[UMAP; ][]{McInEtal18a, McInEtal18b} to construct a 2D
-projection of the text embedding space. Sampling the original 100-dimensional
-space at high resolution to obtain an adequate set of topic vectors spanning
-the embedding space would be computationally intractable. However, sampling a
-2D grid is trivial.
+projection of the text embedding space. Whereas our main analyses used a
+15-topic embedding space, we used a 100-topic embedding space for these
+visualizations. This change in the number of topics overcame an undesirable
+behavior in the UMAP embedding procedure~\citep{McInEtal18a}, whereby embedding
+coordinates for the 15-topic model tended to be ``clumped'' into separated
+clusters, rather than forming a smooth trajectory through the 2D space. When we
+increased the number of topics to 100, the embedding coordinates in the 2D
+space formed a smooth trajectory through the space, with substantially less
+clumping (Fig.~\ref{fig:knowledge-maps}). Creating a ``map'' by
+sampling this 100-dimensional space at high resolution to obtain an adequate
+set of topic vectors spanning the embedding space would be computationally
+intractable. However, sampling a 2D grid is trivial.
 
 At a high level, the UMAP algorithm obtains low-dimensional embeddings by
 minimizing the cross-entropy between the pairwise (clustered) distances between
