@@ -735,7 +735,7 @@ estimating knowledge from a small number of quiz questions may be extended to
 \textit{any} content, given its text embedding coordinate. To visualize how
 knowledge ``spreads'' through text embedding space to content beyond the
 lectures participants watched, we first fit a new topic model to the lectures'
-sliding windows with (up to)~$k = 100$~topics. Conceptually, increasing the
+sliding windows with $k = 100$~topics. Conceptually, increasing the
 number of topics used by the model functions to increase the ``resolution'' of
 the embedding space, providing a greater ability to estimate knowledge for
 content that is highly similar to (but not precisely the same as) that
@@ -1214,7 +1214,7 @@ We adapted an approach we developed in prior work~\citep{HeusEtal21} to embed
 each moment of the two lectures and each question in our pool in a common
 representational space. Briefly, our approach uses a topic model~\citep[Latent
 Dirichlet Allocation; ][]{BleiEtal03} trained on a set of documents, to
-discover a set of (up to) $k$ ``topics'' or ``themes.'' Formally, each topic is
+discover a set of $k$ ``topics'' or ``themes.'' Formally, each topic is
 defined as a distribution of weights over words in the model's vocabulary
 (i.e., the union of all unique words, across all documents, excluding ``stop
 words.''). Conceptually, each topic is intended to give larger weights to words
