@@ -660,26 +660,30 @@ spanned by the two lectures, while also specific enough to distinguish between
 questions about more subtly different content within the same lecture.
 
 That the knowledge predictions derived from the text embedding space reliably
-distinguish between held-out correctly versus incorrectly answered questions
-(Fig.~\ref{fig:predictions}) suggests that the text embedding space bears at
-least some relationship to participants' knowledge. But what does that
-relationship look like as we move through the embedding space? For example,
-suppose we know that a participant answers a question (at embedding coordinate
-$X$) correctly. As we move away from $X$ in the embedding space, how does quiz
-performance ``fall off'' with distance? Or, suppose the participant instead
-answered that same question \textit{in}correctly. Again, as we move away from
-$X$ in the embedding space, how do the chances that the participant does
-\textit{not} know about the content change with distance? We reasoned that,
-assuming our space is capturing something about how participants actually
-organize their knowledge, conceptual knowledge right around $X$ should be
-similar to the participant's knowledge of the content at $X$. And at another
-extreme, at some distance (after moving sufficiently far away from $X$), our
-guesses about what participants know (based on their response to the question
-at location $X$) should be no better than guessing based on their overall
-proportion of correctly answered questions—i.e., if $Y$ is very far away from
-$X$, all we can do with the participant's response to $X$ is guess that ``their
-performance on quiz questions about $Y$ is about equal to their average
-performance on quiz questions about any material.''
+distinguish between correctly and incorrectly answered held-out questions
+(Fig.~\ref{fig:predictions}) suggests that spatial relationships within this
+ space can help explain what participants know. But how far does this
+explanatory power extend? For example, suppose we know that a participant
+correctly answered a question at embedding coordinate $x$. As we move farther away
+from $x$ in the embedding space, how does the likelihood that the participant knows about the content at a given location ``fall off'' with distance?
+Conversely, suppose the participant instead answered that same question
+\textit{in}correctly. Again, as we move farther away from $x$ in the embedding space,
+how does the likelihood that the participant does \textit{not} know about a coordinate's
+content change with distance? We reasoned that, assuming our embedding space is capturing
+something about how individuals actually organize 
+their knowledge, a participant's ability to answer questions 
+embedded very close to $x$ should tend to be similar to their 
+ability to answer the question embedded \textit{at} $x$. Whereas 
+at another extreme, once we reach some sufficiently large 
+distance from $x$, our ability to infer whether or not a participant 
+will correctly answer a question based on their ability to answer 
+the question at $x$ should be no better than guessing based on 
+their \textit{overall} proportion of correctly answered questions. In 
+other words, beyond the maximum distance at which the participant's
+ ability to answer the question at $x$ is informative of their ability to 
+ answer a second question at location $y$, then guessing the outcome 
+ at $y$ based on $x$ should be no more successful than guessing 
+ based on a measure that does not consider embedding space distance.
 
 \begin{figure}[t]
     \centering
