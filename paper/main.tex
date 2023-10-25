@@ -1270,15 +1270,15 @@ in the same number ($w$) of sliding windows. We next performed a series of
 standard text preprocessing steps: normalizing case, lemmatizing, removing
 punctuation and removing stop-words. We constructed our corpus of stop words by
 augmenting the Natural Language Toolkit~\citep[NLTK; ][]{BirdEtal09} English
-stop word list with the following additional words, selected using the approach
-suggested by~\citep{BoydMimn14}: ``actual,'' ``actually,'' ``also,'' ``bit,''
-``could,'' ``e,'' ``even,'' ``first,'' ``follow,'' ``following,'' ``four,''
-``let,'' ``like,'' ``mc,'' ``really,'', ``saw,'' ``see,'' ``seen,'' ``thing,''
-and ``two.'' This yielded sliding windows with an average of 73.8 remaining
-words, and lasting for an average of 62.22~seconds. We treated the text from
-each sliding window as a single ``document,'' and combined these documents
-across the two videos' windows to create a single training corpus for the topic
-model.
+stop word list with the following additional words, selected using one of the
+approaches suggested by~\citep{BoydMimn14}: ``actual,'' ``actually,'' ``also,''
+``bit,'' ``could,'' ``e,'' ``even,'' ``first,'' ``follow,'' ``following,''
+``four,'' ``let,'' ``like,'' ``mc,'' ``really,'', ``saw,'' ``see,'' ``seen,''
+``thing,'' and ``two.'' This yielded sliding windows with an average of 73.8
+remaining words, and lasting for an average of 62.22~seconds. We treated the
+text from each sliding window as a single ``document,'' and combined these
+documents across the two videos' windows to create a single training corpus for
+the topic model.
 
 After fitting a topic model to the two videos' transcripts, we could use the
 trained model to transform arbitrary (potentially new) documents into
