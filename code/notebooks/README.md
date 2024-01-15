@@ -1,5 +1,5 @@
 This folder contains notebooks to replicate analyses and figures from the 
-[paper](../../paper/main.pdf). Notebooks are generally ordered according to when 
+[paper](../../paper/main.pdf) and [supplement](../../paper/supplement.pdf). Notebooks are generally ordered according to when 
 analyses are described or figures appear in the paper.
 
 ### `main/`
