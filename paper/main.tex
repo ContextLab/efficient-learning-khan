@@ -389,7 +389,7 @@ expression (over time and across questions) was similar for the Lecture~1 video
 and questions ($r(13) = 0.824,~p<0.001$, 95\% CI~$= [0.696,~0.973]$) and the
 Lecture~2 video and questions ($r(13) = 0.801,~p<0.001$, 95\% CI~$=
 [0.539,~0.958]$). Simultaneously, as reported in Figure~\ref{fig:topics}B, the
-variability in topic expression across \textit{different} videos and
+variabilities in topic expression across \textit{different} videos and
 lecture-specific questions (i.e., Lecture~1 video vs.~Lecture~2 questions;
 Lecture~2 video vs.~Lecture~1 questions) were negatively correlated, and
 neither video's topic variability was reliably correlated with the topic
@@ -402,7 +402,7 @@ questions.
 While an individual lecture may be organized around a single broad theme at a
 coarse scale, at a finer scale, each moment of a lecture typically covers a
 narrower range of content. Given the correspondence we found between the
-variability in topic expression across moments of each lecture and questions
+variabilities in topic expression across moments of each lecture and questions
 from its corresponding set (Fig.~\ref{fig:topics}), we wondered whether the
 text embedding model might additionally capture these conceptual relationships
 at a finer scale. For example, if a particular question asks about the content
@@ -465,8 +465,8 @@ concepts (e.g., as captured by a single moment of a lecture).
 
 We developed a simple formula (Eqn.~\ref{eqn:prop}) for using a participant's
 responses to a small set of multiple-choice questions to estimate how much the
-participant ``knows'' about the concept reflected by any arbitrary coordinate,
-$x$, in text embedding space (e.g., the content reflected by any moment in a
+participant ``knows'' about the concept reflected by any arbitrary coordinate
+$x$ in text embedding space (e.g., the content reflected by any moment in a
 lecture they had watched; see \nameref{subsec:traces}). Essentially, the
 estimated knowledge at coordinate $x$ is given by the weighted average
 proportion of quiz questions the participant answered correctly, where the
@@ -493,7 +493,7 @@ lectures).
     weighted proportion of correctly answered questions about the content
     reflected in each moment of the lecture (see \nameref{subsec:traces}),
     using responses from a single quiz (color). The traces are averaged across
-    participants. \textbf{B. Average estimated knowledge about \textbf{Four
+    participants. \textbf{B. Average estimated knowledge about \textit{Four
     Fundamental Forces}.} Each bar displays the across-timepoint average
     knowledge, estimated using the responses to one quiz's questions.
     \textbf{C. Knowledge about the time-varying content of \textit{Birth of
@@ -514,7 +514,7 @@ of course only \textit{useful} to the extent that they accurately reflect what
 participants actually know. As one sanity check, we anticipated that the
 knowledge estimates should reflect a content-specific ``boost'' in
 participants' knowledge after watching each lecture. In other words, if
-participants learn about each lecture's content when they watch each lecture,
+participants learn about each lecture's content upon watching it,
 the knowledge estimates should capture that. After watching the \textit{Four
 Fundamental Forces} lecture, participants should exhibit more knowledge for the
 content of that lecture than they had before, and that knowledge should persist
@@ -543,15 +543,18 @@ If we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, our estimates of their knowledge should
 carry some predictive information about whether the participant is likely to
 answer that question correctly or incorrectly. We developed a statistical
-approach to test this claim. For each question, in turn, we used
-Equation~\ref{eqn:prop} to predict each participant's knowledge at the given
-question's embedding space coordinate, using all \textit{other} questions that
-participant answered on the same quiz. For each quiz, we grouped these
-predicted knowledge values into two distributions: one for the predicted knowledge at the
-coordinates of \textit{correctly} answered questions, and another for the
-predicted knowledge at the coordinates of \textit{incorrectly} answered
-questions (Fig.~\ref{fig:predictions}). We then used Mann-Whitney $\U$-tests to
-compare the means of these distributions of predicted knowledge.
+approach to test this claim. 
+For each of the three quizzes, separately, we 
+
+%For each question, in turn, we used
+%Equation~\ref{eqn:prop} to predict each participant's knowledge at the given
+%question's embedding space coordinate, using all \textit{other} questions that
+%participant answered on the same quiz. For each quiz, we grouped these
+%predicted knowledge values into two distributions: one for the predicted knowledge at the
+%coordinates of \textit{correctly} answered questions, and another for the
+%predicted knowledge at the coordinates of \textit{incorrectly} answered
+%questions (Fig.~\ref{fig:predictions}). We then used Mann-Whitney $\U$-tests to
+%compare the means of these distributions of predicted knowledge.
 
 \begin{figure}[tp]
     \centering
