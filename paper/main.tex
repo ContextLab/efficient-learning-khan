@@ -339,14 +339,14 @@ correspondence could not solely arise from superficial text matching between
 lecture transcripts and questions, since the lectures and questions often used
 different words (Supp.~Fig.~\jaccard) and phrasings. Simply comparing the
 average topic weights from each lecture and question set (averaging across time
-and questions, respectively) reveals a striking correspondence (Supp.
-Fig.~\topicWeights). Specifically, the average topic weights from Lecture~1 are
+and questions, respectively) reveals a striking correspondence 
+(Supp.~Fig.~\topicWeights). Specifically, the average topic weights from Lecture~1 are
 strongly correlated with the average topic weights from Lecture~1 questions
 ($r(13) = 0.809,~p < 0.001$, 95\% confidence interval (CI)~$= [0.633,~0.962]$),
 and the average topic weights from Lecture~2 are strongly correlated with the
 average topic weights from Lecture~2 questions ($r(13) = 0.728,~p = 0.002$,
 95\% CI~$= [0.456,~0.920]$). At the same time, the average topic weights from
-the two lectures are \textit{negatively} correlated with their non-matching
+the two lectures are \textit{negatively} correlated with the average topic weights from their non-matching
 question sets (Lecture~1 video vs.~Lecture~2 questions: $r(13) = -0.547,~p =
 0.035$, 95\% CI~$= [-0.812, ~-0.231]$; Lecture~2 video vs.~Lecture~1 questions:
 $r(13) = -0.612,~p = 0.015$, 95\% CI~$= [-0.874,~-0.281]$), indicating that the
@@ -416,7 +416,7 @@ vectors were maximally correlated with a well-defined (and relatively narrow)
 range of timepoints from their corresponding lectures, and the correlations
 fell off sharply outside of that range (Supp.~Figs.~\forcesCorrs,~\bosCorrs).
 We also qualitatively examined the best-matching intervals for each question by
-comparing the question's text to the text of the most-correlated parts of the
+comparing the question's text to the transcribed text from the most-correlated parts of the
 lectures (Supp.~Tab.~\matchTab). Despite that the questions were excluded from
 the text embedding model's training set, in general we found (through manual
 inspection) a close correspondence between the conceptual content that each
@@ -446,9 +446,9 @@ Figure~\ref{fig:question-correlations}.
 The ability to quantify how much each question is ``asking about'' the content
 from each moment of the lectures could enable high-resolution insights into
 participants' knowledge. Traditional approaches to estimating how much a
-student ``knows'' about the content of a given lecture entail computing the
+student ``knows'' about the content of a given lecture entail administering some form of assessment (e.g., a quiz) and computing the
 proportion of correctly answered questions. But if two students receive
-identical scores on an exam, might our modeling framework help us to gain more
+identical scores on such an exam, might our modeling framework help us to gain more
 nuanced insights into the \textit{specific} content that each student has
 mastered (or failed to master)? For example, a student who misses three
 questions that were all about the same concept (e.g., concept $A$) will have
@@ -468,12 +468,12 @@ responses to a small set of multiple-choice questions to estimate how much the
 participant ``knows'' about the concept reflected by any arbitrary coordinate
 $x$ in text embedding space (e.g., the content reflected by any moment in a
 lecture they had watched; see \nameref{subsec:traces}). Essentially, the
-estimated knowledge at coordinate $x$ is given by the weighted average
+estimated knowledge at coordinate $x$ is given by the weighted
 proportion of quiz questions the participant answered correctly, where the
 weights reflect how much each question is ``about'' the content at $x$. When we
 apply this approach to estimate the participant's knowledge about the content
 presented in each moment of each lecture, we can obtain a detailed time course
-describing how much ``knowledge'' the participant has about the content
+describing how much ``knowledge'' that participant has about the content
 presented at any part of the lecture. As shown in
 Figure~\ref{fig:knowledge-timeseries}A and C, we can apply this approach
 separately for the questions from each quiz participants took throughout the
@@ -541,20 +541,12 @@ higher on Quiz~3 versus 2 ($t(49) = 10.561,~p < 0.001$) and Quiz~3 versus 1
 
 If we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, our estimates of their knowledge should
-carry some predictive information about whether the participant is likely to
-answer that question correctly or incorrectly. We developed a statistical
-approach to test this claim. 
-For each of the three quizzes, separately, we 
-
-%For each question, in turn, we used
-%Equation~\ref{eqn:prop} to predict each participant's knowledge at the given
-%question's embedding space coordinate, using all \textit{other} questions that
-%participant answered on the same quiz. For each quiz, we grouped these
-%predicted knowledge values into two distributions: one for the predicted knowledge at the
-%coordinates of \textit{correctly} answered questions, and another for the
-%predicted knowledge at the coordinates of \textit{incorrectly} answered
-%questions (Fig.~\ref{fig:predictions}). We then used Mann-Whitney $\U$-tests to
-%compare the means of these distributions of predicted knowledge.
+carry some predictive information about whether they are likely to answer that 
+question correctly or incorrectly. We developed a statistical approach to test this claim. 
+For each quiz question a participant answered, in turn, we used Equation~\ref{eqn:prop} to estimate their knowledge at the given question's embedding space coordinate, based on other questions that participant answered on the same quiz. 
+We repeated this for all participants, and for each of the three quizzes. 
+Then, separately for each quiz, we fit a generalized linear mixed model (GLMM) with a logistic link function to explain the likelihood of correctly answering a question as a function of estimated knowledge for its embedding coordinate, while accounting for random variation among participants and questions (see Sec.~\nameref{subsec:glmm}).
+To assess the predictive value of the knowledge estimates, we performed likelihood-ratio tests comparing each GLMMs to an analogous (i.e., nested) ``null'' model that did not consider estimated knowledge. 
 
 \begin{figure}[tp]
     \centering
@@ -1341,6 +1333,8 @@ between timepoint $t$'s topic vector and the topic vectors for each question.
 The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
 correlations) ensures that every question contributes some non-negative amount
 to the knowledge estimate.
+
+\subsubsection*{GLMM METHODS SECTION PLACEHOLDER}\label{subsec:glmm}
 
 \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
