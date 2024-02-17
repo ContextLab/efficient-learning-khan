@@ -645,7 +645,7 @@ Fig.~\ref{fig:predictions}, right column) was higher than for held-out
 incorrectly answered questions. This held when we included all questions in the
 analysis ($\U = 38279,~p = 0.022$), when we carried out across-lecture
 predictions (\textit{Four Fundamental Forces}: $\U = 6684.5,~p = 0.032$;
-\textit{Birth of Stars}: $\U = 6414.5,~p = 0.002$), and and when we carried out
+\textit{Birth of Stars}: $\U = 6414.5,~p = 0.002$), and when we carried out
 within-lecture knowledge predictions for held-out \textit{Birth of Stars}
 questions using other \textit{Birth of Stars} questions from the same quiz and
 participant ($\U = 6126,~p = 0.006$). However, we found the \textit{opposite}
@@ -879,11 +879,10 @@ nearby coordinates by the text embedding model also appear to be ``known to a
 similar extent'' (as reflected by participants' responses to held-out
 questions; Fig.~\ref{fig:predictions}). This suggests that participants also
 \textit{conceptualize} similarly the content reflected by nearby embedding
-coordinates. The ``spatial smoothness'' of participants' knowledge (as
-estimated using quiz performance) is being captured by the knowledge maps we
-are inferring from their quiz responses (e.g.,
-Figs.~\ref{fig:smoothness},~\ref{fig:knowledge-maps}). In other words, our
-study shows that knowledge about a given concept implies knowledge about
+coordinates. How participants' knowledge falls off with spatial distance is
+captured by the knowledge maps we infer from their quiz responses
+(e.g., Figs.~\ref{fig:smoothness},~\ref{fig:knowledge-maps}). In other words,
+our study shows that knowledge about a given concept implies knowledge about
 related concepts, and we also show how estimated knowledge falls off with
 distance in text embedding space.
 
@@ -1345,27 +1344,59 @@ to the knowledge estimate.
 
 \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
-In the analysis reported in Figure~\ref{fig:smoothness}A, we show how participants' ability to correctly answer quiz questions changes as a function of distance from a given correctly or incorrectly answered reference question. 
-We used a bootstrap-based approach to estimate the maximum distances over which these proportions of correctly answered questions could be reliably distinguished from participants' overall average proportion of correctly answered questions.
+In the analysis reported in Figure~\ref{fig:smoothness}A, we show how
+participants' ability to correctly answer quiz questions changes as a function
+of distance from a given correctly or incorrectly answered reference question.
+We used a bootstrap-based approach to estimate the maximum distances over which
+these proportions of correctly answered questions could be reliably
+distinguished from participants' overall average proportion of correctly
+answered questions.
 
-For each of 10,000 iterations, we drew a random subsample (with replacement) of 50 participants from our dataset full dataset.
-Within each iteration, we first computed the 95\% confidence interval (CI) of the across-subsample-participants mean proportion correct on each of the three quizzes, separately. 
-To compute this interval for each quiz, we repeatedly (1,000 times) subsampled participants (with replacement, from the outer subsample for the current iteration) and computed the mean proportion correct each of these inner subsamples. 
-We then identified the 2.5\textsuperscript{th} and 97.5\textsuperscript{th} percentiles of the resulting distributions of 1,000 means. 
-These three intervals (one for each quiz) served as our thresholds for confidence that the proportion correct within a given distance from a reference question was reliably different (at the $p < 0.05$ significance level) from the average proportion correct across all questions on the given quiz.
+For each of 10,000 iterations, we drew a random subsample (with replacement) of
+50 participants from our dataset. Within each iteration, we first computed the
+95\% confidence interval (CI) of the across-subsample-participants mean
+proportion correct on each of the three quizzes, separately. To compute this
+interval for each quiz, we repeatedly (1,000 times) subsampled participants
+(with replacement, from the outer subsample for the current iteration) and
+computed the mean proportion correct of each of these inner subsamples. We then
+identified the 2.5\textsuperscript{th} and 97.5\textsuperscript{th} percentiles
+of the resulting distributions of 1,000 means. These three intervals (one for
+each quiz) served as our thresholds for confidence that the proportion correct
+within a given distance from a reference question was reliably different (at
+the $p < 0.05$ significance level) from the average proportion correct across
+all questions on the given quiz.
 
-Next, for each participant in the current subsample, and for each of the three quizzes they completed (separately), we iteratively treated each of the 15 questions appearing on the given quiz as the ``reference'' question. 
-We constructed a series of concentric 15-dimensional ``spheres'' centered on the reference question's embedding space coordinate, where each successive sphere's radius increased by 0.01 (correlation distance) between 0 and 2, inclusive (i.e., tiling the range of possible correlation distances with 201 spheres in total). 
-We then computed the proportion of questions enclosed within each sphere that the participant answered correctly, and averaged these per-radius proportion correct scores across reference questions that were answered correctly, and those that were answered incorrectly.
-This resulted in two number-of-spheres sequences of proportion-correct scores for each subsample participant and quiz: one derived from correctly answered reference questions, and one derived from incorrectly answered reference questions.
+Next, for each participant in the current subsample, and for each of the three
+quizzes they completed (separately), we iteratively treated each of the 15
+questions appearing on the given quiz as the ``reference'' question. We
+constructed a series of concentric 15-dimensional ``spheres'' centered on the
+reference question's embedding space coordinate, where each successive sphere's
+radius increased by 0.01 (correlation distance) between 0 and 2, inclusive
+(i.e., tiling the range of possible correlation distances with 201 spheres in
+total). We then computed the proportion of questions enclosed within each
+sphere that the participant answered correctly, and averaged these per-radius
+proportion correct scores across reference questions that were answered
+correctly, and those that were answered incorrectly. This resulted in two
+number-of-spheres sequences of proportion-correct scores for each subsample
+participant and quiz: one derived from correctly answered reference questions,
+and one derived from incorrectly answered reference questions.
 
-We computed the across-subsample-participants mean proportion correct for each radius value (i.e., sphere) and ``correctness'' of reference question. 
-This yielded two sequences of proportion-correct scores for each quiz, analogous to the blue and red lines displayed in Figure~\ref{fig:smoothness}A, but for the present subsample. 
-For each quiz, we then found the minimum distance from the reference question (i.e., sphere radius) at which each of these two sequences of per-radius proportion correct scores intersected the 95\% confidence interval for the overall proportion correct (i.e., analogous to the black error bands in Fig.~\ref{fig:smoothness}A).
+We computed the across-subsample-participants mean proportion correct for each
+radius value (i.e., sphere) and ``correctness'' of reference question. This
+yielded two sequences of proportion-correct scores for each quiz, analogous to
+the blue and red lines displayed in Figure~\ref{fig:smoothness}A, but for the
+present subsample. For each quiz, we then found the minimum distance from the
+reference question (i.e., sphere radius) at which each of these two sequences
+of per-radius proportion correct scores intersected the 95\% confidence
+interval for the overall proportion correct (i.e., analogous to the black error
+bands in Fig.~\ref{fig:smoothness}A).
 
-This resulted in two ``intersection'' distances for each quiz (for correctly answered and incorrectly answered reference questions). 
-Repeating this full process for each of the 10,000 bootstrap iterations output two distributions of intersection distances for each of the three quizzes. 
-The means and 95\% confidence intervals for these distributions are plotted in Figure~\ref{fig:smoothness}B.
+This resulted in two ``intersection'' distances for each quiz (for correctly
+answered and incorrectly answered reference questions). Repeating this full
+process for each of the 10,000 bootstrap iterations output two distributions of
+intersection distances for each of the three quizzes. The means and 95\%
+confidence intervals for these distributions are plotted in
+Figure~\ref{fig:smoothness}B.
 
 \subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
 
@@ -1381,15 +1412,15 @@ Projection~\citep[UMAP; ][]{McInEtal18a, McInEtal18b} to construct a 2D
 projection of the text embedding space. Whereas our main analyses used a
 15-topic embedding space, we used a 100-topic embedding space for these
 visualizations. This change in the number of topics overcame an undesirable
-behavior in the UMAP embedding procedure, whereby embedding
-coordinates for the 15-topic model tended to be ``clumped'' into separated
-clusters, rather than forming a smooth trajectory through the 2D space. When we
-increased the number of topics to 100, the embedding coordinates in the 2D
-space formed a smooth trajectory through the space, with substantially less
-clumping (Fig.~\ref{fig:knowledge-maps}). Creating a ``map'' by
-sampling this 100-dimensional space at high resolution to obtain an adequate
-set of topic vectors spanning the embedding space would be computationally
-intractable. However, sampling a 2D grid is trivial.
+behavior in the UMAP embedding procedure, whereby embedding coordinates for the
+15-topic model tended to be ``clumped'' into separated clusters, rather than
+forming a smooth trajectory through the 2D space. When we increased the number
+of topics to 100, the embedding coordinates in the 2D space formed a smooth
+trajectory through the space, with substantially less clumping
+(Fig.~\ref{fig:knowledge-maps}). Creating a ``map'' by sampling this
+100-dimensional space at high resolution to obtain an adequate set of topic
+vectors spanning the embedding space would be computationally intractable.
+However, sampling a 2D grid is trivial.
 
 At a high level, the UMAP algorithm obtains low-dimensional embeddings by
 minimizing the cross-entropy between the pairwise (clustered) distances between
