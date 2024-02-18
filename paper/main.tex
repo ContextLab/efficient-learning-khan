@@ -543,55 +543,32 @@ If we are able to accurately estimate a participant's knowledge about the
 content tested by a given question, our estimates of their knowledge should
 carry some predictive information about whether they are likely to answer that 
 question correctly or incorrectly. We developed a statistical approach to test this claim. 
-For each quiz question a participant answered, in turn, we used Equation~\ref{eqn:prop} to estimate their knowledge at the given question's embedding space coordinate, based on other questions that participant answered on the same quiz. 
+For each quiz question a participant answered, in turn, we used Equation~\ref{eqn:prop} to estimate their knowledge at the given question's embedding space coordinate based on other questions that participant answered on the same quiz. 
 We repeated this for all participants, and for each of the three quizzes. 
-Then, separately for each quiz, we fit a generalized linear mixed model (GLMM) with a logistic link function to explain the likelihood of correctly answering a question as a function of estimated knowledge for its embedding coordinate, while accounting for random variation among participants and questions (see Sec.~\nameref{subsec:glmm}).
-To assess the predictive value of the knowledge estimates, we performed likelihood-ratio tests comparing each GLMMs to an analogous (i.e., nested) ``null'' model that did not consider estimated knowledge. 
+Then, separately for each quiz, we fit a generalized linear mixed model (GLMM) with a logistic link function to explain the likelihood of correctly answering a question as a function of estimated knowledge for its embedding coordinate, while accounting for random variation among participants and questions (see \nameref{subsec:glmm}).
+To assess the predictive value of the knowledge estimates, we compared each GLMMs to an analogous (i.e., nested) ``null'' model that did not consider estimated knowledge using using parametric bootstrap likelihood-ratio tests.
 
 \begin{figure}[tp]
     \centering
+    % TODO: adjust width to max possible based on finalized caption
     \includegraphics[width=0.7\textwidth]{figs/predict-knowledge-questions}
-
-    \caption{\textbf{Predicting knowledge at the embedding coordinates of
-    held-out questions.} Separately for each quiz (column), we plot the
-    distributions of predicted knowledge at the embedding coordinates of each
-    held-out correctly (blue) or incorrectly (red) answered question. The
-    Mann-Whitney $\U$-tests reported in each panel are between the
-    distributions of predicted knowledge at the coordinates of correctly and
-    incorrectly answered held-out questions. In the top row (``All
-    questions''), we used all quiz questions (from each quiz, for each
-    participant) except one to predict knowledge at the held-out question's
-    embedding coordinate. In the middle rows (``Across-lecture''), we used all
-    questions about one lecture to predict knowledge at the embedding
-    coordinate of a held-out question about the \textit{other} lecture. In the
-    bottom row (``Within-lecture''), we used all but one question about one
-    lecture to predict knowledge at the embedding coordinate of a held-out
-    question about the \textit{same} lecture. We repeated each of these
-    analyses using all possible held-out questions for each quiz and
-    participant. The arrows at the tops of each panel indicate whether the
-    average predicted knowledge was higher for held-out correctly answered
-    (left) or incorrectly answered (right) questions.}
+    \caption{\textbf{Predicting success on held-out questions using estimated knowledge.}
+    We used generalized linear mixed models (GLMMs) to model the likelihood of correctly answering a quiz question as a function of estimated knowledge for its embedding coordinate (see \nameref{subsec:glmm}). 
+    Separately for each quiz (column), we examined this relationship based on three different sets of knowledge estimates: knowledge for each question based on all other questions the same participant answered on the same quiz (``All questions''; top row), knowledge for each question about one lecture based on all questions (from the same participant and quiz) about the \textit{other} lecture (``Across-lecture''; middle rows), and knowledge for each question about one lecture based on all other questions (from the same participant and quiz) about the \textit{same} lecture (``Within-lecture''; bottom rows). 
+    The background in each panel displays the relative density of observed correctly (blue) versus incorrectly (red) answered questions over the range of knowledge estimates. 
+    The black curves display the (population-level) GLMM-predicted probabilities of correctly answering a question as a function of estimated knowledge. 
+    Error ribbons denote 95\% confidence intervals.}
 
     \label{fig:predictions}
 \end{figure}
 
-We carried out these analyses in three different ways. First, we used all (but one) of
-the questions from a given quiz (and participant) to predict knowledge at the
-embedding coordinate of a held-out question (``All questions'' in
-Fig.~\ref{fig:predictions}). This test was intended to serve as an overall
-baseline for the predictive power of our approach. Second, we used questions
-about one lecture to predict knowledge at the embedding coordinate of a held-out
-question about the \textit{other} lecture, from the same quiz and participant
-(``Across-lecture'' in Fig.~\ref{fig:predictions}). This test was intended to
-test the \textit{generalizability} of our approach by asking whether our
-knowledge predictions held across the content areas of the two lectures. Third,
-we used questions about one lecture to predict knowledge at the embedding
-coordinate of a held-out question about the \textit{same} lecture, from the same
-quiz and participant (``Within-lecture'' in Fig.~\ref{fig:predictions}). This
-test was intended to test the \textit{specificity} of our approach by asking
-whether our knowledge predictions could distinguish between questions about
-different content covered by the same lecture. We repeated each of these
-analyses using all possible held-out questions for each quiz and participant.
+We carried out three different versions of the analyses described above, wherein we considered different sources of information in our estimates of participants' knowledge for each quiz question. 
+First, we estimated knowledge at each question's embedding coordinate using \textit{all other} questions answered by the same participant on the same quiz (``All questions''; Fig.~\ref{fig:predictions}, top row).
+This test was intended to assess the overall predictive power of our approach. 
+Second, we estimated knowledge for each question about one lecture using only questions (from the same participant and quiz) about the \textit{other} lecture (``Across-lecture''; Fig.~\ref{fig:predictions}, middle rows). 
+This test was intended to assess the \textit{generalizability} of our approach by asking whether our predictions held across the content areas of the two lectures.
+Third, we estimated knowledge for each question about a given lecture using only the other questions (from the same participant and quiz) about that \textit{same} lecture (``Within-lecture''; Fig.~\ref{fig:predictions}, bottom rows). 
+This test was intended to assess the \textit{specificity} of our approach by asking whether our predictions could distinguish between questions about different content covered by the same lecture. 
 
 For the initial quizzes participants took (prior to watching either lecture),
 predicted knowledge tended to be low overall, and relatively
