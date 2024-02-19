@@ -568,7 +568,37 @@ This test was intended to assess the overall predictive power of our approach.
 Second, we estimated knowledge for each question about one lecture using only questions (from the same participant and quiz) about the \textit{other} lecture (``Across-lecture''; Fig.~\ref{fig:predictions}, middle rows). 
 This test was intended to assess the \textit{generalizability} of our approach by asking whether our predictions held across the content areas of the two lectures.
 Third, we estimated knowledge for each question about a given lecture using only the other questions (from the same participant and quiz) about that \textit{same} lecture (``Within-lecture''; Fig.~\ref{fig:predictions}, bottom rows). 
-This test was intended to assess the \textit{specificity} of our approach by asking whether our predictions could distinguish between questions about different content covered by the same lecture. 
+This test was intended to assess the \textit{specificity} of our approach by asking whether our predictions could distinguish between questions about different content covered by the same lecture.
+
+Our null hypothesis in performing these analyses is that the knowledge estimates we compute based on the quiz questions' embedding coordinates do \textit{not} provide useful information about participants' abilities to answer those questions. 
+What result might we expect to see if this is the case? 
+To provide an intuition for this, consider the expected outcome if we carried out these same analyses using a simple proportion-correct measure in lieu of our knowledge estimates. 
+Suppose a participant correctly answered $n$ out of 13 questions on a given quiz. 
+If we held out a single correctly answered question and computed the proportion of remaining questions answered correctly, that proportion would be $(n - 1) / 12$. 
+Whereas if we held out a single \textit{incorrectly} answered question and did the same, that proportion would be $n / 12$. 
+Thus for a given participant and quiz, a ``knowledge estimate'' computed as the simple (i.e., unweighted) remaining proportion-correct is perfectly inversely related to success on a held-out question: it will always be \textit{lower} for correctly answered questions than for incorrectly answered questions. 
+Given that our knowledge estimates are computed as a weighted version of this same proportion-correct score (where each held-in question's weight reflects its embedding-space distance from the held-out question; see Eqn.~\ref{eqn:prop}), if these weights are uninformative (e.g., simply randomly distributed), then we would expect, on average, to see this same inverse relationship. 
+It is only if the spatial relationships among the quiz questions' embedding coordinates map onto participants' knowledge in a meaningful way that we would we expect this relationship to be non-negative [PHRASING].
+
+When we fit a GLMM to estimates of participants' knowledge for each Quiz~1 question based on all other Quiz~1 questions, we observed this inverse relationship expected under our null hypothesis. 
+Specifically, higher estimated knowledge at the embedding coordinate of a held-out Quiz~1 question was associated with a lower likelihood of answering the question correctly (odds ratio $(OR) = 0.136$, likelihood-ratio test statistic $(\lambda_{LR}) = 19.749$, 95\%\ $\textnormal{CI} = [14.352,\ 26.545],\ p = 0.001$). 
+However, when we repeated this analysis for quizzes 2 and 3, the direction of this relationship reversed: higher estimated knowledge for a given question predicted a greater likelihood of answering it correctly (Quiz~2: $OR = 2.905,\ \lambda_{LR} = 17.333,\ 95\%\ \textnormal{CI} = [14.966,\ 29.309],\ p = 0.002$; Quiz~3: $OR = 3.238,\ \lambda_{LR} = 6.882,\ 95\%\ \textnormal{CI} = [6.228,\ 8.184],\ p = 0.017$). 
+Taken together, these results suggest that our knowledge estimations can reliably predict participants' likelihood of success on individual quiz questions, provided they have at least some amount of structured knowledge about the underlying concepts being tested. 
+In other words, when participants' correct responses primarily arise from knowledge about the content probed by each question (e.g., after watching one or both lectures), these successes can be predicted from their ability to answer other questions about conceptually similar content (as captured by embedding-space distance).
+However, when a sufficiently large portion of participants' correct responses (presumably) reflect successful random guessing (such as on a multiple-choice quiz taken before viewing either lecture), our approach fails to predict these successes since they do not map onto embedding space distances in a meaningful way.
+
+%When we estimated participants' knowledge for each Quiz~1 question based on all other Quiz~1 questions, we found an inverse relationship. Specifically, higher estimated knowledge at the embedding coordinate at a held-out question was associated with a lower likelihood of answering the question correctly ($\textrm{odds ratio}\ (OR) = 0.136,\ \textrm{likelihood-ratio test statistic}\ (\lambda_{LR}) = 19.749,\ \textrm{95\% CI} = [14.352,\ 26.545],\ p = 0.001$). However, this inverse relationship in fact represents the expected result under our null hypothesis (that estimated knowledge is \textit{not} predictive of success on a question). An intuition for this can be taken from the expected outcome of same analysis based on the simple proportion correct, rather than estimated knowledge. Suppose a participant answered $n$ out of 13 quiz questions correctly. If we held out a single correctly answered question and computed the proportion of remaining questions answered correctly, that proportion would be $(n - 1) / 12$. Whereas if we held out a single incorrectly answered question, the proportion of remaining questions answered correctly would be $n / 12$. 
+
+When we 
+
+
+Taken together, the results of these sets of analyses suggest that our knowledge estimations can reliably predict participants' abilities to answer individual quiz questions, generalize across content areas, and distinguish between questions about similar content, provided that a basic set of assumptions about that content (as described above) can be assumed.
+
+% our approach works when participants have a minimal baseline level of knowledge about content predicted and used to predict
+% our approach generalizes when knowledge of content used to predict can be assumed to be a reasonable indicator of knowledge of content predicted
+% our approach has enough specificity to distinguish between content within the same lecture when it was just watched -- maybe when people forget a little bit they forget "randomly"?. 
+
+% two conditions: participants have at least some knowledge of content being tested, and knowledge of content used to predict is good indicator of knowledge of content predicted / participants can be expected to have same level of knowledge for content used to predict and content predicted
 
 For the initial quizzes participants took (prior to watching either lecture),
 predicted knowledge tended to be low overall, and relatively
@@ -576,7 +606,7 @@ unstructured (Fig.~\ref{fig:predictions}, left column). When we held out
 individual questions and predicted their knowledge at the held-out questions'
 embedding coordinates, we found no reliable differences in the predictions when
 the held-out question had been correctly versus incorrectly answered. This
-``null'' effect persisted when we used \textit{all} of the Quiz 1 questions
+``null'' effect persisted when we used \textit{all} of the Quiz~1 questions
 from a given participant to predict a held-out question (``All questions''; $\U
 = 50587,~p = 0.723$), when we used questions from one lecture to predict
 knowledge at the embedding coordinate of a held-out question about the
@@ -785,7 +815,7 @@ content that is nearby (i.e., related to) the content from the lecture they
 watched prior to taking Quiz~2. This localization is non-trivial: these
 knowledge estimates are informed only by the embedded coordinates of the
 \textit{quiz questions}, not by the embeddings of either lecture (see
-Eqn.~\ref{eqn:rbf-knowledge}). Finally, the knowledge map estimated from Quiz 3
+Eqn.~\ref{eqn:rbf-knowledge}). Finally, the knowledge map estimated from Quiz~3
 responses shows a second increase in knowledge, localized to the region
 surrounding the embedding of the \textit{Birth of Stars} lecture participants
 watched immediately prior to taking Quiz~3.
