@@ -1,4 +1,5 @@
 \documentclass[10pt]{article}
+\usepackage{amsmath}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[font=small,labelfont=bf]{caption}
@@ -11,6 +12,8 @@
 \usepackage{lineno}
 
 \usepackage{xcolor}
+
+\setcitestyle{notesep={; }}
 
 % supplemental tables
 \newcommand{\questions}{1}
@@ -1210,7 +1213,7 @@ timestamp corresponding to the midpoint between the timestamps for its first
 and last lines. This $w$ parameter was chosen to match the same number of words
 per sliding window (rounded to the nearest whole word, and before
 preprocessing) as the sliding windows we defined in our prior
-work~\citep{HeusEtal21} (i.e., 185 words per sliding window).
+work~\citep[][i.e., 185 words per sliding window]{HeusEtal21}.
 
 These sliding windows ramped up and down in length at the beginning and end of
 each transcript, respectively. In other words, each transcript's first sliding
@@ -1288,6 +1291,49 @@ correlations) ensures that every question contributes some non-negative amount
 to the knowledge estimate.
 
 \subsubsection*{GLMM METHODS SECTION PLACEHOLDER}\label{subsec:glmm}
+
+In the set of analyses reported in Figure~\ref{fig:predictions}, we applied Equation~\ref{eqn:prop} to 
+
+
+estimate participants' knowledge for individual held-out quiz questions (i.e., treating 
+
+
+
+In the set of analyses reported in Figure~\ref{fig:predictions}, we applied Equation~\ref{eqn:prop} to estimate participants' knowledge at the embedding coordinates of individual held-out quiz questions. For each of the three quizzes a participant took, 
+
+
+Equation~\ref{eqn:prop} to estimate participants' knowledge at the embedding coordinate of individual held-out questions, based on other questions 
+
+
+
+all other questions (``All questions''; Fig.~\ref{fig:predictions}, top row), 
+
+
+
+
+
+(``All questions''; Fig.~\ref{fig:predictions}, top row).
+This test was intended to assess the overall predictive power of our approach. 
+Second, we estimated knowledge for each question about a given lecture using only the other questions (from the same participant and quiz) about that \textit{same} lecture (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows). 
+This test was intended to assess the \textit{specificity} of our approach by asking whether our predictions could distinguish between questions about different content covered by the same lecture.
+Third, we estimated knowledge for each question about one lecture using only questions (from the same participant and quiz) about the \textit{other} lecture (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows). 
+
+To analyze the predictive value of 
+
+
+To predict individual participants' success on held-out quiz questions, we used Equation~\ref{eqn:prop}
+
+
+$$
+    \mathtt{accuracy \sim knowledge + (knowledge\ \vert\ participant) + (knowledge\ \vert\ question)}
+$$
+
+%\begin{lstlisting}[language=R]
+%    accuracy \sim knowledge + (knowledge|participant) + (knowledge|question)
+%\end{lstlisting}
+
+note that qID is implicitly nested within levels of lecture
+
 
 \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
