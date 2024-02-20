@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Mon Feb 19 07:49:49 2024
-%DIF ADD main.tex   Mon Feb 19 17:29:53 2024
+%DIF ADD main.tex   Mon Feb 19 21:52:49 2024
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[font=small,labelfont=bf]{caption}
@@ -734,20 +734,17 @@ about the }\textit{\DIFadd{other}} \DIFadd{lecture (``Across-lecture'';
 }\DIFaddend \textit{\DIFdelbegin \DIFdel{specificity}\DIFdelend \DIFaddbegin \DIFadd{generalizability}\DIFaddend } of our approach by asking whether our \DIFdelbegin \DIFdel{knowledge predictions
 could distinguish between questions about
 different content covered by the same lecture.
-We repeated each of these analysesusing all possible held-out questions for each quiz and participant.
-}%DIFDELCMD < 
+We repeated each of these analysesusing all possible held-out questionsfor each quiz and participant .
+}\DIFdelend \DIFaddbegin \DIFadd{predictions
+held across the content areas of the two lectures.
+}\DIFaddend 
 
-%DIFDELCMD < %%%
-\DIFdel{For the initial quizzes participantstook (prior to watching either lecture),
-predicted knowledge tended to be low overall, and relatively
-unstructured (Fig. ~\ref{fig:predictions}, left column). When we held out individual questions
-and predicted their knowledge at the held-out questions
-'
-embedding coordinates, we found no reliable differences in the }\DIFdelend predictions
-\DIFaddbegin \DIFadd{held across the content areas of the two lectures.
-}
-
-\DIFadd{In performing these analyses, our null hypothesis is that the knowledge
+\DIFdelbegin \DIFdel{For the initial quizzes participants took (prior to watching either lecture), predicted knowledge tended to be low overall, and relatively
+unstructured (Fig.~\ref{fig:predictions},
+left column). When we
+held out
+individual questions and predicted their knowledge at the held-out questions' embedding coordinates, we found no reliable differences in the predictions when
+the }\DIFdelend \DIFaddbegin \DIFadd{In performing these analyses, our null hypothesis is that the knowledge
 estimates we compute based on the quiz questions' embedding coordinates do
 }\textit{\DIFadd{not}} \DIFadd{provide useful information about participants' abilities to answer
 those questions. What result might we expect to see if this is the case? To
@@ -759,25 +756,24 @@ out of $q$ questions on a given quiz. If we hold out a single
 answered correctly would be $\frac{n - 1}{q - 1}$. If we hold out a single
 }\textit{\DIFadd{incorrectly}} \DIFadd{answered question, the proportion of remaining questions
 answered correctly would be $\frac{n}{q - 1}$. In this way, the proportion of
-correctly answered remaining questions is always }\textit{\DIFadd{lower}} \DIFaddend when the
-held-out question \DIFdelbegin \DIFdel{had been correctly versus incorrectly answered . This
+correctly answered remaining questions is always }\textit{\DIFadd{lower}} \DIFadd{when the
+}\DIFaddend held-out \DIFdelbegin \DIFdel{question had been correctly versus incorrectly answered. This
 ``null'' effect persisted when we used }\textit{\DIFdel{all}} %DIFAUXCMD
 \DIFdel{of the Quiz 1 questions
-from a given participant to predict a }\DIFdelend \DIFaddbegin \DIFadd{was answered correctly than when it was answered incorrectly.
+from a given participant to predict a held-out question (``All questions'' ; $\U
+= 50587,~p = 0.723$), when we used questions from one lecture to predict
+knowledge at the embedding coordinate of a }\DIFdelend \DIFaddbegin \DIFadd{question was answered correctly than when it was answered incorrectly.
 Because our knowledge estimates are computed as a weighted version of this same
 proportion-correct score (where each held-in question's weight reflects its
-embedding-space distance from the }\DIFaddend held-out question\DIFdelbegin \DIFdel{(``All questions''; $\U
-= 50587,~p = 0.723$),
-when we
-used questions from one lecture to predict
-knowledge
-at the embedding coordinate of a held-out question about the }\DIFdelend \DIFaddbegin \DIFadd{; see Eqn.~\ref{eqn:prop}),
+embedding-space distance from the }\DIFaddend held-out \DIFdelbegin \DIFdel{question about the }\textit{\DIFdel{other}} %DIFAUXCMD
+\DIFdel{lecture (``Across-lecture''; predicting knowledge
+for }\DIFdelend \DIFaddbegin \DIFadd{question; see Eqn.~\ref{eqn:prop}),
 if these weights were uninformative (e.g., randomly distributed), then we
 should expect to see this same inverse relationship between estimated knowledge
 and performance, on average. On the other hand, if the spatial relationships
 among the quiz questions' embeddings }\textit{\DIFadd{are}} \DIFadd{predictive of participants'
-knowledge about the questions' content, then we would expect }\DIFaddend \textit{\DIFdelbegin \DIFdel{other}\DIFdelend \DIFaddbegin \DIFadd{higher}\DIFaddend }
-\DIFdelbegin \DIFdel{lecture (``Across-lecture''; predicting }\DIFdelend \DIFaddbegin \DIFadd{estimated }\DIFaddend knowledge for held-out \DIFdelbegin \textit{\DIFdel{Four Fundamental Forces Questions}} %DIFAUXCMD
+knowledge about the questions' content, then we would expect }\textit{\DIFadd{higher}}
+\DIFadd{estimated knowledge for }\DIFaddend held-out \DIFdelbegin \textit{\DIFdel{Four Fundamental Forces Questions}} %DIFAUXCMD
 \DIFdel{using }\textit{\DIFdel{Birth of Stars}}
 %DIFAUXCMD
 \DIFdel{questions: $\U = 8244,~p = 0.184$; predicting knowledge for held-out
@@ -787,167 +783,185 @@ questions from one lecture to predict }\DIFdelend \DIFaddbegin \DIFadd{correctly
 questions.
 }
 
+\DIFadd{Before presenting our results, it is worth considering three possible
+explanations of why a participant might answer a given question correctly or
+incorrectly. One possibility is that the participant simply }\textit{\DIFadd{guessed}}
+\DIFadd{the answer. A second is that they selected an answer by mistake, despite
+``knowing'' the correct answer. In both of these scenarios, the participant's
+knowledge about the question's content should be uninformative about their
+observed response. A third possibility is that the participant's response
+reflects their }\textit{\DIFadd{actual}} \DIFadd{knowledge about the question's content. In this
+case, we }\textit{\DIFadd{might}} \DIFadd{expect to see a positive relationship between the
+participant's knowledge and their likelihood of answering the question
+correctly. However, in order to see this positive relationship, the
+participant's knowledge must be structured in a way that is reflected (at least
+partially) by the embedding space. In other words, if the participant's
+performance reflects their true kwowledge, but our text embedding space does
+not sufficiently capture the structure of that knowledge, then the }\DIFaddend knowledge
+\DIFaddbegin \DIFadd{estimates we generate will not be predictive of the participant's performance.
+In the extreme, if the embedding space is completely unstructured with respect
+to the content of the quiz questions, then we would expect to see the negative
+relationship between estimated knowledge and performance that we described
+above.
+}
+
 \DIFadd{When we fit a GLMM to estimates of participants' knowledge for each Quiz~1
 question based on all other Quiz~1 questions, we observed an outcome consistent
-with our null hypothesis: higher estimated }\DIFaddend knowledge at the embedding
+with our null hypothesis: higher estimated knowledge }\DIFaddend at the embedding
 coordinate of a held-out question \DIFdelbegin \DIFdel{about the }\textit{\DIFdel{same}} %DIFAUXCMD
 \DIFdel{lecture (``Within-lecture'';
 }\textit{\DIFdel{Four Fundamental Forces}}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \DIFadd{was associated with a lower likelihood of
+\DIFdel{: $\U = 7681.5,~p = 0.746$; }\textit{\DIFdel{Birth of
+Stars}}%DIFAUXCMD
+\DIFdel{: $\U = 8125,~p = 0.204$). We believe that this
+reflects a floor effect:
+when knowledge is low everywhere, there is little signal to differentiate
+between what is known versus unknown. }\DIFdelend \DIFaddbegin \DIFadd{was associated with a lower likelihood of
 answering the question correctly (odds ratio $(OR) = 0.136$, likelihood-ratio
 test statistic $(\lambda_{LR}) = 19.749$, 95\%\ $\textnormal{CI} = [14.352,\
 26.545],\ p = 0.001$). This outcome suggests that our knowledge estimates do
 }\textit{\DIFadd{not}} \DIFadd{provide useful information about participants' Quiz~1 performance
 when we aggregated across all question content areas. We speculated that this
 might either indicate that the knowledge estimates are uninformative in
-general, or about Quiz~1 performance in particular. When we repeated this
-analysis for Quizzes~2 and~3, the direction of this relationship reversed:
-higher estimated knowledge for a given question predicted a greater likelihood
-of answering it correctly (Quiz~2}\DIFaddend : \DIFdelbegin \DIFdel{$\U = 7681.5,~p = 0.746$; }\textit{\DIFdel{Birth of
-Stars}}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \DIFadd{$OR = 2.905,\ \lambda_{LR} = 17.333,\ 95\%\
-\textnormal{CI} = [14.966,\ 29.309],\ p = 0.002$; Quiz~3}\DIFaddend : \DIFdelbegin \DIFdel{$\U = 8125,~p = 0.204$). We believe that this
-reflects a floor effect:
-when knowledge is low everywhere, there is little signal to differentiate
-between what is known versus unknown. }%DIFDELCMD < 
+general, or about Quiz~1 performance in particular. This would be expected, for
+example, if participants were guessing about the answers to the Quiz~1
+questions (prior to having watched either lecture). When we repeated this
+analysis for Quizzes~2 and~3, we found that }\textit{\DIFadd{higher}} \DIFadd{estimated knowledge
+for a given question predicted a greater likelihood of answering it correctly
+(Quiz~2: $OR = 2.905,\ \lambda_{LR} = 17.333,\ 95\%\ \textnormal{CI} =
+[14.966,\ 29.309],\ p = 0.002$; Quiz~3: $OR = 3.238,\ \lambda_{LR} = 6.882,\
+95\%\ \textnormal{CI} = [6.228,\ 8.184],\ p = 0.017$). Taken together, these
+results suggest that our knowledge estimates reliably predict participants'
+performance on individual held-out quiz questions, but only after participants
+have received at least some training.
+}\DIFaddend 
 
-%DIFDELCMD < %%%
-\DIFdel{After watching }\textit{\DIFdel{Four Fundamental Forces}}%DIFAUXCMD
-\DIFdel{, predicted knowledge for held-out questions that were answered correctly (from the second quiz; Fig.~\ref{fig:predictions}, middle column)exhibited a significant positive
-shift relative to held-out questions that were answered incorrectly.
-This held
-when we included all questionsin the analysis ($\U = 58332,~p < 0.001$), when
-we predicted knowledge across-lectures (}\textit{\DIFdel{Four Fundamental Forces}}%DIFAUXCMD
+\DIFdelbegin \DIFdel{After watching }\textit{\DIFdel{Four Fundamental Forces}}%DIFAUXCMD
+\DIFdel{, predicted knowledge for
+}\DIFdelend \DIFaddbegin \DIFadd{We observed a similar pattern of results when used this approach to estimate
+participants' knowledge about }\DIFaddend held-out \DIFdelbegin \DIFdel{questions that were answered correctly (from the second quiz;
+Fig.~\ref{fig:predictions}, middle column) exhibited a significant positive
+shift relative to held-out questions that were answered incorrectly. This held
+when we included all questions in the analysis ($\U = 58332,~p < 0.001$), when
+we predicted knowledge
+across-lectures (}\textit{\DIFdel{Four Fundamental Forces}}%DIFAUXCMD
 \DIFdel{: $\U =
 6749.5,~p = 0.014$; }\textit{\DIFdel{Birth of Stars}}%DIFAUXCMD
-\DIFdel{: $\U = 8480,~p = 0.016$}\DIFdelend \DIFaddbegin \DIFadd{$OR = 3.238,\
-\lambda_{LR} = 6.882,\ 95\%\ \textnormal{CI} = [6.228,\ 8.184],\ p = 0.017$).
-Taken together, these results suggest that our knowledge estimates }\textit{\DIFadd{do}}
-\DIFadd{reliably predict participants' likelihood of success on individual quiz
-questions, but only when there is some ``contrast'' in performance between the
-content of different questions. On Quiz~1, before participants have learned the
-content of either lecture, their overall performance is poor (average
-proportion correct: $0.46$), and the specific questions they answer correctly
-not not seem to be structured in a meaningful way with respect to the embedding
-space (e.g., Fig.~\ref{fig:knowledge-maps}A, left panel). On Quizzes~2 and~3,
-after participants have begun their training, their overall performance
-improves (average proportion correct for Quiz~2: 0.60; average proportion
-correct for Quiz~3: 0.79}\DIFaddend ), and \DIFdelbegin \DIFdel{when
-we predicted knowledge at the }\DIFdelend \DIFaddbegin \DIFadd{the specific content areas they improve on are
-captured by the lecture and question embeddings (and, therefore, our knowledge
-estimates).
-}
-
-\DIFadd{We observed a similar pattern of results when we fit GLMMs to estimates of
-participants' knowledge for each question about one lecture derived from other
-questions about the }\textit{\DIFadd{same}} \DIFadd{lecture. Specifically, for questions that
-participants answered on Quiz~1, prior to watching either lecture, knowledge
-for the }\DIFaddend embedding coordinates of \DIFdelbegin \DIFdel{held-out }\DIFdelend \textit{Four Fundamental Forces}\DIFdelbegin \DIFdel{questions }\DIFdelend \DIFaddbegin \DIFadd{-related
-questions estimated }\DIFaddend using other \textit{Four Fundamental Forces}\DIFdelbegin \DIFdel{questions from the same quiz and participant ($\U = 7224,~p < 0.001$). This
+\DIFdel{: $\U = 8480,~p = 0.016$), and when
+we predicted knowledge at the }\DIFdelend \DIFaddbegin \DIFadd{questions from one lecture using their
+performance on other questions from the }\textit{\DIFadd{same}} \DIFadd{lecture. Specifically,
+for Quiz~1 questions (i.e., prior to watching either), participants' estimated
+knowledge for the }\DIFaddend embedding coordinates of held-out \textit{Four Fundamental
+Forces}\DIFdelbegin \DIFdel{questions }\DIFdelend \DIFaddbegin \DIFadd{-related questions estimated }\DIFaddend using other \textit{Four Fundamental
+Forces}\DIFdelbegin \DIFdel{questions from the same quiz and participant ($\U = 7224,~p < 0.001$). This
 difference did }\textit{\DIFdel{not}} %DIFAUXCMD
-\DIFdel{hold for within-lecture knowledge predictions at
-knowledge at embedding space coordinates of }\DIFdelend \DIFaddbegin \DIFadd{-related
-questions did not reliably predict whether those questions were answered
-correctly ($OR = 1.891,\ \lambda_{LR} = 2.293,\ 95\%\ \textnormal{CI} =
-[2.091,\ 2.622],\ p = 0.139$). The same was true of knowledge estimates for
-}\DIFaddend \textit{Birth of Stars}\DIFdelbegin \DIFdel{questions
-($\U = 7419,~p = 0.739$). Again, we suggest that this might reflect a floor
-effect whereby, at that point in the participants' training, their knowledge about the content of the }\DIFdelend \DIFaddbegin \DIFadd{-related questions based on other }\DIFaddend \textit{Birth of
-Stars}\DIFdelbegin \DIFdel{material is relatively low
+\DIFdel{hold for }\DIFdelend \DIFaddbegin \DIFadd{-related questions did not reliably predict whether those questions were
+answered correctly ($OR = 1.891,\ \lambda_{LR} = 2.293,\ 95\%\ \textnormal{CI}
+= [2.091,\ 2.622],\ p = 0.139$). The same was true of knowledge estimates for
+held-out }\textit{\DIFadd{Birth of Stars}}\DIFadd{-related questions based on other }\textit{\DIFadd{Birth
+of Stars}}\DIFadd{-related questions ($OR = 0.722,\ \lambda_{LR} = 5.115,\ 95\%\
+\textnormal{CI} = [0.094,\ 0.146],\ p = 0.738$). As in our analysis that
+included all questions, we speculate that these ``null'' results might reflect
+some degree of random guessing on Quiz~1. When we repeated these }\DIFaddend within-lecture
+\DIFdelbegin \DIFdel{knowledge predictions at
+knowledge at embedding space coordinates of }\DIFdelend \DIFaddbegin \DIFadd{analyses using questions from Quiz~2 (which participants took immediately after
+viewing }\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{but prior to viewing }\DIFaddend \textit{Birth of
+Stars}\DIFdelbegin \DIFdel{questions
+}\DIFdelend \DIFaddbegin \DIFadd{), we found that they now reliably predicted success on }\textit{\DIFadd{Four
+Fundamental Forces}}\DIFadd{-related questions ($OR = 9.023,\ \lambda_{LR} = 18.707,\
+95\%\ \textnormal{CI} = [10.877,\ 22.222],\ p = 0.001$) but not on
+}\textit{\DIFadd{Birth of Stars}}\DIFadd{-related questions }\DIFaddend (\DIFdelbegin \DIFdel{$\U = 7419,~p = 0.739$). Again, we suggest that this might reflect
+a floor
+effect whereby, at that point in the participants' training, their knowledge
+about the content of the }\DIFdelend \DIFaddbegin \DIFadd{$OR = 0.306,\ \lambda_{LR} = 5.115,\
+95\%\ \textnormal{CI} = [4.624,\ 5.655],\ p = 0.055$). Here, we speculate that
+participants might have been guessing about the }\DIFaddend \textit{Birth of Stars} \DIFdelbegin \DIFdel{material is relatively low
 everywhere in that region of text embedding space.
 }%DIFDELCMD < 
 
 %DIFDELCMD < %%%
-\DIFdel{Finally, after watching }\DIFdelend \DIFaddbegin \DIFadd{-related questions ($OR = 0.722,\ \lambda_{LR} = 5.115,\ 95\%\
-\textnormal{CI} = [0.094,\ 0.146],\ p = 0.738$). When we recomputed these
-within-lecture knowledge estimates using questions from Quiz~2---which
-participants took immediately after viewing }\textit{\DIFadd{Four Fundamental Forces}}
-\DIFadd{but prior to viewing }\DIFaddend \textit{Birth of Stars}\DIFdelbegin \DIFdel{, predicted knowledge for
+\DIFdel{Finally, after
+watching }\textit{\DIFdel{Birth of Stars}}%DIFAUXCMD
+\DIFdel{, predicted knowledge for
 held-out correctly answered questions (from the third quiz;
 Fig.~\ref{fig:predictions}, right column) was higher than for held-out
-incorrectly answered questions . This held when we included all questions in the
-analysis ($\U = 38279,~p = 0.022$), when we carried out across-lecture
-predictions (}\DIFdelend \DIFaddbegin \DIFadd{---we found that they now reliably
-predicted success on }\DIFaddend \textit{Four Fundamental Forces}\DIFdelbegin \DIFdel{: $\U = 6684.5,~p = 0.032$;
-}\DIFdelend \DIFaddbegin \DIFadd{-related questions ($OR =
-9.023,\ \lambda_{LR} = 18.707,\ 95\%\ \textnormal{CI} = [10.877,\ 22.222],\ p =
-0.001$) but not on }\DIFaddend \textit{Birth of Stars}\DIFdelbegin \DIFdel{: $\U = 6414.5,~p = 0.002$), and and when we carried out
-}\DIFdelend \DIFaddbegin \DIFadd{-related questions ($OR = 0.306,\
-\lambda_{LR} = 5.115,\ 95\%\ \textnormal{CI} = [4.624,\ 5.655],\ p = 0.055$).
-Using participants' responses from Quiz~3 (taken immediately after viewing
-}\textit{\DIFadd{Birth of Stars}}\DIFadd{), we found that }\DIFaddend within-lecture knowledge \DIFdelbegin \DIFdel{predictions for
-held-out }\DIFdelend \DIFaddbegin \DIFadd{estimates for
-}\DIFaddend \textit{Birth of Stars}\DIFdelbegin \DIFdel{questions using other }\textit{\DIFdel{Birth of Stars}} %DIFAUXCMD
+incorrectly answered questions . This held when we included all questions in the analysis ($\U = 38279,~p = 0.022$), when we carried out across-lecture
+predictions (}\DIFdelend \DIFaddbegin \DIFadd{content
+(e.g., prior to having watched it), whereas they might have been drawing on
+some structured knowledge about the }\DIFaddend \textit{Four Fundamental Forces} \DIFdelbegin \DIFdel{: $\U = 6684.5,~p = 0.032$;
+}\DIFdelend \DIFaddbegin \DIFadd{content
+(e.g., from having just watched it). When we applied this approach to Quiz~3
+responses (given immediately after viewing }\DIFaddend \textit{Birth of Stars}\DIFdelbegin \DIFdel{: $\U = 6414.5,~p = 0.002$), and and when we carried out
+}\DIFdelend \DIFaddbegin \DIFadd{), we found
+that }\DIFaddend within-lecture knowledge \DIFdelbegin \DIFdel{predictions for held-out }\DIFdelend \DIFaddbegin \DIFadd{estimates for }\DIFaddend \textit{Birth of Stars}\DIFdelbegin \DIFdel{questions using other }\textit{\DIFdel{Birth of Stars}} %DIFAUXCMD
 \DIFdel{questions from the same quiz and
-participant ($\U = 6126,~p = 0.006$). However, we found the }\textit{\DIFdel{opposite}}
+participant ($\U = 6126,~p = 0.006$}\DIFdelend \DIFaddbegin \DIFadd{-related
+questions could now reliably predict success on those questions ($OR = 5.467,\
+\lambda_{LR} = 10.670,\ 95\%\ \textnormal{CI} = [7.998, 12.532],\ p = 0.006$}\DIFaddend ).
+However, \DIFdelbegin \DIFdel{we found the }\textit{\DIFdel{opposite}}
 %DIFAUXCMD
-\DIFdel{effect when we carried out }\DIFdelend \DIFaddbegin \DIFadd{-related questions could now reliably predict success on
-those questions ($OR = 5.467,\ \lambda_{LR} = 10.670,\ 95\%\ \textnormal{CI} =
-[7.998, 12.532],\ p = 0.006$). In contrast, }\DIFaddend within-lecture knowledge \DIFdelbegin \DIFdel{predictions for held-out
-}\DIFdelend \DIFaddbegin \DIFadd{estimates
-for }\DIFaddend \textit{Four Fundamental Forces} questions \DIFdelbegin \DIFdel{using other }\DIFdelend \DIFaddbegin \DIFadd{answered on Quiz~3 were no
-longer directly related to the likelihood of successfully answering them and
-instead exhibited the inverse relationship we would expect to arise from
-unstructured knowledge (with respect to the embedding space; $OR = 0.013,\
-\lambda_{LR} = 14.648,\ 95\%\ \textnormal{CI} = [10.695, 23.096],\ p = 0.001$).
-In principle, this ``prediction failure'' might arise from several possible
-scenarios. One possibility is that the participants are answering nearly all of
-the questions about }\DIFaddend \textit{Four Fundamental Forces} \DIFdelbegin \DIFdel{questions from the same quiz and
-participant ($\U = 6734,~p = 0.027$).
-Specifically, on Quiz }\DIFdelend \DIFaddbegin \DIFadd{correctly on Quiz~}\DIFaddend 3, \DIFdelbegin \DIFdel{our knowledgepredictions for held-out correctly
-answered }\DIFdelend \DIFaddbegin \DIFadd{and
-(as with the Quiz~1 questions) there might be insufficient contrast in
-performance across different questions to reliably estimate participants'
-knowledge. However, when we examined participants' performance on Quiz~3
-}\DIFaddend questions about \textit{Four Fundamental Forces}\DIFdelbegin \DIFdel{were reliably
+\DIFdel{effect when we carried out }\DIFdelend within-lecture knowledge \DIFdelbegin \DIFdel{predictions for held-out
+}\DIFdelend \DIFaddbegin \DIFadd{estimates for }\DIFaddend \textit{Four Fundamental
+Forces} questions \DIFdelbegin \DIFdel{using other }\textit{\DIFdel{Four Fundamental
+Forces}} %DIFAUXCMD
+\DIFdel{questions from the
+same quiz and participant ($\U = 6734,~p = 0.027$). Specifically, on Quiz }\DIFdelend \DIFaddbegin \DIFadd{answered on Quiz~}\DIFaddend 3 \DIFdelbegin \DIFdel{, our knowledge predictions for held-out correctly
+answered questions about }\textit{\DIFdel{Four Fundamental Forces}} %DIFAUXCMD
+\DIFdel{were reliably
 }\textit{\DIFdel{lower}} %DIFAUXCMD
-\DIFdel{than those for their incorrectly answered
-counterparts. Speculatively, we suggest that this may reflect participants
-}\DIFdelend \DIFaddbegin \DIFadd{, we found that they answered
-these questions correctly only 76\% of the time, on average (i.e., unlikely to
-reflect a ``ceiling'' effect). Alternatively, we speculated that participants
-might be }\DIFaddend forgetting some of the \DIFaddbegin \DIFadd{material from the }\DIFaddend \textit{Four Fundamental
-Forces} \DIFdelbegin \DIFdel{content. If this forgetting happens }\DIFdelend \DIFaddbegin \DIFadd{lecture, and that this forgetting might be happening }\DIFaddend in a relatively
-``random'' way \DIFdelbegin \DIFdel{(}\DIFdelend with respect to spatial distance within the \DIFdelbegin \DIFdel{text
-embedding space), then it could explain why some held-out questions about
-}\textit{\DIFdel{Four Fundamental Forces}} %DIFAUXCMD
-\DIFdel{were answered incorrectly, even if questions
-at nearby coordinates (i.e., about similar content) were answered correctly}\DIFdelend \DIFaddbegin \DIFadd{embedding space}\DIFaddend .
-This might lead our approach to over-estimate knowledge for held-out questions
-about ``forgotten'' knowledge that participants answered incorrectly. \DIFaddbegin \DIFadd{Indeed,
-participants' performance on }\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{-related questions
-was slightly (thought not dramatically) lower on Quiz~3 than on Quiz~2 (mean
-proportion correct on Quiz~2: $0.77$). }\DIFaddend Taken together, \DIFdelbegin \DIFdel{the results in Figure~\ref{fig:predictions} indicate }\DIFdelend \DIFaddbegin \DIFadd{these results suggest
-}\DIFaddend that our approach can \DIFdelbegin \DIFdel{reliably predict acquired knowledge (especially about recently
-learned content) , and that }\DIFdelend \DIFaddbegin \DIFadd{distinguish between questions about different content
-covered by a single lecture when participants have sufficiently structured
-knowledge about its contents, though this specificity may decrease further in
-time from when the lecture in question was viewed.
+\DIFdel{than those for their incorrectly answered counterparts.
+}\DIFdelend \DIFaddbegin \DIFadd{were no longer directly related to the
+likelihood of successfully answering them and instead exhibited the inverse
+relationship we would expect to arise from unstructured knowledge (with respect
+to the embedding space; $OR = 0.013,\ \lambda_{LR} = 14.648,\ 95\%\
+\textnormal{CI} = [10.695, 23.096],\ p = 0.001$). }\DIFaddend Speculatively, we suggest
+that this may reflect participants forgetting some of the \textit{Four
+Fundamental Forces} content \DIFaddbegin \DIFadd{(e.g., perhaps in favor of prioritizing encoding
+the just-watched }\textit{\DIFadd{Birth of Stars}} \DIFadd{content in preparation for the third
+quiz)}\DIFaddend . If this forgetting happens in a relatively ``random'' way (with respect
+to spatial distance within the \DIFdelbegin \DIFdel{text
+}\DIFdelend embedding space), then it could explain why some
+held-out questions about \textit{Four Fundamental Forces} were answered
+incorrectly, even if questions at nearby coordinates (i.e., about similar
+content) were answered correctly. This might lead our approach to over-estimate
+knowledge for held-out questions about ``forgotten'' knowledge that
+participants answered incorrectly. Taken together, \DIFdelbegin \DIFdel{the results
+in Figure~\ref{fig:predictions} indicate }\DIFdelend \DIFaddbegin \DIFadd{these within-lecture results
+suggest }\DIFaddend that our approach can \DIFdelbegin \DIFdel{reliably predict acquired knowledge (especially about recently
+learnedcontent) , and }\DIFdelend \DIFaddbegin \DIFadd{distinguish between questions about different
+content covered by a single lecture when participants have sufficiently
+structured knowledge about its contents, though this specificity may decrease
+with time since the relevant material was learned.
 }
 
-\DIFadd{Finally, when we fit GLMMs to estimates of participants' knowledge for
-questions about one lecture using questions they answered (on the same quiz)
-about }\DIFaddend the \DIFdelbegin \DIFdel{knowledge predictions are generalizable across
-the content areas spanned by the two lectures, while also specific enough to }\DIFdelend \DIFaddbegin \textit{\DIFadd{other}} \DIFadd{lecture, we also observed a (largely) similar pattern.
-On Quiz~1, we found that participants' abilities to correctly answer questions
-about }\textit{\DIFadd{Four Fundamental Forces}} \DIFadd{could be predicted from their responses
-to questions about }\textit{\DIFadd{Birth of Stars}} \DIFadd{($OR = 1.896,\ \lambda_{LR} =
-7.205,\ 95\%\ \textnormal{CI} = [6.224, 7.524],\ p = 0.039$) and similarly,
-that their ability to correctly answer }\textit{\DIFadd{Birth of Stars}}\DIFadd{-related
-questions could be predicted from their responses to }\textit{\DIFadd{Four Fundamental
-Forces}}\DIFadd{-related questions ($OR = 1.522,\ \lambda_{LR} = 6.448,\ 95\%\
-\textnormal{CI} = [5.656, 6.843],\ p = 0.043$). This reflects coarse-scale
-structure in participants' knowledge prior to any training in our experiment.
-When we repeated this analysis using questions from Quiz~2, we found
-participants' responses to }\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{-related questions
-did }\textit{\DIFadd{not}} \DIFadd{reliably predict their success on }\textit{\DIFadd{Birth of
-Stars}}\DIFadd{-related questions ($OR = 1.865,\ \lambda_{LR} = 3.205,\ 95\%\
-\textnormal{CI} = [3.027, 3.600],\ p = 0.125$), nor did their responses to
-}\textit{\DIFadd{Birth of Stars}}\DIFadd{-related questions reliably predict their success on
-}\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{-related questions ($OR = 3.490,\ \lambda_{LR}
-= 3.266,\ 95\%\ \textnormal{CI} = [3.033, 3.866],\ p = 0.094$). These
-``prediction failures'' appear to come from the fact that any signal derived
-from participants' knowledge about the content of the }\textit{\DIFadd{Birth of Stars}}
+\DIFadd{Finally, we used this approach to estimate participants' knowledge about
+held-out questions from one lecture using their performance on other questions
+from the }\textit{\DIFadd{other}} \DIFadd{lecture. Here we again observed a similar pattern of
+results, though with some notable differences. On Quiz~1, we found that
+participants' abilities to correctly answer questions about }\textit{\DIFadd{Four
+Fundamental Forces}} \DIFadd{could be predicted from their responses to questions about
+}\textit{\DIFadd{Birth of Stars}} \DIFadd{($OR = 1.896,\ \lambda_{LR} = 7.205,\ 95\%\
+\textnormal{CI} = [6.224, 7.524],\ p = 0.039$) and similarly, that their
+ability to correctly answer }\textit{\DIFadd{Birth of Stars}}\DIFadd{-related questions could be
+predicted from their responses to }\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{-related
+questions ($OR = 1.522,\ \lambda_{LR} = 6.448,\ 95\%\ \textnormal{CI} = [5.656,
+6.843],\ p = 0.043$). Given the results from our analyses that included all
+questions and within-lecture predictions, we were surprised to find }\DIFaddend that the
+knowledge \DIFdelbegin \DIFdel{predictions are generalizable across the content areas spanned by the two lectures, while also specific enough to }\DIFdelend \DIFaddbegin \DIFadd{estimates could reliably (if weakly) predict participants'
+performance across content from different lectures. It is possible that this
+result reflects a combination of random guessing prior to training (leading to
+a weak effect size), in combination with some coarse-scale structured knowledge
+that participants had about the content prior to watching either lecture. When
+we repeated this analysis using questions from Quiz~2, we found participants'
+responses to }\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{-related questions did
+}\textit{\DIFadd{not}} \DIFadd{reliably predict their success on }\textit{\DIFadd{Birth of Stars}}\DIFadd{-related
+questions ($OR = 1.865,\ \lambda_{LR} = 3.205,\ 95\%\ \textnormal{CI} = [3.027,
+3.600],\ p = 0.125$), nor did their responses to }\textit{\DIFadd{Birth of
+Stars}}\DIFadd{-related questions reliably predict their success on }\textit{\DIFadd{Four
+Fundamental Forces}}\DIFadd{-related questions ($OR = 3.490,\ \lambda_{LR} = 3.266,\
+95\%\ \textnormal{CI} = [3.033, 3.866],\ p = 0.094$). These ``prediction
+failures'' appear to come from the fact that any signal derived from
+participants' knowledge about the content of the }\textit{\DIFadd{Birth of Stars}}
 \DIFadd{lecture (prior to watching it) is swamped by the much more dramatic increase in
 their knowledge about the content of the }\textit{\DIFadd{Four Fundamental Forces}}
 \DIFadd{(which they watched just prior to taking Quiz~2). This is reflected in their
@@ -964,14 +978,14 @@ p = 0.017$) using responses to questions questions about the other lecture's
 content. Across all three versions of these analyses, our results suggest that
 (by and large) our knowledge estimations can reliably predict participants'
 abilities to answer individual quiz questions, }\DIFaddend distinguish between questions
-about \DIFdelbegin \DIFdel{more subtly different contentwithin the
-same lecture}\DIFdelend \DIFaddbegin \DIFadd{similar content, and generalize across content areas, provided that
+about \DIFdelbegin \DIFdel{more subtly different contentwithin the same lecture}\DIFdelend \DIFaddbegin \DIFadd{similar content, and generalize across content areas, provided that
 participants' quiz responses reflect a minimum level of ``real'' knowledge
 about both content on which these predictions are based and that for which they
-are made. Our results also indicate some potential limitations of our approach:
-when the contrast in participants' knowledge within the embedding space is low
-overall, our approach (often) cannot reliably predict their abilities to answer
-individual quiz questions}\DIFaddend .
+are made. Our results also indicate some important limitations of our approach:
+if participants' quiz performance does not reflect what they know (e.g., when
+they ``guess''), or if their knowledge is not structured in a way that is
+reflected by the embedding space, then our knowledge estimates will not be
+predictive of their performance}\DIFaddend .
 
 %DIF >  our approach works when participants have a minimal baseline level of knowledge about content predicted and used to predict
 %DIF >  our approach generalizes when knowledge of content used to predict can be assumed to be a reasonable indicator of knowledge of content predicted
