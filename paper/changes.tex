@@ -1,7 +1,10 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Mon Feb 19 07:49:49 2024
-%DIF ADD main.tex   Mon Feb 19 21:52:49 2024
+%DIF ADD main.tex   Tue Feb 20 13:03:38 2024
+%DIF 2a2
+\usepackage{amsmath} %DIF > 
+%DIF -------
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[font=small,labelfont=bf]{caption}
@@ -14,6 +17,10 @@
 \usepackage{lineno}
 
 \usepackage{xcolor}
+%DIF 14a15-16
+ %DIF > 
+\setcitestyle{notesep={; }} %DIF > 
+%DIF -------
 
 % supplemental tables
 \newcommand{\questions}{1}
@@ -423,7 +430,7 @@ correspondence could not solely arise from superficial text matching between
 lecture transcripts and questions, since the lectures and questions often used
 different words (Supp.~Fig.~\jaccard) and phrasings. Simply comparing the
 average topic weights from each lecture and question set (averaging across time
-and questions, respectively) reveals a striking correspondence 
+and questions, respectively) reveals a striking correspondence
 (Supp.\DIFaddbegin \DIFadd{~}\DIFaddend Fig.~\topicWeights). Specifically, the average topic weights from Lecture~1 are
 strongly correlated with the average topic weights from Lecture~1 questions
 ($r(13) = 0.809,~p < 0.001$, 95\% confidence interval (CI)~$= [0.633,~0.962]$),
@@ -678,14 +685,16 @@ bootstrap likelihood-ratio tests}\DIFaddend .
     participant }\DIFaddendFL answered \DIFdelbeginFL \DIFdelFL{held-out questions. In }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{on }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{top row }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{same quiz }\DIFaddendFL (``All questions''\DIFaddbeginFL \DIFaddFL{; top row}\DIFaddendFL ),
     \DIFdelbeginFL \DIFdelFL{we used all quiz questions (from each quiz, }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{knowledge }\DIFaddendFL for each \DIFdelbeginFL \DIFdelFL{participant) except one to predict knowledge at the held-out }\DIFdelendFL question \DIFdelbeginFL \DIFdelFL{'s
     embedding coordinate. In the middle rows (``Across-lecture''), we used all
-    questions }\DIFdelendFL about one lecture \DIFdelbeginFL \DIFdelFL{to predict knowledge at }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{based on all questions (from
-    }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{embedding
-    coordinate of a held-out question }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{same participant and quiz) }\DIFaddendFL about the \textit{other} lecture
+    questions }\DIFdelendFL about one lecture \DIFdelbeginFL \DIFdelFL{to predict knowledge at }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{based on all other questions
+    (from }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{embedding
+    coordinate of a held-out question }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{same participant and quiz) }\DIFaddendFL about the \DIFdelbeginFL \textit{\DIFdelFL{other}} %DIFAUXCMD
+\DIFdelendFL \DIFaddbeginFL \textit{\DIFaddFL{same}} \DIFaddendFL lecture
     \DIFdelbeginFL \DIFdelFL{. In the
-    bottom row }\DIFdelendFL (``\DIFdelbeginFL \DIFdelFL{Within-lecture}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Across-lecture}\DIFaddendFL ''\DIFaddbeginFL \DIFaddFL{; middle rows}\DIFaddendFL ), \DIFdelbeginFL \DIFdelFL{we used all but one }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{and knowledge for each }\DIFaddendFL question about
-    one lecture \DIFdelbeginFL \DIFdelFL{to predict knowledge at }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{based on all other questions (from }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{embedding coordinate of a held-out
-    question }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{same participant and
-    quiz) }\DIFaddendFL about the \textit{same} lecture \DIFaddbeginFL \DIFaddFL{(``Within-lecture''; bottom rows)}\DIFaddendFL .
+    bottom row }\DIFdelendFL (``Within-lecture''\DIFaddbeginFL \DIFaddFL{; middle rows}\DIFaddendFL ), \DIFdelbeginFL \DIFdelFL{we used all but one }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{and knowledge for each }\DIFaddendFL question about
+    one lecture \DIFdelbeginFL \DIFdelFL{to predict knowledge at }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{based on all questions (from }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{embedding coordinate of a held-out
+    question }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{same participant and quiz)
+    }\DIFaddendFL about the \DIFdelbeginFL \textit{\DIFdelFL{same}} %DIFAUXCMD
+\DIFdelendFL \DIFaddbeginFL \textit{\DIFaddFL{other}} \DIFaddendFL lecture \DIFaddbeginFL \DIFaddFL{(``Across-lecture''; bottom rows)}\DIFaddendFL .
     \DIFdelbeginFL \DIFdelFL{We repeated each of these
     analyses using all possible held-out questions for each quiz and
     participant. }\DIFdelendFL The \DIFdelbeginFL \DIFdelFL{arrows at the tops of }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{background in }\DIFaddendFL each panel \DIFdelbeginFL \DIFdelFL{indicate whether }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{displays }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{average predicted knowledge was higher for held-out }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{kernel density estimates of the
@@ -694,9 +703,8 @@ bootstrap likelihood-ratio tests}\DIFaddend .
     \DIFaddbeginFL \DIFaddFL{answered }\DIFaddendFL questions\DIFaddbeginFL \DIFaddFL{, for each level of estimated knowledge along the
     $x$-axis}\DIFaddendFL . \DIFaddbeginFL \DIFaddFL{The black curves display the (population-level) GLMM-predicted
     probabilities of correctly answering a question as a function of estimated
-    knowledge. Error ribbons denote bootstrap-estimated 95\% confidence
-    intervals. }\textbf{\DIFaddFL{JRM NOTE: RE-ORDER ROWS TO MATCH THE TEXT, AND UPDATE
-    CAPTION ACCORDINGLY}}\DIFaddendFL }
+    knowledge. Error ribbons denote the 95\% confidence
+    intervals.}\DIFaddendFL }
 
     \label{fig:predictions}
 \end{figure}
@@ -753,7 +761,7 @@ carried out these same analyses using a simple proportion-correct measure in
 lieu of our knowledge estimates. Suppose a participant correctly answered $n$
 out of $q$ questions on a given quiz. If we hold out a single
 }\textit{\DIFadd{correctly}} \DIFadd{answered question, the proportion of remaining questions
-answered correctly would be $\frac{n - 1}{q - 1}$. If we hold out a single
+answered correctly would be $\frac{n - 1}{q - 1}$. Whereas if we hold out a single
 }\textit{\DIFadd{incorrectly}} \DIFadd{answered question, the proportion of remaining questions
 answered correctly would be $\frac{n}{q - 1}$. In this way, the proportion of
 correctly answered remaining questions is always }\textit{\DIFadd{lower}} \DIFadd{when the
@@ -768,7 +776,7 @@ proportion-correct score (where each held-in question's weight reflects its
 embedding-space distance from the }\DIFaddend held-out \DIFdelbegin \DIFdel{question about the }\textit{\DIFdel{other}} %DIFAUXCMD
 \DIFdel{lecture (``Across-lecture''; predicting knowledge
 for }\DIFdelend \DIFaddbegin \DIFadd{question; see Eqn.~\ref{eqn:prop}),
-if these weights were uninformative (e.g., randomly distributed), then we
+if these weights are uninformative (e.g., randomly distributed), then we
 should expect to see this same inverse relationship between estimated knowledge
 and performance, on average. On the other hand, if the spatial relationships
 among the quiz questions' embeddings }\textit{\DIFadd{are}} \DIFadd{predictive of participants'
@@ -989,7 +997,7 @@ predictive of their performance}\DIFaddend .
 
 %DIF >  our approach works when participants have a minimal baseline level of knowledge about content predicted and used to predict
 %DIF >  our approach generalizes when knowledge of content used to predict can be assumed to be a reasonable indicator of knowledge of content predicted
-%DIF >  our approach has enough specificity to distinguish between content within the same lecture when it was just watched -- maybe when people forget a little bit they forget "randomly"?. 
+%DIF >  our approach has enough specificity to distinguish between content within the same lecture when it was just watched -- maybe when people forget a little bit they forget "randomly"?.
 \DIFaddbegin 
 
 %DIF >  potential new transition/motivation -- in the previous analyses, we identified a particular set of constraints on our estimates of participants' knowledge. This made us wonder about another potential constraint: how far away in topic space does the relevance of being able to answer a question extend and influence ability to answer a different question?
@@ -1562,7 +1570,11 @@ training. This indicated that the number of topics was sufficient to capture
 the set of latent themes present in the two lectures (from which we constructed
 our document corpus, as described below). We found this value to be $k = 15$
 topics. We found that with a limited number of additional adjustments
-following~\citep{BoydEtal14}, such as removing corpus-specific stop-words, the
+following~\DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\citep{BoydEtal14}}\hskip0pt%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\citet{BoydEtal14}}\hskip0pt%DIFAUXCMD
+}\DIFaddend , such as removing corpus-specific stop-words, the
 model yielded (subjectively) sensible and coherent topics. The distribution of
 weights over words in the vocabulary for each discovered topic is shown in
 Supplementary Figure~\topicWordWeights, and each topic's top-weighted words may
@@ -1591,7 +1603,11 @@ timestamp corresponding to the midpoint between the timestamps for its first
 and last lines. This $w$ parameter was chosen to match the same number of words
 per sliding window (rounded to the nearest whole word, and before
 preprocessing) as the sliding windows we defined in our prior
-work~\citep{HeusEtal21} (i.e., 185 words per sliding window).
+work~\DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\citep{HeusEtal21} }\hskip0pt%DIFAUXCMD
+(i.e., 185 words per sliding window)}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\citep[][i.e., 185 words per sliding window]{HeusEtal21}}\hskip0pt%DIFAUXCMD
+}\DIFaddend .
 
 These sliding windows ramped up and down in length at the beginning and end of
 each transcript, respectively. In other words, each transcript's first sliding
@@ -1602,7 +1618,11 @@ standard text preprocessing steps: normalizing case, lemmatizing, removing
 punctuation and removing stop-words. We constructed our corpus of stop words by
 augmenting the Natural Language Toolkit~\citep[NLTK; ][]{BirdEtal09} English
 stop word list with the following additional words, selected using one of the
-approaches suggested by~\citep{BoydEtal14}: ``actual,'' ``actually,'' ``also,''
+approaches suggested by~\DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\citep{BoydEtal14}}\hskip0pt%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\citet{BoydEtal14}}\hskip0pt%DIFAUXCMD
+}\DIFaddend : ``actual,'' ``actually,'' ``also,''
 ``bit,'' ``could,'' ``e,'' ``even,'' ``first,'' ``follow,'' ``following,''
 ``four,'' ``let,'' ``like,'' ``mc,'' ``really,'', ``saw,'' ``see,'' ``seen,''
 ``thing,'' and ``two.'' This yielded sliding windows with an average of 73.8
@@ -1669,6 +1689,107 @@ correlations) ensures that every question contributes some non-negative amount
 to the knowledge estimate.
 
 \DIFaddbegin \subsubsection*{\DIFadd{GLMM METHODS SECTION PLACEHOLDER}}\label{subsec:glmm}
+
+\DIFadd{In the set of analyses reported in Figure~\ref{fig:predictions}, we assessed whether estimates of participants' knowledge at the embedding coordinates of individual quiz questions could reliably predict their ability to correctly answer those questions.
+In essence, we treated each question a given participant answered on a given quiz as a ``lecture'' consisting of a single timepoint, and used Equation~\ref{eqn:prop} to estimate the participant's knowledge for its embedding coordinate based on their performance on all }\textit{\DIFadd{other}} \DIFadd{questions they answered on that same quiz (``All questions''; Fig.~\ref{fig:predictions}, top row). 
+Additionally, for each lecture-related question (i.e., excluding questions about general physics knowledge), we computed analogous knowledge estimates based on all other questions the participant answered on the same quiz about (1) the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+%DIF > For each lecture-related question (i.e., excluding questions about general physics knowledge), we also computed analogous knowledge estimates based on two subsets of the other questions the participant answered on the same quiz: (1) all other questions about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) all questions about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+%DIF > For each lecture-related question (i.e., excluding questions about general physics knowledge), we also computed analogous knowledge estimates based on:~(1) all other questions the participant answered on the same quiz about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) all questions they answered on the same quiz about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+%DIF > We also computed analogous knowledge estimates for each lecture-related question based on (1) all other questions answered by the same participant, on the same quiz about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows) and (2) all questions from the same participant and quiz about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+}
+
+\DIFadd{In each version of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and separately for each of the three quizzes (i.e., column in Fig.~\ref{fig:predictions}),  we then fit a generalized linear mixed model (GLMM) with a logistic link function to the set of knowledge estimates for all questions that participants answered on the given quiz.
+We implemented these models in }\texttt{\DIFadd{R}} \DIFadd{using the }\texttt{\DIFadd{lme4}} \DIFadd{package~\mbox{%DIFAUXCMD
+\citep{BateEtal15a} }\hskip0pt%DIFAUXCMD
+and fit them following guidance from~\mbox{%DIFAUXCMD
+\citet{BateEtal15b} }\hskip0pt%DIFAUXCMD
+and \mbox{%DIFAUXCMD
+\citet{MatuEtal17}}\hskip0pt%DIFAUXCMD
+. Specifically, we initially fit each model with the maximal random effects structure afforded our data, which we identified as:
+}\[
+    \DIFadd{\mathtt{accuracy \sim knowledge + (knowledge\ \vert\ participant) + (knowledge\ \vert\ question)}
+}\]
+\DIFadd{Here, ``}\texttt{\DIFadd{accuracy}}\DIFadd{'' is a binary value indicating whether each target question was answered correctly or incorrectly, ``}\texttt{\DIFadd{knowledge}}\DIFadd{'' is estimated knowledge at each target question's embedding coordinate, ``}\texttt{\DIFadd{participant}}\DIFadd{'' is a unique identifier assigned to each participant, and ``}\texttt{\DIFadd{question}}\DIFadd{'' is a unique identifier assigned to each quiz question.
+For models we fit using knowledge estimates for target questions about multiple content areas (i.e., in the ``All questions'' version of the analysis), we also included an additional random effect term, $\mathtt{(knowledge\ \vert\ lecture)}$, where ``}\texttt{\DIFadd{lecture}}\DIFadd{'' is a categorical value denoting whether the target question was about }\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{, }\textit{\DIFadd{Birth of Stars}}\DIFadd{, or general physics knowledge.
+Note that with our coding scheme, identifiers for each }\texttt{\DIFadd{question}} \DIFadd{are implicitly nested within levels of }\texttt{\DIFadd{lecture}} \DIFadd{and do not require explicit nesting in our model formula.
+}
+
+\DIFadd{As necessary, we then iteratively removed random effects from the maximal model until it successfully converged with a full rank (i.e., non-singular) random effects variance-covariance matrix. 
+%DIF > When inspecting the model's random effect estimates revealed multiple terms estimated at the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we eliminated these terms typically did not affect which terms did and did not need to be removed in order for the model to converge to a non-degenerate solution.
+When this required eliminating multiple terms whose estimates reached the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found (qualitatively) that the order in which we did so typically did not affect the set of terms that needed to be removed in order for the model to converge to a non-degenerate solution.
+However, in order to ensure consistency in our approach across the 15 separate GLMMs we fit in this set of analyses, we established a general approach to selecting a boundary-estimated parameter to eliminate for each stepwise reduction of the model's complexity, broadly adapted from~\mbox{%DIFAUXCMD
+\citet{BateEtal15b}}\hskip0pt%DIFAUXCMD
+.
+First, we constrained any correlation terms estimated at the boundary (i.e., $\pm 1$) to 0 and re-fit the model.
+This typically resulted in the variance component for the slope or intercept (or possibly both) associated with the zero-constrained correlation being estimated as 0, suggesting which terms we should consider removing.
+Second, when choosing which of two variance components to remove from the model, we prioritized removing higher-order terms before removing lower-order terms.
+In other words, if the variance components for a random slope and a random intercept were both estimated as 0, we chose to remove the random slope.
+Additionally, if constraining a correlation term to 0 allowed the model to converge with a full rank variance-covariance matrix, we left the correlation term constrained rather than removing the associated slope and/or intercept component.
+Third, to choose which of two zero-estimated variance components of the }\textit{\DIFadd{same}} \DIFadd{order to remove from the model, we took one of two approaches.
+If the two components were both random slopes, performed a Principal Components Analysis (PCA) on the random effects variance-covariance matrix, and compared the proportion of variance explained by the second component from each of the two random effect groupings. 
+If one If one explains a substantially smaller proportion of variance than the other, we dropped its corresponding random slope.
+Alternatively, if the difference in variance explained by the two is (qualitatively) small, or if the two variance components we wanted to choose between were random intercepts rather than slopes, we removed the one whose absence resulted in the greater decrease in the Akaike information criterion (AIC).
+}
+
+
+%DIF > $$
+%DIF > \begin{aligned}
+%DIF >   \operatorname{accuracy}_{i}  &\sim \operatorname{Binomial}(n = 1, \operatorname{prob}_{\operatorname{accuracy} = \operatorname{correct}} = \widehat{P}) \\
+%DIF >     \log\left[\frac{\hat{P}}{1 - \hat{P}} \right] &=\alpha_{j[i],k[i]} \\
+%DIF > \left(
+%DIF >   \begin{array}{c}
+%DIF >     \begin{aligned}
+%DIF >       &\alpha_{j} \\
+%DIF >       &\gamma_{1j}
+%DIF >     \end{aligned}
+%DIF >   \end{array}
+%DIF > \right)
+%DIF >   &\sim N \left(
+%DIF > \left(
+%DIF >   \begin{array}{c}
+%DIF >     \begin{aligned}
+%DIF >       &\gamma_{0}^{\alpha} + \gamma_{1k[i]}^{\alpha}(\operatorname{knowledge}) \\
+%DIF >       &\mu_{\gamma_{1j}}
+%DIF >     \end{aligned}
+%DIF >   \end{array}
+%DIF > \right)
+%DIF > ,
+%DIF > \left(
+%DIF >   \begin{array}{cc}
+%DIF >      \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\gamma_{1j}} \\
+%DIF >      \rho_{\gamma_{1j}\alpha_{j}} & \sigma^2_{\gamma_{1j}}
+%DIF >   \end{array}
+%DIF > \right)
+%DIF >  \right)
+%DIF >     \text{, for participant j = 1,} \dots \text{,J} \\
+%DIF > \left(
+%DIF >   \begin{array}{c}
+%DIF >     \begin{aligned}
+%DIF >       &\alpha_{k} \\
+%DIF >       &\gamma_{1k}
+%DIF >     \end{aligned}
+%DIF >   \end{array}
+%DIF > \right)
+%DIF >   &\sim N \left(
+%DIF > \left(
+%DIF >   \begin{array}{c}
+%DIF >     \begin{aligned}
+%DIF >       &\mu_{\alpha_{k}} \\
+%DIF >       &\mu_{\gamma_{1k}}
+%DIF >     \end{aligned}
+%DIF >   \end{array}
+%DIF > \right)
+%DIF > ,
+%DIF > \left(
+%DIF >   \begin{array}{cc}
+%DIF >      \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\gamma_{1k}} \\
+%DIF >      \rho_{\gamma_{1k}\alpha_{k}} & \sigma^2_{\gamma_{1k}}
+%DIF >   \end{array}
+%DIF > \right)
+%DIF >  \right)
+%DIF >     \text{, for question k = 1,} \dots \text{,K}
+%DIF > \end{aligned}
+%DIF > $$
 
 \DIFaddend \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
