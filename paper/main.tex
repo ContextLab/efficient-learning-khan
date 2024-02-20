@@ -1350,7 +1350,7 @@ training. This indicated that the number of topics was sufficient to capture
 the set of latent themes present in the two lectures (from which we constructed
 our document corpus, as described below). We found this value to be $k = 15$
 topics. We found that with a limited number of additional adjustments
-following~\citep{BoydEtal14}, such as removing corpus-specific stop-words, the
+following~\citet{BoydEtal14}, such as removing corpus-specific stop-words, the
 model yielded (subjectively) sensible and coherent topics. The distribution of
 weights over words in the vocabulary for each discovered topic is shown in
 Supplementary Figure~\topicWordWeights, and each topic's top-weighted words may
@@ -1390,7 +1390,7 @@ standard text preprocessing steps: normalizing case, lemmatizing, removing
 punctuation and removing stop-words. We constructed our corpus of stop words by
 augmenting the Natural Language Toolkit~\citep[NLTK; ][]{BirdEtal09} English
 stop word list with the following additional words, selected using one of the
-approaches suggested by~\citep{BoydEtal14}: ``actual,'' ``actually,'' ``also,''
+approaches suggested by~\citet{BoydEtal14}: ``actual,'' ``actually,'' ``also,''
 ``bit,'' ``could,'' ``e,'' ``even,'' ``first,'' ``follow,'' ``following,''
 ``four,'' ``let,'' ``like,'' ``mc,'' ``really,'', ``saw,'' ``see,'' ``seen,''
 ``thing,'' and ``two.'' This yielded sliding windows with an average of 73.8
@@ -1459,87 +1459,94 @@ to the knowledge estimate.
 \subsubsection*{GLMM METHODS SECTION PLACEHOLDER}\label{subsec:glmm}
 
 In the set of analyses reported in Figure~\ref{fig:predictions}, we assessed whether estimates of participants' knowledge at the embedding coordinates of individual quiz questions could reliably predict their ability to correctly answer those questions.
-In essence, we treated each question a given participant answered on a given quiz as a ``lecture'' consisting of a single timepoint, and used Equation~\ref{eqn:prop} to estimate the participant's knowledge for its embedding coordinate based on their performance on all \textit{other} questions they answered on that same quiz (``All questions''; Fig.~\ref{fig:predictions}, top row).
-We also computed analogous knowledge estimates for each lecture-related question based on all other questions (answered by the same participant, on the same quiz) about the same lecture (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows) and based on all questions about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+In essence, we treated each question a given participant answered on a given quiz as a ``lecture'' consisting of a single timepoint, and used Equation~\ref{eqn:prop} to estimate the participant's knowledge for its embedding coordinate based on their performance on all \textit{other} questions they answered on that same quiz (``All questions''; Fig.~\ref{fig:predictions}, top row). 
+Additionally, for each lecture-related question (i.e., excluding questions about general physics knowledge), we computed analogous knowledge estimates based on all other questions the participant answered on the same quiz about (1) the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+%For each lecture-related question (i.e., excluding questions about general physics knowledge), we also computed analogous knowledge estimates based on two subsets of the other questions the participant answered on the same quiz: (1) all other questions about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) all questions about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+%For each lecture-related question (i.e., excluding questions about general physics knowledge), we also computed analogous knowledge estimates based on:~(1) all other questions the participant answered on the same quiz about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) all questions they answered on the same quiz about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+%We also computed analogous knowledge estimates for each lecture-related question based on (1) all other questions answered by the same participant, on the same quiz about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows) and (2) all questions from the same participant and quiz about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
 
-In each version of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and separately for each of the three quizzes (i.e., column in Fig.~\ref{fig:predictions}),  we then fit a generalized linear mixed model (GLMM) with a logistic link function to the set of knowledge estimates for all questions answered by all participants on the given quiz.
-Our models were implemented in \texttt{R} using the \texttt{lme4} package \citep{BateEtal15}.
-
-
-
-%In each versions of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and separately for each of the three quizzes (i.e., column in Fig.~\ref{fig:predictions}),  we then fit a generalized linear mixed model (GLMM) with a logistic link function to the set of
-
-
-%In the set of analyses reported in Figure~\ref{fig:predictions}, we used generalized linear mixed models (GLMMs) to analyze whether estimates of participants' knowledge at the embedding coordinates of individual held-out questions could reliably predict their ability to answer those questions correctly.
-
-
-
-
-$$
+In each version of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and separately for each of the three quizzes (i.e., column in Fig.~\ref{fig:predictions}),  we then fit a generalized linear mixed model (GLMM) with a logistic link function to the set of knowledge estimates for all questions that participants answered on the given quiz.
+We implemented these models in \texttt{R} using the \texttt{lme4} package~\citep{BateEtal15a} and fit them following guidance from~\citet{BateEtal15b} and \citet{MatuEtal17}. Specifically, we initially fit each model with the maximal random effects structure afforded our data, which we identified as:
+\[
     \mathtt{accuracy \sim knowledge + (knowledge\ \vert\ participant) + (knowledge\ \vert\ question)}
-$$
+\]
+Here, ``\texttt{accuracy}'' is a binary value indicating whether each target question was answered correctly or incorrectly, ``\texttt{knowledge}'' is estimated knowledge at each target question's embedding coordinate, ``\texttt{participant}'' is a unique identifier assigned to each participant, and ``\texttt{question}'' is a unique identifier assigned to each quiz question.
+For models we fit using knowledge estimates for target questions about multiple content areas (i.e., in the ``All questions'' version of the analysis), we also included an additional random effect term, $\mathtt{(knowledge\ \vert\ lecture)}$, where ``\texttt{lecture}'' is a categorical value denoting whether the target question was about \textit{Four Fundamental Forces}, \textit{Birth of Stars}, or general physics knowledge.
+Note that with our coding scheme, identifiers for each \texttt{question} are implicitly nested within levels of \texttt{lecture} and do not require explicit nesting in our model formula.
 
-note that qID is implicitly nested within levels of lecture
+As necessary, we then iteratively removed random effects from the maximal model until it successfully converged with a full rank (i.e., non-singular) random effects variance-covariance matrix. 
+%When inspecting the model's random effect estimates revealed multiple terms estimated at the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we eliminated these terms typically did not affect which terms did and did not need to be removed in order for the model to converge to a non-degenerate solution.
+When this required eliminating multiple terms whose estimates reached the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found (qualitatively) that the order in which we did so typically did not affect the set of terms that needed to be removed in order for the model to converge to a non-degenerate solution.
+However, in order to ensure consistency in our approach across the 15 separate GLMMs we fit in this set of analyses, we established a general approach to selecting a boundary-estimated parameter to eliminate for each stepwise reduction of the model's complexity, broadly adapted from~\citet{BateEtal15b}.
+First, we constrained any correlation terms estimated at the boundary (i.e., $\pm 1$) to 0 and re-fit the model.
+This typically resulted in the variance component for the slope or intercept (or possibly both) associated with the zero-constrained correlation being estimated as 0, suggesting which terms we should consider removing.
+Second, when choosing which of two variance components to remove from the model, we prioritized removing higher-order terms before removing lower-order terms.
+In other words, if the variance components for a random slope and a random intercept were both estimated as 0, we chose to remove the random slope.
+Additionally, if constraining a correlation term to 0 allowed the model to converge with a full rank variance-covariance matrix, we left the correlation term constrained rather than removing the associated slope and/or intercept component.
+Third, to choose which of two zero-estimated variance components of the \textit{same} order to remove from the model, we took one of two approaches.
+If the two components were both random slopes, performed a Principal Components Analysis (PCA) on the random effects variance-covariance matrix, and compared the proportion of variance explained by the second component from each of the two random effect groupings. 
+If one If one explains a substantially smaller proportion of variance than the other, we dropped its corresponding random slope.
+Alternatively, if the difference in variance explained by the two is (qualitatively) small, or if the two variance components we wanted to choose between were random intercepts rather than slopes, we removed the one whose absence resulted in the greater decrease in the Akaike information criterion (AIC).
 
 
-$$
-\begin{aligned}
-  \operatorname{accuracy}_{i}  &\sim \operatorname{Binomial}(n = 1, \operatorname{prob}_{\operatorname{accuracy} = \operatorname{correct}} = \widehat{P}) \\
-    \log\left[\frac{\hat{P}}{1 - \hat{P}} \right] &=\alpha_{j[i],k[i]} \\
-\left(
-  \begin{array}{c}
-    \begin{aligned}
-      &\alpha_{j} \\
-      &\gamma_{1j}
-    \end{aligned}
-  \end{array}
-\right)
-  &\sim N \left(
-\left(
-  \begin{array}{c}
-    \begin{aligned}
-      &\gamma_{0}^{\alpha} + \gamma_{1k[i]}^{\alpha}(\operatorname{knowledge}) \\
-      &\mu_{\gamma_{1j}}
-    \end{aligned}
-  \end{array}
-\right)
-,
-\left(
-  \begin{array}{cc}
-     \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\gamma_{1j}} \\
-     \rho_{\gamma_{1j}\alpha_{j}} & \sigma^2_{\gamma_{1j}}
-  \end{array}
-\right)
- \right)
-    \text{, for participant j = 1,} \dots \text{,J} \\
-\left(
-  \begin{array}{c}
-    \begin{aligned}
-      &\alpha_{k} \\
-      &\gamma_{1k}
-    \end{aligned}
-  \end{array}
-\right)
-  &\sim N \left(
-\left(
-  \begin{array}{c}
-    \begin{aligned}
-      &\mu_{\alpha_{k}} \\
-      &\mu_{\gamma_{1k}}
-    \end{aligned}
-  \end{array}
-\right)
-,
-\left(
-  \begin{array}{cc}
-     \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\gamma_{1k}} \\
-     \rho_{\gamma_{1k}\alpha_{k}} & \sigma^2_{\gamma_{1k}}
-  \end{array}
-\right)
- \right)
-    \text{, for question k = 1,} \dots \text{,K}
-\end{aligned}
-$$
+%$$
+%\begin{aligned}
+%  \operatorname{accuracy}_{i}  &\sim \operatorname{Binomial}(n = 1, \operatorname{prob}_{\operatorname{accuracy} = \operatorname{correct}} = \widehat{P}) \\
+%    \log\left[\frac{\hat{P}}{1 - \hat{P}} \right] &=\alpha_{j[i],k[i]} \\
+%\left(
+%  \begin{array}{c}
+%    \begin{aligned}
+%      &\alpha_{j} \\
+%      &\gamma_{1j}
+%    \end{aligned}
+%  \end{array}
+%\right)
+%  &\sim N \left(
+%\left(
+%  \begin{array}{c}
+%    \begin{aligned}
+%      &\gamma_{0}^{\alpha} + \gamma_{1k[i]}^{\alpha}(\operatorname{knowledge}) \\
+%      &\mu_{\gamma_{1j}}
+%    \end{aligned}
+%  \end{array}
+%\right)
+%,
+%\left(
+%  \begin{array}{cc}
+%     \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\gamma_{1j}} \\
+%     \rho_{\gamma_{1j}\alpha_{j}} & \sigma^2_{\gamma_{1j}}
+%  \end{array}
+%\right)
+% \right)
+%    \text{, for participant j = 1,} \dots \text{,J} \\
+%\left(
+%  \begin{array}{c}
+%    \begin{aligned}
+%      &\alpha_{k} \\
+%      &\gamma_{1k}
+%    \end{aligned}
+%  \end{array}
+%\right)
+%  &\sim N \left(
+%\left(
+%  \begin{array}{c}
+%    \begin{aligned}
+%      &\mu_{\alpha_{k}} \\
+%      &\mu_{\gamma_{1k}}
+%    \end{aligned}
+%  \end{array}
+%\right)
+%,
+%\left(
+%  \begin{array}{cc}
+%     \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\gamma_{1k}} \\
+%     \rho_{\gamma_{1k}\alpha_{k}} & \sigma^2_{\gamma_{1k}}
+%  \end{array}
+%\right)
+% \right)
+%    \text{, for question k = 1,} \dots \text{,K}
+%\end{aligned}
+%$$
 
 \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
