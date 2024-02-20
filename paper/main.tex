@@ -572,19 +572,18 @@ bootstrap likelihood-ratio tests.
     relationship based on three different sets of knowledge estimates:
     knowledge for each question based on all other questions the same
     participant answered on the same quiz (``All questions''; top row),
-    knowledge for each question about one lecture based on all questions (from
-    the same participant and quiz) about the \textit{other} lecture
-    (``Across-lecture''; middle rows), and knowledge for each question about
-    one lecture based on all other questions (from the same participant and
-    quiz) about the \textit{same} lecture (``Within-lecture''; bottom rows).
+    knowledge for each question about one lecture based on all other questions 
+    (from the same participant and quiz) about the \textit{same} lecture 
+    (``Within-lecture''; middle rows), and knowledge for each question about 
+    one lecture based on all questions (from the same participant and quiz) 
+    about the \textit{other} lecture (``Across-lecture''; bottom rows).
     The background in each panel displays the kernel density estimates of the
     relative observed proportions of correctly (blue) versus incorrectly (red)
     answered questions, for each level of estimated knowledge along the
     $x$-axis. The black curves display the (population-level) GLMM-predicted
     probabilities of correctly answering a question as a function of estimated
-    knowledge. Error ribbons denote bootstrap-estimated 95\% confidence
-    intervals. \textbf{JRM NOTE: RE-ORDER ROWS TO MATCH THE TEXT, AND UPDATE
-    CAPTION ACCORDINGLY}}
+    knowledge. Error ribbons denote the 95\% confidence
+    intervals.}
 
     \label{fig:predictions}
 \end{figure}
@@ -617,7 +616,7 @@ carried out these same analyses using a simple proportion-correct measure in
 lieu of our knowledge estimates. Suppose a participant correctly answered $n$
 out of $q$ questions on a given quiz. If we hold out a single
 \textit{correctly} answered question, the proportion of remaining questions
-answered correctly would be $\frac{n - 1}{q - 1}$. If we hold out a single
+answered correctly would be $\frac{n - 1}{q - 1}$. Whereas if we hold out a single
 \textit{incorrectly} answered question, the proportion of remaining questions
 answered correctly would be $\frac{n}{q - 1}$. In this way, the proportion of
 correctly answered remaining questions is always \textit{lower} when the
@@ -625,7 +624,7 @@ held-out question was answered correctly than when it was answered incorrectly.
 Because our knowledge estimates are computed as a weighted version of this same
 proportion-correct score (where each held-in question's weight reflects its
 embedding-space distance from the held-out question; see Eqn.~\ref{eqn:prop}),
-if these weights were uninformative (e.g., randomly distributed), then we
+if these weights are uninformative (e.g., randomly distributed), then we
 should expect to see this same inverse relationship between estimated knowledge
 and performance, on average. On the other hand, if the spatial relationships
 among the quiz questions' embeddings \textit{are} predictive of participants'
@@ -655,7 +654,7 @@ questions, but only when there is some ``contrast'' in performance between the
 content of different questions. On Quiz~1, before participants have learned the
 content of either lecture, their overall performance is poor (average
 proportion correct: $0.46$), and the specific questions they answer correctly
-not not seem to be structured in a meaningful way with respect to the embedding
+do not seem to be structured in a meaningful way with respect to the embedding
 space (e.g., Fig.~\ref{fig:knowledge-maps}A, left panel). On Quizzes~2 and~3,
 after participants have begun their training, their overall performance
 improves (average proportion correct for Quiz~2: 0.60; average proportion
@@ -1440,48 +1439,31 @@ to the knowledge estimate.
 
 \subsubsection*{GLMM METHODS SECTION PLACEHOLDER}\label{subsec:glmm}
 
-In the set of analyses reported in Figure~\ref{fig:predictions}, we applied Equation~\ref{eqn:prop} to 
+In the set of analyses reported in Figure~\ref{fig:predictions}, we assessed whether estimates of participants' knowledge at the embedding coordinates of individual quiz questions could reliably predict their ability to correctly answer those questions. 
+In essence, we treated each question a given participant answered on a given quiz as a ``lecture'' consisting of a single timepoint, and used Equation~\ref{eqn:prop} to estimate the participant's knowledge for its embedding coordinate based on their performance on all \textit{other} questions they answered on that same quiz (``All questions''; Fig.~\ref{fig:predictions}, top row). 
+We also computed analogous knowledge estimates for each lecture-related question based on all other questions (answered by the same participant, on the same quiz) about the same lecture (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows) and based on all questions about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
 
-
-estimate participants' knowledge for individual held-out quiz questions (i.e., treating 
-
-
-
-In the set of analyses reported in Figure~\ref{fig:predictions}, we applied Equation~\ref{eqn:prop} to estimate participants' knowledge at the embedding coordinates of individual held-out quiz questions. For each of the three quizzes a participant took, 
-
-
-Equation~\ref{eqn:prop} to estimate participants' knowledge at the embedding coordinate of individual held-out questions, based on other questions 
+In each version of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and separately for each of the three quizzes (i.e., column in Fig.~\ref{fig:predictions}),  we then fit a generalized linear mixed model (GLMM) with a logistic link function to the set of knowledge estimates for all questions answered by all participants on the given quiz.
+Our models were implemented in \texttt{R} using the \texttt{lme4} package \citep{BateEtal15}. 
 
 
 
-all other questions (``All questions''; Fig.~\ref{fig:predictions}, top row), 
+%In each versions of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and separately for each of the three quizzes (i.e., column in Fig.~\ref{fig:predictions}),  we then fit a generalized linear mixed model (GLMM) with a logistic link function to the set of 
 
 
+%In the set of analyses reported in Figure~\ref{fig:predictions}, we used generalized linear mixed models (GLMMs) to analyze whether estimates of participants' knowledge at the embedding coordinates of individual held-out questions could reliably predict their ability to answer those questions correctly.
 
 
-
-(``All questions''; Fig.~\ref{fig:predictions}, top row).
-This test was intended to assess the overall predictive power of our approach. 
-Second, we estimated knowledge for each question about a given lecture using only the other questions (from the same participant and quiz) about that \textit{same} lecture (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows). 
-This test was intended to assess the \textit{specificity} of our approach by asking whether our predictions could distinguish between questions about different content covered by the same lecture.
-Third, we estimated knowledge for each question about one lecture using only questions (from the same participant and quiz) about the \textit{other} lecture (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows). 
-
-To analyze the predictive value of 
-
-
-To predict individual participants' success on held-out quiz questions, we used Equation~\ref{eqn:prop}
 
 
 $$
     \mathtt{accuracy \sim knowledge + (knowledge\ \vert\ participant) + (knowledge\ \vert\ question)}
 $$
 
-%\begin{lstlisting}[language=R]
-%    accuracy \sim knowledge + (knowledge|participant) + (knowledge|question)
-%\end{lstlisting}
-
 note that qID is implicitly nested within levels of lecture
 
+
+$$\begin{aligned}  \operatorname{accuracy}_{i}  &\sim \operatorname{Binomial}(n = 1, \operatorname{prob}_{\operatorname{accuracy} = \operatorname{correct}} = \widehat{P}) \\    \log\left[\frac{\hat{P}}{1 - \hat{P}} \right] &=\alpha_{j[i],k[i]} \\    \left(  \begin{array}{c}     \begin{aligned}      &\alpha_{j} \\      &\gamma_{1j}    \end{aligned}  \end{array}\right)  &\sim N \left(\left(  \begin{array}{c}     \begin{aligned}      &\gamma_{0}^{\alpha} + \gamma_{1k[i]}^{\alpha}(\operatorname{knowledge}) \\      &\mu_{\gamma_{1j}}    \end{aligned}  \end{array}\right), \left(  \begin{array}{cc}     \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\gamma_{1j}} \\      \rho_{\gamma_{1j}\alpha_{j}} & \sigma^2_{\gamma_{1j}}  \end{array}\right) \right)    \text{, for participant j = 1,} \dots \text{,J} \\    \left(  \begin{array}{c}     \begin{aligned}      &\alpha_{k} \\      &\gamma_{1k}    \end{aligned}  \end{array}\right)  &\sim N \left(\left(  \begin{array}{c}     \begin{aligned}      &\mu_{\alpha_{k}} \\      &\mu_{\gamma_{1k}}    \end{aligned}  \end{array}\right), \left(  \begin{array}{cc}     \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\gamma_{1k}} \\      \rho_{\gamma_{1k}\alpha_{k}} & \sigma^2_{\gamma_{1k}}  \end{array}\right) \right)    \text{, for question k = 1,} \dots \text{,K}\end{aligned}$$
 
 \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
