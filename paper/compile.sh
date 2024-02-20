@@ -19,7 +19,7 @@ latex -interaction=nonstopmode changes
 bibtex changes
 latex -interaction=nonstopmode changes
 latex -interaction=nonstopmode changes
-pdflatex -interaction=nonstopmode changes3
+pdflatex -interaction=nonstopmode changes
 
 
 rm *.cb* *.dvi *.log *.blg *.aux *.fff *.out
