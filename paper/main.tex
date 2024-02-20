@@ -1487,6 +1487,20 @@ Third, to choose which of two zero-estimated variance components of the \textit{
 If the two components were both random slopes, performed a Principal Components Analysis (PCA) on the random effects variance-covariance matrix, and compared the proportion of variance explained by the second component from each of the two random effect groupings. 
 If one If one explains a substantially smaller proportion of variance than the other, we dropped its corresponding random slope.
 Alternatively, if the difference in variance explained by the two is (qualitatively) small, or if the two variance components we wanted to choose between were random intercepts rather than slopes, we removed the one whose absence resulted in the greater decrease in the Akaike information criterion (AIC).
+Finally, once we identify the maximal random effects structure for which the data can yield a full rank variance-covariance matrix, we take no additional steps to further reduce the model's complexity. 
+We chose this stopping criterion to roughly approximate a ``middle ground'' between approaches to model specification and selection that emphasize maximalism at the cost of potential singular fits~\citep[e.g.,~][]{BarrEtal13}, and those that emphasize parsimony at the cost of potentially increased Type I error rates~\citep[e.g.,~][]{BateEtal15b}. 
+
+To assess the predictive value of these 
+
+
+
+Next, in order to assess the predictive value of the knowledge estimates 
+
+
+
+In order to assess the predictive value of the knowledge estimates we used to fit each GLMM, we then fit a \textit{second} model to the same data as each of the 15 
+
+In order to assess whether the knowledge estimates we used to fit each GLMM could reliably predict participants' success on held-out questions, we then fit a second GLMM to the observations 
 
 
 %$$
