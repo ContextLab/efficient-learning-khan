@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Mon Feb 19 07:49:49 2024
-%DIF ADD main.tex   Wed Feb 21 01:22:51 2024
+%DIF ADD main.tex   Wed Feb 21 12:34:25 2024
 %DIF 2a2
 \usepackage{amsmath} %DIF > 
 %DIF -------
@@ -1691,63 +1691,100 @@ The normalization step (i.e., using $\mathrm{ncorr}$ instead of the raw
 correlations) ensures that every question contributes some non-negative amount
 to the knowledge estimate.
 
-\DIFaddbegin \subsubsection*{\DIFadd{GLMM METHODS SECTION PLACEHOLDER}}\label{subsec:glmm}
+\DIFaddbegin \subsubsection*{\DIFadd{Generalized linear mixed models}}\label{subsec:glmm}
 
-\DIFadd{In the set of analyses reported in Figure~\ref{fig:predictions}, we assessed whether estimates of participants' knowledge at the embedding coordinates of individual quiz questions could be used to reliably predict their ability to correctly answer those questions.
-In essence, we treated each question a given participant answered on a given quiz as a ``lecture'' consisting of a single timepoint, and used Equation~\ref{eqn:prop} to estimate the participant's knowledge for its embedding coordinate based on their performance on all }\textit{\DIFadd{other}} \DIFadd{questions they answered on that same quiz (``All questions''; Fig.~\ref{fig:predictions}, top row). 
-Additionally, for each lecture-related question (i.e., excluding questions about general physics knowledge), we computed analogous knowledge estimates based on all other questions the participant answered on the same quiz about (1) the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
+\DIFadd{In the set of analyses reported in Figure~\ref{fig:predictions}, we assessed
+whether estimates of participants' knowledge at the embedding coordinates of
+individual quiz questions could be used to reliably predict their ability to
+correctly answer those questions. In essence, we treated each question a given
+participant answered on a given quiz as a ``lecture'' consisting of a single
+timepoint, and used Equation~\ref{eqn:prop} to estimate the participant's
+knowledge for its embedding coordinate based on their performance on all
+}\textit{\DIFadd{other}} \DIFadd{questions they answered on that same quiz (``All questions'';
+Fig.~\ref{fig:predictions}, top row). Additionally, for each lecture-related
+question (i.e., excluding questions about general physics knowledge), we
+computed analogous knowledge estimates based on all other questions the
+participant answered on the same quiz about (1) the same lecture as the target
+question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2)
+the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions},
+bottom rows).
+}
+
 %DIF > For each lecture-related question (i.e., excluding questions about general physics knowledge), we also computed analogous knowledge estimates based on two subsets of the other questions the participant answered on the same quiz: (1) all other questions about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) all questions about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
 %DIF > For each lecture-related question (i.e., excluding questions about general physics knowledge), we also computed analogous knowledge estimates based on:~(1) all other questions the participant answered on the same quiz about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) all questions they answered on the same quiz about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
 %DIF > We also computed analogous knowledge estimates for each lecture-related question based on (1) all other questions answered by the same participant, on the same quiz about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows) and (2) all questions from the same participant and quiz about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
-}
 
-\DIFadd{In each version of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and separately for each of the three quizzes (i.e., column in Fig.~\ref{fig:predictions}),  we then fit a generalized linear mixed model (GLMM) with a logistic link function to the set of knowledge estimates for all questions that participants answered on the given quiz.
-We implemented these models in }\texttt{\DIFadd{R}} \DIFadd{using the }\texttt{\DIFadd{lme4}} \DIFadd{package~\mbox{%DIFAUXCMD
+\DIFadd{In each version of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and
+separately for each of the three quizzes (i.e., column in
+Fig.~\ref{fig:predictions}), we then fit a generalized linear mixed model
+(GLMM) with a logistic link function to the set of knowledge estimates for all
+questions that participants answered on the given quiz. We implemented these
+models in }\texttt{\DIFadd{R}} \DIFadd{using the }\texttt{\DIFadd{lme4}} \DIFadd{package~\mbox{%DIFAUXCMD
 \citep{BateEtal15a} }\hskip0pt%DIFAUXCMD
-and fit them following guidance from~\mbox{%DIFAUXCMD
+and
+fit them following guidance from~\mbox{%DIFAUXCMD
 \citet{BateEtal15b} }\hskip0pt%DIFAUXCMD
 and \mbox{%DIFAUXCMD
 \citet{MatuEtal17}}\hskip0pt%DIFAUXCMD
-. Specifically, we initially fit each model with the maximal random effects structure afforded by our design, which we identified as:
+.
+Specifically, we initially fit each model with the maximal random effects
+structure afforded by our design, which we identified as:
 }\[
     \DIFadd{\mathtt{accuracy \sim knowledge + (knowledge\ \vert\ participant) + (knowledge\ \vert\ question)}
 }\]
-\DIFadd{Here, ``}\texttt{\DIFadd{accuracy}}\DIFadd{'' is a binary value indicating whether each target question was answered correctly or incorrectly, ``}\texttt{\DIFadd{knowledge}}\DIFadd{'' is estimated knowledge at each target question's embedding coordinate, ``}\texttt{\DIFadd{participant}}\DIFadd{'' is a unique identifier assigned to each participant, and ``}\texttt{\DIFadd{question}}\DIFadd{'' is a unique identifier assigned to each quiz question.
-For models we fit using knowledge estimates for target questions about multiple content areas (i.e., in the ``All questions'' version of the analysis), we also included an additional random effect term, $\mathtt{(knowledge\ \vert\ lecture)}$, where ``}\texttt{\DIFadd{lecture}}\DIFadd{'' is a categorical value denoting whether the target question was about }\textit{\DIFadd{Four Fundamental Forces}}\DIFadd{, }\textit{\DIFadd{Birth of Stars}}\DIFadd{, or general physics knowledge.
-Note that with our coding scheme, identifiers for each }\texttt{\DIFadd{question}} \DIFadd{are implicitly nested within levels of }\texttt{\DIFadd{lecture}} \DIFadd{and do not require explicit nesting in our model formula.
+\DIFadd{where ``}\texttt{\DIFadd{accuracy}}\DIFadd{'' is a binary value indicating whether each target
+question was answered correctly or incorrectly, ``}\texttt{\DIFadd{knowledge}}\DIFadd{'' is
+estimated knowledge at each target question's embedding coordinate,
+``}\texttt{\DIFadd{participant}}\DIFadd{'' is a unique identifier assigned to each participant,
+and ``}\texttt{\DIFadd{question}}\DIFadd{'' is a unique identifier assigned to each quiz
+question. For models we fit using knowledge estimates for target questions
+about multiple content areas (i.e., in the ``All questions'' version of the
+analysis), we also included an additional random effect term,
+$\mathtt{(knowledge\ \vert\ lecture)}$, where ``}\texttt{\DIFadd{lecture}}\DIFadd{'' is a
+categorical value denoting whether the target question was about }\textit{\DIFadd{Four
+Fundamental Forces}}\DIFadd{, }\textit{\DIFadd{Birth of Stars}}\DIFadd{, or general physics knowledge.
+Note that with our coding scheme, identifiers for each }\texttt{\DIFadd{question}} \DIFadd{are
+implicitly nested within levels of }\texttt{\DIFadd{lecture}} \DIFadd{and do not require explicit
+nesting in our model formula.
 }
 
-\DIFadd{We then iteratively removed random effects from the maximal model until it successfully converged with a full rank (i.e., non-singular) random effects variance-covariance matrix. 
-%DIF > When inspecting the model's random effect estimates revealed multiple terms estimated at the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we eliminated these terms typically did not affect which terms did and did not need to be removed in order for the model to converge to a non-degenerate solution.
-When this required eliminating multiple terms whose estimates reached the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we did so typically did not change the set of terms that needed to be removed in order for the model to converge to a non-degenerate solution.
-However, in order to ensure we fit all models used in these analyses in a consistent way, we devised some simple heuristics for choosing which boundary-estimated parameter to eliminate in each stepwise reduction of the model's complexity, based on a combination of popular approaches~\mbox{%DIFAUXCMD
-\citep{BarrEtal13,BateEtal15b,MatuEtal17}}\hskip0pt%DIFAUXCMD
-.
-First, we constrained any correlation terms estimated at their boundaries (i.e., $\pm 1$) to 0 and re-fit the model.
-This usually resulted in the variance component for the associated random slope (or occasionally the intercept, or even both) being estimated as 0, and suggested which terms we should consider removing.
-Second, when choosing which of two zero-variance terms to remove from the model, we prioritized removing higher-order terms before lower-order terms.
-In other words, if the estimated variance for both a random intercept and a random slope were 0, we chose to remove the random slope term before re-fitting the model and evaluating whether or not to remove the intercept.
-%DIF > Additionally, if constraining a boundary-estimated correlation term to 0 allowed the model to converge with a full rank covariance matrix, we left the correlation term constrained rather than removing the associated slope and/or intercept component.
-Third, when choosing which of two boundary-estimated variance components of the }\textit{\DIFadd{same}} \DIFadd{order to exclude from the model first, we took one of two approaches.
-If the two components were random slopes with small but non-zero coefficients (e.g., on the order of $10^{-4}$ or less), we performed a Principal Components Analysis (PCA) on the random effects variance-covariance matrix and compared the variance explained by the two terms' corresponding PCs. 
-If one explained a substantially smaller proportion of variance than the other (loosely defined), we dropped its corresponding random slope.
-Alternatively, if both slopes' principal components explained a similar amount of variance, or if the two terms we wanted to compare were random intercepts rather than slopes, we removed the one whose exclusion resulted in the greater decrease in the Akaike information criterion (AIC).
-Fourth, after removing either a slope or intercept from one random effect grouping, we re-introduced any correlation terms we had previously constrained to 0 for other random effect groupings to check if they could now be estimated. 
-Finally, once the model successfully converged with a full rank covariance matrix, we did not remove random effects for any other reasons (e.g., to lower AIC, increase log-likelihood, etc.). 
-We chose this stopping criterion as a conceptual ``middle ground'' between two popular but opposing approaches to model selection that advocate for either retaining the maximal model that allows convergence, regardless of singular fits~\mbox{%DIFAUXCMD
-\citep[at the potential cost of decreased power; e.g.,~][]{BarrEtal13} }\hskip0pt%DIFAUXCMD
-or performing additional hypothesis tests on individual parameters and removing non-significant components to achieve a parsimonious model~\mbox{%DIFAUXCMD
-\citep[at the potential cost of increased Type I error rates; e.g.,~][]{BateEtal15b}}\hskip0pt%DIFAUXCMD
-.
-%DIF > We chose this stopping criterion as a conceptual ``middle ground'' between two popular but opposing approaches to model selection that advocate (respectively) for either retaining the maximal model that allows convergence, regardless of singular fits~\citep[at the potential cost of decreased power; e.g.,~][]{BarrEtal13} or testing individual parameters achieving a parsimonious model by discarding all parameters that don't significantly decrease goodness of fit ~\citep[at the potential cost of increased Type I error rates; e.g.,~][]{BateEtal15b}.
-Our threshold for inclusion of random effects is intended to achieve a reasonable balance between these trade-offs.
-}
+%DIF >  We then iteratively removed random effects from the maximal model until it
+%DIF >  successfully converged with a full rank (i.e., non-singular) random effects
+%DIF >  variance-covariance matrix.
+
+%DIF >  %When inspecting the model's random effect estimates revealed multiple terms estimated at the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we eliminated these terms typically did not affect which terms did and did not need to be removed in order for the model to converge to a non-degenerate solution.
+%DIF >  When this required eliminating multiple terms whose estimates reached the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we did so typically did not change the set of terms that needed to be removed in order for the model to converge to a non-degenerate solution.
+%DIF >  However, in order to ensure we fit all models used in these analyses in a consistent way, we devised some simple heuristics for choosing which boundary-estimated parameter to eliminate in each stepwise reduction of the model's complexity, based on a combination of popular approaches~\citep{BarrEtal13,BateEtal15b,MatuEtal17}.
+%DIF >  First, we constrained any correlation terms estimated at their boundaries (i.e., $\pm 1$) to 0 and re-fit the model.
+%DIF >  This usually resulted in the variance component for the associated random slope (or occasionally the intercept, or even both) being estimated as 0, and suggested which terms we should consider removing.
+%DIF >  Second, when choosing which of two zero-variance terms to remove from the model, we prioritized removing higher-order terms before lower-order terms.
+%DIF >  In other words, if the estimated variance for both a random intercept and a random slope were 0, we chose to remove the random slope term before re-fitting the model and evaluating whether or not to remove the intercept.
+%DIF >  %Additionally, if constraining a boundary-estimated correlation term to 0 allowed the model to converge with a full rank covariance matrix, we left the correlation term constrained rather than removing the associated slope and/or intercept component.
+%DIF >  Third, when choosing which of two boundary-estimated variance components of the \textit{same} order to exclude from the model first, we took one of two approaches.
+%DIF >  If the two components were random slopes with small but non-zero coefficients (e.g., on the order of $10^{-4}$ or less), we performed a Principal Components Analysis (PCA) on the random effects variance-covariance matrix and compared the variance explained by the two terms' corresponding PCs. 
+%DIF >  If one explained a substantially smaller proportion of variance than the other (loosely defined), we dropped its corresponding random slope.
+%DIF >  Alternatively, if both slopes' principal components explained a similar amount of variance, or if the two terms we wanted to compare were random intercepts rather than slopes, we removed the one whose exclusion resulted in the greater decrease in the Akaike information criterion (AIC).
+%DIF >  Fourth, after removing either a slope or intercept from one random effect grouping, we re-introduced any correlation terms we had previously constrained to 0 for other random effect groupings to check if they could now be estimated. 
+%DIF >  Finally, once the model successfully converged with a full rank covariance matrix, we did not remove random effects for any other reasons (e.g., to lower AIC, increase log-likelihood, etc.). 
+%DIF >  We chose this stopping criterion as a conceptual ``middle ground'' between two popular but opposing approaches to model selection that advocate for either retaining the maximal model that allows convergence, regardless of singular fits~\citep[at the potential cost of decreased power; e.g.,~][]{BarrEtal13} or performing additional hypothesis tests on individual parameters and removing non-significant components to achieve a parsimonious model~\citep[at the potential cost of increased Type I error rates; e.g.,~][]{BateEtal15b}.
+%DIF >  %We chose this stopping criterion as a conceptual ``middle ground'' between two popular but opposing approaches to model selection that advocate (respectively) for either retaining the maximal model that allows convergence, regardless of singular fits~\citep[at the potential cost of decreased power; e.g.,~][]{BarrEtal13} or testing individual parameters achieving a parsimonious model by discarding all parameters that don't significantly decrease goodness of fit ~\citep[at the potential cost of increased Type I error rates; e.g.,~][]{BateEtal15b}.
+%DIF >  Our threshold for inclusion of random effects is intended to achieve a reasonable balance between these trade-offs.
 
 %DIF > To assess the predictive value of our knowledge estimates for individual quiz questions, we used the same sets of observations used to fit each GLMM to fit a second set of ``null'' models (similarly with a logistic link function). We fit these models with the formula:
-\DIFadd{To assess the predictive value of our knowledge estimates, we compared each GLMM's ability to discriminate between correctly and incorrectly answered questions to that of an analogous model that did not consider estimated knowledge. Specifically, we used the same sets of observations with which we fit each ``full'' model to fit a second ``null'' model, with the formula:
+
+\DIFadd{To assess the predictive value of our knowledge estimates, we compared each
+GLMM's ability to discriminate between correctly and incorrectly answered
+questions to that of an analogous model that did not consider estimated
+knowledge. Specifically, we used the same sets of observations with which we
+fit each ``full'' model to fit a second ``null'' model, with the formula:
 }\[
     \DIFadd{\mathtt{accuracy \sim (1\ \vert\ participant) + (1\ \vert\ question)}
 }\]
+\DIFadd{where the terms are as defined above.
+}
+
+
+
 
 
 
