@@ -1536,7 +1536,7 @@ fit each ``full'' model to fit a second ``null'' model, with the formula:
     \mathtt{accuracy \sim (1\ \vert\ participant) + (1\ \vert\ question)}
 \]
 where ``\texttt{accuracy}'', ``\texttt{participant}'', and ``\texttt{question}'' are as defined above. 
-As with our full models, the null models we fit for the “All questions” version of the analysis for each quiz contained an additional term, $\mathtt{(1\ \vert\ lecture)}$, where ``\texttt{lecture}'' are as defined above. 
+As with our full models, the null models we fit for the “All questions” version of the analysis for each quiz contained an additional term, $\mathtt{(1\ \vert\ lecture)}$, where ``\texttt{lecture}'' is as defined above. 
 We then compared each full model to its reduced (null) equivalent using a likelihood-ratio test (LRT). 
 Because the typical asymptotic $\chi^2_d$ approximation of the null distribution for the LRT statistic ($\lambda_{LR}$) is anti-conservative for models that differ in their random slope terms~\citep{GoldSimo00,ScheEtal08b,SnijBosk11}, we computed $p$-values for these tests using a parametric bootstrapping procedure~\citep{HaleHojs14}. 
 For each of 1,000 bootstraps, we used the fitted null model to simulate a sample of observations of equal size to our original sample.
