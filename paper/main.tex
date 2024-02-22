@@ -1502,11 +1502,9 @@ categorical value denoting whether the target question was about \textit{Four
 Fundamental Forces}, \textit{Birth of Stars}, or general physics knowledge.
 Note that with our coding scheme, identifiers for each \texttt{question} are
 implicitly nested within levels of \texttt{lecture} and do not require explicit
-nesting in our model formula.
-
-% We then iteratively removed random effects from the maximal model until it
-% successfully converged with a full rank (i.e., non-singular) random effects
-% variance-covariance matrix.
+nesting in our model formula. We then iteratively removed random effects from 
+the maximal model until it successfully converged with a full rank (i.e., non-singular) 
+random effects variance-covariance matrix.
 
 %% JRM NOTE: do we need this next paragraph?  Commenting out for now...
 % %When inspecting the model's random effect estimates revealed multiple terms estimated at the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we eliminated these terms typically did not affect which terms did and did not need to be removed in order for the model to converge to a non-degenerate solution.
@@ -1531,96 +1529,20 @@ nesting in our model formula.
 
 To assess the predictive value of our knowledge estimates, we compared each
 GLMM's ability to discriminate between correctly and incorrectly answered
-questions to that of an analogous model that did not consider estimated
+questions to that of an analogous model that did \textit{not} consider estimated
 knowledge. Specifically, we used the same sets of observations with which we
 fit each ``full'' model to fit a second ``null'' model, with the formula:
 \[
     \mathtt{accuracy \sim (1\ \vert\ participant) + (1\ \vert\ question)}
 \]
-where the terms are as defined above.
-
-
-
-
-
-
-
-
-
-%In order to assess the predictive value of the knowledge estimates, we then fit a second set of ``null'' models to the same sets of observations used to fit our full GLMMs. These 
-%
-%
-%used the same sets of observations used to fit these GLMMs to fit a second set of ``null'' models. 
-%
-%
-%
-%Next, in order to assess the predictive value of the knowledge estimates 
-%
-%
-%
-%In order to assess the predictive value of the knowledge estimates we used to fit each GLMM, we then fit a \textit{second} model to the same data as each of the 15 
-%
-%In order to assess whether the knowledge estimates we used to fit each GLMM could reliably predict participants' success on held-out questions, we then fit a second GLMM to the observations 
-
-
-%$$
-%\begin{aligned}
-%  \operatorname{accuracy}_{i}  &\sim \operatorname{Binomial}(n = 1, \operatorname{prob}_{\operatorname{accuracy} = \operatorname{correct}} = \widehat{P}) \\
-%    \log\left[\frac{\hat{P}}{1 - \hat{P}} \right] &=\alpha_{j[i],k[i]} \\
-%\left(
-%  \begin{array}{c}
-%    \begin{aligned}
-%      &\alpha_{j} \\
-%      &\gamma_{1j}
-%    \end{aligned}
-%  \end{array}
-%\right)
-%  &\sim N \left(
-%\left(
-%  \begin{array}{c}
-%    \begin{aligned}
-%      &\gamma_{0}^{\alpha} + \gamma_{1k[i]}^{\alpha}(\operatorname{knowledge}) \\
-%      &\mu_{\gamma_{1j}}
-%    \end{aligned}
-%  \end{array}
-%\right)
-%,
-%\left(
-%  \begin{array}{cc}
-%     \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\gamma_{1j}} \\
-%     \rho_{\gamma_{1j}\alpha_{j}} & \sigma^2_{\gamma_{1j}}
-%  \end{array}
-%\right)
-% \right)
-%    \text{, for participant j = 1,} \dots \text{,J} \\
-%\left(
-%  \begin{array}{c}
-%    \begin{aligned}
-%      &\alpha_{k} \\
-%      &\gamma_{1k}
-%    \end{aligned}
-%  \end{array}
-%\right)
-%  &\sim N \left(
-%\left(
-%  \begin{array}{c}
-%    \begin{aligned}
-%      &\mu_{\alpha_{k}} \\
-%      &\mu_{\gamma_{1k}}
-%    \end{aligned}
-%  \end{array}
-%\right)
-%,
-%\left(
-%  \begin{array}{cc}
-%     \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\gamma_{1k}} \\
-%     \rho_{\gamma_{1k}\alpha_{k}} & \sigma^2_{\gamma_{1k}}
-%  \end{array}
-%\right)
-% \right)
-%    \text{, for question k = 1,} \dots \text{,K}
-%\end{aligned}
-%$$
+where ``\texttt{accuracy}'', ``\texttt{participant}'', and ``\texttt{question}'' are as defined above. 
+As with our full models, the null models we fit for the “All questions” version of the analysis for each quiz contained an additional term, $\mathtt{(1\ \vert\ lecture)}$, where ``\texttt{lecture}'' are as defined above. 
+We then compared each full model to its reduced (null) equivalent using a likelihood-ratio test (LRT). 
+Because the typical asymptotic $\chi^2_d$ approximation of the null distribution for the LRT statistic ($\lambda_{LR}$) is anti-conservative for models that differ in their random slope terms~\citep{GoldSimo00,ScheEtal08b,SnijBosk11}, we computed $p$-values for these tests using a parametric bootstrapping procedure~\citep{HaleHojs14}. 
+For each of 1,000 bootstraps, we used the fitted null model to simulate a sample of observations of equal size to our original sample.
+We then re-fit both the null and full models to this simulated sample and compared them via an LRT.
+This yielded a distribution of $\lambda_{LR}$ statistics we may expect to observe under our null hypothesis.
+Following~\citep{DaviHink97,NortEtal02}, we computed a corrected $p$-value for our observed $\lambda_{LR}$ as $\frac{r + 1}{n + 1}$, where $r$ is the number of simulated model comparisons that yielded a $\lambda_{LR}$ greater than or equal to our observed value and $n$ is the number of simulations we ran (1,000).
 
 \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
