@@ -1,5 +1,5 @@
-This folder contains notebooks to replicate analyses and figures from the 
-[paper](../../paper/main.pdf). Notebooks are generally ordered according to when 
+This folder contains notebooks to replicate analyses and figures from the
+[paper](../../paper/main.pdf) and [supplement](../../paper/supplement.pdf). Notebooks are generally ordered according to when
 analyses are described or figures appear in the paper.
 
 ### `main/`
@@ -16,9 +16,10 @@ analyses are described or figures appear in the paper.
 
 ### `supp/`
 **code to reproduce tables and figures from the Supplementary Materials document**
-- `1_tables.ipynb` &ndash; code to generate Supplementary Tables 1, 2, and 3, and compute the correlation timeseries peaks shown in Supplementary Figures 3 & 4
+- `1_tables.ipynb` &ndash; code to generate Supplementary Tables 1&ndash;3 and compute the correlation timeseries peaks shown in Supplementary Figures 3 & 4
 - `2_topic-word-distributions-fig.ipynb` &ndash; code to generate Supplementary Figure 1
 - `3_topic-weight-fig.ipynb` &ndash; code to generate Supplementary Figure 2 and compute related stats
 - `4_lecture-question-correlation-peaks.ipynb` &ndash; code to generate Supplementary Figures 3 & 4
-- `5_model-comparison-BERT.ipynb` &ndash; code to generate Supplementary Figure 5
-- `6_individual-maps.ipynb` &ndash; code to generate Supplementary Figures 2&ndash;6
+- `5_model-comparison-word-overlap.ipynb` &ndash; code to generate Supplementary Figure 5
+- `6_model-comparison-BERT.ipynb` &ndash; code to generate Supplementary Figure 6
+- `7_individual-maps.ipynb` &ndash; code to generate Supplementary Figures 7&ndash;11
