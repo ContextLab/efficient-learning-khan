@@ -1525,8 +1525,6 @@ random effects variance-covariance matrix.
 % %We chose this stopping criterion as a conceptual ``middle ground'' between two popular but opposing approaches to model selection that advocate (respectively) for either retaining the maximal model that allows convergence, regardless of singular fits~\citep[at the potential cost of decreased power; e.g.,~][]{BarrEtal13} or testing individual parameters achieving a parsimonious model by discarding all parameters that don't significantly decrease goodness of fit ~\citep[at the potential cost of increased Type I error rates; e.g.,~][]{BateEtal15b}.
 % Our threshold for inclusion of random effects is intended to achieve a reasonable balance between these trade-offs.
 
-%To assess the predictive value of our knowledge estimates for individual quiz questions, we used the same sets of observations used to fit each GLMM to fit a second set of ``null'' models (similarly with a logistic link function). We fit these models with the formula:
-
 To assess the predictive value of our knowledge estimates, we compared each
 GLMM's ability to discriminate between correctly and incorrectly answered
 questions to that of an analogous model that did \textit{not} consider estimated
@@ -1536,13 +1534,13 @@ fit each ``full'' model to fit a second ``null'' model, with the formula:
     \mathtt{accuracy \sim (1\ \vert\ participant) + (1\ \vert\ question)}
 \]
 where ``\texttt{accuracy}'', ``\texttt{participant}'', and ``\texttt{question}'' are as defined above. 
-As with our full models, the null models we fit for the “All questions” version of the analysis for each quiz contained an additional term, $\mathtt{(1\ \vert\ lecture)}$, where ``\texttt{lecture}'' are as defined above. 
+As with our full models, the null models we fit for the “All questions” version of the analysis for each quiz contained an additional term, $\mathtt{(1\ \vert\ lecture)}$, where ``\texttt{lecture}'' is as defined above. 
 We then compared each full model to its reduced (null) equivalent using a likelihood-ratio test (LRT). 
-Because the typical asymptotic $\chi^2_d$ approximation of the null distribution for the LRT statistic ($\lambda_{LR}$) is anti-conservative for models that differ in their random slope terms~\citep{GoldSimo00,ScheEtal08b,SnijBosk11}, we computed $p$-values for these tests using a parametric bootstrapping procedure~\citep{HaleHojs14}. 
+Because the typical asymptotic $\chi^2_d$ approximation of the null distribution for the LRT statistic ($\lambda_{LR}$) is anti-conservative for models that differ in their random slope terms~\citep{GoldSimo00,ScheEtal08b,SnijBosk11}, we computed $p$-values for these tests using a parametric bootstrap procedure~\citep{DaviHink97,HaleHojs14}. 
 For each of 1,000 bootstraps, we used the fitted null model to simulate a sample of observations of equal size to our original sample.
 We then re-fit both the null and full models to this simulated sample and compared them via an LRT.
 This yielded a distribution of $\lambda_{LR}$ statistics we may expect to observe under our null hypothesis.
-Following~\citep{DaviHink97,NortEtal02}, we computed a corrected $p$-value for our observed $\lambda_{LR}$ as $\frac{r + 1}{n + 1}$, where $r$ is the number of simulated model comparisons that yielded a $\lambda_{LR}$ greater than or equal to our observed value and $n$ is the number of simulations we ran (1,000).
+Following~\citet{Ewen03}, we computed a corrected $p$-value for our observed $\lambda_{LR}$ as $\frac{r}{n}$, where $r$ is the number of simulated model comparisons that yielded a $\lambda_{LR}$ greater than or equal to our observed value and $n$ is the number of simulations we ran (1,000).
 
 \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
