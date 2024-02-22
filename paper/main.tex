@@ -634,23 +634,23 @@ incorrectly) answered questions.
 Before presenting our results, it is worth considering three possible
 explanations of why a participant might answer a given question correctly or
 incorrectly. One possibility is that the participant simply \textit{guessed}
-the answer. A second is that they selected an answer by mistake, despite
-``knowing'' the correct answer. In both of these scenarios, the participant's
-knowledge about the question's content should be uninformative about their
-observed response. A third possibility is that the participant's response
-reflects their \textit{actual} knowledge about the question's content. In this
-case, we \textit{might} expect to see a positive relationship between the
-participant's knowledge and their likelihood of answering the question
-correctly. However, in order to see this positive relationship, the
-participant's knowledge must be structured in a way that is reflected (at least
-partially) by the embedding space. In other words, if the participant's
-performance reflects their true knowledge, but our text embedding space does
-not sufficiently capture the structure of that knowledge, then the knowledge
-estimates we generate will not be predictive of the participant's performance.
-In the extreme, if the embedding space is completely unstructured with respect
-to the content of the quiz questions, then we would expect to see the negative
-relationship between estimated knowledge and performance that we described
-above.
+the answer. A second is that they selected the incorrect answer by mistake,
+despite ``knowing'' the correct answer (or vice versa). In both of these
+scenarios, the participant's knowledge about the question's content should be
+uninformative about their observed response. A third possibility is that the
+participant's response reflects their \textit{actual} knowledge about the
+question's content. In this case, we \textit{might} expect to see a positive
+relationship between the participant's knowledge and their likelihood of
+answering the question correctly. However, in order to see this positive
+relationship, the participant's knowledge must be structured in a way that is
+reflected (at least partially) by the embedding space. In other words, if the
+participant's performance reflects their true knowledge, but our text embedding
+space does not sufficiently capture the structure of that knowledge, then the
+knowledge estimates we generate will not be predictive of the participant's
+performance. In the extreme, if the embedding space is completely unstructured
+with respect to the content of the quiz questions, then we would expect to see
+the negative relationship between estimated knowledge and performance that we
+described above.
 
 When we fit a GLMM to estimates of participants' knowledge for each Quiz~1
 question based on all other Quiz~1 questions, we observed an outcome consistent
@@ -752,7 +752,7 @@ Fundamental Forces}-related questions ($OR = 3.490,\ \lambda_{LR} = 3.266,\
 95\%\ \textnormal{CI} = [3.033, 3.866],\ p = 0.093$). These ``prediction
 failures'' appear to come from the fact that any signal derived from
 participants' knowledge about the content of the \textit{Birth of Stars}
-lecture (prior to watching it) is swamped by the much more dramatic increase in
+lecture (prior to watching it) is overwhelmed by the much more dramatic increase in
 their knowledge about the content of the \textit{Four Fundamental Forces}
 (which they watched just prior to taking Quiz~2). This is reflected in their
 Quiz~2 performance for questions about each lecture (mean proportion correct
@@ -770,12 +770,7 @@ large) our knowledge estimates can reliably predict participants' abilities to
 answer individual quiz questions, distinguish between questions about similar
 content, and generalize across content areas, provided that participants' quiz
 responses reflect a minimum level of ``real'' knowledge about both content on
-which these predictions are based and that for which they are made. Our results
-also indicate some important limitations of our approach: if participants' quiz
-performance does not reflect what they know (e.g., when they ``guess''), or if
-their knowledge is not structured in a way that is reflected by the embedding
-space, then our knowledge estimates will not be predictive of their
-performance.
+which these predictions are based and that for which they are made.
 
 That the knowledge predictions derived from the text embedding space reliably
 distinguish between held-out correctly versus incorrectly answered questions

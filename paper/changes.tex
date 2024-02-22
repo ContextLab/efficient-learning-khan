@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Mon Feb 19 07:49:49 2024
-%DIF ADD main.tex   Wed Feb 21 12:34:25 2024
+%DIF ADD main.tex   Wed Feb 21 21:04:59 2024
 %DIF 2a2
 \usepackage{amsmath} %DIF > 
 %DIF -------
@@ -776,9 +776,9 @@ from a given participant to predict a held-out question (``All questions'' ; $\U
 knowledge at the embedding coordinate of a }\DIFdelend \DIFaddbegin \DIFadd{question was answered correctly than when it was answered
 incorrectly. Because our knowledge estimates are computed as a weighted version
 of this same proportion-correct score (where each held-in question's weight
-reflects its embedding-space distance from the }\DIFaddend held-out \DIFdelbegin \DIFdel{question about the }\textit{\DIFdel{other}} %DIFAUXCMD
-\DIFdel{lecture (``Across-lecture''; predicting knowledge
-for }\DIFdelend \DIFaddbegin \DIFadd{question; see
+reflects its embedding-space distance from the }\DIFaddend held-out \DIFdelbegin \DIFdel{question about the
+}\textit{\DIFdel{other}} %DIFAUXCMD
+\DIFdel{lecture (``Across-lecture''; predicting knowledge for }\DIFdelend \DIFaddbegin \DIFadd{question; see
 Eqn.~\ref{eqn:prop}), if these weights are uninformative (e.g., randomly
 distributed), then we should expect to see this same inverse relationship
 between estimated knowledge and performance, on average. On the other hand, if
@@ -797,23 +797,23 @@ incorrectly) answered questions.
 \DIFadd{Before presenting our results, it is worth considering three possible
 explanations of why a participant might answer a given question correctly or
 incorrectly. One possibility is that the participant simply }\textit{\DIFadd{guessed}}
-\DIFadd{the answer. A second is that they selected an answer by mistake, despite
-``knowing'' the correct answer. In both of these scenarios, the participant's
-knowledge about the question's content should be uninformative about their
-observed response. A third possibility is that the participant's response
-reflects their }\textit{\DIFadd{actual}} \DIFadd{knowledge about the question's content. In this
-case, we }\textit{\DIFadd{might}} \DIFadd{expect to see a positive relationship between the
-participant's knowledge and their likelihood of answering the question
-correctly. However, in order to see this positive relationship, the
-participant's knowledge must be structured in a way that is reflected (at least
-partially) by the embedding space. In other words, if the participant's
-performance reflects their true knowledge, but our text embedding space does
-not sufficiently capture the structure of that knowledge, then the }\DIFaddend knowledge
-\DIFaddbegin \DIFadd{estimates we generate will not be predictive of the participant's performance.
-In the extreme, if the embedding space is completely unstructured with respect
-to the content of the quiz questions, then we would expect to see the negative
-relationship between estimated knowledge and performance that we described
-above.
+\DIFadd{the answer. A second is that they selected the incorrect answer by mistake,
+despite ``knowing'' the correct answer (or vice versa). In both of these
+scenarios, the participant's knowledge about the question's content should be
+uninformative about their observed response. A third possibility is that the
+participant's response reflects their }\textit{\DIFadd{actual}} \DIFadd{knowledge about the
+question's content. In this case, we }\textit{\DIFadd{might}} \DIFadd{expect to see a positive
+relationship between the participant's knowledge and their likelihood of
+answering the question correctly. However, in order to see this positive
+relationship, the participant's knowledge must be structured in a way that is
+reflected (at least partially) by the embedding space. In other words, if the
+participant's performance reflects their true knowledge, but our text embedding
+space does not sufficiently capture the structure of that knowledge, then the
+}\DIFaddend knowledge \DIFaddbegin \DIFadd{estimates we generate will not be predictive of the participant's
+performance. In the extreme, if the embedding space is completely unstructured
+with respect to the content of the quiz questions, then we would expect to see
+the negative relationship between estimated knowledge and performance that we
+described above.
 }
 
 \DIFadd{When we fit a GLMM to estimates of participants' knowledge for each Quiz~1
@@ -973,7 +973,7 @@ Fundamental Forces}}\DIFadd{-related questions ($OR = 3.490,\ \lambda_{LR} = 3.2
 95\%\ \textnormal{CI} = [3.033, 3.866],\ p = 0.094$). These ``prediction
 failures'' appear to come from the fact that any signal derived from
 participants' knowledge about the content of the }\textit{\DIFadd{Birth of Stars}}
-\DIFadd{lecture (prior to watching it) is swamped by the much more dramatic increase in
+\DIFadd{lecture (prior to watching it) is overwhelmed by the much more dramatic increase in
 their knowledge about the content of the }\textit{\DIFadd{Four Fundamental Forces}}
 \DIFadd{(which they watched just prior to taking Quiz~2). This is reflected in their
 Quiz~2 performance for questions about each lecture (mean proportion correct
@@ -988,15 +988,11 @@ questions from Quiz~3 (when participants had now viewed }\textit{\DIFadd{both}}
 p = 0.017$) using responses to questions about the other lecture's content.
 Across all three versions of these analyses, our results suggest that (by and
 large) our knowledge estimates can reliably predict participants' abilities to
-answer individual quiz questions, }\DIFaddend distinguish between questions about \DIFdelbegin \DIFdel{more subtly different contentwithin the same lecture}\DIFdelend \DIFaddbegin \DIFadd{similar
+answer individual quiz questions, }\DIFaddend distinguish between questions about \DIFdelbegin \DIFdel{more subtly different contentwithin the
+same lecture}\DIFdelend \DIFaddbegin \DIFadd{similar
 content, and generalize across content areas, provided that participants' quiz
 responses reflect a minimum level of ``real'' knowledge about both content on
-which these predictions are based and that for which they are made. Our results
-also indicate some important limitations of our approach: if participants' quiz
-performance does not reflect what they know (e.g., when they ``guess''), or if
-their knowledge is not structured in a way that is reflected by the embedding
-space, then our knowledge estimates will not be predictive of their
-performance}\DIFaddend .
+which these predictions are based and that for which they are made}\DIFaddend .
 
 %DIF >  our approach works when participants have a minimal baseline level of knowledge about content predicted and used to predict
 %DIF >  our approach generalizes when knowledge of content used to predict can be assumed to be a reasonable indicator of knowledge of content predicted
@@ -1745,13 +1741,12 @@ categorical value denoting whether the target question was about }\textit{\DIFad
 Fundamental Forces}}\DIFadd{, }\textit{\DIFadd{Birth of Stars}}\DIFadd{, or general physics knowledge.
 Note that with our coding scheme, identifiers for each }\texttt{\DIFadd{question}} \DIFadd{are
 implicitly nested within levels of }\texttt{\DIFadd{lecture}} \DIFadd{and do not require explicit
-nesting in our model formula.
+nesting in our model formula. We then iteratively removed random effects from 
+the maximal model until it successfully converged with a full rank (i.e., non-singular) 
+random effects variance-covariance matrix.
 }
 
-%DIF >  We then iteratively removed random effects from the maximal model until it
-%DIF >  successfully converged with a full rank (i.e., non-singular) random effects
-%DIF >  variance-covariance matrix.
-
+%DIF > % JRM NOTE: do we need this next paragraph?  Commenting out for now...
 %DIF >  %When inspecting the model's random effect estimates revealed multiple terms estimated at the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we eliminated these terms typically did not affect which terms did and did not need to be removed in order for the model to converge to a non-degenerate solution.
 %DIF >  When this required eliminating multiple terms whose estimates reached the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we did so typically did not change the set of terms that needed to be removed in order for the model to converge to a non-degenerate solution.
 %DIF >  However, in order to ensure we fit all models used in these analyses in a consistent way, we devised some simple heuristics for choosing which boundary-estimated parameter to eliminate in each stepwise reduction of the model's complexity, based on a combination of popular approaches~\citep{BarrEtal13,BateEtal15b,MatuEtal17}.
@@ -1774,97 +1769,27 @@ nesting in our model formula.
 
 \DIFadd{To assess the predictive value of our knowledge estimates, we compared each
 GLMM's ability to discriminate between correctly and incorrectly answered
-questions to that of an analogous model that did not consider estimated
+questions to that of an analogous model that did }\textit{\DIFadd{not}} \DIFadd{consider estimated
 knowledge. Specifically, we used the same sets of observations with which we
 fit each ``full'' model to fit a second ``null'' model, with the formula:
 }\[
     \DIFadd{\mathtt{accuracy \sim (1\ \vert\ participant) + (1\ \vert\ question)}
 }\]
-\DIFadd{where the terms are as defined above.
+\DIFadd{where ``}\texttt{\DIFadd{accuracy}}\DIFadd{'', ``}\texttt{\DIFadd{participant}}\DIFadd{'', and ``}\texttt{\DIFadd{question}}\DIFadd{'' are as defined above. 
+As with our full models, the null models we fit for the “All questions” version of the analysis for each quiz contained an additional term, $\mathtt{(1\ \vert\ lecture)}$, where ``}\texttt{\DIFadd{lecture}}\DIFadd{'' is as defined above. 
+We then compared each full model to its reduced (null) equivalent using a likelihood-ratio test (LRT). 
+Because the typical asymptotic $\chi^2_d$ approximation of the null distribution for the LRT statistic ($\lambda_{LR}$) is anti-conservative for models that differ in their random slope terms~\mbox{%DIFAUXCMD
+\citep{GoldSimo00,ScheEtal08b,SnijBosk11}}\hskip0pt%DIFAUXCMD
+, we computed $p$-values for these tests using a parametric bootstrapping procedure~\mbox{%DIFAUXCMD
+\citep{HaleHojs14}}\hskip0pt%DIFAUXCMD
+. 
+For each of 1,000 bootstraps, we used the fitted null model to simulate a sample of observations of equal size to our original sample.
+We then re-fit both the null and full models to this simulated sample and compared them via an LRT.
+This yielded a distribution of $\lambda_{LR}$ statistics we may expect to observe under our null hypothesis.
+Following~\mbox{%DIFAUXCMD
+\citep{DaviHink97,NortEtal02}}\hskip0pt%DIFAUXCMD
+, we computed a corrected $p$-value for our observed $\lambda_{LR}$ as $\frac{r + 1}{n + 1}$, where $r$ is the number of simulated model comparisons that yielded a $\lambda_{LR}$ greater than or equal to our observed value and $n$ is the number of simulations we ran (1,000).
 }
-
-
-
-
-
-
-
-
-
-%DIF > In order to assess the predictive value of the knowledge estimates, we then fit a second set of ``null'' models to the same sets of observations used to fit our full GLMMs. These 
-%DIF > 
-%DIF > 
-%DIF > used the same sets of observations used to fit these GLMMs to fit a second set of ``null'' models. 
-%DIF > 
-%DIF > 
-%DIF > 
-%DIF > Next, in order to assess the predictive value of the knowledge estimates 
-%DIF > 
-%DIF > 
-%DIF > 
-%DIF > In order to assess the predictive value of the knowledge estimates we used to fit each GLMM, we then fit a \textit{second} model to the same data as each of the 15 
-%DIF > 
-%DIF > In order to assess whether the knowledge estimates we used to fit each GLMM could reliably predict participants' success on held-out questions, we then fit a second GLMM to the observations 
-
-
-%DIF > $$
-%DIF > \begin{aligned}
-%DIF >   \operatorname{accuracy}_{i}  &\sim \operatorname{Binomial}(n = 1, \operatorname{prob}_{\operatorname{accuracy} = \operatorname{correct}} = \widehat{P}) \\
-%DIF >     \log\left[\frac{\hat{P}}{1 - \hat{P}} \right] &=\alpha_{j[i],k[i]} \\
-%DIF > \left(
-%DIF >   \begin{array}{c}
-%DIF >     \begin{aligned}
-%DIF >       &\alpha_{j} \\
-%DIF >       &\gamma_{1j}
-%DIF >     \end{aligned}
-%DIF >   \end{array}
-%DIF > \right)
-%DIF >   &\sim N \left(
-%DIF > \left(
-%DIF >   \begin{array}{c}
-%DIF >     \begin{aligned}
-%DIF >       &\gamma_{0}^{\alpha} + \gamma_{1k[i]}^{\alpha}(\operatorname{knowledge}) \\
-%DIF >       &\mu_{\gamma_{1j}}
-%DIF >     \end{aligned}
-%DIF >   \end{array}
-%DIF > \right)
-%DIF > ,
-%DIF > \left(
-%DIF >   \begin{array}{cc}
-%DIF >      \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\gamma_{1j}} \\
-%DIF >      \rho_{\gamma_{1j}\alpha_{j}} & \sigma^2_{\gamma_{1j}}
-%DIF >   \end{array}
-%DIF > \right)
-%DIF >  \right)
-%DIF >     \text{, for participant j = 1,} \dots \text{,J} \\
-%DIF > \left(
-%DIF >   \begin{array}{c}
-%DIF >     \begin{aligned}
-%DIF >       &\alpha_{k} \\
-%DIF >       &\gamma_{1k}
-%DIF >     \end{aligned}
-%DIF >   \end{array}
-%DIF > \right)
-%DIF >   &\sim N \left(
-%DIF > \left(
-%DIF >   \begin{array}{c}
-%DIF >     \begin{aligned}
-%DIF >       &\mu_{\alpha_{k}} \\
-%DIF >       &\mu_{\gamma_{1k}}
-%DIF >     \end{aligned}
-%DIF >   \end{array}
-%DIF > \right)
-%DIF > ,
-%DIF > \left(
-%DIF >   \begin{array}{cc}
-%DIF >      \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\gamma_{1k}} \\
-%DIF >      \rho_{\gamma_{1k}\alpha_{k}} & \sigma^2_{\gamma_{1k}}
-%DIF >   \end{array}
-%DIF > \right)
-%DIF >  \right)
-%DIF >     \text{, for question k = 1,} \dots \text{,K}
-%DIF > \end{aligned}
-%DIF > $$
 
 \DIFaddend \subsubsection*{Estimating the ``smoothness'' of knowledge}\label{subsec:smoothness}
 
