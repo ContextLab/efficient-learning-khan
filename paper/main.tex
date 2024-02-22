@@ -561,8 +561,6 @@ bootstrap likelihood-ratio tests.
 
 \begin{figure}[tp]
     \centering
-
-    % TODO: adjust width to max possible based on finalized caption
     \includegraphics[width=0.75\textwidth]{figs/predict-knowledge-questions}
     \caption{\textbf{Predicting success on held-out questions using estimated
     knowledge.} We used generalized linear mixed models (GLMMs) to model the
@@ -1462,10 +1460,6 @@ question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2)
 the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions},
 bottom rows).
 
-%For each lecture-related question (i.e., excluding questions about general physics knowledge), we also computed analogous knowledge estimates based on two subsets of the other questions the participant answered on the same quiz: (1) all other questions about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) all questions about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
-%For each lecture-related question (i.e., excluding questions about general physics knowledge), we also computed analogous knowledge estimates based on:~(1) all other questions the participant answered on the same quiz about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows), and (2) all questions they answered on the same quiz about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
-%We also computed analogous knowledge estimates for each lecture-related question based on (1) all other questions answered by the same participant, on the same quiz about the same lecture as the target question (``Within-lecture''; Fig.~\ref{fig:predictions}, middle rows) and (2) all questions from the same participant and quiz about the other of the two lectures (``Across-lecture''; Fig.~\ref{fig:predictions}, bottom rows).
-
 In each version of this analysis (i.e., row in Fig.~\ref{fig:predictions}), and
 separately for each of the three quizzes (i.e., column in
 Fig.~\ref{fig:predictions}), we then fit a generalized linear mixed model
@@ -1494,25 +1488,6 @@ implicitly nested within levels of \texttt{lecture} and do not require explicit
 nesting in our model formula. We then iteratively removed random effects from 
 the maximal model until it successfully converged with a full rank (i.e., non-singular) 
 random effects variance-covariance matrix.
-
-%% JRM NOTE: do we need this next paragraph?  Commenting out for now...
-% %When inspecting the model's random effect estimates revealed multiple terms estimated at the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we eliminated these terms typically did not affect which terms did and did not need to be removed in order for the model to converge to a non-degenerate solution.
-% When this required eliminating multiple terms whose estimates reached the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we did so typically did not change the set of terms that needed to be removed in order for the model to converge to a non-degenerate solution.
-% However, in order to ensure we fit all models used in these analyses in a consistent way, we devised some simple heuristics for choosing which boundary-estimated parameter to eliminate in each stepwise reduction of the model's complexity, based on a combination of popular approaches~\citep{BarrEtal13,BateEtal15b,MatuEtal17}.
-% First, we constrained any correlation terms estimated at their boundaries (i.e., $\pm 1$) to 0 and re-fit the model.
-% This usually resulted in the variance component for the associated random slope (or occasionally the intercept, or even both) being estimated as 0, and suggested which terms we should consider removing.
-% Second, when choosing which of two zero-variance terms to remove from the model, we prioritized removing higher-order terms before lower-order terms.
-% In other words, if the estimated variance for both a random intercept and a random slope were 0, we chose to remove the random slope term before re-fitting the model and evaluating whether or not to remove the intercept.
-% %Additionally, if constraining a boundary-estimated correlation term to 0 allowed the model to converge with a full rank covariance matrix, we left the correlation term constrained rather than removing the associated slope and/or intercept component.
-% Third, when choosing which of two boundary-estimated variance components of the \textit{same} order to exclude from the model first, we took one of two approaches.
-% If the two components were random slopes with small but non-zero coefficients (e.g., on the order of $10^{-4}$ or less), we performed a Principal Components Analysis (PCA) on the random effects variance-covariance matrix and compared the variance explained by the two terms' corresponding PCs. 
-% If one explained a substantially smaller proportion of variance than the other (loosely defined), we dropped its corresponding random slope.
-% Alternatively, if both slopes' principal components explained a similar amount of variance, or if the two terms we wanted to compare were random intercepts rather than slopes, we removed the one whose exclusion resulted in the greater decrease in the Akaike information criterion (AIC).
-% Fourth, after removing either a slope or intercept from one random effect grouping, we re-introduced any correlation terms we had previously constrained to 0 for other random effect groupings to check if they could now be estimated. 
-% Finally, once the model successfully converged with a full rank covariance matrix, we did not remove random effects for any other reasons (e.g., to lower AIC, increase log-likelihood, etc.). 
-% We chose this stopping criterion as a conceptual ``middle ground'' between two popular but opposing approaches to model selection that advocate for either retaining the maximal model that allows convergence, regardless of singular fits~\citep[at the potential cost of decreased power; e.g.,~][]{BarrEtal13} or performing additional hypothesis tests on individual parameters and removing non-significant components to achieve a parsimonious model~\citep[at the potential cost of increased Type I error rates; e.g.,~][]{BateEtal15b}.
-% %We chose this stopping criterion as a conceptual ``middle ground'' between two popular but opposing approaches to model selection that advocate (respectively) for either retaining the maximal model that allows convergence, regardless of singular fits~\citep[at the potential cost of decreased power; e.g.,~][]{BarrEtal13} or testing individual parameters achieving a parsimonious model by discarding all parameters that don't significantly decrease goodness of fit ~\citep[at the potential cost of increased Type I error rates; e.g.,~][]{BateEtal15b}.
-% Our threshold for inclusion of random effects is intended to achieve a reasonable balance between these trade-offs.
 
 To assess the predictive value of our knowledge estimates, we compared each
 GLMM's ability to discriminate between correctly and incorrectly answered
