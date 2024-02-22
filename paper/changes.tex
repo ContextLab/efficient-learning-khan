@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL old.tex    Mon Feb 19 07:49:49 2024
-%DIF ADD main.tex   Wed Feb 21 12:34:25 2024
+%DIF ADD main.tex   Wed Feb 21 12:35:29 2024
 %DIF 2a2
 \usepackage{amsmath} %DIF > 
 %DIF -------
@@ -1752,6 +1752,7 @@ nesting in our model formula.
 %DIF >  successfully converged with a full rank (i.e., non-singular) random effects
 %DIF >  variance-covariance matrix.
 
+%DIF > % JRM NOTE: do we need this next paragraph?  Commenting out for now...
 %DIF >  %When inspecting the model's random effect estimates revealed multiple terms estimated at the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we eliminated these terms typically did not affect which terms did and did not need to be removed in order for the model to converge to a non-degenerate solution.
 %DIF >  When this required eliminating multiple terms whose estimates reached the boundary of their parameter space (i.e., variance components of 0 or correlation terms of  $\pm 1$), we found that the order in which we did so typically did not change the set of terms that needed to be removed in order for the model to converge to a non-degenerate solution.
 %DIF >  However, in order to ensure we fit all models used in these analyses in a consistent way, we devised some simple heuristics for choosing which boundary-estimated parameter to eliminate in each stepwise reduction of the model's complexity, based on a combination of popular approaches~\citep{BarrEtal13,BateEtal15b,MatuEtal17}.
