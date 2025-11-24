@@ -37,6 +37,7 @@ exp/server.log
 # latex extensions
 paper/**/*.aux
 paper/**/*.fdb_latexmk
+paper/**/*.fff
 paper/**/*.fls
 paper/**/*.log
 paper/**/*.out
