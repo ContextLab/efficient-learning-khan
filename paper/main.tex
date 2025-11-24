@@ -10,6 +10,8 @@
 \usepackage{hyperref}
 \usepackage{lineno}
 \usepackage{xcolor}
+\usepackage[nolists, nomarkers, fighead]{endfloat}
+\renewcommand{\includegraphics}[2][]{}
 
 \setcitestyle{notesep={; }}
 
@@ -42,7 +44,7 @@
 \renewcommand{\nameref}[1]{\textit{\oldnameref{#1}}}
 
 \doublespacing
-\linenumbers
+%\linenumbers
 
 \title{Text embedding models yield high-resolution insights into conceptual
 knowledge from short multiple-choice quizzes}
@@ -77,8 +79,6 @@ on individual quiz questions. Our findings show how a small set of quiz
 questions may be used to obtain rich and meaningful high-resolution insights
 into what each learner knows, and how their knowledge changes over time as they
 learn.
-
-\textbf{Keywords: education, learning, knowledge, concepts, natural language processing}
 
 \end{abstract}
 
@@ -849,7 +849,7 @@ projected each question into a shared text embedding space.
     (green) lectures, on average, across all timepoints' topic vectors.}
 
     \label{fig:knowledge-maps}
-    \end{figure}
+\end{figure}
 
 We projected the resulting 100-dimensional topic vectors (for each second of
 the lectures and each quiz question) onto a shared 2-dimensional plane (see
@@ -1104,7 +1104,7 @@ these advances might help pave the way for new approaches to teaching or
 delivering educational content that are tailored to individual students'
 learning needs and goals.
 
-\section*{Materials and methods}
+\section*{Methods}
 
 \subsection*{Participants}
 
@@ -1655,15 +1655,6 @@ coordinate-by-coordinate differences between any pair of knowledge maps.
 Intuitively, learning maps reflect the \textit{change} in knowledge
 across two maps.
 
-\section*{Author contributions}
-
-Conceptualization: P.C.F., A.C.H., and J.R.M. Methodology: P.C.F., A.C.H., and
-J.R.M. Software: P.C.F. Validation: P.C.F. Formal analysis: P.C.F. Resources: P.C.F.,
-A.C.H., and J.R.M. Data curation: P.C.F. Writing (original draft): J.R.M. Writing
-(review and editing): P.C.F., A.C.H., and J.R.M. Visualization: P.C.F. and J.R.M.
-Supervision: J.R.M. Project administration: P.C.F. Funding acquisition: J.R.M.
-
-
 \section*{Data availability}
 
 All of the data analyzed in this manuscript may be found at
@@ -1673,6 +1664,464 @@ https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
 
 All of the code for running our experiment and carrying out the analyses may be
 found at https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
+
+
+%\bibliographystyle{apa}
+%\bibliography{CDL-bibliography/cdl}
+
+\begin{thebibliography}{99}
+
+\bibitem[\protect\astroncite{Ashby and Maddox}{2005}]{AshbMadd05}
+Ashby, F.~G. and Maddox, W.~T. (2005).
+\newblock Human category learning.
+\newblock {\em Annual Review of Psychology}, 56:149--178.
+
+\bibitem[\protect\astroncite{Bates et~al.}{2015a}]{BateEtal15b}
+Bates, D., Kliegl, R., Vasishth, S., and Baayen, H. (2015a).
+\newblock Parsimonious mixed models.
+\newblock {\em {arXiv}}, 1506.04967.
+
+\bibitem[\protect\astroncite{Bates et~al.}{2015b}]{BateEtal15a}
+Bates, D., M{\"a}chler, M., Bolker, B., and Walker, S. (2015b).
+\newblock Fitting linear mixed-effects models using {lme4}.
+\newblock {\em Journal of Statistical Software}, 67(1):1--48.
+
+\bibitem[\protect\astroncite{Bevilacqua et~al.}{2019}]{BeviEtal19}
+Bevilacqua, D., Davidesco, I., Wan, L., and Chaloner, K. (2019).
+\newblock Brain-to-brain synchrony and learning outcomes vary by
+  student-teacher dynamics: evidence from a real-world classroom
+  electroencephalography study.
+\newblock {\em Journal of Cognitive Neuroscience}, 31(3):401--411.
+
+\bibitem[\protect\astroncite{Bird et~al.}{2009}]{BirdEtal09}
+Bird, S., Klein, E., and Loper, E. (2009).
+\newblock {\em Nature language processing with {Python}: analyzing text with
+  the natural language toolkit}.
+\newblock Reilly Media, Inc.
+
+\bibitem[\protect\astroncite{Blaye et~al.}{2006}]{BlayEtal06}
+Blaye, A., Bernard-Peyron, V., Paour, J.-L., and Bonthoux, F. (2006).
+\newblock Category flexibility in children: distinguishing response flexibility
+  from conceptual flexibility; the protracted development of taxonomic
+  representations.
+\newblock {\em {European} Journal of Developmental Psychology}, 3(2):163--188.
+
+\bibitem[\protect\astroncite{Blei and Lafferty}{2006}]{BleiLaff06}
+Blei, D.~M. and Lafferty, J.~D. (2006).
+\newblock Dynamic topic models.
+\newblock In {\em Proceedings of the International Conference on Machine
+  Learning}, pages 113--120, New York, {NY}. Association for Computing
+  Machinery.
+
+\bibitem[\protect\astroncite{Blei et~al.}{2003}]{BleiEtal03}
+Blei, D.~M., Ng, A.~Y., and Jordan, M.~I. (2003).
+\newblock Latent dirichlet allocation.
+\newblock {\em Journal of Machine Learning Research}, 3:993--1022.
+
+\bibitem[\protect\astroncite{Boyd-Graber et~al.}{2014}]{BoydEtal14}
+Boyd-Graber, J., Mimno, D., and Newman, D. (2014).
+\newblock Care and feeding of topic models: problems, diagnostics, and
+  improvements.
+\newblock In Airoldi, E.~M., Blei, D.~M., Erosheva, E.~A., and Fienberg, S.~E.,
+  editors, {\em Handbook of Mixed Membership Models and Their Applications}.
+  {CRC} Press.
+
+\bibitem[\protect\astroncite{Brown et~al.}{2020}]{BrowEtal20}
+Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P.,
+  Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S.,
+  Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler,
+  D.~M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray,
+  S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever,
+  I., and Amodei, D. (2020).
+\newblock Language models are few-shot learners.
+\newblock {\em {arXiv}}, 2005.14165.
+
+\bibitem[\protect\astroncite{Caramazza and Mahon}{2003}]{CaraMaho03}
+Caramazza, A. and Mahon, B.~Z. (2003).
+\newblock The organization of conceptual knowledge: the evidence from
+  category-specific semantic deficits.
+\newblock {\em Trends in Cognitive Sciences}, 7(8):354--361.
+
+\bibitem[\protect\astroncite{Cer et~al.}{2018}]{CerEtal18}
+Cer, D., Yang, Y., Kong, S.~Y., Hua, N., Limtiaco, N., John, R.~S., Constant,
+  N., Guajardo-Cespedes, M., Yuan, S., Tar, C., Sung, Y.-H., Strope, B., and
+  Kurzweil, R. (2018).
+\newblock Universal sentence encoder.
+\newblock {\em {arXiv}}, 1803.11175.
+
+\bibitem[\protect\astroncite{Constantinescu et~al.}{2016}]{ConsEtal16}
+Constantinescu, A.~O., O'Reilly, J.~X., and Behrens, T. E.~J. (2016).
+\newblock Organizing conceptual knowledge in humans with a gridlike code.
+\newblock {\em Science}, 352(6292):1464--1468.
+
+\bibitem[\protect\astroncite{Davison and Hinkley}{1997}]{DaviHink97}
+Davison, A.~C. and Hinkley, D.~V. (1997).
+\newblock {\em Bootstrap Methods and their Application}.
+\newblock Cambridge Series in Statistical and Probabilistic Mathematics.
+  Cambridge University Press.
+
+\bibitem[\protect\astroncite{Deacon et~al.}{2004}]{DeacEtal04}
+Deacon, D., Grose-Fifer, J., Yang, C.~M., Stanick, V., Hewitt, S., and
+  Dynowska, A. (2004).
+\newblock Evidence for a new conceptualization of semantic representation in
+  the left and right cerebral hemispheres.
+\newblock {\em Cortex}, 40(3):467--478.
+
+\bibitem[\protect\astroncite{Deerwester et~al.}{1990}]{DeerEtal90}
+Deerwester, S., Dumais, S.~T., Furnas, G.~W., Landauer, T.~K., and Harshman, R.
+  (1990).
+\newblock Indexing by latent semantic analysis.
+\newblock {\em Journal of the {American} Society for Information Science},
+  41(6):391--407.
+
+\bibitem[\protect\astroncite{Depoix}{2018}]{Depo18}
+Depoix, J. (2018).
+\newblock {YouTube} transcript {API}.
+\newblock \url{https://github.com/jdepoix/youtube-transcript-api}.
+
+\bibitem[\protect\astroncite{Devlin et~al.}{2018}]{DevlEtal18}
+Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K. (2018).
+\newblock {BERT}: pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock {\em {arXiv}}, 1810.04805.
+
+\bibitem[\protect\astroncite{Dikker et~al.}{2017}]{DikkEtal17}
+Dikker, S., Wan, L., Davidesco, I., Kaggen, L., Oostrik, M., McClintock, J.,
+  Rowland, J., Michalareas, G., van Bavel, J.~J., Ding, M., and Poeppel, D.
+  (2017).
+\newblock Brain-to-brain synchrony tracks real-world dynamic group interactions
+  in the classroom.
+\newblock {\em Current Biology}, 27(9):1375--1380.
+
+\bibitem[\protect\astroncite{Estes}{1986a}]{Este86a}
+Estes, W.~K. (1986a).
+\newblock Array models for category learning.
+\newblock {\em Cognitive Psychology}, 18(4):500--549.
+
+\bibitem[\protect\astroncite{Estes}{1986b}]{Este86b}
+Estes, W.~K. (1986b).
+\newblock Memory storage and retrieval processes in category learning.
+\newblock {\em Journal of Experimental Psychology: General}, 115:155--174.
+
+\bibitem[\protect\astroncite{Fisher}{1922}]{Fish22}
+Fisher, R.~A. (1922).
+\newblock On the mathematical foundations of theoretical statistics.
+\newblock {\em Philosophical Transactions of the Royal Society {A}},
+  222(602):309--368.
+
+\bibitem[\protect\astroncite{Gallagher}{2000}]{Gall00}
+Gallagher, J.~J. (2000).
+\newblock Teaching for understanding and application of science knowledge.
+\newblock {\em School Science and Mathematics}, 100(6):310--318.
+
+\bibitem[\protect\astroncite{Gluck et~al.}{2002}]{GlucEtal02}
+Gluck, M.~A., Shohamy, D., and Myers, C.~E. (2002).
+\newblock How do people solve the ``weather prediction'' task? individual
+  variability in strategies for probabilistic category learning.
+\newblock {\em Learning and Memory}, 9:408--418.
+
+\bibitem[\protect\astroncite{Goldman and Whelan}{2000}]{GoldSimo00}
+Goldman, N. and Whelan, S. (2000).
+\newblock {Statistical Tests of Gamma-Distributed Rate Heterogeneity in Models
+  of Sequence Evolution in Phylogenetics}.
+\newblock {\em Molecular Biology and Evolution}, 17(6):975--978.
+
+\bibitem[\protect\astroncite{Goldstein and Winner}{2012}]{GoldWinn12}
+Goldstein, T.~R. and Winner, E. (2012).
+\newblock Enhancing empathy and theory of mind.
+\newblock {\em Journal of Cognition and Development}, 13(1):19--37.
+
+\bibitem[\protect\astroncite{Halekoh and H{\o}jsgaard}{2014}]{HaleHojs14}
+Halekoh, U. and H{\o}jsgaard, S. (2014).
+\newblock {A Kenward-Roger Approximation and Parametric Bootstrap Methods for
+  Tests in Linear Mixed Models -- The R Package pbkrtest}.
+\newblock {\em Journal of Statistical Software}, 59(9):1--32.
+
+\bibitem[\protect\astroncite{Hall and Greeno}{2008}]{HallGree08}
+Hall, R. and Greeno, J. (2008).
+\newblock {\em 21st century education: A reference handbook}, chapter
+  Conceptual learning, pages 212--221.
+\newblock Sage Publications.
+
+\bibitem[\protect\astroncite{Heusser et~al.}{2021}]{HeusEtal21}
+Heusser, A.~C., Fitzpatrick, P.~C., and Manning, J.~R. (2021).
+\newblock Geometric models reveal behavioral and neural signatures of
+  transforming experiences into memories.
+\newblock {\em Nature Human Behaviour}, 5:905--919.
+
+\bibitem[\protect\astroncite{Huebner and Willits}{2018}]{HuebWill18}
+Huebner, P.~A. and Willits, J.~A. (2018).
+\newblock Structured semantic knowledge can emerge automatically from
+  predicting word sequences in child-directed speech.
+\newblock {\em Frontiers in Psychology}, 9:doi.org/10.3389/fpsyg.2018.00133.
+
+\bibitem[\protect\astroncite{Hulbert and Norman}{2015}]{HulbNorm15}
+Hulbert, J.~C. and Norman, K.~A. (2015).
+\newblock Neural differentiation tracks improved recall of competing memories
+  following interleaved study and retrieval practice.
+\newblock {\em Cerebral Cortex}, 25(10):3994--4008.
+
+\bibitem[\protect\astroncite{Kanske et~al.}{2015}]{KansEtal15}
+Kanske, P., B\"{o}ckler, A., and Singer, T. (2015).
+\newblock Models, mechanisms and moderators dissociating empathy and theory of
+  mind.
+\newblock In {\em Social Behavior From Rodents to Humans}, pages 193--206.
+  Springer.
+
+\bibitem[\protect\astroncite{Katona}{1940}]{Kato40}
+Katona, G. (1940).
+\newblock {\em Organizing and memorizing: studies in the psychology of learning
+  and teaching}.
+\newblock Columbia {University} Press.
+
+\bibitem[\protect\astroncite{Kaufman}{2003}]{Kauf03}
+Kaufman, D.~M. (2003).
+\newblock Applying educational theory in practice.
+\newblock {\em British Medical Journal}, 326(7382):213--216.
+
+\bibitem[\protect\astroncite{Kawasaki et~al.}{2021}]{KawaEtal21}
+Kawasaki, H., Yamasaki, S., Masuoka, Y., Iwasa, M., Fukita, S., and Matsuyama,
+  R. (2021).
+\newblock Remote teaching due to {COVID-19}: an exploration of its
+  effectiveness and issues.
+\newblock {\em International Journal of Environmental Research and Public
+  Health}, 18(5):2672.
+
+\bibitem[\protect\astroncite{Khan}{2004}]{Khan04}
+Khan, S. (2004).
+\newblock {\em The {K}han Academy}.
+\newblock Salman Khan.
+
+\bibitem[\protect\astroncite{Kintsch}{1970}]{Kint70}
+Kintsch (1970).
+\newblock {\em Learning, memory, and conceptual processes}.
+\newblock Wiley.
+
+\bibitem[\protect\astroncite{Kolowich}{2013}]{Kolo13}
+Kolowich, S. (2013).
+\newblock How {EdX} plans to earn, and share, revenue from its free online
+  courses.
+\newblock {\em The Chronicle of Higher Education}, 21:1--5.
+
+\bibitem[\protect\astroncite{Landauer and Dumais}{1997}]{LandDuma97}
+Landauer, T.~K. and Dumais, S.~T. (1997).
+\newblock A solution to {P}lato's problem: the latent semantic analysis theory
+  of acquisition, induction, and representation of knowledge.
+\newblock {\em Psychological Review}, 104:211--240.
+
+\bibitem[\protect\astroncite{Lee and Chen}{2022}]{LeeChen22}
+Lee, H. and Chen, J. (2022).
+\newblock Predicting memory from the network structure of naturalistic events.
+\newblock {\em Nature Communications},
+  13(4235):doi.org/10.1038/s41467--022--31965--2.
+
+\bibitem[\protect\astroncite{Maclellan}{2005}]{Macl05}
+Maclellan, E. (2005).
+\newblock Conceptual learning: the priority for higher education.
+\newblock {\em British Journal of Educational Studies}, 53(2):129--147.
+
+\bibitem[\protect\astroncite{Manning}{2021}]{Mann21a}
+Manning, J.~R. (2021).
+\newblock Episodic memory: mental time travel or a quantum ``memory wave''
+  function?
+\newblock {\em Psychological Review}, 128(4):711--725.
+
+\bibitem[\protect\astroncite{Manning}{2023}]{Mann23b}
+Manning, J.~R. (2023).
+\newblock Context reinstatement.
+\newblock In Kahana, M.~J. and Wagner, A.~D., editors, {\em Handbook of Human
+  Memory}. {Oxford} {University} Press.
+
+\bibitem[\protect\astroncite{Manning and Kahana}{2012}]{MannKaha12}
+Manning, J.~R. and Kahana, M.~J. (2012).
+\newblock Interpreting semantic clustering effects in free recall.
+\newblock {\em Memory}, 20(5):511--517.
+
+\bibitem[\protect\astroncite{Manning et~al.}{2023}]{MannEtal23b}
+Manning, J.~R., Menjunatha, H., and Kording, K. (2023).
+\newblock Chatify: {A} {J}upyter extension for adding {LLM}-driven chatbots to
+  interactive notebooks.
+\newblock \url{https://github.com/ContextLab/chatify}.
+
+\bibitem[\protect\astroncite{Matuschek et~al.}{2017}]{MatuEtal17}
+Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., and Bates, D. (2017).
+\newblock Balancing type i error and power in linear mixed models.
+\newblock {\em Journal of Memory and Language}, 94:305--315.
+
+\bibitem[\protect\astroncite{McInnes et~al.}{2018a}]{McInEtal18a}
+McInnes, L., Healy, J., and Melville, J. (2018a).
+\newblock {UMAP}: {U}niform {m}anifold {a}pproximation and {p}rojection for
+  {d}imension {r}eduction.
+\newblock {\em {arXiv}}, 1802(03426).
+
+\bibitem[\protect\astroncite{McInnes et~al.}{2018b}]{McInEtal18b}
+McInnes, L., Healy, J., Saul, N., and Gro{\ss}berger, L. (2018b).
+\newblock {UMAP}: {U}niform {M}anifold {A}pproximation and {P}rojection.
+\newblock {\em Journal of Open Source Software}, 3(29):861.
+
+\bibitem[\protect\astroncite{Meltzoff}{2011}]{Melt11}
+Meltzoff, A.~N. (2011).
+\newblock Social cognition and the origins of imitation, empathy, and theory of
+  mind.
+\newblock In {\em The Wiley-Blackwell Handbook of Childhood Cognitive
+  Development}. Wiley-Blackwell.
+
+\bibitem[\protect\astroncite{Meshulam et~al.}{2020}]{MeshEtal20}
+Meshulam, M., Hasenfratz, L., Hillman, H., Liu, Y.~F., Nguyen, M., Norman,
+  K.~A., and Hasson, U. (2020).
+\newblock Neural alignment predicts learning outcomes in students taking an
+  introduction to computer science course.
+\newblock {\em Nature Communications},
+  12(1922):doi.org/10.1038/s41467--021--22202--3.
+
+\bibitem[\protect\astroncite{Mikolov et~al.}{2013}]{MikoEtal13a}
+Mikolov, T., Chen, K., Corrado, G., and Dean, J. (2013).
+\newblock Efficient estimation of word representations in vector space.
+\newblock {\em {arXiv}}, 1301.3781.
+
+\bibitem[\protect\astroncite{Moser et~al.}{2021}]{MoseEtal21}
+Moser, K.~M., Wei, T., and Brenner, D. (2021).
+\newblock Remote teaching during {COVID-19}: implications from a national
+  survey of language educators.
+\newblock {\em System}, 97:102431.
+
+\bibitem[\protect\astroncite{Nastase et~al.}{2020}]{NastEtal20}
+Nastase, S.~A., Goldstein, A., and Hasson, U. (2020).
+\newblock Keep it real: rethinking the primacy of experimental control in
+  cognitive neuroscience.
+\newblock {\em {NeuroImage}}, 15(222):117254--117261.
+
+\bibitem[\protect\astroncite{Nguyen et~al.}{2022}]{NguyEtal22}
+Nguyen, M., Chang, A., Micciche, E., Meshulam, M., Nastase, S.~A., and Hasson,
+  U. (2022).
+\newblock Teacher-student neural coupling during teaching and learning.
+\newblock {\em Social Cognitive and Affective Neuroscience}, 17(4):367--376.
+
+\bibitem[\protect\astroncite{OpenAI}{2023}]{ChatGPT}
+OpenAI (2023).
+\newblock {ChatGPT}.
+\newblock https://chat.openai.com.
+
+\bibitem[\protect\astroncite{Piantadosi and Hill}{2022}]{PianHill22}
+Piantadosi, S.~T. and Hill, F. (2022).
+\newblock Meaning without reference in large language models.
+\newblock {\em {arXiv}}, 2208.02957.
+
+\bibitem[\protect\astroncite{Poulsen et~al.}{2017}]{PoulEtal17}
+Poulsen, A.~T., Kamronn, S., Dmochowski, J., Parra, L.~C., and Hansen, L.~K.
+  (2017).
+\newblock {EEG} in the classroom: synchronised neural recordings during video
+  presentation.
+\newblock {\em Scientific Reports}, 7:43916.
+
+\bibitem[\protect\astroncite{Ratka}{2018}]{Ratk18}
+Ratka, A. (2018).
+\newblock Empathy and the development of affective skills.
+\newblock {\em {American} Journal of Pharmaceutical Education},
+  82(10):doi.org/10.5688/ajpe7192.
+
+\bibitem[\protect\astroncite{Reilly et~al.}{1982}]{ReilEtal82}
+Reilly, D.~L., Cooper, L.~N., and Elbaum, C. (1982).
+\newblock A neural model for category learning.
+\newblock {\em Biological Cybernetics}, 45(1):35--41.
+
+\bibitem[\protect\astroncite{Rhoads et~al.}{2013}]{RhoaEtal13}
+Rhoads, R.~A., Berdan, J., and Toven-Lindsey, B. (2013).
+\newblock The open courseware movement in higher education: unmasking power and
+  raising questions about the movement's democratic potential.
+\newblock {\em Educational Theory}, 63(1):87--110.
+
+\bibitem[\protect\astroncite{Scheipl et~al.}{2008}]{ScheEtal08b}
+Scheipl, F., Greven, S., and K{\"u}chenhoff, H. (2008).
+\newblock Size and power of tests for a zero random effect variance or
+  polynomial regression in additive and linear mixed models.
+\newblock {\em Computational Statistics \& Data Analysis}, 52(7):3283--3299.
+
+\bibitem[\protect\astroncite{Scott et~al.}{2007}]{ScotEtal07}
+Scott, P., Asoko, H., and Leach, J. (2007).
+\newblock {\em Handbook of research on science education}, chapter Student
+  conceptions and conceptual learning in science.
+\newblock Routledge.
+
+\bibitem[\protect\astroncite{Shao et~al.}{2018}]{ShaoEtal18}
+Shao, Y.~N., Sun, H.~M., Huang, J.~W., Li, M.~L., Huang, R.~R., and Li, N.
+  (2018).
+\newblock Simulation-based empathy training improves the communication skills
+  of neonatal nurses.
+\newblock {\em Clinical Simulation in Nursing}, 22:32--42.
+
+\bibitem[\protect\astroncite{Shim and Lee}{2020}]{ShimLee20}
+Shim, T.~E. and Lee, S.~Y. (2020).
+\newblock College students' experience of emergency remote teaching during
+  {COVID-19}.
+\newblock {\em Children and Youth Services Review}, 119:105578.
+
+\bibitem[\protect\astroncite{Simon et~al.}{2004}]{SimoEtal04}
+Simon, M.~A., Tzur, R., Heinz, K., and Kinzel, M. (2004).
+\newblock Explicating a mechanism for conceptual learning: elaborating the
+  construct of reflective abstraction.
+\newblock {\em Journal for Research in Mathematics Education}, 35(5):305--329.
+
+\bibitem[\protect\astroncite{Snijders and Bosker}{2011}]{SnijBosk11}
+Snijders, T. A.~B. and Bosker, R. (2011).
+\newblock More powerful tests for variance parameters.
+\newblock In {\em {Multilevel Analysis: An Introduction to Basic and Advanced
+  Multilevel Modeling}}, chapter~6, pages 94--108. Sage Publications, 2nd
+  edition.
+
+\bibitem[\protect\astroncite{Stepien and Baernstein}{2006}]{StepBaer06}
+Stepien, K.~A. and Baernstein, A. (2006).
+\newblock Education for empathy.
+\newblock {\em Journal of General Internal Medicine}, 21:524--530.
+
+\bibitem[\protect\astroncite{Touvron et~al.}{2023}]{TouvEtal23}
+Touvron, H., Lavril, T., Izacard, G., Martinet, X., Lachaux, M.-A., Lacroix,
+  T., Rozi\`{e}re, B., Goyal, N., Hambro, E., Azhar, F., Rodriguz, A., Joulin,
+  A., Grave, E., and Lample, G. (2023).
+\newblock {LLaMA}: open and efficient foundation language models.
+\newblock {\em {arXiv}}, 2302.13971.
+
+\bibitem[\protect\astroncite{Tulchinskii et~al.}{2023}]{TulcEtal23}
+Tulchinskii, E., Kuznetsov, K., Kushnareva, L., Cherniavskii, D., Barannikov,
+  S., Piontkovskaya, I., Nikolenko, S., and Burnaev, E. (2023).
+\newblock Intrinsic dimension estimation for robust detection of {AI}-generated
+  texts.
+\newblock {\em {arXiv}}, 2306.04723.
+
+\bibitem[\protect\astroncite{{van Paridon} et~al.}{2021}]{vanPEtal21}
+{van Paridon}, J., Liu, Q., and Lupyan, G. (2021).
+\newblock How do blind people know that blue is cold? distributional semantics
+  encode color-adjective associations.
+\newblock {\em Proceedings of the Annual Meeting of the Cognitive Science
+  Society}, 43(43).
+
+\bibitem[\protect\astroncite{Viswani et~al.}{2017}]{ViswEtal17}
+Viswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.~N.,
+  Kaiser, L., and Polosukhin, I. (2017).
+\newblock Attention is all you need.
+\newblock In {\em Advances in Neural Information Processing Systems}.
+
+\bibitem[\protect\astroncite{Whalen}{2020}]{Whal20}
+Whalen, J. (2020).
+\newblock Should teachers be trained in emergency remote teaching? {L}essons
+  learned from the {COVID-19} pandemic.
+\newblock {\em Journal of Technology and Teacher Education}, 28(2):189--199.
+
+\bibitem[\protect\astroncite{Young}{2012}]{Youn12}
+Young, J.~R. (2012).
+\newblock Inside the {C}oursera contract: how an upstart company might profit
+  from free courses.
+\newblock {\em The Chronicle of Higher Education}, 19(7):1--4.
+
+\bibitem[\protect\astroncite{Ziman et~al.}{2018}]{ZimaEtal18}
+Ziman, K., Heusser, A.~C., Fitzpatrick, P.~C., Field, C.~E., and Manning, J.~R.
+  (2018).
+\newblock Is automatic speech-to-text transcription ready for use in
+  psychological experiments?
+\newblock {\em Behavior Research Methods}, 50:2597--2605.
+
+\end{thebibliography}
+
 
 \section*{Acknowledgements}
 
@@ -1687,7 +2136,18 @@ data collection and analysis, decision to publish, or preparation of the
 manuscript.
 
 
+\section*{Author contributions}
 
-\bibliographystyle{apa}
-\bibliography{CDL-bibliography/cdl}
+Conceptualization: P.C.F., A.C.H., and J.R.M. Methodology: P.C.F., A.C.H., and
+J.R.M. Software: P.C.F. Validation: P.C.F. Formal analysis: P.C.F. Resources: P.C.F.,
+A.C.H., and J.R.M. Data curation: P.C.F. Writing (original draft): J.R.M. Writing
+(review and editing): P.C.F., A.C.H., and J.R.M. Visualization: P.C.F. and J.R.M.
+Supervision: J.R.M. Project administration: P.C.F. Funding acquisition: J.R.M.
+
+
+\section*{Competing interests}
+
+The authors declare no competing interests.
+
+
 \end{document}
