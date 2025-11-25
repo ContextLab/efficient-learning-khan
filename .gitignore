@@ -46,3 +46,6 @@ paper/**/*.blg
 paper/**/*.bbl
 texput.log
 paper/.#compile.sh
+
+# MS Word temp files
+paper/**/~$*
