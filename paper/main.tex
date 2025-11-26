@@ -483,7 +483,7 @@ proportion of quiz questions the participant answered correctly, where the
 weights reflect how much each question is ``about'' the content at $x$. When we
 apply this approach to estimate the participant's knowledge about the content
 presented in each moment of each lecture, we can obtain a detailed time course
-describing how much ``knowledge'' that participant has about the content
+describing how much knowledge that participant has about the content
 presented at any part of the lecture. As shown in
 Figure~\ref{fig:knowledge-timeseries}A and C, we can apply this approach
 separately for the questions from each quiz participants took throughout the
@@ -513,7 +513,7 @@ lectures).
     of Stars}.} The panel is in the same format as Panel B, but here the
     knowledge estimates are for the content of the \textit{Birth of Stars}
     lecture. \textbf{All panels.} Error ribbons and error bars denote 95\% confidence
-    intervals, estimated across participants.}
+    intervals of the mean, estimated across participants ($n = 50$).}
 
     \label{fig:knowledge-timeseries}
 \end{figure}
@@ -586,7 +586,7 @@ nested) null model that assumed these estimates carried no predictive informatio
     questions, for each level of estimated knowledge along the $x$-axis. The
     black curves display the (population-level) GLMM-predicted probabilities of
     correctly answering a question as a function of estimated knowledge. Error
-    ribbons denote 95\% confidence intervals.}
+    ribbons denote 95\% confidence intervals of the predicted mean probabilities.}
 
     \label{fig:predictions}
 \end{figure}
@@ -765,21 +765,23 @@ embedding-space distance.
     \includegraphics[width=0.8\textwidth]{figs/knowledge-smoothness}
 
     \caption{\textbf{Knowledge falls off gradually in text embedding space.}
-    \textbf{A. Performance versus distance.} For each participant, for each
+    \textbf{A. Performance versus distance.} For each participant, and for each
     correctly answered question (blue) or incorrectly answered question (red),
     we computed the proportion of correctly answered questions within a given
     distance of that question's embedding coordinate. We used these proportions
     as a proxy for participants' knowledge about the content within that region
     of the embedding space. We repeated this analysis for all questions and
     participants, and separately for each quiz (column). The black lines denote
-    the average proportion correct across all questions included in
-    the analysis at the given distance. \textbf{B. Maximum distance for which
+    the average proportion correct including all questions a participant answered
+    on the given quiz (i.e., not restricted by distance from the reference question). 
+    Error ribbons denote bootstrap-estimated 95\% confidence intervals of the across-participants mean.
+    \textbf{B. Maximum distance for which
     performance is reliably different from the average.} We used a bootstrap
     procedure (see~\nameref{subsec:smoothness}) to estimate the point at which
     the blue and red lines in Panel A reliably diverged from the black line. We
     repeated this analysis separately for correctly and incorrectly answered
-    questions from each quiz. \textbf{All panels.} Error ribbons denote
-    bootstrap-estimated 95\% confidence intervals.}
+    questions from each quiz. Error ribbons denote 95\% confidence intervals of 
+    the mean distance over 10,000 subsamples.}
 
     \label{fig:smoothness}
 \end{figure}
@@ -960,7 +962,7 @@ stylistic features, and more. We considered using transformer-based models in
 our study, but we found that the text embeddings derived from these models were
 surprisingly uninformative with respect to differentiating or otherwise
 characterizing the conceptual content of the lectures and questions we used
-(see \suppResults). We suspect that this reflects a broader challenge in
+(see \suppDiscussion). We suspect that this reflects a broader challenge in
 constructing models that are both high-resolution within a given domain (e.g.,
 the domain of physics lectures and questions) and sufficiently broad
 as to enable them to cover a wide range of domains. Essentially,
@@ -1659,6 +1661,7 @@ across two maps.
 
 All of the data analyzed in this manuscript may be found at
 https://github.com/Con\-text\-Lab/eff\-ic\-ient-learn\-ing-khan.
+All Khan Academy content is available for free at https://www.khan\-academy.org.
 
 \section*{Code availability}
 
