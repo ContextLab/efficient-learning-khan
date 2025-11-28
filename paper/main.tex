@@ -567,7 +567,7 @@ nested) null model that assumed these estimates carried no predictive informatio
 
 \begin{figure}[tp]
     \centering
-    \includegraphics[width=0.75\textwidth]{figs/predict-knowledge-questions}
+    \includegraphics[width=0.71\textwidth]{figs/predict-knowledge-questions}
     \caption{\textbf{Predicting success on held-out questions using estimated
     knowledge.} We used generalized linear mixed models (GLMMs) to model the
     probability of correctly answering a quiz question as a function of
@@ -586,7 +586,10 @@ nested) null model that assumed these estimates carried no predictive informatio
     questions, for each level of estimated knowledge along the $x$-axis. The
     black curves display the (population-level) GLMM-predicted probabilities of
     correctly answering a question as a function of estimated knowledge. Error
-    ribbons denote 95\% confidence intervals of the predicted mean probabilities.}
+    ribbons denote 95\% confidence intervals of the predicted mean probabilities.
+    $OR$ denotes the model-estimated odds ratio. $\lambda_{LR}$ denotes the result
+    of a likelihood-ratio test for the effect of estimated knowledge. $p$-values
+    were estimated via parametric bootstrapping.}
 
     \label{fig:predictions}
 \end{figure}
