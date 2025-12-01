@@ -1,4 +1,4 @@
-# Text embedding models yield high-resolution insights into conceptual knowledge from short multiple-choice quizzes
+# Text embedding models yield detailed conceptual knowledge maps derived from short multiple-choice quizzes
 
 <p align="center">
   <a href="https://psyarxiv.com/dh3q2">
@@ -7,8 +7,8 @@
 </p>
 
 This repository contains all data and code used to produce the paper
-"[_Text embedding models yield high-resolution insights into conceptual
-knowledge from short multiple-choice quizzes_](https://psyarxiv.com/dh3q2)" by
+"[_Text embedding models yield detailed conceptual
+knowledge maps derived from short multiple-choice quizzes_](https://psyarxiv.com/dh3q2)" by
 Paxton C. Fitzpatrick, Andrew C. Heusser, and Jeremy R. Manning.
 
 We also include reproducible environments for running our experiment and
@@ -17,7 +17,7 @@ analyses via [Docker](https://www.docker.com/).
 
 ## Table of Contents
 
-- [Text embedding models yield high-resolution insights into conceptual knowledge from short multiple-choice quizzes](#text-embedding-models-yield-high-resolution-insights-into-conceptual-knowledge-from-short-multiple-choice-quizzes)
+- [Text embedding models yield detailed conceptual knowledge maps derived from short multiple-choice quizzes](#text-embedding-models-yield-detailed-conceptual-knowledge-maps-derived-from-short-multiple-choice-quizzes)
   - [Table of Contents](#table-of-contents)
   - [Repo Organization](#repo-organization)
   - [Installing Docker](#installing-docker)
